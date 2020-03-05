@@ -1,0 +1,23 @@
+{
+  "name": "dynamodb-datamodel",
+  "version": "1.0.0",
+  "description": "DynamoDB javascript/node/typescript library to support single table design pattern",
+  "main": "index.js",
+  "repository": "https://github.com/jasonuwbadger/dynamodb-datamodel.git",
+  "author": "Jason Christensen <jasonchr@microsoft.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/preset-typescript": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "bufferutil": "^4.0.1",
+    "canvas": "^2.6.1",
+    "jest": "^25.1.0",
+    "typescript": "^3.8.3",
+    "utf-8-validate": "^5.0.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.633.0"
+  }
+}
