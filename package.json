@@ -1,23 +1,55 @@
 {
   "name": "dynamodb-datamodel",
   "version": "1.0.0",
-  "description": "DynamoDB javascript/node/typescript library to support single table design pattern",
-  "main": "index.js",
-  "repository": "https://github.com/jasonuwbadger/dynamodb-datamodel.git",
-  "author": "Jason Christensen <jasonchr@microsoft.com>",
+  "description": "DynamoDB single table design based model",
+  "keywords": [
+    "DynamoDB",
+    "Single-Table-Model"
+  ],
+  "author": "Jason Christensen",
   "license": "MIT",
-  "private": false,
-  "devDependencies": {
-    "@babel/core": "^7.8.6",
-    "@babel/preset-typescript": "^7.8.3",
-    "babel-loader": "^8.0.6",
-    "bufferutil": "^4.0.1",
-    "canvas": "^2.6.1",
-    "jest": "^25.1.0",
-    "typescript": "^3.8.3",
-    "utf-8-validate": "^5.0.2"
+  "homepage": "https://github.com/jasonuwbadger/dynamodb-datamodel",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonuwbadger/dynamodb-datamodel.git"
   },
-  "dependencies": {
-    "aws-sdk": "^2.633.0"
-  }
+  "bugs": {
+    "url": "https://github.com/jasonuwbadger/dynamodb-datamodel/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "test": "jest --config jestconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "devDependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.0",
+    "@types/yup": "^0.26.34",
+    "aws-sdk": "^2.653.0",
+    "jest": "^25.2.7",
+    "prettier": "^2.0.2",
+    "ts-jest": "^25.3.1",
+    "ts-node": "^8.8.1",
+    "tslint": "^6.1.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.8.3",
+    "yup": "^0.28.3"
+  },
+  "dependencies": {}
 }

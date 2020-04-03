@@ -1,76 +1,456 @@
-import {PartitionKeyType, SortKeyType, IndexProjection} from "./Enums"
-import { IGSI, GSI } from "./GSI";
-import { ILSI } from "./LSI";
+import { AWSError } from 'aws-sdk/lib/error';
+import { PromiseResult } from 'aws-sdk/lib/Request';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-export class Table<PK, SK> {
-    name: string;
-    partitionKey: string;
-    partitionKeyType: PartitionKeyType;
-    sortKey?: string;
-    sortKeyType?: SortKeyType;
-    globalIndexes?: IGSI[];
-    localIndexes?: ILSI[];
-    options?: string;
+import { BinaryValue, AttributeValueMap, Optional } from './Common';
+import { Condition, buildConditionInput } from './Condition';
+import { ExpressionAttributes } from './ExpressionAttributes';
+import { KeyConditionExpression, buildKeyConditionInput } from './KeyCondition';
+import { UpdateMapValue, buildUpdateInput, UpdateExpression } from './Update';
 
-    constructor(name: string, pk: string = 'P', sk?: string, gsi?: IGSI[], lsi?: ILSI[]) {
-        this.name = name;
-        this.partitionKey = pk;
-        this.sortKey = sk;
-        this.globalIndexes = gsi;
-        this.localIndexes = lsi;
+function getKeyName(keySchema: Table.PrimaryKeySchema, type: Table.PrimaryKeyType): string {
+  let name = '';
+  Object.keys(keySchema).forEach((key) => {
+    if (keySchema[key].keyType === type) {
+      name = key;
     }
-
-    createModel(schema: string, options: string) {
-
-    }
-
-    pk() {
-        return {type: this.partitionKeyType, alias: this.partitionKey};
-    }
-
-    sk() {
-        return {type: this.sortKeyType, alias: this.sortKey};
-    }
-
-    // combine two or more dynamodb attributes into a single model attribute like id
-    combine(fields: string[], delimiter = '.') {
-        return {type: 'string', op: 'combine', aliases: fields, delimiter};
-    }
-
-    // combine two or more model attributes into a single dynamodb attribute like location
-    // TODO: how do we make it easy to build a query for this data?
-    composite(fields: string[], delimiter) {
-        return {type: 'string', op: 'combine', aliases: fields, delimiter};
-    }
-};
-
-const gsi0 = new GSI<string, string>('GSI0', IndexProjection.All, 'P0', 'S0');
-const gsi0sk = gsi0.compositeSortKey(3, '.');
-
-const table = new Table<string, string>('testTableName', 'P', 'S');
-
-const model = table.createModel({
-    id: table.pk(),
-    name: table.string(),
-    city: gsi0sk[0],
-    state: gsi0sk[1],
-    country: gsi0sk[2],
-}, {
-
-});
-
-const data = {
-    id: 'abc.xyz',
-    name: "name of",
-    city: "Seattle",
-    state: "Washington",
-    country: "United States Of America"
+  });
+  return name;
 }
 
-model.validateModel(data);
-const params = model.putParams(data);
-const result = dynamodb.put(params);
-const modelData = model.parsePut(result);
+export interface IndexBase {
+  name: string;
+  keySchema: Table.PrimaryKeySchema;
+  projection: {
+    type: Table.ProjectionType;
+    attributes?: string[];
+  };
+  init(table: TableBase): void;
 
+  getPartitionKey(): string;
+  getSortKey(): string;
 
-model.put(data);
+  queryParams(key: Table.PrimaryKeyQuery, options?: Table.QueryOptions): DocumentClient.QueryInput;
+  scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput;
+  query(
+    key: Table.PrimaryKeyQuery,
+    options?: Table.QueryOptions,
+  ): Promise<PromiseResult<DocumentClient.QueryOutput, AWSError>>;
+  scan(options?: Table.ScanOptions): Promise<PromiseResult<DocumentClient.ScanOutput, AWSError>>;
+}
+
+export interface IndexParams<KEY> {
+  name: string;
+  keySchema: Table.PrimaryKeySchemaT<KEY>;
+  projection: {
+    type: Table.ProjectionType;
+    attributes?: string[];
+  };
+}
+
+interface DefaultGlobalIndexKey {
+  G0P: Table.StringPartitionKey;
+  G0S?: Table.StringSortKey;
+}
+
+interface DefaultLocalIndexKey {
+  P: Table.StringPartitionKey;
+  L0S?: Table.StringSortKey;
+}
+
+export class Index<KEY = DefaultGlobalIndexKey> implements IndexBase {
+  name: string;
+  keySchema: Table.PrimaryKeySchemaT<KEY>;
+  projection: {
+    type: Table.ProjectionType;
+    attributes?: string[];
+  };
+  private table?: TableBase;
+
+  constructor(params: IndexParams<KEY>) {
+    this.name = params.name;
+    this.keySchema = params.keySchema;
+    this.projection = params.projection;
+  }
+
+  init(table: TableBase) {
+    this.table = table;
+  }
+
+  getPartitionKey(): string {
+    return getKeyName(this.keySchema, Table.PrimaryKeyType.Hash);
+  }
+
+  getSortKey(): string {
+    return getKeyName(this.keySchema, Table.PrimaryKeyType.Range);
+  }
+
+  queryParams(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions): DocumentClient.QueryInput {
+    const o = {
+      IndexName: options?.IndexName || this.name,
+      ...options,
+    };
+    return this.table!.queryParams(key, o);
+  }
+  scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput {
+    const o = {
+      IndexName: options?.IndexName || this.name,
+      ...options,
+    };
+    return this.table!.scanParams(o);
+  }
+
+  async query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
+    const o = {
+      IndexName: options?.IndexName || this.name,
+      ...options,
+    };
+    return this.table!.query(key, o);
+  }
+  async scan(options?: Table.ScanOptions) {
+    const o = {
+      IndexName: options?.IndexName || this.name,
+      ...options,
+    };
+    return this.table!.scan(o);
+  }
+}
+
+export interface TableBase {
+  name: string;
+  keyAttributes: Table.PrimaryAttributeDefinitions;
+  keySchema: Table.PrimaryKeySchema;
+  globalIndexes?: IndexBase[];
+  localIndexes?: IndexBase[];
+  client?: DocumentClient;
+
+  getPartitionKey(): string;
+  getSortKey(): string;
+
+  getParams(key: Table.PrimaryKeyValueMap, options?: Table.GetOptions): DocumentClient.GetItemInput;
+  deleteParams(key: Table.PrimaryKeyValueMap, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
+  putParams(
+    key: Table.PrimaryKeyValueMap,
+    item?: AttributeValueMap,
+    options?: Table.PutOptions,
+  ): DocumentClient.PutItemInput;
+  updateParams(
+    key: Table.PrimaryKeyValueMap,
+    item?: UpdateMapValue,
+    options?: Table.UpdateOptions,
+  ): DocumentClient.UpdateItemInput;
+  queryParams(key: Table.PrimaryKeyQuery, options?: Table.QueryOptions): DocumentClient.QueryInput;
+  scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput;
+
+  get(
+    key: Table.PrimaryKeyValueMap,
+    options?: Table.GetOptions,
+  ): Promise<PromiseResult<DocumentClient.GetItemOutput, AWSError>>;
+  delete(
+    key: Table.PrimaryKeyValueMap,
+    options?: Table.DeleteOptions,
+  ): Promise<PromiseResult<DocumentClient.DeleteItemOutput, AWSError>>;
+  put(
+    key: Table.PrimaryKeyValueMap,
+    item?: AttributeValueMap,
+    options?: Table.PutOptions,
+  ): Promise<PromiseResult<DocumentClient.PutItemOutput, AWSError>>;
+  update(
+    key: Table.PrimaryKeyValueMap,
+    item?: UpdateMapValue,
+    options?: Table.UpdateOptions,
+  ): Promise<PromiseResult<DocumentClient.UpdateItemOutput, AWSError>>;
+  query(
+    key: Table.PrimaryKeyQuery,
+    options?: Table.QueryOptions,
+  ): Promise<PromiseResult<DocumentClient.QueryOutput, AWSError>>;
+  scan(options?: Table.ScanOptions): Promise<PromiseResult<DocumentClient.ScanOutput, AWSError>>;
+}
+
+export interface TableParams<KEY, ATTRIBUTES> {
+  name: string;
+  keyAttributes: Table.PrimaryAttributeDefinitionsT<ATTRIBUTES>;
+  keySchema: Table.PrimaryKeySchemaT<KEY>;
+  globalIndexes?: IndexBase[];
+  localIndexes?: IndexBase[];
+  client?: DocumentClient;
+}
+
+// StringSortKey should be optional (?) since for update actions it is optional
+interface DefaultTableKey {
+  P: Table.StringPartitionKey;
+  S?: Table.StringSortKey;
+}
+
+export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase {
+  name: string;
+  keyAttributes: Table.PrimaryAttributeDefinitionsT<ATTRIBUTES>;
+  keySchema: Table.PrimaryKeySchemaT<KEY>;
+  globalIndexes?: IndexBase[] = [];
+  localIndexes?: IndexBase[] = [];
+  client?: DocumentClient;
+
+  constructor(params: TableParams<KEY, ATTRIBUTES>) {
+    // validateTable(params);
+    this.name = params.name;
+    this.keyAttributes = params.keyAttributes;
+    this.keySchema = params.keySchema;
+    this.globalIndexes = params.globalIndexes;
+    this.globalIndexes?.forEach((gsi) => gsi.init(this));
+    this.localIndexes = params.localIndexes;
+    this.localIndexes?.forEach((lsi) => lsi.init(this));
+    this.client = params.client;
+  }
+
+  getPartitionKey(): string {
+    return getKeyName(this.keySchema, Table.PrimaryKeyType.Hash);
+  }
+
+  getSortKey(): string {
+    return getKeyName(this.keySchema, Table.PrimaryKeyType.Range);
+  }
+
+  // Action Params:
+  getParams(
+    key: Table.PrimaryKeyValueMapT<KEY>,
+    { client, attributes, ...options }: Table.GetOptions = {},
+  ): DocumentClient.GetItemInput {
+    return {
+      TableName: this.name,
+      Key: key,
+      ...options,
+    };
+  }
+  deleteParams(
+    key: Table.PrimaryKeyValueMapT<KEY>,
+    { client, attributes, ...options }: Table.DeleteOptions = {},
+  ): DocumentClient.DeleteItemInput {
+    return {
+      TableName: this.name,
+      Key: key,
+      ...options,
+    };
+  }
+  putParams(
+    key: Table.PrimaryKeyValueMapT<KEY>,
+    item?: AttributeValueMap,
+    { client, attributes, writeOptions, ...options }: Table.PutOptions = {},
+  ): DocumentClient.PutItemInput {
+    let condInput;
+    switch (writeOptions) {
+      case Table.PutWriteOptions.Exists:
+        condInput = buildConditionInput(Condition.exists(this.getPartitionKey()), attributes);
+        break;
+      case Table.PutWriteOptions.NotExists:
+        condInput = buildConditionInput(Condition.notExists(this.getPartitionKey()), attributes);
+        break;
+      default:
+        condInput = undefined;
+        break;
+    }
+    return {
+      TableName: this.name,
+      Item: { ...key, ...item },
+      ...condInput,
+      ...options,
+    };
+  }
+  updateParams(
+    key: Table.PrimaryKeyValueMapT<KEY>,
+    item?: UpdateMapValue,
+    { client, attributes, ...options }: Table.UpdateOptions = {},
+  ): DocumentClient.UpdateItemInput {
+    return {
+      TableName: this.name,
+      Key: key,
+      ...buildUpdateInput(item, new UpdateExpression(attributes)),
+      ...options,
+    };
+  }
+  queryParams(
+    key: Table.PrimaryKeyQueryT<KEY>,
+    { client, attributes, ...options }: Table.QueryOptions = {},
+  ): DocumentClient.QueryInput {
+    return {
+      TableName: this.name,
+      ...buildKeyConditionInput(key, attributes),
+      ...options,
+    };
+  }
+  scanParams({ client, attributes, ...options }: Table.ScanOptions = {}): DocumentClient.ScanInput {
+    return {
+      TableName: this.name,
+      ...options,
+    };
+  }
+
+  // actions:
+  async get(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.GetOptions) {
+    const client = options?.client || this.client!;
+    const params = this.getParams(key, options);
+    return client.get(params).promise();
+  }
+  async delete(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.DeleteOptions) {
+    const client = options?.client || this.client!;
+    const params = this.deleteParams(key, options);
+    return client.delete(params).promise();
+  }
+  async put(key: Table.PrimaryKeyValueMapT<KEY>, items?: AttributeValueMap, options?: Table.PutOptions) {
+    const client = options?.client || this.client!;
+    const params = this.putParams(key, items, options);
+    return client.put(params).promise();
+  }
+  async update(key: Table.PrimaryKeyValueMapT<KEY>, items?: UpdateMapValue, options?: Table.UpdateOptions) {
+    const client = options?.client || this.client!;
+    const params = this.updateParams(key, items, options);
+    return client.update(params).promise();
+  }
+  // query and scan are also used to access indexes
+  async query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
+    const client = options?.client || this.client!;
+    const params = this.queryParams(key, options);
+    return client.query(params).promise();
+  }
+  async scan(options?: Table.ScanOptions) {
+    const client = options?.client || this.client!;
+    const params = this.scanParams(options);
+    return client.scan(params).promise();
+  }
+}
+
+export namespace Table {
+  // Omit legacy attributes
+  type GetInput = Omit<DocumentClient.GetItemInput, 'AttributesToGet'>;
+  type PutInput = Omit<DocumentClient.PutItemInput, 'Expected' | 'ConditionalOperator'>;
+  type DeleteInput = Omit<DocumentClient.DeleteItemInput, 'Expected' | 'ConditionalOperator'>;
+  type UpdateInput = Omit<DocumentClient.UpdateItemInput, 'AttributeUpdates' | 'Expected' | 'ConditionalOperator'>;
+  type QueryInput = Omit<
+    DocumentClient.QueryInput,
+    'AttributesToGet' | 'KeyConditions' | 'QueryFilter' | 'ConditionalOperator'
+  >;
+  type ScanInput = Omit<DocumentClient.ScanInput, 'AttributesToGet' | 'ScanFilter' | 'ConditionalOperator'>;
+
+  export type PrimaryAttributeValue = string | number | DocumentClient.binaryType;
+
+  // ScalarAttributeType
+  // export type PrimaryAttributeType = 'B' | 'N' | 'S';
+  // export const PrimaryAttribute = { Binary: 'B', Number: 'N', String:'S' }; Object.freeze(PrimaryAttribute);
+  export enum PrimaryAttributeType {
+    Binary = 'B',
+    Number = 'N',
+    String = 'S',
+  }
+
+  // KeyType
+  // export type PrimaryKeyType = 'HASH' | 'RANGE';
+  // export const PrimaryKey = { Partition: 'HASH', Sort: 'RANGE' }; Object.freeze(PrimaryKey);
+  export enum PrimaryKeyType {
+    Hash = 'HASH',
+    Range = 'RANGE',
+  }
+
+  // export type SortComparisionOperator = '=' | '<' | '<=' | '>' | '>=' | 'BETWEEN' | begins_with'
+  /*
+  export const SortComparisionOperator = {
+    EqualL: '=',
+    LessThen: '<',
+    LessThenEqual: '<=',
+    GreaterThen: '>',
+    GreaterThenEqual: '>=',
+    Between: 'BETWEEN',
+    BeginsWidth: 'begins_with',
+  };
+  */
+  // ComparisonOperator (minus )
+  export enum SortComparisonOperator {
+    Equal = '=',
+    LessThen = '<',
+    LessThenEqual = '<=',
+    GreaterThen = '>',
+    GreaterThenEqual = '>=',
+    Between = 'BETWEEN',
+    BeginsWidth = 'begins_with',
+  }
+
+  // export type ProjectionType = 'ALL' | 'KEYS_ONLY' | 'INCLUDE';
+  // export const ProjectionType = { All: 'ALL', KeysOnly: 'KEYS_ONLY', Include: 'INCLUDE' }; Object.freeze(ProjectionType);
+  // ProjectionType
+  export enum ProjectionType {
+    All = 'ALL',
+    KeysOnly = 'KEYS_ONLY',
+    Include = 'INCLUDE',
+  }
+
+  export type ValueKeyConditionBase<T extends PrimaryAttributeType> = (
+    name: string,
+    exp: KeyConditionExpression,
+    type?: T,
+  ) => void;
+
+  export type StringKeyCondition = ValueKeyConditionBase<PrimaryAttributeType.String>;
+  export type NumberKeyCondition = ValueKeyConditionBase<PrimaryAttributeType.Number>;
+  export type BinaryKeyCondition = ValueKeyConditionBase<PrimaryAttributeType.Binary>;
+  export type KeyConditionValue = StringKeyCondition | NumberKeyCondition | BinaryKeyCondition;
+
+  type StringType = string | { type: PrimaryAttributeType.String };
+  type NumberType = number | { type: PrimaryAttributeType.Number };
+  type BinaryType = BinaryValue | { type: PrimaryAttributeType.Binary };
+  type PrimaryAttributeDefinition = { type: PrimaryAttributeType }; // keyof typeof PrimaryAttributeType;
+
+  type HashKeyType = { keyType: PrimaryKeyType.Hash };
+  type RangeKeyType = undefined | { keyType: PrimaryKeyType.Range };
+  type PrimarySchemaKeyType = { keyType: PrimaryKeyType };
+
+  export type StringPartitionKey = StringType | HashKeyType;
+  export type NumberPartitionKey = NumberType | HashKeyType;
+  export type BinaryPartitionKey = BinaryType | HashKeyType;
+
+  export type StringSortKey = StringType | RangeKeyType | StringKeyCondition;
+  export type NumberSortKey = NumberType | RangeKeyType | NumberKeyCondition;
+  export type BinarySortKey = BinaryType | RangeKeyType | BinaryKeyCondition;
+
+  export type PrimaryAttributeDefinitionsT<T> = {
+    [P in keyof Required<T>]: Extract<T[P], PrimaryAttributeDefinition>;
+  };
+  export type PrimaryAttributeDefinitions = {
+    [key: string]: PrimaryAttributeDefinition;
+  };
+
+  export type PrimaryKeySchemaT<T> = {
+    [P in keyof Required<T>]: Extract<T[P], PrimarySchemaKeyType>;
+  };
+  export type PrimaryKeySchema = { [key: string]: PrimarySchemaKeyType };
+
+  export type PrimaryKeyQueryT<T> = {
+    [P in keyof T]: Extract<T[P], PrimaryAttributeValue | KeyConditionValue>;
+  };
+  export type PrimaryKeyQuery = {
+    [key: string]: PrimaryAttributeValue | KeyConditionValue;
+  };
+
+  export type PrimaryKeyValueMapT<T> = {
+    [P in keyof Required<T>]: Extract<T[P], PrimaryAttributeValue>;
+  };
+  export type PrimaryKeyValueMap = {
+    [key: string]: PrimaryAttributeValue;
+  };
+
+  export interface BaseOptions {
+    // Setting TableBase (or IndexBase) allows the input to be validated
+    client?: DocumentClient;
+    attributes?: ExpressionAttributes;
+  }
+  export interface GetOptions extends BaseOptions, Optional<GetInput> {}
+  export interface DeleteOptions extends BaseOptions, Optional<DeleteInput> {}
+  export enum PutWriteOptions {
+    Always,
+    Exists,
+    NotExists,
+  }
+  export interface PutOptions extends BaseOptions, Optional<PutInput> {
+    writeOptions?: PutWriteOptions;
+  }
+  export interface UpdateOptions extends BaseOptions, Optional<UpdateInput> {}
+  export interface QueryOptions extends BaseOptions, Optional<QueryInput> {}
+  export interface ScanOptions extends BaseOptions, Optional<ScanInput> {}
+}
