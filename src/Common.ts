@@ -1,4 +1,7 @@
+import { AWSError, Response } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+
+export type PromiseResult<D, E> = D & { $response: Response<D, E> };
 
 export type Optional<T> = { [P in keyof T]?: T[P] };
 

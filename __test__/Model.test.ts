@@ -1,3 +1,7 @@
+import { AWSError, Request } from 'aws-sdk';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import * as yup from 'yup';
+
 import { BinaryValue, StringSetValue, NumberSetValue, BinarySetValue, ListValue, MapValue } from '../src/Common';
 import { Model, Schema } from '../src/Model';
 import {
@@ -14,10 +18,6 @@ import {
   UpdateMap,
 } from '../src/Update';
 import { TableBase, Table, IndexBase, Index } from '../src/Table';
-import { AWSError } from 'aws-sdk/lib/error';
-import { Request } from 'aws-sdk/lib/Request';
-import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import * as yup from 'yup';
 import { delay } from './testCommon';
 
 const client = new DocumentClient({ convertEmptyValues: true });

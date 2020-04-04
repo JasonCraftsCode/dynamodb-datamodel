@@ -1,8 +1,7 @@
-import { AWSError } from 'aws-sdk/lib/error';
-import { PromiseResult } from 'aws-sdk/lib/Request';
+import { AWSError, Response } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-import { BinaryValue, AttributeValueMap, Optional } from './Common';
+import { BinaryValue, AttributeValueMap, Optional, PromiseResult } from './Common';
 import { Condition, buildConditionInput } from './Condition';
 import { ExpressionAttributes } from './ExpressionAttributes';
 import { KeyConditionExpression, buildKeyConditionInput } from './KeyCondition';
@@ -17,6 +16,28 @@ function getKeyName(keySchema: Table.PrimaryKeySchema, type: Table.PrimaryKeyTyp
   });
   return name;
 }
+
+class AWSEnhancedError extends Error {
+  awsError: AWSError;
+  args: any[];
+  constructor(message: string, error: AWSError, args: any[]) {
+    super(message);
+    this.awsError = error;
+    this.args = args;
+  }
+}
+
+const functionFor = (target: any, name: string, targetName: string) => (...args: any[]) => {
+  const rethrow = (error: AWSError) => {
+    throw new AWSEnhancedError(`Error calling ${targetName}.${name}: ${error.message}`, error, args);
+  };
+  try {
+    const result = target[name](...args);
+    return result.promise ? result.promise().catch(rethrow) : result;
+  } catch (err) {
+    return rethrow(err);
+  }
+};
 
 export interface IndexBase {
   name: string;
@@ -142,10 +163,7 @@ export interface TableBase {
   queryParams(key: Table.PrimaryKeyQuery, options?: Table.QueryOptions): DocumentClient.QueryInput;
   scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput;
 
-  get(
-    key: Table.PrimaryKeyValueMap,
-    options?: Table.GetOptions,
-  ): Promise<PromiseResult<DocumentClient.GetItemOutput, AWSError>>;
+  get(key: Table.PrimaryKeyValueMap, options?: Table.GetOptions): Promise<DocumentClient.GetItemOutput>;
   delete(
     key: Table.PrimaryKeyValueMap,
     options?: Table.DeleteOptions,
@@ -288,7 +306,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   async get(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.GetOptions) {
     const client = options?.client || this.client!;
     const params = this.getParams(key, options);
-    return client.get(params).promise();
+    return functionFor(client, 'get', 'DocumentClient')(params);
   }
   async delete(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.DeleteOptions) {
     const client = options?.client || this.client!;

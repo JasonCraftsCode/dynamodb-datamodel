@@ -44,7 +44,7 @@
     "@types/jest": "^25.2.1",
     "@types/node": "^13.11.0",
     "@types/yup": "^0.26.34",
-    "aws-sdk": "^2.653.0",
+    "aws-sdk": "~2.585.0",
     "jest": "^25.2.7",
     "prettier": "^2.0.2",
     "ts-jest": "^25.3.1",
@@ -53,6 +53,9 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.8.3",
     "yup": "^0.28.3"
+  },
+  "peerDependencies": {
+    "aws-sdk": "^2.585.0"
   },
   "dependencies": {}
 }
