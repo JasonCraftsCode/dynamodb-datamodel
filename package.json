@@ -1,10 +1,13 @@
 {
   "name": "dynamodb-datamodel",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "DynamoDB single table design based model",
   "keywords": [
     "DynamoDB",
-    "Single-Table-Model"
+    "Single-Table-Model",
+    "aws",
+    "nosql",
+    "serverless"
   ],
   "author": "Jason Christensen",
   "license": "MIT",

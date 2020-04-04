@@ -378,7 +378,7 @@ export class FieldBase<V, T> implements Field {
       // Simple coercion
     }
     // (typeof value === 'string' && value.length === 0) ||
-    //( Array.isArray(value) && value.length === 0)
+    // (Array.isArray(value) && value.length === 0)
     // Sets, typeOf
     if (value === undefined || value === null) {
       const def = this._default;
@@ -817,21 +817,23 @@ export namespace Schema {
 
   export const namedComposite = <T extends { [key: string]: number }>(
     alias: string,
-    map: T,
+    slotMap: T,
     slots?: CompositeSlot<T>,
     delim?: string,
   ) => {
-    return new FieldNamedComposite(alias, map, slots, delim);
+    return new FieldNamedComposite(alias, slotMap, slots, delim);
   };
 
-  export const compositeSlot = (composite: FieldComposite, slot: number) => {
-    return composite.slot(slot);
+  export const compositeSlot = (comp: FieldComposite, slot: number) => {
+    return comp.slot(slot);
   };
 
+  /* tslint:disable:variable-name */
   export const string = (alias?: string) => {
     return new FieldString('S', alias);
   };
 
+  /* tslint:disable:variable-name */
   export const number = (alias?: string) => {
     return new FieldNumber('N', alias);
   };
@@ -840,6 +842,7 @@ export namespace Schema {
     return new FieldBinary('B', alias);
   };
 
+  /* tslint:disable:variable-name */
   export const boolean = (alias?: string) => {
     return new FieldBoolean('BOOL', alias);
   };
