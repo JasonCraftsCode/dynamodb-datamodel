@@ -27,8 +27,8 @@ describe('Validate Simple Table', () => {
   const testTable = new Table<SimpleTableKey, SimpleTableKey>({
     name: 'TestTable',
     keyAttributes: {
-      P: { type: Table.PrimaryAttributeType.String },
-      S: { type: Table.PrimaryAttributeType.String },
+      P: { type: 'S' },
+      S: { type: 'S' },
     },
     keySchema: {
       P: { keyType: Table.PrimaryKeyType.Hash },
@@ -142,11 +142,11 @@ describe('Validate Table with indexes', () => {
   const testTable = new Table<TestTableKey, TestTableAttributes>({
     name: 'TestTable',
     keyAttributes: {
-      P: { type: Table.PrimaryAttributeType.String },
-      S: { type: Table.PrimaryAttributeType.String },
-      G0P: { type: Table.PrimaryAttributeType.String },
-      G0S: { type: Table.PrimaryAttributeType.String },
-      L0S: { type: Table.PrimaryAttributeType.Number },
+      P: { type: 'S' },
+      S: { type: 'S' },
+      G0P: { type: 'S' },
+      G0S: { type: 'S' },
+      L0S: { type: 'N' },
     },
     keySchema: {
       P: { keyType: Table.PrimaryKeyType.Hash },

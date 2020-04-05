@@ -13,5 +13,5 @@
     "noUnusedLocals": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/*"]
+  "exclude": ["node_modules", "coverage", "dist", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/*"]
 }

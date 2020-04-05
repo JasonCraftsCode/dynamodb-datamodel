@@ -71,11 +71,11 @@ describe('Validate Model with Table and Indexes', () => {
   const table = new Table<TableKey, TableAttributes>({
     name: 'MainTable',
     keyAttributes: {
-      P: { type: Table.PrimaryAttributeType.String },
-      S: { type: Table.PrimaryAttributeType.String },
-      G0P: { type: Table.PrimaryAttributeType.String },
-      G0S: { type: Table.PrimaryAttributeType.String },
-      L0S: { type: Table.PrimaryAttributeType.Number },
+      P: { type: 'S' },
+      S: { type: 'S' },
+      G0P: { type: 'S' },
+      G0S: { type: 'S' },
+      L0S: { type: 'N' },
     },
     keySchema: {
       P: { keyType: Table.PrimaryKeyType.Hash },
