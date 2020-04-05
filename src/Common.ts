@@ -1,4 +1,4 @@
-import { AWSError, Response } from 'aws-sdk';
+import { Response } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
 export type PromiseResult<D, E> = D & { $response: Response<D, E> };

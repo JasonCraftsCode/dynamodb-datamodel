@@ -126,6 +126,13 @@ describe('Validate buildUpdateExpression', () => {
     expect(exp.getValues()).toEqual({});
   });
 
+  it('set pathWithDefault', () => {
+    const input = { testPath: Update.pathWithDefault('testPath3', 'default') };
+    expect(buildUpdateExpression(input, exp)).toEqual('SET #n0 = if_not_exists(#n1, :v0)');
+    expect(exp.getPaths()).toEqual({ '#n0': 'testPath', '#n1': 'testPath3' });
+    expect(exp.getValues()).toEqual({ ':v0': 'default' });
+  });
+
   it('set Update values', () => {
     const input = {
       testString: Update.set('string'),
@@ -146,10 +153,11 @@ describe('Validate buildUpdateExpression', () => {
         tmap: { tnumber: 8 },
       }),
       testDel: Update.del(),
+      testFunction: Update.set(Update.path('testFunc1')),
     };
     const update = buildUpdateExpression(input, exp);
     expect(update).toEqual(
-      'SET #n0 = :v0, #n1 = :v1, #n2 = :v2, #n3 = :v3, #n4 = :v4, #n5 = :v5, #n6 = :v6, #n7 = :v7, #n8 = :v8 REMOVE #n9',
+      'SET #n0 = :v0, #n1 = :v1, #n2 = :v2, #n3 = :v3, #n4 = :v4, #n5 = :v5, #n6 = :v6, #n7 = :v7, #n8 = :v8, #n10 = #n11 REMOVE #n9',
     );
     expect({ remove: exp.removeList, set: exp.setList }).toEqual({
       remove: ['#n9'],
@@ -163,6 +171,7 @@ describe('Validate buildUpdateExpression', () => {
         '#n6 = :v6',
         '#n7 = :v7',
         '#n8 = :v8',
+        '#n10 = #n11',
       ],
     });
     expect(exp.getPaths()).toEqual({
@@ -176,6 +185,8 @@ describe('Validate buildUpdateExpression', () => {
       '#n7': 'testList',
       '#n8': 'testMap',
       '#n9': 'testDel',
+      '#n10': 'testFunction',
+      '#n11': 'testFunc1',
     });
     expect(exp.getValues()).toEqual({
       ':v0': 'string',
@@ -542,6 +553,7 @@ describe('Validate buildUpdateExpression', () => {
           l2Binary: Buffer.from('def'),
           l2Boolean: true,
         },
+        l1Undefined: undefined,
       }),
     };
     const update = buildUpdateExpression(input, exp);

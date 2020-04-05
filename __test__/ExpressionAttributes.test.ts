@@ -13,6 +13,12 @@ it('Validate isValidAttributeName ', () => {
 });
 
 describe('Validate ExpressionAttributes', () => {
+  it('addPath for simple name treatNameAsPath=false', () => {
+    const attrs = new ExpressionAttributes();
+    attrs.treatNameAsPath = false;
+    expect(attrs.addPath('path')).toEqual('#n0');
+    expect(attrs.getPaths()).toEqual({ '#n0': 'path' });
+  });
   it('addPath for simple name', () => {
     const attrs = new ExpressionAttributes();
     expect(attrs.addPath('path')).toEqual('#n0');

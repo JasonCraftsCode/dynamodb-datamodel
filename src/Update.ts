@@ -1,6 +1,6 @@
-import { ExpressionAttributeNameMap } from "aws-sdk/clients/dynamodb";
-import { AttributeValue, AttributeValueMap, AttributeSetValue } from "./Common";
-import { ExpressionAttributes } from "./ExpressionAttributes";
+import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
+import { AttributeValue, AttributeValueMap, AttributeSetValue } from './Common';
+import { ExpressionAttributes } from './ExpressionAttributes';
 
 export class UpdateExpression {
   setList: string[] = [];
@@ -80,18 +80,13 @@ export class UpdateExpression {
     return this.attributes.addValue(value);
   }
   addAnyValue(value: AttributeValue | UpdateFunction, name: string): string {
-    return typeof value === "function"
-      ? value(name, this)
-      : this.addValue(value);
+    return typeof value === 'function' ? value(name, this) : this.addValue(value);
   }
-  addNonStringValue(
-    value: AttributeValue | UpdateFunction,
-    name: string
-  ): string {
+  addNonStringValue(value: AttributeValue | UpdateFunction, name: string): string {
     switch (typeof value) {
-      case "function":
+      case 'function':
         return value(name, this); // type?: 'string'
-      case "string":
+      case 'string':
         // For non-string values we allow strings to specify paths, for strings paths need to
         // use the path() function to wrap the path
         return this.addPath(value);
@@ -110,13 +105,11 @@ export class UpdateExpression {
 
   buildExpression(): string | undefined {
     const updates = new Array<string>();
-    if (this.setList.length > 0) updates.push(`SET ${this.setList.join(", ")}`);
-    if (this.removeList.length > 0)
-      updates.push(`REMOVE ${this.removeList.join(", ")}`);
-    if (this.addList.length > 0) updates.push(`ADD ${this.addList.join(", ")}`);
-    if (this.delList.length > 0)
-      updates.push(`DELETE ${this.delList.join(", ")}`);
-    if (updates.length > 0) return updates.join(" ");
+    if (this.setList.length > 0) updates.push(`SET ${this.setList.join(', ')}`);
+    if (this.removeList.length > 0) updates.push(`REMOVE ${this.removeList.join(', ')}`);
+    if (this.addList.length > 0) updates.push(`ADD ${this.addList.join(', ')}`);
+    if (this.delList.length > 0) updates.push(`DELETE ${this.delList.join(', ')}`);
+    if (updates.length > 0) return updates.join(' ');
     return undefined;
   }
 
@@ -129,22 +122,18 @@ export class UpdateExpression {
   }
 }
 
-export type UpdateInput<T> = (
-  name: string,
-  exp: UpdateExpression,
-  type?: T
-) => void;
+export type UpdateInput<T> = (name: string, exp: UpdateExpression, type?: T) => void;
 
-export type UpdateString = UpdateInput<"S">;
-export type UpdateNumber = UpdateInput<"N">;
-export type UpdateBinary = UpdateInput<"B">;
-export type UpdateBoolean = UpdateInput<"BOOL">;
-export type UpdateNull = UpdateInput<"NULL">;
-export type UpdateStringSet = UpdateInput<"SS">;
-export type UpdateNumberSet = UpdateInput<"NS">;
-export type UpdateBinarySet = UpdateInput<"BS">;
-export type UpdateList = UpdateInput<"L">;
-export type UpdateMap = UpdateInput<"M">;
+export type UpdateString = UpdateInput<'S'>;
+export type UpdateNumber = UpdateInput<'N'>;
+export type UpdateBinary = UpdateInput<'B'>;
+export type UpdateBoolean = UpdateInput<'BOOL'>;
+export type UpdateNull = UpdateInput<'NULL'>;
+export type UpdateStringSet = UpdateInput<'SS'>;
+export type UpdateNumberSet = UpdateInput<'NS'>;
+export type UpdateBinarySet = UpdateInput<'BS'>;
+export type UpdateList = UpdateInput<'L'>;
+export type UpdateMap = UpdateInput<'M'>;
 
 export type UpdateFunction = (name: string, exp: UpdateExpression) => string;
 export type UpdateNumberValue = number | string | UpdateFunction;
@@ -163,10 +152,7 @@ export class Update {
     };
   };
 
-  static pathWithDefault = <T extends AttributeValue>(
-    path: string,
-    value: T
-  ): UpdateFunction => {
+  static pathWithDefault = <T extends AttributeValue>(path: string, value: T): UpdateFunction => {
     return (name: string, exp: UpdateExpression): string => {
       return exp.ifNotExist(exp.addPath(path), exp.addValue(value));
     };
@@ -193,72 +179,58 @@ export class Update {
   };
 
   static inc = (value: UpdateNumberValue) => {
-    return (name: string, exp: UpdateExpression, type?: "N") => {
+    return (name: string, exp: UpdateExpression, type?: 'N') => {
       exp.inc(name, exp.addNumberValue(value, name));
     };
   };
   static increment = Update.inc;
 
   static dec = (value: UpdateNumberValue) => {
-    return (name: string, exp: UpdateExpression, type?: "N") => {
+    return (name: string, exp: UpdateExpression, type?: 'N') => {
       exp.dec(name, exp.addNumberValue(value, name));
     };
   };
   static decrement = Update.dec;
 
   static add = (left: UpdateNumberValue, right: UpdateNumberValue) => {
-    return (name: string, exp: UpdateExpression, type?: "N") => {
-      exp.add(
-        name,
-        exp.addNumberValue(left, name),
-        exp.addNumberValue(right, name)
-      );
+    return (name: string, exp: UpdateExpression, type?: 'N') => {
+      exp.add(name, exp.addNumberValue(left, name), exp.addNumberValue(right, name));
     };
   };
 
   static sub = (left: UpdateNumberValue, right: UpdateNumberValue) => {
-    return (name: string, exp: UpdateExpression, type?: "N") => {
-      exp.sub(
-        name,
-        exp.addNumberValue(left, name),
-        exp.addNumberValue(right, name)
-      );
+    return (name: string, exp: UpdateExpression, type?: 'N') => {
+      exp.sub(name, exp.addNumberValue(left, name), exp.addNumberValue(right, name));
     };
   };
   static subtract = Update.sub;
 
   static append = (value: UpdateListValue) => {
-    return (name: string, exp: UpdateExpression, type?: "L") => {
+    return (name: string, exp: UpdateExpression, type?: 'L') => {
       exp.append(name, exp.addListValue(value, name));
     };
   };
 
   static prepend = (value: UpdateListValue) => {
-    return (name: string, exp: UpdateExpression, type?: "L") => {
+    return (name: string, exp: UpdateExpression, type?: 'L') => {
       exp.prepend(name, exp.addListValue(value, name));
     };
   };
 
   static join = (left: UpdateListValue, right: UpdateListValue) => {
-    return (name: string, exp: UpdateExpression, type?: "L") => {
-      exp.join(
-        name,
-        exp.addListValue(left, name),
-        exp.addListValue(right, name)
-      );
+    return (name: string, exp: UpdateExpression, type?: 'L') => {
+      exp.join(name, exp.addListValue(left, name), exp.addListValue(right, name));
     };
   };
 
   static delIndexes = (indexes: number[]) => {
-    return (name: string, exp: UpdateExpression, type?: "L") => {
+    return (name: string, exp: UpdateExpression, type?: 'L') => {
       exp.delIndexes(name, indexes);
     };
   };
 
-  static setIndexes = (values: {
-    [key: number]: AttributeValue | UpdateFunction;
-  }) => {
-    return (name: string, exp: UpdateExpression, type?: "L") => {
+  static setIndexes = (values: { [key: number]: AttributeValue | UpdateFunction }) => {
+    return (name: string, exp: UpdateExpression, type?: 'L') => {
       const listValues: { [key: number]: string } = {};
       Object.keys(values).forEach((key) => {
         listValues[Number(key)] = exp.addAnyValue(values[Number(key)], name);
@@ -268,23 +240,23 @@ export class Update {
   };
 
   static addToSet = (value: AttributeSetValue) => {
-    return (name: string, exp: UpdateExpression, type?: "SS" | "NS" | "BS") => {
+    return (name: string, exp: UpdateExpression, type?: 'SS' | 'NS' | 'BS') => {
       exp.addToSet(name, exp.addSetValue(value, name));
     };
   };
   static removeFromSet = (value: AttributeSetValue) => {
-    return (name: string, exp: UpdateExpression, type?: "SS" | "NS" | "BS") => {
+    return (name: string, exp: UpdateExpression, type?: 'SS' | 'NS' | 'BS') => {
       exp.removeFromSet(name, exp.addSetValue(value, name));
     };
   };
 
   static map = (map: UpdateMapValue) => {
-    return (name: string | null, exp: UpdateExpression, type?: "M") => {
+    return (name: string | null, exp: UpdateExpression, type?: 'M') => {
       Object.keys(map).forEach((key) => {
         const value = map[key];
-        const path = name ? `${name}.${exp.addPath(key)}` : exp.addPath(key);
         if (value === undefined) return;
-        if (typeof value === "function") {
+        const path = name ? `${name}.${exp.addPath(key)}` : exp.addPath(key);
+        if (typeof value === 'function') {
           const newValue = value(path, exp);
           if (newValue) {
             exp.set(path, newValue);
@@ -300,17 +272,14 @@ export class Update {
 }
 namespace Update {}
 
-export function buildUpdateExpression(
-  updateMap: UpdateMapValue,
-  exp: UpdateExpression = new UpdateExpression()
-) {
-  Update.map(updateMap)(null, exp, "M");
+export function buildUpdateExpression(updateMap: UpdateMapValue, exp: UpdateExpression = new UpdateExpression()) {
+  Update.map(updateMap)(null, exp, 'M');
   return exp.buildExpression();
 }
 
 export function buildUpdateInput(
   updateMap: UpdateMapValue | undefined,
-  exp = new UpdateExpression()
+  exp = new UpdateExpression(),
 ):
   | {
       ExpressionAttributeNames: ExpressionAttributeNameMap;
@@ -319,7 +288,7 @@ export function buildUpdateInput(
     }
   | undefined {
   if (updateMap) {
-    Update.map(updateMap)(null, exp, "M");
+    Update.map(updateMap)(null, exp, 'M');
     const expression = exp.buildExpression();
     if (expression) {
       return {

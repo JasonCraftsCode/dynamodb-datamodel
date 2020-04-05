@@ -1,3 +1,3 @@
-import { Table, Model } from "../src/index";
+import { Table, Model } from '../src/index';
 
-it("Validate ", () => {});
+it('Validate ', () => {});

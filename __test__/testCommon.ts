@@ -4,9 +4,10 @@ export function delay(tms: number, v: any) {
     setTimeout(resolve.bind(null, v), tms);
   });
 }
-
+/*
 export function delayCallback(tms: number, f: () => void) {
   return new Promise((resolve, reject) => {
     f();
   });
 }
+*/

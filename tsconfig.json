@@ -8,12 +8,6 @@
     "outDir": "dist",
     "strict": true
   },
-  "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/__tests__/*"
-  ]
+  "include": ["src", "__test__/ValidateTable.test.ts"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/*"]
 }

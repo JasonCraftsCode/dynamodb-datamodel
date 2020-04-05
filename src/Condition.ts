@@ -37,7 +37,7 @@ export function buildCondition(path: string, op: ConditionOperator, operands?: s
     case ConditionOperator.Size:
       return `${op}(${path})`;
   }
-  throw new Error(`Invalid ConditionOperator ${op}`);
+  // throw new Error(`Invalid ConditionOperator ${op}`);
 }
 
 export interface BasicCondition {
@@ -68,7 +68,7 @@ export class LogicalCondition implements BasicCondition {
 
   add(cond: BasicCondition) {
     if (this.isNot()) throw new Error('Not only supports a single condition');
-    this.conds.concat(cond);
+    this.conds.push(cond);
     return this;
   }
 
@@ -105,6 +105,7 @@ export class LogicalCondition implements BasicCondition {
   }
 }
 
+/*
 class ConditionExpression {
   attrs: ExpressionAttributes;
 
@@ -119,6 +120,8 @@ class ConditionExpression {
     return this.attrs.addValue(value);
   }
 }
+*/
+
 export type ConditionFunction = (exp: ExpressionAttributes, type?: string) => string;
 export function IsConditionFunction(value: any): value is ConditionFunction {
   return typeof value === 'function';
@@ -234,12 +237,9 @@ export function buildConditionInput(
     }
   | undefined {
   const condExp = cond.buildExpression(exp);
-  if (cond) {
-    return {
-      ConditionExpression: condExp,
-      ExpressionAttributeNames: exp.getPaths(),
-      ExpressionAttributeValues: exp.getValues(),
-    };
-  }
-  return;
+  return {
+    ConditionExpression: condExp,
+    ExpressionAttributeNames: exp.getPaths(),
+    ExpressionAttributeValues: exp.getValues(),
+  };
 }
