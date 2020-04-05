@@ -3,3 +3,4 @@
 [![npm](https://img.shields.io/npm/l/dynamodb-datamodel.svg)](https://www.npmjs.com/package/dynamodb-datamodel)
 [![dependencies](https://david-dm.org/jasonuwbadger/dynamodb-datamodel.svg)](https://david-dm.org/jasonuwbadger/dynamodb-datamodel)
 [![Coverage Status](https://coveralls.io/repos/github/jasonuwbadger/dynamodb-datamodel/badge.svg)](https://coveralls.io/github/jasonuwbadger/dynamodb-datamodel)
+![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)
