@@ -3,4 +3,5 @@
 [![npm](https://img.shields.io/npm/l/dynamodb-datamodel.svg)](https://www.npmjs.com/package/dynamodb-datamodel)
 [![dependencies](https://david-dm.org/jasonuwbadger/dynamodb-datamodel.svg)](https://david-dm.org/jasonuwbadger/dynamodb-datamodel)
 [![Coverage Status](https://coveralls.io/repos/github/jasonuwbadger/dynamodb-datamodel/badge.svg)](https://coveralls.io/github/jasonuwbadger/dynamodb-datamodel)
+[![DeepScan grade](https://deepscan.io/api/teams/8443/projects/10631/branches/149533/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=8443&pid=10631&bid=149533)
 ![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)
