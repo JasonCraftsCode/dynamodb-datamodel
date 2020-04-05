@@ -121,14 +121,14 @@ export class Index<KEY = DefaultGlobalIndexKey> implements IndexBase {
     return this.table!.scanParams(o);
   }
 
-  async query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
+  query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
     const o = {
       IndexName: options?.IndexName || this.name,
       ...options,
     };
     return this.table!.query(key, o);
   }
-  async scan(options?: Table.ScanOptions) {
+  scan(options?: Table.ScanOptions) {
     const o = {
       IndexName: options?.IndexName || this.name,
       ...options,
@@ -303,33 +303,33 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   }
 
   // actions:
-  async get(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.GetOptions) {
+  get(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.GetOptions) {
     const client = options?.client || this.client!;
     const params = this.getParams(key, options);
     return functionFor(client, 'get', 'DocumentClient')(params);
   }
-  async delete(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.DeleteOptions) {
+  delete(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.DeleteOptions) {
     const client = options?.client || this.client!;
     const params = this.deleteParams(key, options);
     return client.delete(params).promise();
   }
-  async put(key: Table.PrimaryKeyValueMapT<KEY>, items?: AttributeValueMap, options?: Table.PutOptions) {
+  put(key: Table.PrimaryKeyValueMapT<KEY>, items?: AttributeValueMap, options?: Table.PutOptions) {
     const client = options?.client || this.client!;
     const params = this.putParams(key, items, options);
     return client.put(params).promise();
   }
-  async update(key: Table.PrimaryKeyValueMapT<KEY>, items?: UpdateMapValue, options?: Table.UpdateOptions) {
+  update(key: Table.PrimaryKeyValueMapT<KEY>, items?: UpdateMapValue, options?: Table.UpdateOptions) {
     const client = options?.client || this.client!;
     const params = this.updateParams(key, items, options);
     return client.update(params).promise();
   }
   // query and scan are also used to access indexes
-  async query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
+  query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
     const client = options?.client || this.client!;
     const params = this.queryParams(key, options);
     return client.query(params).promise();
   }
-  async scan(options?: Table.ScanOptions) {
+  scan(options?: Table.ScanOptions) {
     const client = options?.client || this.client!;
     const params = this.scanParams(options);
     return client.scan(params).promise();
