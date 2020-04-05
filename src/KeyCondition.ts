@@ -37,16 +37,8 @@ export class SortKey {
     return SortKey.op<string>(Table.SortComparisonOperator.BeginsWidth, value);
   }
 
-  static op<T extends Table.PrimaryAttributeValue>(
-    op: Table.SortComparisonOperator,
-    value: T,
-    and?: T
-  ) {
-    return (
-      name: string,
-      exp: KeyConditionExpression,
-      type?: Table.PrimaryAttributeType
-    ): void => {
+  static op<T extends Table.PrimaryAttributeValue>(op: Table.SortComparisonOperator, value: T, and?: T) {
+    return (name: string, exp: KeyConditionExpression, type?: Table.PrimaryAttributeType): void => {
       exp.addSortCondition(name, op, value, and);
     };
   }
@@ -72,7 +64,7 @@ export class KeyConditionExpression {
     name: string,
     op: Table.SortComparisonOperator,
     value: Table.PrimaryAttributeValue,
-    and?: Table.PrimaryAttributeValue
+    and?: Table.PrimaryAttributeValue,
   ) {
     const n = this.addPath(name);
     const v = this.addValue(value);
@@ -89,7 +81,7 @@ export class KeyConditionExpression {
     name: string,
     op: Table.SortComparisonOperator,
     value: Table.PrimaryAttributeValue,
-    and?: Table.PrimaryAttributeValue
+    and?: Table.PrimaryAttributeValue,
   ) {
     const cond = this.createSortCondition(name, op, value, and);
     this.addCondition(cond);
@@ -108,12 +100,9 @@ export class KeyConditionExpression {
   }
 }
 
-export function buildKeyConditionExpression(
-  key: Table.PrimaryKeyQuery,
-  attr: ExpressionAttributes
-): string {
+export function buildKeyConditionExpression(key: Table.PrimaryKeyQuery, attr: ExpressionAttributes): string {
   const exp = new KeyConditionExpression(attr);
-  Object.keys(key).forEach(name => {
+  Object.keys(key).forEach((name) => {
     const value = key[name];
     if (value === undefined) return;
     if (typeof value === 'function') {
@@ -127,7 +116,7 @@ export function buildKeyConditionExpression(
 
 export function buildKeyConditionInput(
   key: Table.PrimaryKeyQuery,
-  exp = new ExpressionAttributes()
+  exp = new ExpressionAttributes(),
 ):
   | {
       KeyConditionExpression: string;

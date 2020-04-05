@@ -1,4 +1,4 @@
-import { AWSError, Response } from 'aws-sdk';
+import { AWSError } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
 import { BinaryValue, AttributeValueMap, Optional, PromiseResult } from './Common';
@@ -73,12 +73,12 @@ interface DefaultGlobalIndexKey {
   G0P: Table.StringPartitionKey;
   G0S?: Table.StringSortKey;
 }
-
+/*
 interface DefaultLocalIndexKey {
   P: Table.StringPartitionKey;
   L0S?: Table.StringSortKey;
 }
-
+*/
 export class Index<KEY = DefaultGlobalIndexKey> implements IndexBase {
   name: string;
   keySchema: Table.PrimaryKeySchemaT<KEY>;
@@ -351,13 +351,16 @@ export namespace Table {
   export type PrimaryAttributeValue = string | number | DocumentClient.binaryType;
 
   // ScalarAttributeType
-  // export type PrimaryAttributeType = 'B' | 'N' | 'S';
-  // export const PrimaryAttribute = { Binary: 'B', Number: 'N', String:'S' }; Object.freeze(PrimaryAttribute);
+  export type PrimaryAttributeType = 'B' | 'N' | 'S';
+  export const PrimaryAttribute = { Binary: 'B', Number: 'N', String: 'S' };
+  Object.freeze(PrimaryAttribute);
+  /*
   export enum PrimaryAttributeType {
     Binary = 'B',
     Number = 'N',
     String = 'S',
   }
+  */
 
   // KeyType
   // export type PrimaryKeyType = 'HASH' | 'RANGE';
@@ -405,14 +408,14 @@ export namespace Table {
     type?: T,
   ) => void;
 
-  export type StringKeyCondition = ValueKeyConditionBase<PrimaryAttributeType.String>;
-  export type NumberKeyCondition = ValueKeyConditionBase<PrimaryAttributeType.Number>;
-  export type BinaryKeyCondition = ValueKeyConditionBase<PrimaryAttributeType.Binary>;
+  export type StringKeyCondition = ValueKeyConditionBase<'S'>;
+  export type NumberKeyCondition = ValueKeyConditionBase<'N'>;
+  export type BinaryKeyCondition = ValueKeyConditionBase<'B'>;
   export type KeyConditionValue = StringKeyCondition | NumberKeyCondition | BinaryKeyCondition;
 
-  type StringType = string | { type: PrimaryAttributeType.String };
-  type NumberType = number | { type: PrimaryAttributeType.Number };
-  type BinaryType = BinaryValue | { type: PrimaryAttributeType.Binary };
+  type StringType = string | { type: 'S' };
+  type NumberType = number | { type: 'N' };
+  type BinaryType = BinaryValue | { type: 'B' };
   type PrimaryAttributeDefinition = { type: PrimaryAttributeType }; // keyof typeof PrimaryAttributeType;
 
   type HashKeyType = { keyType: PrimaryKeyType.Hash };

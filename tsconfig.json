@@ -9,8 +9,9 @@
     "strict": true,
     "sourceMap": true,
     "removeComments": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "noUnusedLocals": true
   },
-  "include": ["src", "__test__/ValidateTable.test.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/*"]
 }

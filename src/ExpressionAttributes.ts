@@ -1,4 +1,4 @@
-import { ExpressionAttributeNameMap, AttributeName } from 'aws-sdk/clients/dynamodb';
+import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 
 import { AttributeValue, AttributeValueMap } from './Common';
 

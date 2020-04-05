@@ -1,7 +1,8 @@
 {
   "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
-    "max-classes-per-file": [false],
-    "no-namespace": [false]
+    "max-classes-per-file": false,
+    "no-namespace": false,
+    "no-unused-expression": true
   }
 }

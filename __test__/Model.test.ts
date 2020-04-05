@@ -2,7 +2,7 @@ import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import * as yup from 'yup';
 
-import { BinaryValue, StringSetValue, NumberSetValue, BinarySetValue, ListValue, MapValue } from '../src/Common';
+import { BinaryValue, StringSetValue, NumberSetValue } from '../src/Common';
 import { Model, Schema } from '../src/Model';
 import {
   Update,
@@ -13,7 +13,6 @@ import {
   UpdateBinary,
   UpdateStringSet,
   UpdateNumberSet,
-  UpdateBinarySet,
   UpdateList,
   UpdateMap,
 } from '../src/Update';

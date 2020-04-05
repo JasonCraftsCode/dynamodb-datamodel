@@ -2,7 +2,7 @@ import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
 import { Table, Index, IndexBase } from '../src/Table';
-import { validateTable } from '../src/ValidateTable';
+import { validateTable } from '../src/TableValidate';
 import { delay } from './testCommon';
 
 const client = new DocumentClient();

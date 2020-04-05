@@ -8,21 +8,6 @@ it('Validate Condition exports', () => {
   expect(typeof buildUpdateExpression).toEqual('function');
 });
 
-const updateData = {
-  map: Update.map({
-    id1: { name: 'name1', contacts: ['jill', 'bob'] }, // SET map.id1 = { name: 1}
-    id2: { name: 'name2' }, //
-    id3: null, // REMOVE map.id3
-    'id4.name': 'name4',
-    'id4.contacts[0]': 'billy', // #n0.#n1[0]
-  }),
-  map2: {
-    title: '',
-    subtitle: '',
-    author: '',
-  },
-};
-
 export function buildUpdate(updateMap: UpdateMapValue, exp = new UpdateExpression()) {
   const update = buildUpdateExpression(updateMap, exp);
   return {
