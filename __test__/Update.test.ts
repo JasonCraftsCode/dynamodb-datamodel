@@ -1,4 +1,4 @@
-import { Update, UpdateExpression, buildUpdateExpression, UpdateMapValue } from '../src/Update';
+import { Update, UpdateExpression, buildUpdateExpression, buildUpdateInput, UpdateMapValue } from '../src/Update';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 var documentClient = new DocumentClient();
 
@@ -21,6 +21,22 @@ describe('Validate buildUpdateExpression for each type', () => {
   const exp = new UpdateExpression();
   beforeEach(() => {
     exp.reset();
+  });
+
+  it('buildUpdateInput', () => {
+    expect(buildUpdateInput({ testString: 'string' }, exp)).toEqual({
+      UpdateExpression: 'SET #n0 = :v0',
+      ExpressionAttributeNames: { '#n0': 'testString' },
+      ExpressionAttributeValues: { ':v0': 'string' },
+    });
+  });
+
+  it('buildUpdateInput with no exp', () => {
+    expect(buildUpdateInput({ testString: 'string' })).toEqual({
+      UpdateExpression: 'SET #n0 = :v0',
+      ExpressionAttributeNames: { '#n0': 'testString' },
+      ExpressionAttributeValues: { ':v0': 'string' },
+    });
   });
 
   it('set string', () => {

@@ -6,5 +6,6 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testEnvironment: 'node',
   transform: { '^.+\\.(t|j)sx?$': ['ts-jest'] },
+  coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/', '<rootDir>/__test__/'],
   watchman: true,
 };

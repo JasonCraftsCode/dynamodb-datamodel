@@ -272,7 +272,7 @@ export class Update {
 }
 namespace Update {}
 
-export function buildUpdateExpression(updateMap: UpdateMapValue, exp: UpdateExpression = new UpdateExpression()) {
+export function buildUpdateExpression(updateMap: UpdateMapValue, exp: UpdateExpression) {
   Update.map(updateMap)(null, exp, 'M');
   return exp.buildExpression();
 }
@@ -288,8 +288,7 @@ export function buildUpdateInput(
     }
   | undefined {
   if (updateMap) {
-    Update.map(updateMap)(null, exp, 'M');
-    const expression = exp.buildExpression();
+    const expression = buildUpdateExpression(updateMap, exp);
     if (expression) {
       return {
         ExpressionAttributeNames: exp.getPaths(),

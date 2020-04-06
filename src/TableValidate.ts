@@ -24,11 +24,11 @@ export function validateKeySchema<
   Object.keys(keySchema).forEach((key) => {
     const schema = keySchema[key];
     if (keyAttributes[key] === undefined) onError(`Key '${key}' not in keyAttributes`);
-    if (schema.keyType === Table.PrimaryKeyType.Hash) {
+    if (schema.keyType === 'HASH') {
       if (pk !== undefined) onError(`Key '${key}' invalid, ${name} already has partition key '${pk}'`);
       pk = key;
     }
-    if (schema.keyType === Table.PrimaryKeyType.Range) {
+    if (schema.keyType === 'RANGE') {
       if (sk !== undefined) onError(`Key '${key}' invalid, ${name} already has sort key '${sk}'`);
       sk = key;
     }

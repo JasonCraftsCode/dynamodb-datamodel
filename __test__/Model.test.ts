@@ -53,19 +53,19 @@ describe('Validate Model with Table and Indexes', () => {
   const gsi0 = new Index<GSI0Key>({
     name: 'GSI0',
     keySchema: {
-      G0P: { keyType: Table.PrimaryKeyType.Hash },
-      G0S: { keyType: Table.PrimaryKeyType.Range },
+      G0P: { keyType: 'HASH' },
+      G0S: { keyType: 'RANGE' },
     },
-    projection: { type: Table.ProjectionType.All },
+    projection: { type: 'ALL' },
   });
 
   const lsi0 = new Index<LSI0Key>({
     name: 'LSI0',
     keySchema: {
-      P: { keyType: Table.PrimaryKeyType.Hash },
-      L0S: { keyType: Table.PrimaryKeyType.Range },
+      P: { keyType: 'HASH' },
+      L0S: { keyType: 'RANGE' },
     },
-    projection: { type: Table.ProjectionType.All },
+    projection: { type: 'ALL' },
   });
 
   const table = new Table<TableKey, TableAttributes>({
@@ -78,8 +78,8 @@ describe('Validate Model with Table and Indexes', () => {
       L0S: { type: 'N' },
     },
     keySchema: {
-      P: { keyType: Table.PrimaryKeyType.Hash },
-      S: { keyType: Table.PrimaryKeyType.Range },
+      P: { keyType: 'HASH' },
+      S: { keyType: 'RANGE' },
     },
     globalIndexes: [gsi0 as IndexBase],
     localIndexes: [lsi0 as IndexBase],

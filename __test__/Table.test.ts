@@ -31,8 +31,8 @@ describe('Validate Simple Table', () => {
       S: { type: 'S' },
     },
     keySchema: {
-      P: { keyType: Table.PrimaryKeyType.Hash },
-      S: { keyType: Table.PrimaryKeyType.Range },
+      P: { keyType: 'HASH' },
+      S: { keyType: 'RANGE' },
     },
     client,
   });
@@ -119,23 +119,23 @@ describe('Validate Table with indexes', () => {
   const gsi0 = new Index<GSI0Key>({
     name: 'GSI0',
     keySchema: {
-      G0P: { keyType: Table.PrimaryKeyType.Hash },
-      G0S: { keyType: Table.PrimaryKeyType.Range },
+      G0P: { keyType: 'HASH' },
+      G0S: { keyType: 'RANGE' },
     },
     projection: {
-      type: Table.ProjectionType.All,
+      type: 'ALL',
     },
   });
 
   const lsi0 = new Index<LSI0Key>({
     name: 'LSI0',
     keySchema: {
-      P: { keyType: Table.PrimaryKeyType.Hash },
-      L0S: { keyType: Table.PrimaryKeyType.Range },
+      P: { keyType: 'HASH' },
+      L0S: { keyType: 'RANGE' },
     },
     projection: {
       attributes: ['project', 'some', 'attributes'],
-      type: Table.ProjectionType.Include,
+      type: 'INCLUDE',
     },
   });
 
@@ -149,8 +149,8 @@ describe('Validate Table with indexes', () => {
       L0S: { type: 'N' },
     },
     keySchema: {
-      P: { keyType: Table.PrimaryKeyType.Hash },
-      S: { keyType: Table.PrimaryKeyType.Range },
+      P: { keyType: 'HASH' },
+      S: { keyType: 'RANGE' },
     },
     globalIndexes: [gsi0 as IndexBase],
     localIndexes: [lsi0 as IndexBase],
@@ -163,6 +163,22 @@ describe('Validate Table with indexes', () => {
 
   it('Table with Index', () => {
     validateTable(testTable);
+  });
+
+  it('Index.getPartitionKey', () => {
+    expect(gsi0.getPartitionKey()).toEqual('G0P');
+  });
+
+  it('Index.getSortKey', () => {
+    expect(gsi0.getSortKey()).toEqual('G0S');
+  });
+
+  it('Table.getPartitionKey', () => {
+    expect(testTable.getPartitionKey()).toEqual('P');
+  });
+
+  it('Table.getSortKey', () => {
+    expect(testTable.getSortKey()).toEqual('S');
   });
 
   it('getParams', () => {
@@ -191,7 +207,7 @@ describe('Validate Table with indexes', () => {
 
   it('putParams for exists', () => {
     const params = testTable.putParams({ P: 'pk', S: 'sk' }, undefined, {
-      writeOptions: Table.PutWriteOptions.Exists,
+      writeOptions: 'Exists',
     });
     expect(params).toEqual({
       ConditionExpression: 'attribute_exists(#n0)',
@@ -204,7 +220,7 @@ describe('Validate Table with indexes', () => {
 
   it('putParams for not exists', () => {
     const params = testTable.putParams({ P: 'pk', S: 'sk' }, undefined, {
-      writeOptions: Table.PutWriteOptions.NotExists,
+      writeOptions: 'NotExists',
     });
     expect(params).toEqual({
       ConditionExpression: 'attribute_not_exists(#n0)',
@@ -259,7 +275,7 @@ describe('Validate Table with indexes', () => {
   it('put exists just key', async () => {
     client.put = jest.fn((params) => request);
     const results = await testTable.put({ P: 'pk', S: 'sk' }, undefined, {
-      writeOptions: Table.PutWriteOptions.Exists,
+      writeOptions: 'Exists',
     });
     expect(results).toEqual({ Attributes: {} });
     expect(client.put).toBeCalledWith({
@@ -275,7 +291,7 @@ describe('Validate Table with indexes', () => {
   it('put not exists just key', async () => {
     client.put = jest.fn((params) => request);
     const results = await testTable.put({ P: 'pk', S: 'sk' }, undefined, {
-      writeOptions: Table.PutWriteOptions.NotExists,
+      writeOptions: 'NotExists',
     });
     expect(results).toEqual({ Attributes: {} });
     expect(client.put).toBeCalledWith({

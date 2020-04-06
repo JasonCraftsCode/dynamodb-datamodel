@@ -372,7 +372,7 @@ export class FieldBase<V, T> implements Field {
     if (this._validator) {
       const coerced = await this._validator(value as V);
       if (this._coerce && coerced !== undefined) {
-        value = coerced;
+        value = coerced as V;
       }
     } else if (this._coerce) {
       // Simple coercion
@@ -405,7 +405,7 @@ export class FieldBase<V, T> implements Field {
     if (this._updateValidator) {
       const coerced = await this._updateValidator(value as ModelUpdateValue<V>);
       if (this._coerce && coerced !== undefined) {
-        value = coerced;
+        value = coerced as ModelUpdateValue<V>;
       }
     } else if (this._coerce) {
       // Simple coercion

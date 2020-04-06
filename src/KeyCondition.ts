@@ -5,36 +5,36 @@ import { ExpressionAttributes } from './ExpressionAttributes';
 
 export class SortKey {
   static eq<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>(Table.SortComparisonOperator.Equal, value);
+    return SortKey.op<T>('=', value);
   }
   static equal = SortKey.eq;
 
   static lt<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>(Table.SortComparisonOperator.LessThen, value);
+    return SortKey.op<T>('<', value);
   }
   static lessThen = SortKey.lt;
 
   static le<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>(Table.SortComparisonOperator.LessThenEqual, value);
+    return SortKey.op<T>('<=', value);
   }
   static lessThenEqual = SortKey.le;
 
   static gt<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>(Table.SortComparisonOperator.GreaterThen, value);
+    return SortKey.op<T>('>', value);
   }
   static greaterThen = SortKey.gt;
 
   static ge<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>(Table.SortComparisonOperator.GreaterThenEqual, value);
+    return SortKey.op<T>('>=', value);
   }
   static greaterThenEqual = SortKey.ge;
 
   static between<T extends Table.PrimaryAttributeValue>(value: T, and: T) {
-    return SortKey.op<T>(Table.SortComparisonOperator.Between, value, and);
+    return SortKey.op<T>('BETWEEN', value, and);
   }
 
   static beginsWith(value: string) {
-    return SortKey.op<string>(Table.SortComparisonOperator.BeginsWidth, value);
+    return SortKey.op<string>('begins_with', value);
   }
 
   static op<T extends Table.PrimaryAttributeValue>(op: Table.SortComparisonOperator, value: T, and?: T) {
@@ -48,7 +48,7 @@ export class KeyConditionExpression {
   conditions: string[] = [];
   attributes: ExpressionAttributes;
 
-  constructor(attributes: ExpressionAttributes = new ExpressionAttributes()) {
+  constructor(attributes = new ExpressionAttributes()) {
     this.attributes = attributes;
   }
 
@@ -69,9 +69,9 @@ export class KeyConditionExpression {
     const n = this.addPath(name);
     const v = this.addValue(value);
     switch (op) {
-      case Table.SortComparisonOperator.Between:
+      case 'BETWEEN':
         return `${n} ${op} ${v} AND ${this.addValue(and!)}`;
-      case Table.SortComparisonOperator.BeginsWidth:
+      case 'begins_with':
         return `${op}(${n}, ${v})`;
     }
     return `${n} ${op} ${v}`;
@@ -88,7 +88,7 @@ export class KeyConditionExpression {
   }
 
   addEqualCondition(name: string, value: Table.PrimaryAttributeValue) {
-    this.addSortCondition(name, Table.SortComparisonOperator.Equal, value);
+    this.addSortCondition(name, '=', value);
   }
 
   addCondition(cond: string) {
@@ -100,11 +100,9 @@ export class KeyConditionExpression {
   }
 }
 
-export function buildKeyConditionExpression(key: Table.PrimaryKeyQuery, attr: ExpressionAttributes): string {
-  const exp = new KeyConditionExpression(attr);
+export function buildKeyConditionExpression(key: Table.PrimaryKeyQuery, exp: KeyConditionExpression): string {
   Object.keys(key).forEach((name) => {
     const value = key[name];
-    if (value === undefined) return;
     if (typeof value === 'function') {
       value(name, exp);
     } else {
@@ -116,7 +114,7 @@ export function buildKeyConditionExpression(key: Table.PrimaryKeyQuery, attr: Ex
 
 export function buildKeyConditionInput(
   key: Table.PrimaryKeyQuery,
-  exp = new ExpressionAttributes(),
+  exp = new KeyConditionExpression(),
 ):
   | {
       KeyConditionExpression: string;
@@ -125,12 +123,9 @@ export function buildKeyConditionInput(
     }
   | undefined {
   const keyCond = buildKeyConditionExpression(key, exp);
-  if (keyCond) {
-    return {
-      KeyConditionExpression: keyCond,
-      ExpressionAttributeNames: exp.getPaths(),
-      ExpressionAttributeValues: exp.getValues(),
-    };
-  }
-  return;
+  return {
+    KeyConditionExpression: keyCond,
+    ExpressionAttributeNames: exp.attributes.getPaths(),
+    ExpressionAttributeValues: exp.attributes.getValues(),
+  };
 }

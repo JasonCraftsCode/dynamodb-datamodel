@@ -17,6 +17,7 @@ function getKeyName(keySchema: Table.PrimaryKeySchema, type: Table.PrimaryKeyTyp
   return name;
 }
 
+/*
 class AWSEnhancedError extends Error {
   awsError: AWSError;
   args: any[];
@@ -38,6 +39,7 @@ const functionFor = (target: any, name: string, targetName: string) => (...args:
     return rethrow(err);
   }
 };
+*/
 
 export interface IndexBase {
   name: string;
@@ -99,23 +101,23 @@ export class Index<KEY = DefaultGlobalIndexKey> implements IndexBase {
   }
 
   getPartitionKey(): string {
-    return getKeyName(this.keySchema, Table.PrimaryKeyType.Hash);
+    return getKeyName(this.keySchema, 'HASH');
   }
 
   getSortKey(): string {
-    return getKeyName(this.keySchema, Table.PrimaryKeyType.Range);
+    return getKeyName(this.keySchema, 'RANGE');
   }
 
   queryParams(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions): DocumentClient.QueryInput {
     const o = {
-      IndexName: options?.IndexName || this.name,
+      IndexName: this.name,
       ...options,
     };
     return this.table!.queryParams(key, o);
   }
   scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput {
     const o = {
-      IndexName: options?.IndexName || this.name,
+      IndexName: this.name,
       ...options,
     };
     return this.table!.scanParams(o);
@@ -123,14 +125,14 @@ export class Index<KEY = DefaultGlobalIndexKey> implements IndexBase {
 
   query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
     const o = {
-      IndexName: options?.IndexName || this.name,
+      IndexName: this.name,
       ...options,
     };
     return this.table!.query(key, o);
   }
   scan(options?: Table.ScanOptions) {
     const o = {
-      IndexName: options?.IndexName || this.name,
+      IndexName: this.name,
       ...options,
     };
     return this.table!.scan(o);
@@ -207,6 +209,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   globalIndexes?: IndexBase[] = [];
   localIndexes?: IndexBase[] = [];
   client?: DocumentClient;
+  // onError;
 
   constructor(params: TableParams<KEY, ATTRIBUTES>) {
     // validateTable(params);
@@ -221,11 +224,11 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   }
 
   getPartitionKey(): string {
-    return getKeyName(this.keySchema, Table.PrimaryKeyType.Hash);
+    return getKeyName(this.keySchema, 'HASH');
   }
 
   getSortKey(): string {
-    return getKeyName(this.keySchema, Table.PrimaryKeyType.Range);
+    return getKeyName(this.keySchema, 'RANGE');
   }
 
   // Action Params:
@@ -256,10 +259,10 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   ): DocumentClient.PutItemInput {
     let condInput;
     switch (writeOptions) {
-      case Table.PutWriteOptions.Exists:
+      case 'Exists':
         condInput = buildConditionInput(Condition.exists(this.getPartitionKey()), attributes);
         break;
-      case Table.PutWriteOptions.NotExists:
+      case 'NotExists':
         condInput = buildConditionInput(Condition.notExists(this.getPartitionKey()), attributes);
         break;
       default:
@@ -291,7 +294,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   ): DocumentClient.QueryInput {
     return {
       TableName: this.name,
-      ...buildKeyConditionInput(key, attributes),
+      ...buildKeyConditionInput(key, new KeyConditionExpression(attributes)),
       ...options,
     };
   }
@@ -304,35 +307,29 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
 
   // actions:
   get(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.GetOptions) {
-    const client = options?.client || this.client!;
     const params = this.getParams(key, options);
-    return functionFor(client, 'get', 'DocumentClient')(params);
+    return this.client!.get(params).promise(); // functionFor(client, 'get', 'DocumentClient')(params);
   }
   delete(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.DeleteOptions) {
-    const client = options?.client || this.client!;
     const params = this.deleteParams(key, options);
-    return client.delete(params).promise();
+    return this.client!.delete(params).promise();
   }
   put(key: Table.PrimaryKeyValueMapT<KEY>, items?: AttributeValueMap, options?: Table.PutOptions) {
-    const client = options?.client || this.client!;
     const params = this.putParams(key, items, options);
-    return client.put(params).promise();
+    return this.client!.put(params).promise();
   }
   update(key: Table.PrimaryKeyValueMapT<KEY>, items?: UpdateMapValue, options?: Table.UpdateOptions) {
-    const client = options?.client || this.client!;
     const params = this.updateParams(key, items, options);
-    return client.update(params).promise();
+    return this.client!.update(params).promise();
   }
   // query and scan are also used to access indexes
   query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
-    const client = options?.client || this.client!;
     const params = this.queryParams(key, options);
-    return client.query(params).promise();
+    return this.client!.query(params).promise();
   }
   scan(options?: Table.ScanOptions) {
-    const client = options?.client || this.client!;
     const params = this.scanParams(options);
-    return client.scan(params).promise();
+    return this.client!.scan(params).promise();
   }
 }
 
@@ -352,9 +349,9 @@ export namespace Table {
 
   // ScalarAttributeType
   export type PrimaryAttributeType = 'B' | 'N' | 'S';
+  /*
   export const PrimaryAttribute = { Binary: 'B', Number: 'N', String: 'S' };
   Object.freeze(PrimaryAttribute);
-  /*
   export enum PrimaryAttributeType {
     Binary = 'B',
     Number = 'N',
@@ -363,14 +360,16 @@ export namespace Table {
   */
 
   // KeyType
-  // export type PrimaryKeyType = 'HASH' | 'RANGE';
+  export type PrimaryKeyType = 'HASH' | 'RANGE';
   // export const PrimaryKey = { Partition: 'HASH', Sort: 'RANGE' }; Object.freeze(PrimaryKey);
+  /*
   export enum PrimaryKeyType {
     Hash = 'HASH',
     Range = 'RANGE',
   }
+  */
 
-  // export type SortComparisionOperator = '=' | '<' | '<=' | '>' | '>=' | 'BETWEEN' | begins_with'
+  export type SortComparisonOperator = '=' | '<' | '<=' | '>' | '>=' | 'BETWEEN' | 'begins_with';
   /*
   export const SortComparisionOperator = {
     EqualL: '=',
@@ -381,7 +380,7 @@ export namespace Table {
     Between: 'BETWEEN',
     BeginsWidth: 'begins_with',
   };
-  */
+
   // ComparisonOperator (minus )
   export enum SortComparisonOperator {
     Equal = '=',
@@ -392,15 +391,18 @@ export namespace Table {
     Between = 'BETWEEN',
     BeginsWidth = 'begins_with',
   }
+  */
 
-  // export type ProjectionType = 'ALL' | 'KEYS_ONLY' | 'INCLUDE';
+  export type ProjectionType = 'ALL' | 'KEYS_ONLY' | 'INCLUDE';
   // export const ProjectionType = { All: 'ALL', KeysOnly: 'KEYS_ONLY', Include: 'INCLUDE' }; Object.freeze(ProjectionType);
   // ProjectionType
+  /*
   export enum ProjectionType {
     All = 'ALL',
     KeysOnly = 'KEYS_ONLY',
     Include = 'INCLUDE',
   }
+  */
 
   export type ValueKeyConditionBase<T extends PrimaryAttributeType> = (
     name: string,
@@ -413,14 +415,21 @@ export namespace Table {
   export type BinaryKeyCondition = ValueKeyConditionBase<'B'>;
   export type KeyConditionValue = StringKeyCondition | NumberKeyCondition | BinaryKeyCondition;
 
-  type StringType = string | { type: 'S' };
-  type NumberType = number | { type: 'N' };
-  type BinaryType = BinaryValue | { type: 'B' };
-  type PrimaryAttributeDefinition = { type: PrimaryAttributeType }; // keyof typeof PrimaryAttributeType;
+  // export const PrimaryStringType: { type: 'S' } = { type: 'S' };
+  // export const PrimaryNumberType: { type: 'N' } = { type: 'N' };
+  // export const PrimaryBinaryType: { type: 'B' } = { type: 'B' };
 
-  type HashKeyType = { keyType: PrimaryKeyType.Hash };
-  type RangeKeyType = undefined | { keyType: PrimaryKeyType.Range };
-  type PrimarySchemaKeyType = { keyType: PrimaryKeyType };
+  export type StringType = string | { type: 'S' };
+  export type NumberType = number | { type: 'N' };
+  export type BinaryType = BinaryValue | { type: 'B' };
+  export type PrimaryAttributeDefinition = { type: PrimaryAttributeType };
+
+  // export const PrimaryHashKeyType: { keyType: 'HASH' } = { keyType: 'HASH' };
+  // export const PrimaryRangeKeyType: { keyType: 'RANGE' } = { keyType: 'RANGE' };
+
+  export type HashKeyType = { keyType: 'HASH' };
+  export type RangeKeyType = undefined | { keyType: 'RANGE' };
+  export type PrimarySchemaKeyType = { keyType: PrimaryKeyType };
 
   export type StringPartitionKey = StringType | HashKeyType;
   export type NumberPartitionKey = NumberType | HashKeyType;
@@ -463,11 +472,8 @@ export namespace Table {
   }
   export interface GetOptions extends BaseOptions, Optional<GetInput> {}
   export interface DeleteOptions extends BaseOptions, Optional<DeleteInput> {}
-  export enum PutWriteOptions {
-    Always,
-    Exists,
-    NotExists,
-  }
+  export type PutWriteOptions = 'Always' | 'Exists' | 'NotExists';
+
   export interface PutOptions extends BaseOptions, Optional<PutInput> {
     writeOptions?: PutWriteOptions;
   }

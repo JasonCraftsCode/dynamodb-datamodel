@@ -30,7 +30,11 @@
 
 ## Future direction
 
-- Create a way to model access patterns
+- Create a way to model access patterns:
+  - One-to-one
+  - One-to-many
+  - Many-to-many
+- Make it easy to integrate graphql based data models
 
 ## Notes
 

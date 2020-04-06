@@ -13,7 +13,7 @@
       "env": {
         "NODE_ENV": "test"
       },
-      "args": ["--detectOpenHandles", "--runInBand", "--rootDir", "./"],
+      "args": ["--detectOpenHandles", "--no-cache", "--runInBand", "--rootDir", "./"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "stopOnEntry": false,
@@ -30,7 +30,7 @@
       "env": {
         "NODE_ENV": "test"
       },
-      "args": ["--detectOpenHandles", "--runInBand", "--rootDir", "./", "${file}"],
+      "args": ["--detectOpenHandles", "--no-cache", "--runInBand", "--rootDir", "./", "${file}"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "stopOnEntry": false,
