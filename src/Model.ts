@@ -801,7 +801,7 @@ export class FieldObject<V extends { [key: string]: any }, T> extends FieldExpre
   }
 
   // Update
-  map(map: { [key: string]: V }) {
+  map(map: ModelUpdateT<V>) {
     return Update.map(map);
   }
 }
@@ -822,10 +822,6 @@ export namespace Schema {
     delim?: string,
   ) => {
     return new FieldNamedComposite(alias, slotMap, slots, delim);
-  };
-
-  export const compositeSlot = (comp: FieldComposite, slot: number) => {
-    return comp.slot(slot);
   };
 
   /* tslint:disable:variable-name */

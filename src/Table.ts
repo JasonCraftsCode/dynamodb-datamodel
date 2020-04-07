@@ -146,6 +146,7 @@ export interface TableBase {
   globalIndexes?: IndexBase[];
   localIndexes?: IndexBase[];
   client?: DocumentClient;
+  onError: (msg: string) => void;
 
   getPartitionKey(): string;
   getSortKey(): string;
@@ -194,6 +195,7 @@ export interface TableParams<KEY, ATTRIBUTES> {
   globalIndexes?: IndexBase[];
   localIndexes?: IndexBase[];
   client?: DocumentClient;
+  onError?: (msg: string) => void;
 }
 
 // StringSortKey should be optional (?) since for update actions it is optional
@@ -209,7 +211,9 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   globalIndexes?: IndexBase[] = [];
   localIndexes?: IndexBase[] = [];
   client?: DocumentClient;
-  // onError;
+  onError = (msg: string) => {
+    throw new Error(msg);
+  };
 
   constructor(params: TableParams<KEY, ATTRIBUTES>) {
     // validateTable(params);

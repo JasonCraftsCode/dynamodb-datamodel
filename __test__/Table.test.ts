@@ -181,6 +181,10 @@ describe('Validate Table with indexes', () => {
     expect(testTable.getSortKey()).toEqual('S');
   });
 
+  it('Table.onError', () => {
+    expect(() => testTable.onError('Error message')).toThrow();
+  });
+
   it('getParams', () => {
     const params = testTable.getParams({ P: 'pk', S: 'sk' });
     expect(params).toEqual({

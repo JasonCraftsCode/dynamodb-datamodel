@@ -12,10 +12,6 @@ export type BinarySetValue = DocumentClient.BinarySet;
 export type MapValue = { [key: string]: AttributeValue };
 export type ListValue = AttributeValue[];
 
-export let onError = (msg: string) => {
-  throw new Error(msg);
-};
-
 export type AttributeValue =
   | null
   | string
