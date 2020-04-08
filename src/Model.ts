@@ -128,10 +128,6 @@ export class Model<KEY extends { [key: string]: any }, MODEL extends KEY = KEY> 
     return { key, item };
   }
 
-  async mapToTableItem(data: ModelCoreT<MODEL>): Promise<AttributeValueMap> {
-    return (await this.mapModelToTable(data)).item;
-  }
-
   async mapToTableKey(key: ModelCoreT<KEY>): Promise<Table.PrimaryKeyValueMap> {
     return (await this.mapModelToTable(key)).key;
   }
@@ -312,9 +308,13 @@ export class FieldBase<V, T> implements Field {
     });
   }
   regex(regex: RegExp) {
-    return this.validator((value: any) => {
-      return new Promise<void>(() => {
-        regex.exec(value.toString());
+    return this.validator((value: V) => {
+      return new Promise<void | V>((resolve, reject) => {
+        if (regex.test((value as any).toString())) {
+          resolve(value);
+        } else {
+          reject(new Error(`value must match regex: '${regex}'`));
+        }
       });
     });
   }
@@ -335,12 +335,12 @@ export class FieldBase<V, T> implements Field {
     return this._updateValidator!(value);
   }
 
-  coerce(value: boolean) {
+  coerce(value = true) {
     this._coerce = value;
     return this;
   }
 
-  alias(value: string) {
+  alias(value?: string) {
     this._alias = value;
     return this;
   }
@@ -350,12 +350,12 @@ export class FieldBase<V, T> implements Field {
     return this;
   }
 
-  hidden(value: boolean) {
+  hidden(value = true) {
     this._hidden = value;
     return this;
   }
 
-  required(value: boolean) {
+  required(value = true) {
     this._required = value;
     return this;
   }
@@ -417,154 +417,10 @@ export class FieldBase<V, T> implements Field {
   }
 }
 
-export class FieldCompositeSlot implements Field {
-  name?: string;
-  composite: FieldComposite;
-  slot: number;
-  constructor(composite: FieldComposite, slot: number) {
-    this.composite = composite;
-    this.slot = slot;
-  }
-
-  init(name: string): void {
-    this.name = name;
-  }
-
-  async toModel(name: string, tableData: AttributeValueMap, modelData: ModelData, model: ModelBase) {
-    this.composite.toModel(this.slot, name, tableData, modelData, model);
-  }
-
-  async toTable(name: string, modelData: ModelData, tableData: AttributeValueMap, model: ModelBase) {
-    this.composite.toTable(this.slot, name, modelData, tableData, model);
-  }
-
-  async toTableUpdate(name: string, modelData: ModelUpdate, tableData: UpdateMapValue, model: ModelBase) {
-    this.composite.toTableUpdate(this.slot, name, modelData, tableData, model);
-  }
-}
-
-export class FieldComposite {
-  alias: string;
-  count: number;
-  delim: string;
-
-  constructor(alias: string, count: number, delim: string = '.') {
-    this.alias = alias;
-    this.count = count;
-    this.delim = delim;
-  }
-
-  slot(value: number) {
-    return new FieldCompositeSlot(this, value);
-  }
-
-  toModel(slot: number, name: string, tableData: AttributeValueMap, modelData: ModelData, model: ModelBase): void {
-    const value = tableData[this.alias];
-    if (typeof value !== 'string') return;
-    const parts = value.split(this.delim);
-    if (slot >= parts.length) return;
-    modelData[name] = parts[slot];
-  }
-
-  toTable(slot: number, name: string, modelData: ModelData, tableData: AttributeValueMap, model: ModelBase): void {
-    const value = modelData[name];
-    if (value === undefined) return;
-    if (typeof value === 'function') return; // throw and error
-    const slots = (tableData[this.alias] as string)?.split(this.delim) || new Array<string>(this.count);
-    slots[slot] = value!.toString();
-    tableData[this.alias] = slots.join(this.delim);
-  }
-
-  toTableUpdate(slot: number, name: string, modelData: ModelUpdate, tableData: UpdateMapValue, model: ModelBase): void {
-    this.toTable(slot, name, modelData, tableData as AttributeValueMap, model);
-  }
-}
-
-export type CompositeSlot<T extends { [index: string]: number }> = {
-  [P in keyof T]: () => FieldCompositeSlot;
-};
-
-export class FieldNamedComposite<T extends { [index: string]: number }> extends FieldComposite {
-  slots: CompositeSlot<T>;
-  map: T;
-
-  constructor(alias: string, map: T, slots?: CompositeSlot<T>, delim?: string) {
-    const keys = Object.keys(map);
-    super(alias, keys.length, delim);
-    this.map = map;
-    if (slots) this.slots = slots;
-    else {
-      const newSlots: { [index: string]: () => FieldCompositeSlot } = {};
-      keys.forEach((key) => {
-        // TODO: validate slot is < keys.length
-        const slot = map[key];
-        newSlots[key] = () => new FieldCompositeSlot(this, slot);
-      });
-      this.slots = newSlots as CompositeSlot<T>;
-    }
-  }
-
-  slot(value: number | string): FieldCompositeSlot {
-    if (typeof value === 'number') return new FieldCompositeSlot(this, value);
-    return this.slots[value]();
-  }
-}
-
-class FieldSplit implements Field {
-  name?: string;
-  aliases: string[];
-  delim: string;
-
-  constructor(aliases: string[], delim: string = '.') {
-    this.aliases = aliases;
-    this.delim = delim;
-  }
-  init(name: string) {
-    this.name = name;
-  }
-  async toModel(name: string, tableData: AttributeValueMap, modelData: ModelData, model: ModelBase): Promise<void> {
-    const parts: string[] = [];
-    this.aliases.forEach((alias) => {
-      const part = tableData[alias];
-      if (part) parts.push(part.toString());
-    });
-    modelData[name] = parts.join(this.delim);
-  }
-
-  async toTable(name: string, modelData: ModelData, tableData: AttributeValueMap, model: ModelBase): Promise<void> {
-    // TODO: should we throw for this?
-    const value = modelData[name];
-    if (value === undefined) return;
-    if (typeof value !== 'string') return; // skip any field that is not a string and is split aliased
-    let parts = value.split(this.delim);
-    const extraParts = parts.length - this.aliases.length;
-    if (extraParts > 0) {
-      parts[extraParts] = parts.slice(0, extraParts + 1).join(this.delim);
-      parts = parts.slice(extraParts);
-    }
-    for (let i = 0; i < parts.length; i++) {
-      tableData[this.aliases[i]] = parts[i];
-    }
-  }
-
-  async toTableUpdate(
-    name: string,
-    modelData: ModelUpdate,
-    tableData: UpdateMapValue,
-    model: ModelBase,
-  ): Promise<void> {
-    this.toTable(name, modelData, tableData as AttributeValueMap, model);
-  }
-}
-
 export class FieldExpression<V, T> extends FieldBase<V, T> {
   // Conditions
   path(): ConditionFunction {
     return Condition.path(this.name!);
-  }
-
-  size(): ConditionFunction {
-    return Condition.size(this.name!);
   }
 
   eq(v: V): Condition {
@@ -696,14 +552,6 @@ export class FieldNumberSet extends FieldSet<NumberSetValue, 'NS'> {}
 
 export class FieldBinarySet extends FieldSet<BinarySetValue, 'BS'> {}
 
-export class FieldHidden extends FieldSet<undefined, 'HIDDEN'> {
-  readonly type = 'HIDDEN';
-  readonly _hidden = true;
-  constructor() {
-    super('HIDDEN');
-  }
-}
-
 export class FieldListT<V extends AttributeValue, T> extends FieldExpression<V[], T> {
   // Condition
   size() {
@@ -729,12 +577,12 @@ export class FieldListT<V extends AttributeValue, T> extends FieldExpression<V[]
 }
 
 export class FieldListTyped<V extends { [key: string]: any }, T> extends FieldListT<V, T> {
-  schema?: ModelSchemaT<V>;
+  schema: ModelSchemaT<V>;
 
   constructor(type: T, schema: ModelSchemaT<V>, alias?: string) {
     super(type, alias);
     this.schema = schema;
-    if (schema) Object.keys(schema).forEach((key) => schema[key].init(key));
+    Object.keys(schema).forEach((key) => schema[key].init(key));
   }
 }
 
@@ -751,38 +599,12 @@ export class FieldMapT<V extends AttributeValue, T> extends FieldExpression<{ [k
 }
 
 export class FieldMapTyped<V extends { [key: string]: any }, T> extends FieldMapT<V, T> {
-  schema?: ModelSchemaT<V>;
+  schema: ModelSchemaT<V>;
 
-  constructor(type: T, schema?: ModelSchemaT<V>, alias?: string) {
+  constructor(type: T, schema: ModelSchemaT<V>, alias?: string) {
     super(type, alias);
     this.schema = schema;
-    if (schema) Object.keys(schema).forEach((key) => schema[key].init(key));
-  }
-}
-
-export class FieldDate extends FieldExpression<Date, 'DATE'> {
-  readonly type = 'DATE';
-
-  async toModel(name: string, tableData: AttributeValueMap, modelData: ModelData, model: ModelBase): Promise<void> {
-    if (this._hidden) return;
-    const value = tableData[this._alias || name];
-    if (value === undefined) return;
-    modelData[name] = new Date((value as number) * 1000);
-  }
-
-  async toTable(name: string, modelData: ModelData, tableData: AttributeValueMap, model: ModelBase): Promise<void> {
-    const value = modelData[name];
-    if (value === undefined) return;
-    tableData[this._alias || name] = Math.round((value as Date).valueOf() / 1000);
-  }
-
-  async toTableUpdate(
-    name: string,
-    modelData: ModelUpdate,
-    tableData: UpdateMapValue,
-    model: ModelBase,
-  ): Promise<void> {
-    this.toTable(name, modelData, tableData as AttributeValueMap, model);
+    Object.keys(schema).forEach((key) => schema[key].init(key));
   }
 }
 
@@ -806,24 +628,178 @@ export class FieldObject<V extends { [key: string]: any }, T> extends FieldExpre
   }
 }
 
+export class FieldDate extends FieldBase<Date, 'DATE'> {
+  async toModel(name: string, tableData: AttributeValueMap, modelData: ModelData, model: ModelBase) {
+    await super.toModel(name, tableData, modelData, model);
+    const value = modelData[name];
+    if (value === undefined) return;
+    modelData[name] = new Date((value as number) * 1000);
+  }
+
+  async toTable(name: string, modelData: ModelData, tableData: AttributeValueMap, model: ModelBase) {
+    await super.toTable(name, tableData, modelData, model);
+    const value = modelData[this._alias || name];
+    if (value === undefined) return;
+    tableData[this._alias || name] = Math.round((value as Date).valueOf() / 1000);
+  }
+
+  async toTableUpdate(name: string, modelData: ModelUpdate, tableData: UpdateMapValue, model: ModelBase) {
+    this.toTable(name, modelData, tableData as AttributeValueMap, model);
+  }
+}
+
+export class FieldHidden extends FieldBase<undefined, 'HIDDEN'> {
+  readonly _hidden = true;
+  constructor() {
+    super('HIDDEN');
+  }
+}
+
+export class FieldCompositeSlot implements Field {
+  name?: string;
+  composite: FieldComposite;
+  slot: number;
+  constructor(composite: FieldComposite, slot: number, name?: string) {
+    this.composite = composite;
+    this.slot = slot;
+    this.name = name;
+  }
+
+  init(name: string): void {
+    this.name = name;
+  }
+
+  async toModel(name: string, tableData: AttributeValueMap, modelData: ModelData, model: ModelBase) {
+    this.composite.toModel(this.slot, name, tableData, modelData, model);
+  }
+
+  async toTable(name: string, modelData: ModelData, tableData: AttributeValueMap, model: ModelBase) {
+    this.composite.toTable(this.slot, name, modelData, tableData, model);
+  }
+
+  async toTableUpdate(name: string, modelData: ModelUpdate, tableData: UpdateMapValue, model: ModelBase) {
+    this.composite.toTableUpdate(this.slot, name, modelData, tableData, model);
+  }
+}
+
+export class FieldComposite {
+  alias: string;
+  count: number;
+  delim: string;
+
+  constructor(alias: string, count: number, delim: string = '.') {
+    this.alias = alias;
+    this.count = count;
+    this.delim = delim;
+  }
+
+  slot(value: number) {
+    return new FieldCompositeSlot(this, value);
+  }
+
+  toModel(slot: number, name: string, tableData: AttributeValueMap, modelData: ModelData, model: ModelBase): void {
+    const value = tableData[this.alias];
+    if (typeof value !== 'string') return;
+    const parts = value.split(this.delim);
+    if (slot >= parts.length) return;
+    modelData[name] = parts[slot];
+  }
+
+  toTable(slot: number, name: string, modelData: ModelData, tableData: AttributeValueMap, model: ModelBase): void {
+    const value = modelData[name];
+    if (value === undefined) return;
+    if (typeof value === 'function') return; // throw and error
+    const slots = (tableData[this.alias] as string)?.split(this.delim) || new Array<string>(this.count);
+    slots[slot] = value!.toString();
+    tableData[this.alias] = slots.join(this.delim);
+  }
+
+  toTableUpdate(slot: number, name: string, modelData: ModelUpdate, tableData: UpdateMapValue, model: ModelBase): void {
+    this.toTable(slot, name, modelData, tableData as AttributeValueMap, model);
+  }
+}
+
+export type CompositeSlot<T extends { [index: string]: number }> = {
+  [P in keyof T]: () => FieldCompositeSlot;
+};
+
+export class FieldNamedComposite<T extends { [index: string]: number }> extends FieldComposite {
+  slots: CompositeSlot<T>;
+  map: T;
+
+  constructor(alias: string, map: T, slots?: CompositeSlot<T>, delim?: string) {
+    const keys = Object.keys(map);
+    super(alias, keys.length, delim);
+    this.map = map;
+    if (slots) this.slots = slots;
+    else {
+      const newSlots: { [index: string]: () => FieldCompositeSlot } = {};
+      keys.forEach((key) => {
+        // TODO: validate slot is < keys.length
+        const slot = map[key];
+        newSlots[key] = () => new FieldCompositeSlot(this, slot, key);
+      });
+      this.slots = newSlots as CompositeSlot<T>;
+    }
+  }
+
+  slot(value: number | string): FieldCompositeSlot {
+    if (typeof value === 'number') {
+      const keys = Object.keys(this.map);
+      return new FieldCompositeSlot(this, value, keys[value]);
+    }
+    return this.slots[value]();
+  }
+}
+
+class FieldSplit implements Field {
+  name?: string;
+  aliases: string[];
+  delim: string;
+
+  constructor(aliases: string[], delim: string = '.') {
+    this.aliases = aliases;
+    this.delim = delim;
+  }
+  init(name: string) {
+    this.name = name;
+  }
+  async toModel(name: string, tableData: AttributeValueMap, modelData: ModelData, model: ModelBase): Promise<void> {
+    const parts: string[] = [];
+    this.aliases.forEach((alias) => {
+      const part = tableData[alias];
+      if (part) parts.push(part.toString());
+    });
+    modelData[name] = parts.join(this.delim);
+  }
+
+  async toTable(name: string, modelData: ModelData, tableData: AttributeValueMap, model: ModelBase): Promise<void> {
+    // TODO: should we throw for this?
+    const value = modelData[name];
+    if (value === undefined) return;
+    if (typeof value !== 'string') return; // skip any field that is not a string and is split aliased
+    let parts = value.split(this.delim);
+    const extraParts = parts.length - this.aliases.length;
+    if (extraParts > 0) {
+      parts[extraParts] = parts.slice(0, extraParts + 1).join(this.delim);
+      parts = parts.slice(extraParts);
+    }
+    for (let i = 0; i < parts.length; i++) {
+      tableData[this.aliases[i]] = parts[i];
+    }
+  }
+
+  async toTableUpdate(
+    name: string,
+    modelData: ModelUpdate,
+    tableData: UpdateMapValue,
+    model: ModelBase,
+  ): Promise<void> {
+    this.toTable(name, modelData, tableData as AttributeValueMap, model);
+  }
+}
+
 export namespace Schema {
-  export const split = (aliases: string[], delim?: string) => {
-    return new FieldSplit(aliases, delim);
-  };
-
-  export const composite = (alias: string, count: number, delim?: string) => {
-    return new FieldComposite(alias, count, delim);
-  };
-
-  export const namedComposite = <T extends { [key: string]: number }>(
-    alias: string,
-    slotMap: T,
-    slots?: CompositeSlot<T>,
-    delim?: string,
-  ) => {
-    return new FieldNamedComposite(alias, slotMap, slots, delim);
-  };
-
   /* tslint:disable:variable-name */
   export const string = (alias?: string) => {
     return new FieldString('S', alias);
@@ -881,5 +857,22 @@ export namespace Schema {
 
   export const hidden = () => {
     return new FieldHidden();
+  };
+
+  export const split = (aliases: string[], delim?: string) => {
+    return new FieldSplit(aliases, delim);
+  };
+
+  export const composite = (alias: string, count: number, delim?: string) => {
+    return new FieldComposite(alias, count, delim);
+  };
+
+  export const namedComposite = <T extends { [key: string]: number }>(
+    alias: string,
+    slotMap: T,
+    slots?: CompositeSlot<T>,
+    delim?: string,
+  ) => {
+    return new FieldNamedComposite<T>(alias, slotMap, slots, delim);
   };
 }

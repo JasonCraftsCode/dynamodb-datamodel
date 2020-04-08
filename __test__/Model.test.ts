@@ -1,9 +1,10 @@
 import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import * as yup from 'yup';
+import * as joi from '@hapi/joi';
 
-import { BinaryValue, StringSetValue, NumberSetValue, AttributeType } from '../src/Common';
-import { Model, Schema } from '../src/Model';
+import { BinaryValue, StringSetValue, NumberSetValue, AttributeType, AttributeValueMap } from '../src/Common';
+import { Model, Schema, ModelBase, ModelUpdateValue, ModelData, FieldCompositeSlot } from '../src/Model';
 import {
   Update,
   UpdateInput,
@@ -16,6 +17,7 @@ import {
   UpdateList,
   UpdateMap,
   UpdateExpression,
+  UpdateMapValue,
 } from '../src/Update';
 import { TableBase, Table, IndexBase, Index } from '../src/Table';
 import { ExpressionAttributes } from '../src/ExpressionAttributes';
@@ -185,7 +187,8 @@ interface UserModel extends UserKey {
   created?: Date | UpdateInput<'Date'>;
   hide?: Set<Date>;
   nickname?: string | UpdateString;
-  range?: number | UpdateNumber;
+  rangeYup?: number | UpdateNumber;
+  rangeJoi?: number | UpdateNumber;
 }
 
 const userSchema = {
@@ -207,7 +210,8 @@ const userSchema = {
   created: Schema.date(),
   hide: Schema.hidden(),
   nickname: Schema.string().default('none'),
-  range: Schema.number().yup(yup.number().integer().positive()),
+  rangeYup: Schema.number().yup(yup.number().integer().positive()),
+  rangeJoi: Schema.number().joi(joi.number().integer().positive()),
 };
 
 const userModel = new Model<UserKey, UserModel>({
@@ -217,6 +221,11 @@ const userModel = new Model<UserKey, UserModel>({
 
 describe('Validate Model with Table and Indexes', () => {
   describe('model params', () => {
+    it('Model.createBinarySet with single id', async () => {
+      const binarySet = userModel.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')]);
+      expect(binarySet.type).toEqual('Binary');
+    });
+
     it('Model.getParams with single id', async () => {
       // TODO: should probably throw in SplitField
       const params = await userModel.getParams({ id: 'id1' });
@@ -312,7 +321,8 @@ describe('Validate Model with Table and Indexes', () => {
         interests: userModel.createStringSet(['basketball', 'soccer', 'football']),
         groups: { group1: { role: Role.Guest }, group3: { role: Role.Member } },
         hide: new Set([new Date(), new Date()]),
-        //range: -1,
+        rangeYup: 1,
+        rangeJoi: 2,
       });
       expect(params).toEqual({
         Item: {
@@ -354,6 +364,8 @@ describe('Validate Model with Table and Indexes', () => {
             married: true,
             name: 'spouse',
           },
+          rangeJoi: 2,
+          rangeYup: 1,
         },
         TableName: 'MainTable',
       });
@@ -470,6 +482,12 @@ describe('Validate Model with Table and Indexes', () => {
         TableName: 'MainTable',
       });
       expect(client.get).toBeCalledTimes(1);
+    });
+
+    it('Model.get no Item expect results undefined ', async () => {
+      client.get = jest.fn((params) => request({}));
+      const results = await userModel.get({ id: 'id1' });
+      expect(results).toBeUndefined();
     });
 
     it('Model.get with multiple id', async () => {
@@ -603,6 +621,12 @@ describe('Validate Model with Table and Indexes', () => {
       expect(client.delete).toBeCalledTimes(1);
     });
 
+    it('Model.delete Attributes missing expect results undefined', async () => {
+      client.delete = jest.fn((params) => request({}));
+      const results = await userModel.delete({ id: 'id1.id2' });
+      expect(results).toBeUndefined();
+    });
+
     it('Model.put', async () => {
       client.put = jest.fn((params) => request({ Attributes: { P: 'id1', S: 'id2' } }));
       const results = await userModel.put({
@@ -646,6 +670,14 @@ describe('Validate Model with Table and Indexes', () => {
         TableName: 'MainTable',
       });
       expect(client.update).toBeCalledTimes(1);
+    });
+
+    it('Model.update Attributes missing expect results undefined', async () => {
+      client.update = jest.fn((params) => request({}));
+      const results = await userModel.update({
+        id: 'id1.id2',
+      });
+      expect(results).toBeUndefined();
     });
 
     it('Model.update with all fields', async () => {
@@ -702,20 +734,201 @@ describe('Validate Model with Table and Indexes', () => {
   });
 });
 
-// 6-408,458,508-509,563-571,576,581,586,591,596,601-631,638-644,651-660
+describe('When FieldBase', () => {
+  it('expect init sets name', () => {
+    const initField = Schema.string();
+    initField.init('initField');
+    expect(initField.name).toEqual('initField');
+  });
+
+  it('yup expect validate invalid value to throw', async () => {
+    const field = Schema.number().yup(yup.number().min(1).max(2));
+    await expect(field.validate(0)).rejects.toThrowError(new Error('this must be greater than or equal to 1'));
+  });
+
+  it('yup with coerce expect return value coerce', async () => {
+    const field = Schema.number().coerce().yup(yup.number().min(1).max(10));
+    await expect(field.validate('5' as any)).resolves.toEqual(5);
+  });
+
+  it('joi expect validate invalid value to throw', async () => {
+    const field = Schema.number().joi(joi.number().min(1).max(2));
+    await expect(field.validate(0)).rejects.toThrowError(new Error('"value" must be larger than or equal to 1'));
+  });
+
+  it('joi with coerce expect return value coerce', async () => {
+    const field = Schema.number().joi(joi.number().min(1).max(10)).coerce();
+    await expect(field.validate('5' as any)).resolves.toEqual(5);
+  });
+
+  it('regex expect validate invalid value to throw', async () => {
+    const field = Schema.string().regex(/^[A-Za-z][A-Za-z0-9]*$/);
+    await expect(field.validate('0f')).rejects.toThrowError(
+      new Error("value must match regex: '/^[A-Za-z][A-Za-z0-9]*$/'"),
+    );
+  });
+
+  it('regex expect validate to return value', async () => {
+    const field = Schema.string().regex(/^[A-Za-z][A-Za-z0-9]*$/);
+    await expect(field.validate('ff')).resolves.toEqual('ff');
+  });
+
+  it('validator always throw expect to throw', async () => {
+    const field = Schema.string().validator((value: string) => {
+      return new Promise<string | void>((resolve, reject) => {
+        reject(new Error(`always throw`));
+      });
+    });
+    await expect(field.validate('abc')).rejects.toThrowError(new Error('always throw'));
+  });
+
+  it('updateValidator with does not throw expect success', async () => {
+    const field = Schema.string().updateValidator((value: ModelUpdateValue<string>) => {
+      return new Promise<string | void>((resolve, reject) => {
+        resolve('abc');
+      });
+    });
+    await expect(field.validateUpdate('abc')).resolves.toEqual('abc');
+  });
+
+  it('updateValidator always throw expect to throw', async () => {
+    const field = Schema.string().updateValidator((value: any) => {
+      return new Promise<void>((resolve, reject) => {
+        reject(new Error(`always throw`));
+      });
+    });
+    await expect(field.validateUpdate('abc')).rejects.toThrowError(new Error('always throw'));
+  });
+
+  it('coerce expects to be set', () => {
+    const field = Schema.string().coerce();
+    expect(field._coerce).toEqual(true);
+  });
+
+  it('hidden expects to be set', () => {
+    const field = Schema.string().hidden();
+    expect(field._hidden).toEqual(true);
+  });
+
+  it('required expects to be set', () => {
+    const field = Schema.string().required();
+    expect(field._required).toEqual(true);
+  });
+
+  it('default expects to be set', () => {
+    const field = Schema.string().default('default');
+    expect(field._default).toEqual('default');
+  });
+
+  it('alias expects to be set', () => {
+    const field = Schema.string().alias('alias');
+    expect(field._alias).toEqual('alias');
+  });
+
+  it('constructor with alias expects alias to be set', () => {
+    const field = Schema.string('alias');
+    expect(field._alias).toEqual('alias');
+  });
+
+  // toTablw
+  it('toTable with hidden field expect not in table data', async () => {
+    const field = Schema.number().hidden();
+    const tabelData: AttributeValueMap = {};
+    await field.toTable('test', { test: '5' }, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({});
+  });
+
+  it('toTable with coerce validator expect coerce value', async () => {
+    const field = Schema.number().coerce().yup(yup.number().min(1).max(10));
+    const tabelData: AttributeValueMap = {};
+    await field.toTable('test', { test: '5' }, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({ test: 5 });
+  });
+
+  it('toTable with coerce expect coerce value', async () => {
+    const field = Schema.number().coerce();
+    const tabelData: AttributeValueMap = {};
+    await field.toTable('test', { test: 8 }, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({ test: 8 });
+  });
+
+  // toTableUpdate
+  it('toTableUpdate with hidden field expect not in table data', async () => {
+    const field = Schema.number().hidden();
+    const tabelData: AttributeValueMap = {};
+    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({});
+  });
+
+  it('toTableUpdate with coerce validator expect coerce value', async () => {
+    const field = Schema.number()
+      .coerce()
+      .updateValidator((value: ModelUpdateValue<number>) => {
+        return new Promise<number | void>((resolve, reject) => {
+          resolve(15);
+        });
+      });
+    field.init('test');
+    const tabelData: UpdateMapValue = {};
+    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({ test: 15 });
+  });
+
+  it('toTableUpdate with coerce validator and undefine keep value', async () => {
+    const field = Schema.number()
+      .coerce()
+      .updateValidator((value: ModelUpdateValue<number>) => {
+        return new Promise<number | void>((resolve, reject) => {
+          resolve();
+        });
+      });
+    field.init('test');
+    const tabelData: UpdateMapValue = {};
+    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({ test: '5' });
+  });
+
+  it('toTableUpdate with coerce expect coerce value', async () => {
+    const field = Schema.number().coerce();
+    const tabelData: AttributeValueMap = {};
+    await field.toTableUpdate('test', { test: 9 }, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({ test: 9 });
+  });
+
+  // toTable
+  it('required field missing from model expect toTable to throw', async () => {
+    const field = Schema.string().required();
+    field.init('test');
+    await expect(field.toTable('test', {}, {}, {} as ModelBase)).rejects.toThrowError(
+      new Error('Field test is required'),
+    );
+  });
+
+  it('toTable with default expects default return', async () => {
+    const field = Schema.string().default('default');
+    const tabelData: AttributeValueMap = {};
+    await field.toTable('test', {}, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({ test: 'default' });
+  });
+
+  it('toTable with default function expects default return', async () => {
+    const field = Schema.string().default((name, tableData, modelData, model) => {
+      return name + '-default';
+    });
+    const tabelData: AttributeValueMap = {};
+    await field.toTable('test', {}, tabelData, {} as ModelBase);
+    expect(tabelData).toEqual({ test: 'test-default' });
+  });
+});
 
 describe('When FieldExpression', () => {
   const field = Schema.string();
   field.init('string');
 
+  // Condition
   it('expect path returns condition expression', () => {
     const exp = new ExpressionAttributes();
     expect(field.path()(exp)).toEqual('#n0');
-  });
-
-  it('expect size returns condition expression', () => {
-    const exp = new ExpressionAttributes();
-    expect(field.size()(exp)).toEqual('size(#n0)');
   });
 
   it('expect eq returns condition expression', () => {
@@ -852,9 +1065,44 @@ describe('When FieldNumber', () => {
   });
 });
 
+describe('When FieldBinary', () => {
+  const field = Schema.binary();
+  field.init('binary');
+
+  it('expect size returns condition expression', () => {
+    const exp = new ExpressionAttributes();
+    expect(field.size()(exp)).toEqual('size(#n0)');
+  });
+});
+
+describe('When FieldBoolean', () => {
+  const field = Schema.boolean();
+  field.init('boolean');
+
+  it('expect boolean returns correct type', () => {
+    expect(field.type).toEqual('BOOL');
+    expect(field.name).toEqual('boolean');
+  });
+});
+
 describe('When FieldSet', () => {
   const field = Schema.stringSet();
   field.init('set');
+
+  it('expect stringSet returns correct type', () => {
+    expect(field.type).toEqual('SS');
+    expect(field.name).toEqual('set');
+  });
+
+  it('expect numberSet returns correct type', () => {
+    const field1 = Schema.numberSet();
+    expect(field1.type).toEqual('NS');
+  });
+
+  it('expect binarySet returns correct type', () => {
+    const field1 = Schema.binarySet();
+    expect(field1.type).toEqual('BS');
+  });
 
   it('expect size returns condition expression', () => {
     const exp = new ExpressionAttributes();
@@ -879,44 +1127,12 @@ describe('When FieldSet', () => {
   });
 });
 
-describe('When FieldBinary', () => {
-  const field = Schema.binary();
-  field.init('binary');
-
+describe('When FieldList', () => {
+  const field = Schema.list();
+  field.init('list');
   it('expect size returns condition expression', () => {
     const exp = new ExpressionAttributes();
     expect(field.size()(exp)).toEqual('size(#n0)');
-  });
-});
-
-describe('When FieldObject', () => {
-  const field = Schema.object<SpouseModel, 'Spouse'>('Spouse', spouseSchema);
-  field.init('spouse');
-
-  it('expect size returns condition expression', () => {
-    const exp = new ExpressionAttributes();
-    expect(field.size()(exp)).toEqual('size(#n0)');
-  });
-
-  it('expect map returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.map({ name: 'abc' })('spouse', exp);
-    expect(exp.buildExpression()).toEqual('SET spouse.#n0 = :v0');
-  });
-});
-
-describe('When FieldMapT', () => {
-  const field = Schema.mapT<GroupModel, 'Groups'>('Groups', groupSchema);
-  field.init('groups');
-  it('expect size returns condition expression', () => {
-    const exp = new ExpressionAttributes();
-    expect(field.size()(exp)).toEqual('size(#n0)');
-  });
-
-  it('expect map returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.map({ group1: { role: Role.Admin } })('groups', exp);
-    expect(exp.buildExpression()).toEqual('SET groups.#n0 = :v0');
   });
 });
 
@@ -959,26 +1175,285 @@ describe('When FieldListT', () => {
   });
 });
 
-describe('When Schema', () => {
-  it('expect map returns correct type', () => {
-    const field = Schema.map();
-    expect(field.type).toEqual('M');
+describe('When FieldMap', () => {
+  const field = Schema.map();
+  field.init('map');
+
+  it('expect size returns condition expression', () => {
+    const exp = new ExpressionAttributes();
+    expect(field.size()(exp)).toEqual('size(#n0)');
   });
 
-  it('expect list returns correct type', () => {
-    const field = Schema.list();
-    expect(field.type).toEqual('L');
+  it('expect map returns update expression', () => {
+    const exp = new UpdateExpression();
+    field.map({ map: { abc: 'yea', xyz: 'boo' } })('map', exp);
+    expect(exp.buildExpression()).toEqual('SET map.#n0 = :v0');
+  });
+});
+
+describe('When FieldMapT', () => {
+  const field = Schema.mapT<GroupModel, 'Groups'>('Groups', groupSchema);
+  field.init('groups');
+  it('expect size returns condition expression', () => {
+    const exp = new ExpressionAttributes();
+    expect(field.size()(exp)).toEqual('size(#n0)');
   });
 
-  it('expect binarySet returns correct type', () => {
-    const field = Schema.binarySet();
-    expect(field.type).toEqual('BS');
+  it('expect map returns update expression', () => {
+    const exp = new UpdateExpression();
+    field.map({ group1: { role: Role.Admin } })('groups', exp);
+    expect(exp.buildExpression()).toEqual('SET groups.#n0 = :v0');
+  });
+});
+
+describe('When FieldObject', () => {
+  const field = Schema.object<SpouseModel, 'Spouse'>('Spouse', spouseSchema);
+  field.init('spouse');
+
+  it('expect size returns condition expression', () => {
+    const exp = new ExpressionAttributes();
+    expect(field.size()(exp)).toEqual('size(#n0)');
+  });
+
+  it('expect map returns update expression', () => {
+    const exp = new UpdateExpression();
+    field.map({ name: 'abc' })('spouse', exp);
+    expect(exp.buildExpression()).toEqual('SET spouse.#n0 = :v0');
+  });
+});
+
+// FieldDate inherits from FieldBase
+describe('When FieldDate', () => {
+  const field = Schema.date();
+  field.init('date');
+
+  it('expect date returns correct type', () => {
+    expect(field.type).toEqual('DATE');
+    expect(field.name).toEqual('date');
+  });
+
+  it('toModel expect date data', async () => {
+    const data: ModelData = {};
+    await field.toModel('date', { date: 1585564302000 }, data, {} as ModelBase);
+    expect(data).toEqual({ date: new Date(1585564302000000) });
+  });
+
+  it('toTable expect date as number', async () => {
+    const data: AttributeValueMap = {};
+    await field.toTable('date', { date: new Date(1585574302000000) }, data, {} as ModelBase);
+    expect(data).toEqual({ date: 1585574302000 });
+  });
+
+  it('toTableUpdate expect date as number', async () => {
+    const data: AttributeValueMap = {};
+    await field.toTableUpdate('date', { date: new Date(1585584302000000) }, data, {} as ModelBase);
+    expect(data).toEqual({ date: 1585584302000 });
+  });
+});
+
+describe('When FieldHidden', () => {
+  const field = Schema.hidden();
+  it('expect hidden returns correct type', () => {
+    expect(field._alias).toBeUndefined();
+    expect(field.type).toEqual('HIDDEN');
+    expect(field._hidden).toEqual(true);
+  });
+});
+
+describe('When FieldComposite', () => {
+  const field = Schema.composite('G0S', 3);
+
+  it('expect composite with delim returns correct type', () => {
+    const delim = Schema.composite('L0S', 2, '#');
+    expect(delim.alias).toEqual('L0S');
+    expect(delim.count).toEqual(2);
+    expect(delim.delim).toEqual('#');
   });
 
   it('expect composite returns correct type', () => {
-    const field = Schema.composite('G0S', 3);
     expect(field.alias).toEqual('G0S');
     expect(field.count).toEqual(3);
     expect(field.delim).toEqual('.');
   });
+
+  it('expect slot to return FieldCompositeSlot', () => {
+    const slot = field.slot(1);
+    expect(slot.slot).toEqual(1);
+    expect(slot.name).toBeUndefined();
+    expect(slot.composite).toBe(field);
+  });
+
+  it('slot.toModel expect existing slot to map', async () => {
+    const slot = field.slot(1);
+    const data: ModelData = {};
+    await slot.toModel('split', { G0S: 'part1.part2.part3' }, data, {} as ModelBase);
+    expect(data).toEqual({ split: 'part2' });
+  });
+
+  it('slot.toModel expect missing slot to skip', async () => {
+    const slot = field.slot(2);
+    const data: ModelData = {};
+    await slot.toModel('split', { G0S: 'part1.part2' }, data, {} as ModelBase);
+    expect(data).toEqual({});
+  });
+
+  it('slot.toTable expect fields to map to key', async () => {
+    const slot2 = field.slot(2);
+    const slot1 = field.slot(1);
+    const data: AttributeValueMap = {};
+    await slot2.toTable('split2', { split2: 'part2' }, data, {} as ModelBase);
+    expect(data).toEqual({ G0S: '..part2' });
+    await slot1.toTable('split1', { split1: 'part1' }, data, {} as ModelBase);
+    expect(data).toEqual({ G0S: '.part1.part2' });
+  });
+
+  it('slot.toTable missing slot expect empty data', async () => {
+    const slot = field.slot(1);
+    const data: AttributeValueMap = {};
+    await slot.toTable('split', { split1: 'part1' }, data, {} as ModelBase);
+    expect(data).toEqual({});
+  });
+
+  it('slot.toTable slot is function expect empty data', async () => {
+    const slot = field.slot(1);
+    const data: AttributeValueMap = {};
+    await slot.toTable('split', { split: () => 'value' }, data, {} as ModelBase);
+    expect(data).toEqual({});
+  });
+
+  it('slot.toTableUpdate expect fields to map to key', async () => {
+    const slot = field.slot(1);
+    const data: AttributeValueMap = {};
+    await slot.toTableUpdate('split', { split: 'part1' }, data, {} as ModelBase);
+    expect(data).toEqual({ G0S: '.part1.' });
+  });
 });
+
+describe('When FieldNamedComposite', () => {
+  const field = Schema.namedComposite('G0S', {
+    city: 0,
+    state: 1,
+    country: 2,
+  });
+
+  it('expect constructed with slots', () => {
+    const field1 = Schema.namedComposite(
+      'L0S',
+      { dollar: 0, cents: 1 },
+      {
+        dollar: () => new FieldCompositeSlot(field, 0, 'dollar1'),
+        cents: () => new FieldCompositeSlot(field, 1, 'cents1'),
+      },
+      '#',
+    );
+    expect(field1.alias).toEqual('L0S');
+    expect(field1.count).toEqual(2);
+    expect(field1.delim).toEqual('#');
+    expect(field1.map).toEqual({ dollar: 0, cents: 1 });
+    expect(Object.keys(field1.slots).length).toEqual(2);
+    expect(field1.slots.dollar().name).toEqual('dollar1');
+  });
+
+  it('expect correctly constructed', () => {
+    expect(field.alias).toEqual('G0S');
+    expect(field.count).toEqual(3);
+    expect(field.delim).toEqual('.');
+    expect(field.map).toEqual({
+      city: 0,
+      state: 1,
+      country: 2,
+    });
+    expect(Object.keys(field.slots).length).toEqual(3);
+  });
+
+  it('expect city slot return correct FieldCompositeSlot', () => {
+    const slot = field.slot('city');
+    expect(slot.name).toEqual('city');
+    expect(slot.slot).toEqual(0);
+  });
+
+  it('expect 1 slot return state FieldCompositeSlot', () => {
+    const slot = field.slot(1);
+    expect(slot.name).toEqual('state');
+    expect(slot.slot).toEqual(1);
+  });
+
+  it('expect country slot return correct FieldCompositeSlot', () => {
+    const slot = field.slots.country();
+    expect(slot.name).toEqual('country');
+    expect(slot.slot).toEqual(2);
+  });
+});
+
+describe('When FieldSplit', () => {
+  const field = Schema.split(['P', 'S']);
+  field.init('split');
+
+  it('expect init correctly', () => {
+    expect(field.aliases).toEqual(['P', 'S']);
+    expect(field.delim).toEqual('.');
+    expect(field.name).toEqual('split');
+  });
+
+  it('toModel expect join of all aliases', async () => {
+    const data: ModelData = {};
+    await field.toModel('split', { P: 'id1', S: 'id2' }, data, {} as ModelBase);
+    expect(data).toEqual({ split: 'id1.id2' });
+  });
+
+  it('toModel expect join of single aliases', async () => {
+    const data: ModelData = {};
+    await field.toModel('split', { P: 'id1' }, data, {} as ModelBase);
+    expect(data).toEqual({ split: 'id1' });
+  });
+
+  it('toModel expect join of first aliases', async () => {
+    const data: ModelData = {};
+    await field.toModel('split', { S: 'id2' }, data, {} as ModelBase);
+    expect(data).toEqual({ split: 'id2' });
+  });
+
+  it('toTable expect split of all aliases', async () => {
+    const data: AttributeValueMap = {};
+    await field.toTable('split', { split: 'id1.id2' }, data, {} as ModelBase);
+    expect(data).toEqual({ P: 'id1', S: 'id2' });
+  });
+
+  it('toTable expect split of more then number of aliases', async () => {
+    const data: AttributeValueMap = {};
+    await field.toTable('split', { split: 'id1.id2.id3.id4' }, data, {} as ModelBase);
+    expect(data).toEqual({ P: 'id1.id2.id3', S: 'id4' });
+  });
+
+  it('toTable expect join of first aliases', async () => {
+    const data: AttributeValueMap = {};
+    await field.toTable('split', { split: 'id1' }, data, {} as ModelBase);
+    expect(data).toEqual({ P: 'id1' });
+  });
+
+  it('toTable missing field expect empty data', async () => {
+    const data: AttributeValueMap = {};
+    await field.toTable('split', { split1: 'id1' }, data, {} as ModelBase);
+    expect(data).toEqual({});
+  });
+
+  it('toTable not a string field expect empty data', async () => {
+    const data: AttributeValueMap = {};
+    await field.toTable('split', { split: 5.2 }, data, {} as ModelBase);
+    expect(data).toEqual({});
+  });
+
+  it('toTableUpdate expect join of all aliases', async () => {
+    const data: UpdateMapValue = {};
+    await field.toTableUpdate('split', { split: 'id1.id2' }, data, {} as ModelBase);
+    expect(data).toEqual({ P: 'id1', S: 'id2' });
+  });
+
+  it('toTableUpdate expect join of first aliases', async () => {
+    const data: AttributeValueMap = {};
+    await field.toTableUpdate('split', { split: 'id1' }, data, {} as ModelBase);
+    expect(data).toEqual({ P: 'id1' });
+  });
+});
+
+// 172-187,407,466,473,496,541-542,737-767

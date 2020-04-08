@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@hapi/joi": "^17.1.1",
+    "@types/hapi__joi": "^16.0.12",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.11.0",
     "@types/yup": "^0.26.34",
