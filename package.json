@@ -34,6 +34,7 @@
     "lint": "tslint -p tsconfig.json",
     "test": "jest --no-cache --rootDir ./",
     "test:coverage": "jest --no-cache --rootDir ./ --coverage",
+    "pr": "npm run lint && npm run test:coverage && npm run build",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",

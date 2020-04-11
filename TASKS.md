@@ -18,7 +18,6 @@
 - Add jdocs
 - Add types to class namespaces (Table, Model, Condition, Update)
 - Validate Model (add options to validate)
-- Use strings over enums
 - Non-Validator coerce (see dynamodb-toolbox)
 - Write a Medium artical on Single Table Design and using
 - Write detailed examples (js and ts and graphql):
