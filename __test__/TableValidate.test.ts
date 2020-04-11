@@ -1,5 +1,5 @@
-import { validateKeySchema, validateTable } from '../src/TableValidate';
 import { Table, Index, IndexBase, TableParams } from '../src/Table';
+import { validateKeySchema, validateTable } from '../src/TableValidate';
 
 it('Validate ValidateTable exports', () => {
   expect(typeof validateKeySchema).toEqual('function');

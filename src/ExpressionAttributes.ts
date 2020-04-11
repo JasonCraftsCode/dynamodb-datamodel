@@ -1,19 +1,18 @@
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
-
-import { AttributeValue, AttributeValueMap } from './Common';
-
-export const validAttributeNameRegEx = /^[A-Za-z][A-Za-z0-9]*$/;
-export function isValidAttributeName(name: string) {
-  return validAttributeNameRegEx.test(name);
-}
+import { Table } from './Table';
 
 export class ExpressionAttributes {
+  static validAttributeNameRegEx = /^[A-Za-z][A-Za-z0-9]*$/;
+  static isValidAttributeName(name: string) {
+    return ExpressionAttributes.validAttributeNameRegEx.test(name);
+  }
+
   isReservedName: (name: string) => boolean = () => false;
   isValidName: (name: string) => boolean = () => false;
   treatNameAsPath: boolean = true;
   names: ExpressionAttributeNameMap = {};
   nextName: number = 0;
-  values: AttributeValueMap = {};
+  values: Table.AttributeValueMap = {};
   nextValue: number = 0;
 
   private addName(name: string) {
@@ -53,7 +52,7 @@ export class ExpressionAttributes {
     return this.addName(name);
   }
 
-  addValue(value: AttributeValue) {
+  addValue(value: Table.AttributeValue) {
     const name = `:v${this.nextValue++}`;
     this.values[name] = value;
     return name;

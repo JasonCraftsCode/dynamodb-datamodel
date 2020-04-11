@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
     "module": "commonjs",
-    "lib": ["es2017", "es7"],
-    "declaration": true,
+    "moduleResolution": "node",
+    "lib": ["es6", "es2015"],
     "outDir": "dist",
+    "declaration": true,
     "strict": true,
-    "sourceMap": true,
-    "removeComments": true,
+    // "sourceMap": true,
     "noImplicitAny": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "esModuleInterop": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "coverage", "dist", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/*"]

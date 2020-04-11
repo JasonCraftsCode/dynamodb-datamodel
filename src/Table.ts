@@ -1,11 +1,9 @@
-import { AWSError } from 'aws-sdk';
+import { AWSError, Response } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-
-import { BinaryValue, AttributeValueMap, Optional, PromiseResult } from './Common';
-import { Condition, buildConditionInput } from './Condition';
+import { Condition } from './Condition';
 import { ExpressionAttributes } from './ExpressionAttributes';
-import { KeyConditionExpression, buildKeyConditionInput } from './KeyCondition';
-import { UpdateMapValue, buildUpdateInput, UpdateExpression } from './Update';
+import { KeyConditionExpression, KeyCondition } from './KeyCondition';
+import { Update, UpdateExpression } from './Update';
 
 function getKeyName(keySchema: Table.PrimaryKeySchema, type: Table.PrimaryKeyType): string {
   let name = '';
@@ -16,30 +14,6 @@ function getKeyName(keySchema: Table.PrimaryKeySchema, type: Table.PrimaryKeyTyp
   });
   return name;
 }
-
-/*
-class AWSEnhancedError extends Error {
-  awsError: AWSError;
-  args: any[];
-  constructor(message: string, error: AWSError, args: any[]) {
-    super(message);
-    this.awsError = error;
-    this.args = args;
-  }
-}
-
-const functionFor = (target: any, name: string, targetName: string) => (...args: any[]) => {
-  const rethrow = (error: AWSError) => {
-    throw new AWSEnhancedError(`Error calling ${targetName}.${name}: ${error.message}`, error, args);
-  };
-  try {
-    const result = target[name](...args);
-    return result.promise ? result.promise().catch(rethrow) : result;
-  } catch (err) {
-    return rethrow(err);
-  }
-};
-*/
 
 export interface IndexBase {
   name: string;
@@ -58,8 +32,8 @@ export interface IndexBase {
   query(
     key: Table.PrimaryKeyQuery,
     options?: Table.QueryOptions,
-  ): Promise<PromiseResult<DocumentClient.QueryOutput, AWSError>>;
-  scan(options?: Table.ScanOptions): Promise<PromiseResult<DocumentClient.ScanOutput, AWSError>>;
+  ): Promise<Table.PromiseResult<DocumentClient.QueryOutput, AWSError>>;
+  scan(options?: Table.ScanOptions): Promise<Table.PromiseResult<DocumentClient.ScanOutput, AWSError>>;
 }
 
 export interface IndexParams<KEY> {
@@ -71,16 +45,16 @@ export interface IndexParams<KEY> {
   };
 }
 
-interface DefaultGlobalIndexKey {
+export interface DefaultGlobalIndexKey {
   G0P: Table.StringPartitionKey;
   G0S?: Table.StringSortKey;
 }
-/*
-interface DefaultLocalIndexKey {
+
+export interface DefaultLocalIndexKey {
   P: Table.StringPartitionKey;
   L0S?: Table.StringSortKey;
 }
-*/
+
 export class Index<KEY = DefaultGlobalIndexKey> implements IndexBase {
   name: string;
   keySchema: Table.PrimaryKeySchemaT<KEY>;
@@ -155,12 +129,12 @@ export interface TableBase {
   deleteParams(key: Table.PrimaryKeyValueMap, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
   putParams(
     key: Table.PrimaryKeyValueMap,
-    item?: AttributeValueMap,
+    item?: Table.AttributeValueMap,
     options?: Table.PutOptions,
   ): DocumentClient.PutItemInput;
   updateParams(
     key: Table.PrimaryKeyValueMap,
-    item?: UpdateMapValue,
+    item?: Update.UpdateMapValue,
     options?: Table.UpdateOptions,
   ): DocumentClient.UpdateItemInput;
   queryParams(key: Table.PrimaryKeyQuery, options?: Table.QueryOptions): DocumentClient.QueryInput;
@@ -170,22 +144,22 @@ export interface TableBase {
   delete(
     key: Table.PrimaryKeyValueMap,
     options?: Table.DeleteOptions,
-  ): Promise<PromiseResult<DocumentClient.DeleteItemOutput, AWSError>>;
+  ): Promise<Table.PromiseResult<DocumentClient.DeleteItemOutput, AWSError>>;
   put(
     key: Table.PrimaryKeyValueMap,
-    item?: AttributeValueMap,
+    item?: Table.AttributeValueMap,
     options?: Table.PutOptions,
-  ): Promise<PromiseResult<DocumentClient.PutItemOutput, AWSError>>;
+  ): Promise<Table.PromiseResult<DocumentClient.PutItemOutput, AWSError>>;
   update(
     key: Table.PrimaryKeyValueMap,
-    item?: UpdateMapValue,
+    item?: Update.UpdateMapValue,
     options?: Table.UpdateOptions,
-  ): Promise<PromiseResult<DocumentClient.UpdateItemOutput, AWSError>>;
+  ): Promise<Table.PromiseResult<DocumentClient.UpdateItemOutput, AWSError>>;
   query(
     key: Table.PrimaryKeyQuery,
     options?: Table.QueryOptions,
-  ): Promise<PromiseResult<DocumentClient.QueryOutput, AWSError>>;
-  scan(options?: Table.ScanOptions): Promise<PromiseResult<DocumentClient.ScanOutput, AWSError>>;
+  ): Promise<Table.PromiseResult<DocumentClient.QueryOutput, AWSError>>;
+  scan(options?: Table.ScanOptions): Promise<Table.PromiseResult<DocumentClient.ScanOutput, AWSError>>;
 }
 
 export interface TableParams<KEY, ATTRIBUTES> {
@@ -199,7 +173,7 @@ export interface TableParams<KEY, ATTRIBUTES> {
 }
 
 // StringSortKey should be optional (?) since for update actions it is optional
-interface DefaultTableKey {
+export interface DefaultTableKey {
   P: Table.StringPartitionKey;
   S?: Table.StringSortKey;
 }
@@ -258,16 +232,16 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   }
   putParams(
     key: Table.PrimaryKeyValueMapT<KEY>,
-    item?: AttributeValueMap,
+    item?: Table.AttributeValueMap,
     { client, attributes, writeOptions, ...options }: Table.PutOptions = {},
   ): DocumentClient.PutItemInput {
     let condInput;
     switch (writeOptions) {
       case 'Exists':
-        condInput = buildConditionInput(Condition.exists(this.getPartitionKey()), attributes);
+        condInput = Condition.buildInput(Condition.exists(this.getPartitionKey()), attributes);
         break;
       case 'NotExists':
-        condInput = buildConditionInput(Condition.notExists(this.getPartitionKey()), attributes);
+        condInput = Condition.buildInput(Condition.notExists(this.getPartitionKey()), attributes);
         break;
       default:
         condInput = undefined;
@@ -282,13 +256,13 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   }
   updateParams(
     key: Table.PrimaryKeyValueMapT<KEY>,
-    item?: UpdateMapValue,
+    item?: Update.UpdateMapValue,
     { client, attributes, ...options }: Table.UpdateOptions = {},
   ): DocumentClient.UpdateItemInput {
     return {
       TableName: this.name,
       Key: key,
-      ...buildUpdateInput(item, new UpdateExpression(attributes)),
+      ...Update.buildInput(item, new UpdateExpression(attributes)),
       ...options,
     };
   }
@@ -298,7 +272,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   ): DocumentClient.QueryInput {
     return {
       TableName: this.name,
-      ...buildKeyConditionInput(key, new KeyConditionExpression(attributes)),
+      ...KeyCondition.buildInput(key, new KeyConditionExpression(attributes)),
       ...options,
     };
   }
@@ -318,11 +292,11 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
     const params = this.deleteParams(key, options);
     return this.client!.delete(params).promise();
   }
-  put(key: Table.PrimaryKeyValueMapT<KEY>, items?: AttributeValueMap, options?: Table.PutOptions) {
+  put(key: Table.PrimaryKeyValueMapT<KEY>, items?: Table.AttributeValueMap, options?: Table.PutOptions) {
     const params = this.putParams(key, items, options);
     return this.client!.put(params).promise();
   }
-  update(key: Table.PrimaryKeyValueMapT<KEY>, items?: UpdateMapValue, options?: Table.UpdateOptions) {
+  update(key: Table.PrimaryKeyValueMapT<KEY>, items?: Update.UpdateMapValue, options?: Table.UpdateOptions) {
     const params = this.updateParams(key, items, options);
     return this.client!.update(params).promise();
   }
@@ -337,6 +311,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   }
 }
 
+/* tslint:disable:no-namespace */
 export namespace Table {
   // Omit legacy attributes
   type GetInput = Omit<DocumentClient.GetItemInput, 'AttributesToGet'>;
@@ -353,60 +328,11 @@ export namespace Table {
 
   // ScalarAttributeType
   export type PrimaryAttributeType = 'B' | 'N' | 'S';
-  /*
-  export const PrimaryAttribute = { Binary: 'B', Number: 'N', String: 'S' };
-  Object.freeze(PrimaryAttribute);
-  export enum PrimaryAttributeType {
-    Binary = 'B',
-    Number = 'N',
-    String = 'S',
-  }
-  */
 
   // KeyType
   export type PrimaryKeyType = 'HASH' | 'RANGE';
-  // export const PrimaryKey = { Partition: 'HASH', Sort: 'RANGE' }; Object.freeze(PrimaryKey);
-  /*
-  export enum PrimaryKeyType {
-    Hash = 'HASH',
-    Range = 'RANGE',
-  }
-  */
-
   export type SortComparisonOperator = '=' | '<' | '<=' | '>' | '>=' | 'BETWEEN' | 'begins_with';
-  /*
-  export const SortComparisionOperator = {
-    EqualL: '=',
-    LessThen: '<',
-    LessThenEqual: '<=',
-    GreaterThen: '>',
-    GreaterThenEqual: '>=',
-    Between: 'BETWEEN',
-    BeginsWidth: 'begins_with',
-  };
-
-  // ComparisonOperator (minus )
-  export enum SortComparisonOperator {
-    Equal = '=',
-    LessThen = '<',
-    LessThenEqual = '<=',
-    GreaterThen = '>',
-    GreaterThenEqual = '>=',
-    Between = 'BETWEEN',
-    BeginsWidth = 'begins_with',
-  }
-  */
-
   export type ProjectionType = 'ALL' | 'KEYS_ONLY' | 'INCLUDE';
-  // export const ProjectionType = { All: 'ALL', KeysOnly: 'KEYS_ONLY', Include: 'INCLUDE' }; Object.freeze(ProjectionType);
-  // ProjectionType
-  /*
-  export enum ProjectionType {
-    All = 'ALL',
-    KeysOnly = 'KEYS_ONLY',
-    Include = 'INCLUDE',
-  }
-  */
 
   export type ValueKeyConditionBase<T extends PrimaryAttributeType> = (
     name: string,
@@ -484,4 +410,46 @@ export namespace Table {
   export interface UpdateOptions extends BaseOptions, Optional<UpdateInput> {}
   export interface QueryOptions extends BaseOptions, Optional<QueryInput> {}
   export interface ScanOptions extends BaseOptions, Optional<ScanInput> {}
+
+  export type AttributeType = 'B' | 'N' | 'S' | 'BOOL' | 'NULL' | 'L' | 'M' | 'BS' | 'NS' | 'SS';
+  export type CompareOperator = '=' | '<>' | '<' | '<=' | '>' | '>=';
+  export type LogicalOperator = 'AND' | 'OR' | 'NOT';
+  export type ConditionOperator =
+    | CompareOperator
+    | 'BETWEEN'
+    | 'IN'
+    | 'begins_with'
+    | 'contains'
+    | 'attribute_type'
+    | 'attribute_exists'
+    | 'attribute_not_exists'
+    | 'size'
+    | LogicalOperator;
+
+  export type PromiseResult<D, E> = D & { $response: Response<D, E> };
+
+  export type Optional<T> = { [P in keyof T]?: T[P] };
+
+  export type BinaryValue = DocumentClient.binaryType;
+  export type StringSetValue = DocumentClient.StringSet;
+  export type NumberSetValue = DocumentClient.NumberSet;
+  export type BinarySetValue = DocumentClient.BinarySet;
+  export type MapValue = { [key: string]: AttributeValue };
+  export type ListValue = AttributeValue[];
+
+  export type AttributeValue =
+    | null
+    | string
+    | number
+    | boolean
+    | BinaryValue
+    | StringSetValue
+    | NumberSetValue
+    | BinarySetValue
+    | MapValue
+    | ListValue;
+
+  export type AttributeSetValue = StringSetValue | NumberSetValue | BinarySetValue;
+
+  export type AttributeValueMap = { [key: string]: AttributeValue };
 }

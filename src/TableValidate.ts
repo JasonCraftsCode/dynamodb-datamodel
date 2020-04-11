@@ -1,17 +1,18 @@
 import { Table, IndexBase } from './Table';
 
 // Validate:
-// - Table initialize
-// - Index initialize
-// - params & action args (key and params)
+// X Table initialize
+// X Index initialize
+// - Params & action args (key and params)
+// - Table and Index name (regex)
+// - Attribute names (regex)
 
-// move all validation in to separate npm package
 export interface KeyName {
   pk?: string;
   sk?: string;
 }
 
-function validateKeyAttribute<ATTRIBUTES extends { [index: string]: any }>(
+export function validateKeyAttribute<ATTRIBUTES extends { [index: string]: any }>(
   keyAttributes: Table.PrimaryAttributeDefinitionsT<ATTRIBUTES>,
   name: string,
   onError: (msg: string) => void,
@@ -54,7 +55,7 @@ export function validateKeySchema<
   return { pk, sk };
 }
 
-function validateIndexes(index: IndexBase, names: Set<string>, onError: (msg: string) => void) {
+export function validateIndexes(index: IndexBase, names: Set<string>, onError: (msg: string) => void) {
   if (!index.name) onError(`Global index must have a name`);
   if (names.has(index.name)) onError(`Duplicate index name '${index.name}'`);
   names.add(index.name);

@@ -1,15 +1,14 @@
-import { ExpressionAttributes, isValidAttributeName } from '../src/ExpressionAttributes';
+import { ExpressionAttributes } from '../src/ExpressionAttributes';
 
 it('Validate ExpressionAttributes exports', () => {
   expect(typeof ExpressionAttributes).toBe('function');
-  expect(typeof isValidAttributeName).toBe('function');
 });
 
 it('Validate isValidAttributeName ', () => {
-  expect(isValidAttributeName('a')).toBeTruthy();
-  expect(isValidAttributeName('a0')).toBeTruthy();
-  expect(isValidAttributeName('0')).toBeFalsy();
-  expect(isValidAttributeName('-')).toBeFalsy();
+  expect(ExpressionAttributes.isValidAttributeName('a')).toBeTruthy();
+  expect(ExpressionAttributes.isValidAttributeName('a0')).toBeTruthy();
+  expect(ExpressionAttributes.isValidAttributeName('0')).toBeFalsy();
+  expect(ExpressionAttributes.isValidAttributeName('-')).toBeFalsy();
 });
 
 describe('Validate ExpressionAttributes', () => {

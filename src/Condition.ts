@@ -1,153 +1,29 @@
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
-import { AttributeValue, AttributeValueMap, AttributeType, ConditionOperator } from './Common';
 import { ExpressionAttributes } from './ExpressionAttributes';
+import { Table } from './Table';
 
-// TODO: Use schema to validate path types.
-export function buildCondition(path: string, op: ConditionOperator, operands?: string[]) {
-  switch (op) {
-    case ConditionOperator.Equal:
-    case ConditionOperator.NotEqual:
-    case ConditionOperator.LessThen:
-    case ConditionOperator.LessThenEqual:
-    case ConditionOperator.GreaterThen:
-    case ConditionOperator.GreaterThenEqual:
-      return `${path} ${op} ${operands![0]}`;
-
-    case ConditionOperator.And:
-    case ConditionOperator.Or:
-      return `(${path} ${op} ${operands!.join(` ${op} `)})`;
-
-    case ConditionOperator.Not:
-      return `(${op} ${path})`;
-
-    case ConditionOperator.Between:
-      return `${path} ${op} ${operands![0]} AND ${operands![1]}`;
-
-    case ConditionOperator.In:
-      // TODO: cap operands to 100
-      return `${path} ${op} (${operands!.join(', ')})`;
-
-    case ConditionOperator.BeginsWith:
-    case ConditionOperator.Contains:
-    case ConditionOperator.Type:
-      return `${op}(${path}, ${operands![0]})`;
-
-    case ConditionOperator.Exists:
-    case ConditionOperator.NotExists:
-    case ConditionOperator.Size:
-      return `${op}(${path})`;
-  }
-  // throw new Error(`Invalid ConditionOperator ${op}`);
-}
-
-export interface BasicCondition {
-  readonly op: ConditionOperator;
-  buildExpression(attrs: ExpressionAttributes): string;
-}
-
-export class LogicalCondition implements BasicCondition {
-  readonly op: ConditionOperator;
-  readonly conds: BasicCondition[];
-
-  private constructor(op: ConditionOperator, conds: BasicCondition[]) {
-    this.op = op;
-    this.conds = conds;
+export class Condition {
+  static isFunction(value: any): value is Condition.ConditionFunction {
+    return typeof value === 'function';
   }
 
-  isAnd() {
-    return this.op === ConditionOperator.And;
+  static addPath(path: Condition.ConditionPath, exp: ExpressionAttributes): string {
+    return Condition.isFunction(path) ? path(exp) : exp.addPath(path);
   }
 
-  isOr() {
-    return this.op === ConditionOperator.Or;
+  static addValues(values: Condition.ConditionValue[], exp: ExpressionAttributes): string[] {
+    return values.map((value) => (Condition.isFunction(value) ? value(exp) : exp.addValue(value)));
   }
 
-  isNot() {
-    return this.op === ConditionOperator.Not;
+  static compare(left: Condition.ConditionPath, op: Table.CompareOperator, right: Condition.ConditionValue) {
+    return (exp: ExpressionAttributes) => {
+      const path = Condition.addPath(left, exp);
+      const value = Condition.addValues([right], exp);
+      return `${path} ${op} ${value}`;
+    };
   }
 
-  add(cond: BasicCondition) {
-    if (this.isNot()) throw new Error('Not only supports a single condition');
-    this.conds.push(cond);
-    return this;
-  }
-
-  buildExpression(exp: ExpressionAttributes): string {
-    const exps = this.conds.map((cond) => {
-      switch (cond.op) {
-        case ConditionOperator.And:
-        case ConditionOperator.Not:
-        case ConditionOperator.Or:
-          return `(${cond.buildExpression(exp)})`;
-        default:
-          return cond.buildExpression(exp);
-      }
-    });
-    const op = this.op;
-    if (this.isNot()) {
-      if (exps.length !== 1) throw new Error(`${op} has ${exps.length} conditions`);
-      return `${op} ${exps[0]}`;
-    }
-    if (exps.length < 2) throw new Error(`${op} only has ${exps.length} conditions`);
-    return exps.join(` ${op} `);
-  }
-
-  static and(cond: BasicCondition[]) {
-    return new LogicalCondition(ConditionOperator.And, cond);
-  }
-
-  static or(cond: BasicCondition[]) {
-    return new LogicalCondition(ConditionOperator.Or, cond);
-  }
-
-  static not(cond: BasicCondition) {
-    return new LogicalCondition(ConditionOperator.Not, [cond]);
-  }
-}
-
-/*
-class ConditionExpression {
-  attrs: ExpressionAttributes;
-
-  constructor(attrs: ExpressionAttributes) {
-    this.attrs = attrs;
-  }
-
-  addPath(path: string) {
-    return this.attrs.addPath(path);
-  }
-  addValue(value: AttributeValue) {
-    return this.attrs.addValue(value);
-  }
-}
-*/
-
-export type ConditionFunction = (exp: ExpressionAttributes, type?: string) => string;
-export function IsConditionFunction(value: any): value is ConditionFunction {
-  return typeof value === 'function';
-}
-
-export type ConditionValue = AttributeValue | ConditionFunction;
-export type ConditionPath = string | ConditionFunction;
-
-export class Condition implements BasicCondition {
-  readonly op: ConditionOperator;
-  readonly left: ConditionPath;
-  readonly values: ConditionValue[];
-
-  private constructor(left: ConditionPath, op: ConditionOperator, values: ConditionValue[] = []) {
-    this.op = op;
-    this.left = left;
-    this.values = values;
-  }
-
-  buildExpression(exp: ExpressionAttributes): string {
-    const path = IsConditionFunction(this.left) ? this.left(exp) : exp.addPath(this.left);
-    const operands = this.values.map((value) => (IsConditionFunction(value) ? value(exp) : exp.addValue(value)));
-    return buildCondition(path, this.op, operands);
-  }
-
-  static path(value: string): ConditionFunction {
+  static path(value: string): Condition.ConditionFunction {
     return (exp: ExpressionAttributes) => {
       return exp.addPath(value);
     };
@@ -159,87 +35,128 @@ export class Condition implements BasicCondition {
   //  - *Set: number of elements in set
   //  - Map: number of child elements
   //  - List: number of child elements
-  static size(path: string): ConditionFunction {
+  static size(path: string): Condition.ConditionFunction {
     return (exp: ExpressionAttributes) => {
       return `size(${exp.addPath(path)})`;
     };
   }
 
-  static eq(left: ConditionPath, right: ConditionValue): Condition {
-    return new Condition(left, ConditionOperator.Equal, [right]);
+  static eq(left: Condition.ConditionPath, right: Condition.ConditionValue): Condition.ConditionFunction {
+    return Condition.compare(left, '=', right);
   }
   static equal = Condition.eq;
 
-  static ne(left: ConditionPath, right: ConditionValue): Condition {
-    return new Condition(left, ConditionOperator.NotEqual, [right]);
+  static ne(left: Condition.ConditionPath, right: Condition.ConditionValue): Condition.ConditionFunction {
+    return Condition.compare(left, '<>', right);
   }
   static notEqual = Condition.ne;
 
-  static lt(left: ConditionPath, right: ConditionValue): Condition {
-    return new Condition(left, ConditionOperator.LessThen, [right]);
+  static lt(left: Condition.ConditionPath, right: Condition.ConditionValue): Condition.ConditionFunction {
+    return Condition.compare(left, '<', right);
   }
   static lessThen = Condition.lt;
 
-  static le(left: ConditionPath, right: ConditionValue): Condition {
-    return new Condition(left, ConditionOperator.LessThenEqual, [right]);
+  static le(left: Condition.ConditionPath, right: Condition.ConditionValue): Condition.ConditionFunction {
+    return Condition.compare(left, '<=', right);
   }
   static lessThenEqual = Condition.le;
 
-  static gt(left: ConditionPath, right: ConditionValue): Condition {
-    return new Condition(left, ConditionOperator.GreaterThen, [right]);
+  static gt(left: Condition.ConditionPath, right: Condition.ConditionValue): Condition.ConditionFunction {
+    return Condition.compare(left, '>', right);
   }
   static greaterThen = Condition.gt;
 
-  static ge(left: ConditionPath, right: ConditionValue): Condition {
-    return new Condition(left, ConditionOperator.GreaterThenEqual, [right]);
+  static ge(left: Condition.ConditionPath, right: Condition.ConditionValue): Condition.ConditionFunction {
+    return Condition.compare(left, '>=', right);
   }
   static greaterThenEqual = Condition.ge;
 
-  static between(path: string, from: ConditionValue, to: ConditionValue): Condition {
-    return new Condition(path, ConditionOperator.Between, [from, to]);
+  static between(
+    path: string,
+    from: Condition.ConditionValue,
+    to: Condition.ConditionValue,
+  ): Condition.ConditionFunction {
+    return (exp: ExpressionAttributes) => {
+      return `${exp.addPath(path)} BETWEEN ${Condition.addValues([from, to], exp).join(' AND ')}`;
+    };
   }
 
-  static in(path: string, value: ConditionValue[]): Condition {
-    return new Condition(path, ConditionOperator.In, value);
+  static in(path: string, values: Condition.ConditionValue[]): Condition.ConditionFunction {
+    return (exp: ExpressionAttributes) => {
+      return `${exp.addPath(path)} IN (${Condition.addValues(values, exp).join(', ')})`;
+    };
   }
 
   // Supported Types: String, *Set
-  static contains(path: string, value: string): Condition {
-    return new Condition(path, ConditionOperator.Contains, [value]);
+  static contains(path: string, value: string): Condition.ConditionFunction<'S' | 'SS' | 'NS' | 'BS'> {
+    return (exp: ExpressionAttributes, type?: 'S' | 'SS' | 'NS' | 'BS') => {
+      return `contains(${exp.addPath(path)}, ${exp.addValue(value)})`;
+    };
   }
 
   // Supported Types: String
-  static beginsWith(path: string, value: string): Condition {
-    return new Condition(path, ConditionOperator.BeginsWith, [value]);
+  static beginsWith(path: string, value: string): Condition.ConditionFunction<'S'> {
+    return (exp: ExpressionAttributes, type?: 'S') => {
+      return `begins_with(${exp.addPath(path)}, ${exp.addValue(value)})`;
+    };
   }
 
-  static type(path: string, type: AttributeType): Condition {
-    return new Condition(path, ConditionOperator.Type, [type]);
+  static type(path: string, type: Table.AttributeType): Condition.ConditionFunction {
+    return (exp: ExpressionAttributes) => {
+      return `attribute_type(${exp.addPath(path)}, ${exp.addValue(type)})`;
+    };
   }
 
-  static exists(path: string): Condition {
-    return new Condition(path, ConditionOperator.Exists);
+  static exists(path: string): Condition.ConditionFunction {
+    return (exp: ExpressionAttributes) => {
+      return `attribute_exists(${exp.addPath(path)})`;
+    };
   }
 
-  static notExists(path: string): Condition {
-    return new Condition(path, ConditionOperator.NotExists);
+  static notExists(path: string): Condition.ConditionFunction {
+    return (exp: ExpressionAttributes) => {
+      return `attribute_not_exists(${exp.addPath(path)})`;
+    };
+  }
+
+  static and(conds: Condition.ConditionFunction[]): Condition.ConditionFunction {
+    return (exp: ExpressionAttributes) => {
+      return `(${conds.map((cond) => cond(exp)).join(` AND `)})`;
+    };
+  }
+
+  static or(conds: Condition.ConditionFunction[]): Condition.ConditionFunction {
+    return (exp: ExpressionAttributes) => {
+      return `(${conds.map((cond) => cond(exp)).join(` OR `)})`;
+    };
+  }
+
+  static not(cond: Condition.ConditionFunction): Condition.ConditionFunction {
+    return (exp: ExpressionAttributes) => {
+      return `(NOT ${cond(exp)})`;
+    };
+  }
+
+  static buildInput(
+    cond: Condition.ConditionFunction,
+    exp = new ExpressionAttributes(),
+  ): {
+    ConditionExpression: string;
+    ExpressionAttributeNames: ExpressionAttributeNameMap;
+    ExpressionAttributeValues: Table.AttributeValueMap;
+  } {
+    const condExp = cond(exp);
+    return {
+      ConditionExpression: condExp,
+      ExpressionAttributeNames: exp.getPaths(),
+      ExpressionAttributeValues: exp.getValues(),
+    };
   }
 }
 
-export function buildConditionInput(
-  cond: BasicCondition,
-  exp = new ExpressionAttributes(),
-):
-  | {
-      ConditionExpression: string;
-      ExpressionAttributeNames: ExpressionAttributeNameMap;
-      ExpressionAttributeValues: AttributeValueMap;
-    }
-  | undefined {
-  const condExp = cond.buildExpression(exp);
-  return {
-    ConditionExpression: condExp,
-    ExpressionAttributeNames: exp.getPaths(),
-    ExpressionAttributeValues: exp.getValues(),
-  };
+/* tslint:disable:no-namespace */
+namespace Condition {
+  export type ConditionFunction<T = Table.AttributeType> = (exp: ExpressionAttributes, type?: T) => string;
+  export type ConditionValue = Table.AttributeValue | ConditionFunction;
+  export type ConditionPath = string | ConditionFunction;
 }

@@ -1,45 +1,72 @@
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
-import { AttributeValueMap } from './Common';
-import { Table } from './Table';
 import { ExpressionAttributes } from './ExpressionAttributes';
+import { Table } from './Table';
 
-export class SortKey {
+export class KeyCondition {
   static eq<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>('=', value);
+    return KeyCondition.op<T>('=', value);
   }
-  static equal = SortKey.eq;
+  static equal = KeyCondition.eq;
 
   static lt<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>('<', value);
+    return KeyCondition.op<T>('<', value);
   }
-  static lessThen = SortKey.lt;
+  static lessThen = KeyCondition.lt;
 
   static le<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>('<=', value);
+    return KeyCondition.op<T>('<=', value);
   }
-  static lessThenEqual = SortKey.le;
+  static lessThenEqual = KeyCondition.le;
 
   static gt<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>('>', value);
+    return KeyCondition.op<T>('>', value);
   }
-  static greaterThen = SortKey.gt;
+  static greaterThen = KeyCondition.gt;
 
   static ge<T extends Table.PrimaryAttributeValue>(value: T) {
-    return SortKey.op<T>('>=', value);
+    return KeyCondition.op<T>('>=', value);
   }
-  static greaterThenEqual = SortKey.ge;
+  static greaterThenEqual = KeyCondition.ge;
 
   static between<T extends Table.PrimaryAttributeValue>(value: T, and: T) {
-    return SortKey.op<T>('BETWEEN', value, and);
+    return KeyCondition.op<T>('BETWEEN', value, and);
   }
 
   static beginsWith(value: string) {
-    return SortKey.op<string>('begins_with', value);
+    return KeyCondition.op<string>('begins_with', value);
   }
 
   static op<T extends Table.PrimaryAttributeValue>(op: Table.SortComparisonOperator, value: T, and?: T) {
     return (name: string, exp: KeyConditionExpression, type?: Table.PrimaryAttributeType): void => {
       exp.addSortCondition(name, op, value, and);
+    };
+  }
+
+  static buildExpression(key: Table.PrimaryKeyQuery, exp: KeyConditionExpression): string {
+    Object.keys(key).forEach((name) => {
+      const value = key[name];
+      if (typeof value === 'function') {
+        value(name, exp);
+      } else {
+        exp.addEqualCondition(name, value);
+      }
+    });
+    return exp.getExpression();
+  }
+
+  static buildInput(
+    key: Table.PrimaryKeyQuery,
+    exp = new KeyConditionExpression(),
+  ): {
+    KeyConditionExpression: string;
+    ExpressionAttributeNames: ExpressionAttributeNameMap;
+    ExpressionAttributeValues: Table.AttributeValueMap;
+  } {
+    const keyCond = KeyCondition.buildExpression(key, exp);
+    return {
+      KeyConditionExpression: keyCond,
+      ExpressionAttributeNames: exp.attributes.getPaths(),
+      ExpressionAttributeValues: exp.attributes.getValues(),
     };
   }
 }
@@ -98,34 +125,4 @@ export class KeyConditionExpression {
   getExpression() {
     return this.conditions.join(' AND ');
   }
-}
-
-export function buildKeyConditionExpression(key: Table.PrimaryKeyQuery, exp: KeyConditionExpression): string {
-  Object.keys(key).forEach((name) => {
-    const value = key[name];
-    if (typeof value === 'function') {
-      value(name, exp);
-    } else {
-      exp.addEqualCondition(name, value);
-    }
-  });
-  return exp.getExpression();
-}
-
-export function buildKeyConditionInput(
-  key: Table.PrimaryKeyQuery,
-  exp = new KeyConditionExpression(),
-):
-  | {
-      KeyConditionExpression: string;
-      ExpressionAttributeNames: ExpressionAttributeNameMap;
-      ExpressionAttributeValues: AttributeValueMap;
-    }
-  | undefined {
-  const keyCond = buildKeyConditionExpression(key, exp);
-  return {
-    KeyConditionExpression: keyCond,
-    ExpressionAttributeNames: exp.attributes.getPaths(),
-    ExpressionAttributeValues: exp.attributes.getValues(),
-  };
 }

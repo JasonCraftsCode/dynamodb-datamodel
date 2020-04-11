@@ -30,7 +30,7 @@
   "scripts": {
     "build": "tsc",
     "build:check": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "test": "jest --no-cache --rootDir ./",
     "test:coverage": "jest --no-cache --rootDir ./ --coverage",

@@ -1,14 +1,14 @@
-import { SortKey, KeyConditionExpression, buildKeyConditionInput } from '../src/KeyCondition';
+import { KeyCondition, KeyConditionExpression } from '../src/KeyCondition';
 
 it('Validate Condition exports', () => {
-  expect(typeof SortKey).toEqual('function');
+  expect(typeof KeyCondition).toEqual('function');
   expect(typeof KeyConditionExpression).toEqual('function');
-  expect(typeof buildKeyConditionInput).toEqual('function');
+  expect(typeof KeyCondition.buildInput).toEqual('function');
 });
 
-describe('Validate SortKey', () => {
+describe('Validate KeyCondition', () => {
   it('eq', () => {
-    expect(buildKeyConditionInput({ P: SortKey.eq('keyvalue') })).toEqual({
+    expect(KeyCondition.buildInput({ P: KeyCondition.eq('keyvalue') })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 'keyvalue' },
       KeyConditionExpression: '#n0 = :v0',
@@ -16,7 +16,7 @@ describe('Validate SortKey', () => {
   });
 
   it('lt', () => {
-    expect(buildKeyConditionInput({ P: SortKey.lt(4) })).toEqual({
+    expect(KeyCondition.buildInput({ P: KeyCondition.lt(4) })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 4 },
       KeyConditionExpression: '#n0 < :v0',
@@ -24,7 +24,7 @@ describe('Validate SortKey', () => {
   });
 
   it('le', () => {
-    expect(buildKeyConditionInput({ P: SortKey.le(6) })).toEqual({
+    expect(KeyCondition.buildInput({ P: KeyCondition.le(6) })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 6 },
       KeyConditionExpression: '#n0 <= :v0',
@@ -32,7 +32,7 @@ describe('Validate SortKey', () => {
   });
 
   it('gt', () => {
-    expect(buildKeyConditionInput({ P: SortKey.gt(8) })).toEqual({
+    expect(KeyCondition.buildInput({ P: KeyCondition.gt(8) })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 8 },
       KeyConditionExpression: '#n0 > :v0',
@@ -40,7 +40,7 @@ describe('Validate SortKey', () => {
   });
 
   it('ge', () => {
-    expect(buildKeyConditionInput({ P: SortKey.ge(10) })).toEqual({
+    expect(KeyCondition.buildInput({ P: KeyCondition.ge(10) })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 10 },
       KeyConditionExpression: '#n0 >= :v0',
@@ -48,7 +48,7 @@ describe('Validate SortKey', () => {
   });
 
   it('between', () => {
-    expect(buildKeyConditionInput({ P: SortKey.between('a', 'z') })).toEqual({
+    expect(KeyCondition.buildInput({ P: KeyCondition.between('a', 'z') })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 'a', ':v1': 'z' },
       KeyConditionExpression: '#n0 BETWEEN :v0 AND :v1',
@@ -56,31 +56,31 @@ describe('Validate SortKey', () => {
   });
 
   it('beginsWith', () => {
-    expect(buildKeyConditionInput({ P: SortKey.beginsWith('abc') })).toEqual({
+    expect(KeyCondition.buildInput({ P: KeyCondition.beginsWith('abc') })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 'abc' },
       KeyConditionExpression: 'begins_with(#n0, :v0)',
     });
   });
 
-  it('buildKeyConditionInput with KeyConditionExpression', () => {
-    expect(buildKeyConditionInput({ P: SortKey.eq('with exp') }, new KeyConditionExpression())).toEqual({
+  it('SortKey.buildInput with KeyConditionExpression', () => {
+    expect(KeyCondition.buildInput({ P: KeyCondition.eq('with exp') }, new KeyConditionExpression())).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 'with exp' },
       KeyConditionExpression: '#n0 = :v0',
     });
   });
 
-  it('buildKeyConditionInput with 2 keys', () => {
-    expect(buildKeyConditionInput({ P: 'abc', S: SortKey.beginsWith('with exp') })).toEqual({
+  it('SortKey.buildInput with 2 keys', () => {
+    expect(KeyCondition.buildInput({ P: 'abc', S: KeyCondition.beginsWith('with exp') })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P', '#n1': 'S' },
       ExpressionAttributeValues: { ':v0': 'abc', ':v1': 'with exp' },
       KeyConditionExpression: '#n0 = :v0 AND begins_with(#n1, :v1)',
     });
   });
 
-  it('buildKeyConditionInput with 3 keys', () => {
-    expect(buildKeyConditionInput({ P: 'abc', S: SortKey.beginsWith('with exp'), E: 'extrakey' })).toEqual({
+  it('SortKey.buildInput with 3 keys', () => {
+    expect(KeyCondition.buildInput({ P: 'abc', S: KeyCondition.beginsWith('with exp'), E: 'extrakey' })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P', '#n1': 'S', '#n2': 'E' },
       ExpressionAttributeValues: { ':v0': 'abc', ':v1': 'with exp', ':v2': 'extrakey' },
       KeyConditionExpression: '#n0 = :v0 AND begins_with(#n1, :v1)',
