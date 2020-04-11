@@ -36,26 +36,7 @@ export interface IndexBase {
   scan(options?: Table.ScanOptions): Promise<Table.PromiseResult<DocumentClient.ScanOutput, AWSError>>;
 }
 
-export interface IndexParams<KEY> {
-  name: string;
-  keySchema: Table.PrimaryKeySchemaT<KEY>;
-  projection: {
-    type: Table.ProjectionType;
-    attributes?: string[];
-  };
-}
-
-export interface DefaultGlobalIndexKey {
-  G0P: Table.StringPartitionKey;
-  G0S?: Table.StringSortKey;
-}
-
-export interface DefaultLocalIndexKey {
-  P: Table.StringPartitionKey;
-  L0S?: Table.StringSortKey;
-}
-
-export class Index<KEY = DefaultGlobalIndexKey> implements IndexBase {
+export class Index<KEY = Table.DefaultGlobalIndexKey> implements IndexBase {
   name: string;
   keySchema: Table.PrimaryKeySchemaT<KEY>;
   projection: {
@@ -64,7 +45,7 @@ export class Index<KEY = DefaultGlobalIndexKey> implements IndexBase {
   };
   private table?: TableBase;
 
-  constructor(params: IndexParams<KEY>) {
+  constructor(params: Table.IndexParams<KEY>) {
     this.name = params.name;
     this.keySchema = params.keySchema;
     this.projection = params.projection;
@@ -162,23 +143,7 @@ export interface TableBase {
   scan(options?: Table.ScanOptions): Promise<Table.PromiseResult<DocumentClient.ScanOutput, AWSError>>;
 }
 
-export interface TableParams<KEY, ATTRIBUTES> {
-  name: string;
-  keyAttributes: Table.PrimaryAttributeDefinitionsT<ATTRIBUTES>;
-  keySchema: Table.PrimaryKeySchemaT<KEY>;
-  globalIndexes?: IndexBase[];
-  localIndexes?: IndexBase[];
-  client: DocumentClient;
-  onError?: (msg: string) => void;
-}
-
-// StringSortKey should be optional (?) since for update actions it is optional
-export interface DefaultTableKey {
-  P: Table.StringPartitionKey;
-  S?: Table.StringSortKey;
-}
-
-export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase {
+export class Table<KEY = Table.DefaultTableKey, ATTRIBUTES = KEY> implements TableBase {
   name: string;
   keyAttributes: Table.PrimaryAttributeDefinitionsT<ATTRIBUTES>;
   keySchema: Table.PrimaryKeySchemaT<KEY>;
@@ -189,7 +154,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
     throw new Error(msg);
   };
 
-  constructor(params: TableParams<KEY, ATTRIBUTES>) {
+  constructor(params: Table.TableParams<KEY, ATTRIBUTES>) {
     // validateTable(params);
     this.name = params.name;
     this.keyAttributes = params.keyAttributes;
@@ -313,6 +278,41 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
 
 /* tslint:disable:no-namespace */
 export namespace Table {
+  export interface IndexParams<KEY> {
+    name: string;
+    keySchema: Table.PrimaryKeySchemaT<KEY>;
+    projection: {
+      type: Table.ProjectionType;
+      attributes?: string[];
+    };
+  }
+
+  export interface DefaultGlobalIndexKey {
+    G0P: Table.StringPartitionKey;
+    G0S?: Table.StringSortKey;
+  }
+
+  export interface DefaultLocalIndexKey {
+    P: Table.StringPartitionKey;
+    L0S?: Table.StringSortKey;
+  }
+
+  export interface TableParams<KEY, ATTRIBUTES> {
+    name: string;
+    keyAttributes: Table.PrimaryAttributeDefinitionsT<ATTRIBUTES>;
+    keySchema: Table.PrimaryKeySchemaT<KEY>;
+    globalIndexes?: IndexBase[];
+    localIndexes?: IndexBase[];
+    client: DocumentClient;
+    onError?: (msg: string) => void;
+  }
+
+  // StringSortKey should be optional (?) since for update actions it is optional
+  export interface DefaultTableKey {
+    P: Table.StringPartitionKey;
+    S?: Table.StringSortKey;
+  }
+
   // Omit legacy attributes
   type GetInput = Omit<DocumentClient.GetItemInput, 'AttributesToGet'>;
   type PutInput = Omit<DocumentClient.PutItemInput, 'Expected' | 'ConditionalOperator'>;

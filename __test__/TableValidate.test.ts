@@ -1,4 +1,4 @@
-import { Table, Index, IndexBase, TableParams } from '../src/Table';
+import { Table, Index, IndexBase } from '../src/Table';
 import { validateKeySchema, validateTable } from '../src/TableValidate';
 
 it('Validate ValidateTable exports', () => {
@@ -20,7 +20,7 @@ interface SimpleKeyAttributes extends SimpleTableKey {
   L1S?: Table.NumberSortKey;
 }
 
-const testTableParams: TableParams<SimpleTableKey, SimpleKeyAttributes> = {
+const testTableParams: Table.TableParams<SimpleTableKey, SimpleKeyAttributes> = {
   name: 'TestTable',
   keyAttributes: {
     P: { type: 'S' },
