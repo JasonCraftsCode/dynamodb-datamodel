@@ -1,5 +1,4 @@
 export { Condition } from './Condition';
-export * as DynamoDbReservedWords from './DynamoDbReservedWords';
 export { ExpressionAttributes } from './ExpressionAttributes';
 export {
   Field,

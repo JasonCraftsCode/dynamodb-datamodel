@@ -348,7 +348,7 @@ export class FieldListTyped<V extends { [key: string]: any }, T> extends FieldLi
   schema: Model.ModelSchemaT<V>;
 
   constructor(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
-    super(type, alias);
+    super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
     this.schema = schema;
     Object.keys(schema).forEach((key) => schema[key].init(key));
   }
@@ -370,7 +370,7 @@ export class FieldMapTyped<V extends { [key: string]: any }, T> extends FieldMap
   schema: Model.ModelSchemaT<V>;
 
   constructor(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
-    super(type, alias);
+    super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
     this.schema = schema;
     Object.keys(schema).forEach((key) => schema[key].init(key));
   }
@@ -380,7 +380,7 @@ export class FieldObject<V extends { [key: string]: any }, T> extends FieldExpre
   schema: Model.ModelSchemaT<V>;
 
   constructor(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
-    super(type, alias);
+    super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
     this.schema = schema;
     Object.keys(schema).forEach((key) => schema[key].init(key));
   }
