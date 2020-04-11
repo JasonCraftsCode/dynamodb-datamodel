@@ -1,4 +1,5 @@
 import { KeyCondition, KeyConditionExpression } from '../src/KeyCondition';
+import { ExpressionAttributes } from '../src/ExpressionAttributes';
 
 it('Validate Condition exports', () => {
   expect(typeof KeyCondition).toEqual('function');
@@ -64,7 +65,8 @@ describe('Validate KeyCondition', () => {
   });
 
   it('SortKey.buildInput with KeyConditionExpression', () => {
-    expect(KeyCondition.buildInput({ P: KeyCondition.eq('with exp') }, new KeyConditionExpression())).toEqual({
+    const attr = new ExpressionAttributes();
+    expect(KeyCondition.buildInput({ P: KeyCondition.eq('with exp') }, new KeyConditionExpression(attr))).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
       ExpressionAttributeValues: { ':v0': 'with exp' },
       KeyConditionExpression: '#n0 = :v0',

@@ -36,6 +36,7 @@ const testTableParams: TableParams<SimpleTableKey, SimpleKeyAttributes> = {
     P: { keyType: 'HASH' },
     S: { keyType: 'RANGE' },
   },
+  client: {} as any,
 };
 
 function TestIndex<KEY>(keySchema: Table.PrimaryKeySchemaT<KEY>, name = 'GSI0') {
@@ -59,6 +60,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'S' } },
       keySchema: { P: { keyType: 'HASH' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).not.toThrow();
   });
@@ -68,6 +70,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'S' }, S: { type: 'S' } },
       keySchema: { P: { keyType: 'HASH' }, S: { keyType: 'RANGE' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).not.toThrow();
   });
@@ -77,6 +80,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'N' }, S: { type: 'N' } },
       keySchema: { P: { keyType: 'HASH' }, S: { keyType: 'RANGE' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).not.toThrow();
   });
@@ -86,6 +90,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'B' }, S: { type: 'B' } },
       keySchema: { P: { keyType: 'HASH' }, S: { keyType: 'RANGE' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).not.toThrow();
   });
@@ -95,6 +100,7 @@ describe('When table', () => {
       name: '',
       keyAttributes: { P: { type: 'S' } },
       keySchema: { P: { keyType: 'HASH' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(new Error('Table must have a name'));
   });
@@ -106,6 +112,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'BOOL' } as any },
       keySchema: { P: { keyType: 'HASH' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(
       new Error("Primary key 'P' has an invalid type of 'BOOL' in table 'TestTable'"),
@@ -120,6 +127,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'S' }, P1: { type: 'S' } },
       keySchema: { P: { keyType: 'HASH' }, P1: { keyType: 'HASH' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(
       new Error("Key 'P1' invalid, TestTable already has partition key 'P'"),
@@ -133,6 +141,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { S: { type: 'S' } },
       keySchema: { S: { keyType: 'RANGE' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(new Error('TestTable needs partition key'));
   });
@@ -142,6 +151,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: {},
       keySchema: { P: { keyType: 'HASH' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'P' not in table's keyAttributes"));
   });
@@ -155,6 +165,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'S' }, S: { type: 'S' }, S1: { type: 'S' } },
       keySchema: { P: { keyType: 'HASH' }, S: { keyType: 'RANGE' }, S1: { keyType: 'RANGE' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'S1' invalid, TestTable already has sort key 'S'"));
   });
@@ -164,6 +175,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'S' } },
       keySchema: { P: { keyType: 'HASH' }, S: { keyType: 'RANGE' } },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'S' not in table's keyAttributes"));
   });
@@ -175,6 +187,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'S' } },
       keySchema: { P: { keyType: 'PARTITION' } as any },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'P' has an invalid key type of 'PARTITION'"));
   });
@@ -187,6 +200,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: { type: 'S' }, S: { type: 'S' } },
       keySchema: { P: { keyType: 'HASH' }, S: { keyType: 'SORT' } as any },
+      client: {} as any,
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'S' has an invalid key type of 'SORT'"));
   });

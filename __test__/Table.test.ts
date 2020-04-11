@@ -193,10 +193,28 @@ describe('Validate Table with indexes', () => {
     });
   });
 
+  it('getParams with options', () => {
+    const params = testTable.getParams({ P: 'pk', S: 'sk' }, { ReturnConsumedCapacity: 'TOTAL' });
+    expect(params).toEqual({
+      Key: { P: 'pk', S: 'sk' },
+      ReturnConsumedCapacity: 'TOTAL',
+      TableName: 'TestTable',
+    });
+  });
+
   it('deleteParams', () => {
     const params = testTable.deleteParams({ P: 'pk', S: 'sk' });
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
+      TableName: 'TestTable',
+    });
+  });
+
+  it('deleteParams with options', () => {
+    const params = testTable.deleteParams({ P: 'pk', S: 'sk' }, { ReturnConsumedCapacity: 'TOTAL' });
+    expect(params).toEqual({
+      Key: { P: 'pk', S: 'sk' },
+      ReturnConsumedCapacity: 'TOTAL',
       TableName: 'TestTable',
     });
   });
@@ -236,6 +254,15 @@ describe('Validate Table with indexes', () => {
   });
 
   it('updateParams', () => {
+    const params = testTable.updateParams({ P: 'pk', S: 'sk' }, undefined, { ReturnConsumedCapacity: 'TOTAL' });
+    expect(params).toEqual({
+      Key: { P: 'pk', S: 'sk' },
+      ReturnConsumedCapacity: 'TOTAL',
+      TableName: 'TestTable',
+    });
+  });
+
+  it('updateParams with options', () => {
     const params = testTable.updateParams({ P: 'pk', S: 'sk' });
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },

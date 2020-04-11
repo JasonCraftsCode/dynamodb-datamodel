@@ -174,13 +174,40 @@ const userModel = new Model<UserKey, UserModel>({
   table: table as TableBase,
 });
 
+describe('Whem Model.create*Set', () => {
+  it('expect createBinarySet type to be Binary', async () => {
+    const set = userModel.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')]);
+    expect(set.type).toEqual('Binary');
+  });
+
+  it('expect createBinarySet with validate type to be Binary', async () => {
+    const set = userModel.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')], { validate: true });
+    expect(set.type).toEqual('Binary');
+  });
+
+  it('expect createStringSet type to be String', async () => {
+    const set = userModel.createStringSet(['abc', 'xyz']);
+    expect(set.type).toEqual('String');
+  });
+
+  it('expect createStringSet with validate type to be String', async () => {
+    const set = userModel.createStringSet(['abc', 'xyz'], { validate: true });
+    expect(set.type).toEqual('String');
+  });
+
+  it('expect createNumberSet type to be Number', async () => {
+    const set = userModel.createNumberSet([4, 9]);
+    expect(set.type).toEqual('Number');
+  });
+
+  it('expect createNumberSet with validate type to be Number', async () => {
+    const set = userModel.createNumberSet([4, 9], { validate: true });
+    expect(set.type).toEqual('Number');
+  });
+});
+
 describe('Validate Model with Table and Indexes', () => {
   describe('model params', () => {
-    it('Model.createBinarySet with single id', async () => {
-      const binarySet = userModel.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')]);
-      expect(binarySet.type).toEqual('Binary');
-    });
-
     it('Model.getParams with single id', async () => {
       // TODO: should probably throw in SplitField
       const params = await userModel.getParams({ id: 'id1' });

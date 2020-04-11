@@ -168,7 +168,7 @@ export interface TableParams<KEY, ATTRIBUTES> {
   keySchema: Table.PrimaryKeySchemaT<KEY>;
   globalIndexes?: IndexBase[];
   localIndexes?: IndexBase[];
-  client?: DocumentClient;
+  client: DocumentClient;
   onError?: (msg: string) => void;
 }
 
@@ -184,7 +184,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   keySchema: Table.PrimaryKeySchemaT<KEY>;
   globalIndexes?: IndexBase[] = [];
   localIndexes?: IndexBase[] = [];
-  client?: DocumentClient;
+  client: DocumentClient;
   onError = (msg: string) => {
     throw new Error(msg);
   };
@@ -212,7 +212,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   // Action Params:
   getParams(
     key: Table.PrimaryKeyValueMapT<KEY>,
-    { client, attributes, ...options }: Table.GetOptions = {},
+    { attributes, ...options }: Table.GetOptions = {},
   ): DocumentClient.GetItemInput {
     return {
       TableName: this.name,
@@ -222,7 +222,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   }
   deleteParams(
     key: Table.PrimaryKeyValueMapT<KEY>,
-    { client, attributes, ...options }: Table.DeleteOptions = {},
+    { attributes, ...options }: Table.DeleteOptions = {},
   ): DocumentClient.DeleteItemInput {
     return {
       TableName: this.name,
@@ -233,7 +233,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   putParams(
     key: Table.PrimaryKeyValueMapT<KEY>,
     item?: Table.AttributeValueMap,
-    { client, attributes, writeOptions, ...options }: Table.PutOptions = {},
+    { attributes, writeOptions, ...options }: Table.PutOptions = {},
   ): DocumentClient.PutItemInput {
     let condInput;
     switch (writeOptions) {
@@ -257,7 +257,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   updateParams(
     key: Table.PrimaryKeyValueMapT<KEY>,
     item?: Update.UpdateMapValue,
-    { client, attributes, ...options }: Table.UpdateOptions = {},
+    { attributes, ...options }: Table.UpdateOptions = {},
   ): DocumentClient.UpdateItemInput {
     return {
       TableName: this.name,
@@ -268,7 +268,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   }
   queryParams(
     key: Table.PrimaryKeyQueryT<KEY>,
-    { client, attributes, ...options }: Table.QueryOptions = {},
+    { attributes, ...options }: Table.QueryOptions = {},
   ): DocumentClient.QueryInput {
     return {
       TableName: this.name,
@@ -276,7 +276,7 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
       ...options,
     };
   }
-  scanParams({ client, attributes, ...options }: Table.ScanOptions = {}): DocumentClient.ScanInput {
+  scanParams({ attributes, ...options }: Table.ScanOptions = {}): DocumentClient.ScanInput {
     return {
       TableName: this.name,
       ...options,
@@ -286,28 +286,28 @@ export class Table<KEY = DefaultTableKey, ATTRIBUTES = KEY> implements TableBase
   // actions:
   get(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.GetOptions) {
     const params = this.getParams(key, options);
-    return this.client!.get(params).promise(); // functionFor(client, 'get', 'DocumentClient')(params);
+    return this.client.get(params).promise(); // functionFor(client, 'get', 'DocumentClient')(params);
   }
   delete(key: Table.PrimaryKeyValueMapT<KEY>, options?: Table.DeleteOptions) {
     const params = this.deleteParams(key, options);
-    return this.client!.delete(params).promise();
+    return this.client.delete(params).promise();
   }
   put(key: Table.PrimaryKeyValueMapT<KEY>, items?: Table.AttributeValueMap, options?: Table.PutOptions) {
     const params = this.putParams(key, items, options);
-    return this.client!.put(params).promise();
+    return this.client.put(params).promise();
   }
   update(key: Table.PrimaryKeyValueMapT<KEY>, items?: Update.UpdateMapValue, options?: Table.UpdateOptions) {
     const params = this.updateParams(key, items, options);
-    return this.client!.update(params).promise();
+    return this.client.update(params).promise();
   }
   // query and scan are also used to access indexes
   query(key: Table.PrimaryKeyQueryT<KEY>, options?: Table.QueryOptions) {
     const params = this.queryParams(key, options);
-    return this.client!.query(params).promise();
+    return this.client.query(params).promise();
   }
   scan(options?: Table.ScanOptions) {
     const params = this.scanParams(options);
-    return this.client!.scan(params).promise();
+    return this.client.scan(params).promise();
   }
 }
 
@@ -397,7 +397,6 @@ export namespace Table {
 
   export interface BaseOptions {
     // Setting TableBase (or IndexBase) allows the input to be validated
-    client?: DocumentClient;
     attributes?: ExpressionAttributes;
   }
   export interface GetOptions extends BaseOptions, Optional<GetInput> {}

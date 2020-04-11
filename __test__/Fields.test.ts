@@ -149,28 +149,27 @@ describe('When FieldBase', () => {
   });
 
   it('coerce expects to be set', () => {
-    const field = Field.string().coerce();
-    expect(field._coerce).toEqual(true);
+    expect(Field.string().coerce()._coerce).toEqual(true);
+    expect(Field.string().coerce(true)._coerce).toEqual(true);
   });
 
   it('hidden expects to be set', () => {
-    const field = Field.string().hidden();
-    expect(field._hidden).toEqual(true);
+    expect(Field.string().hidden()._hidden).toEqual(true);
+    expect(Field.string().hidden(true)._hidden).toEqual(true);
   });
 
   it('required expects to be set', () => {
-    const field = Field.string().required();
-    expect(field._required).toEqual(true);
+    expect(Field.string().required()._required).toEqual(true);
+    expect(Field.string().required(true)._required).toEqual(true);
   });
 
   it('default expects to be set', () => {
-    const field = Field.string().default('default');
-    expect(field._default).toEqual('default');
+    expect(Field.string().default('default')._default).toEqual('default');
   });
 
   it('alias expects to be set', () => {
-    const field = Field.string().alias('alias');
-    expect(field._alias).toEqual('alias');
+    expect(Field.string().alias('alias')._alias).toEqual('alias');
+    expect(Field.string().alias()._alias).toEqual(undefined);
   });
 
   it('constructor with alias expects alias to be set', () => {
@@ -478,6 +477,12 @@ describe('When FieldSet', () => {
 describe('When FieldList', () => {
   const field = Field.list();
   field.init('list');
+
+  it('expect constructor with alias has alias', () => {
+    const field1 = Field.list('list');
+    expect(field1._alias).toEqual('list');
+  });
+
   it('expect size returns condition expression', () => {
     const exp = new ExpressionAttributes();
     expect(field.size()(exp)).toEqual('size(#n0)');
@@ -487,6 +492,14 @@ describe('When FieldList', () => {
 describe('When FieldListT', () => {
   const field = Field.listT<ChildModel, 'Child'>('Child', childSchema);
   field.init('children');
+
+  it('expect constructor to init correctly', () => {
+    const field1 = Field.listT<ChildModel, 'Child'>('Child', childSchema, 'children');
+    expect(field1._alias).toEqual('children');
+    expect(field1.type).toEqual('Child');
+    expect(field1.schema.adult.name).toEqual('adult');
+  });
+
   it('expect size returns condition expression', () => {
     const exp = new ExpressionAttributes();
     expect(field.size()(exp)).toEqual('size(#n0)');
@@ -527,6 +540,11 @@ describe('When FieldMap', () => {
   const field = Field.map();
   field.init('map');
 
+  it('expect constructed with alias to have alias', () => {
+    const field1 = Field.map('map');
+    expect(field1._alias).toEqual('map');
+  });
+
   it('expect size returns condition expression', () => {
     const exp = new ExpressionAttributes();
     expect(field.size()(exp)).toEqual('size(#n0)');
@@ -557,6 +575,11 @@ describe('When FieldMapT', () => {
 describe('When FieldObject', () => {
   const field = Field.object<SpouseModel, 'Spouse'>('Spouse', spouseSchema);
   field.init('spouse');
+
+  it('expect constructed with alias to have alias', () => {
+    const field1 = Field.object<SpouseModel, 'Spouse'>('Spouse', spouseSchema, 'spouse');
+    expect(field1._alias).toEqual('spouse');
+  });
 
   it('expect size returns condition expression', () => {
     const exp = new ExpressionAttributes();
@@ -741,6 +764,12 @@ describe('When FieldSplit', () => {
     expect(field.aliases).toEqual(['P', 'S']);
     expect(field.delim).toEqual('.');
     expect(field.name).toEqual('split');
+  });
+
+  it('expect init with delims correctly', () => {
+    const field1 = Field.split(['P', 'S'], ':');
+    expect(field1.aliases).toEqual(['P', 'S']);
+    expect(field1.delim).toEqual(':');
   });
 
   it('toModel expect join of all aliases', async () => {
