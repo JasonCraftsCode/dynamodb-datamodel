@@ -64,7 +64,7 @@ describe('Validate KeyCondition', () => {
     });
   });
 
-  it('SortKey.buildInput with KeyConditionExpression', () => {
+  it('buildInput with KeyConditionExpression', () => {
     const attr = new ExpressionAttributes();
     expect(KeyCondition.buildInput({ P: KeyCondition.eq('with exp') }, new KeyConditionExpression(attr))).toEqual({
       ExpressionAttributeNames: { '#n0': 'P' },
@@ -73,7 +73,7 @@ describe('Validate KeyCondition', () => {
     });
   });
 
-  it('SortKey.buildInput with 2 keys', () => {
+  it('buildInput with 2 keys', () => {
     expect(KeyCondition.buildInput({ P: 'abc', S: KeyCondition.beginsWith('with exp') })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P', '#n1': 'S' },
       ExpressionAttributeValues: { ':v0': 'abc', ':v1': 'with exp' },
@@ -81,7 +81,7 @@ describe('Validate KeyCondition', () => {
     });
   });
 
-  it('SortKey.buildInput with 3 keys', () => {
+  it('buildInput with 3 keys', () => {
     expect(KeyCondition.buildInput({ P: 'abc', S: KeyCondition.beginsWith('with exp'), E: 'extrakey' })).toEqual({
       ExpressionAttributeNames: { '#n0': 'P', '#n1': 'S', '#n2': 'E' },
       ExpressionAttributeValues: { ':v0': 'abc', ':v1': 'with exp', ':v2': 'extrakey' },

@@ -1,4 +1,4 @@
-import { Table, IndexBase } from './Table';
+import { Table, Index } from './Table';
 
 // Validate:
 // X Table initialize
@@ -13,7 +13,7 @@ export interface KeyName {
 }
 
 export function validateKeyAttribute<ATTRIBUTES extends { [index: string]: any }>(
-  keyAttributes: Table.PrimaryAttributeDefinitionsT<ATTRIBUTES>,
+  keyAttributes: Table.PrimaryKey.AttributeTypesMapT<ATTRIBUTES>,
   name: string,
   onError: (msg: string) => void,
 ): void {
@@ -29,8 +29,8 @@ export function validateKeySchema<
   KEY extends { [index: string]: any },
   ATTRIBUTES extends { [index: string]: any } = KEY
 >(
-  keySchema: Table.PrimaryKeySchemaT<KEY>,
-  keyAttributes: Table.PrimaryAttributeDefinitionsT<ATTRIBUTES>,
+  keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>,
+  keyAttributes: Table.PrimaryKey.AttributeTypesMapT<ATTRIBUTES>,
   name: string,
   onError: (msg: string) => void,
 ): KeyName {
@@ -55,7 +55,7 @@ export function validateKeySchema<
   return { pk, sk };
 }
 
-export function validateIndexes(index: IndexBase, names: Set<string>, onError: (msg: string) => void) {
+export function validateIndexes(index: Index, names: Set<string>, onError: (msg: string) => void) {
   if (!index.name) onError(`Global index must have a name`);
   if (names.has(index.name)) onError(`Duplicate index name '${index.name}'`);
   names.add(index.name);
@@ -71,7 +71,7 @@ export function validateIndexes(index: IndexBase, names: Set<string>, onError: (
   }
 }
 
-export function validateTable<KEY, ATTRIBUTES>(table: Table<KEY, ATTRIBUTES>) {
+export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>) {
   if (!table.name) table.onError(`Table must have a name`);
   validateKeyAttribute(table.keyAttributes, table.name, table.onError);
   const { pk, sk } = validateKeySchema(table.keySchema, table.keyAttributes, table.name, table.onError);

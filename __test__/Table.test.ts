@@ -1,7 +1,7 @@
 import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-import { Table, Index, IndexBase } from '../src/Table';
+import { Table, Index } from '../src/Table';
 import { validateTable } from '../src/TableValidate';
 import { delay } from './testCommon';
 
@@ -13,26 +13,26 @@ const request = {
 } as Request<DocumentClient.GetItemOutput, AWSError>;
 
 it('Validate Table exports', () => {
-  expect(typeof Table).toBe('function');
-  expect(typeof Index).toBe('function');
+  expect(typeof Table.createTable).toBe('function');
+  expect(typeof Index.createIndex).toBe('function');
   expect(typeof validateTable).toBe('function');
 });
 
 describe('Validate Simple Table', () => {
   interface SimpleTableKey {
-    P: Table.StringPartitionKey;
-    S?: Table.StringSortKey;
+    P: Table.PrimaryKey.PartitionString;
+    S?: Table.PrimaryKey.SortString;
   }
 
-  const testTable = new Table<SimpleTableKey, SimpleTableKey>({
+  const testTable = Table.createTable<SimpleTableKey, SimpleTableKey>({
     name: 'TestTable',
     keyAttributes: {
-      P: { type: 'S' },
-      S: { type: 'S' },
+      P: Table.PrimaryKey.StringType,
+      S: Table.PrimaryKey.StringType,
     },
     keySchema: {
-      P: { keyType: 'HASH' },
-      S: { keyType: 'RANGE' },
+      P: Table.PrimaryKey.PartitionKeyType,
+      S: Table.PrimaryKey.SortKeyType,
     },
     client,
   });
@@ -96,42 +96,74 @@ describe('Validate Simple Table', () => {
     });
     expect(client.scan).toBeCalledTimes(1);
   });
+
+  describe('Whem Model.create*Set', () => {
+    it('expect createBinarySet type to be Binary', async () => {
+      const set = testTable.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')]);
+      expect(set.type).toEqual('Binary');
+    });
+
+    it('expect createBinarySet with validate type to be Binary', async () => {
+      const set = testTable.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')], { validate: true });
+      expect(set.type).toEqual('Binary');
+    });
+
+    it('expect createStringSet type to be String', async () => {
+      const set = testTable.createStringSet(['abc', 'xyz']);
+      expect(set.type).toEqual('String');
+    });
+
+    it('expect createStringSet with validate type to be String', async () => {
+      const set = testTable.createStringSet(['abc', 'xyz'], { validate: true });
+      expect(set.type).toEqual('String');
+    });
+
+    it('expect createNumberSet type to be Number', async () => {
+      const set = testTable.createNumberSet([4, 9]);
+      expect(set.type).toEqual('Number');
+    });
+
+    it('expect createNumberSet with validate type to be Number', async () => {
+      const set = testTable.createNumberSet([4, 9], { validate: true });
+      expect(set.type).toEqual('Number');
+    });
+  });
 });
 
 describe('Validate Table with indexes', () => {
   interface TestTableKey {
-    P: Table.StringPartitionKey;
-    S?: Table.StringSortKey;
+    P: Table.PrimaryKey.PartitionString;
+    S?: Table.PrimaryKey.SortString;
   }
 
   interface GSI0Key {
-    G0P: Table.StringPartitionKey;
-    G0S?: Table.StringSortKey;
+    G0P: Table.PrimaryKey.PartitionString;
+    G0S?: Table.PrimaryKey.SortString;
   }
 
   interface LSI0Key {
-    P: Table.StringPartitionKey;
-    L0S?: Table.NumberSortKey;
+    P: Table.PrimaryKey.PartitionString;
+    L0S?: Table.PrimaryKey.SortNumber;
   }
 
   interface TestTableAttributes extends TestTableKey, GSI0Key, LSI0Key {}
 
-  const gsi0 = new Index<GSI0Key>({
+  const gsi0 = Index.createIndex<GSI0Key>({
     name: 'GSI0',
     keySchema: {
-      G0P: { keyType: 'HASH' },
-      G0S: { keyType: 'RANGE' },
+      G0P: Table.PrimaryKey.PartitionKeyType,
+      G0S: Table.PrimaryKey.SortKeyType,
     },
     projection: {
       type: 'ALL',
     },
   });
 
-  const lsi0 = new Index<LSI0Key>({
+  const lsi0 = Index.createIndex<LSI0Key>({
     name: 'LSI0',
     keySchema: {
-      P: { keyType: 'HASH' },
-      L0S: { keyType: 'RANGE' },
+      P: Table.PrimaryKey.PartitionKeyType,
+      L0S: Table.PrimaryKey.SortKeyType,
     },
     projection: {
       attributes: ['project', 'some', 'attributes'],
@@ -139,21 +171,21 @@ describe('Validate Table with indexes', () => {
     },
   });
 
-  const testTable = new Table<TestTableKey, TestTableAttributes>({
+  const testTable = Table.createTable<TestTableKey, TestTableAttributes>({
     name: 'TestTable',
     keyAttributes: {
-      P: { type: 'S' },
-      S: { type: 'S' },
-      G0P: { type: 'S' },
-      G0S: { type: 'S' },
-      L0S: { type: 'N' },
+      P: Table.PrimaryKey.StringType,
+      S: Table.PrimaryKey.StringType,
+      G0P: Table.PrimaryKey.StringType,
+      G0S: Table.PrimaryKey.StringType,
+      L0S: Table.PrimaryKey.NumberType,
     },
     keySchema: {
-      P: { keyType: 'HASH' },
-      S: { keyType: 'RANGE' },
+      P: Table.PrimaryKey.PartitionKeyType,
+      S: Table.PrimaryKey.SortKeyType,
     },
-    globalIndexes: [gsi0 as IndexBase],
-    localIndexes: [lsi0 as IndexBase],
+    globalIndexes: [gsi0 as Index],
+    localIndexes: [lsi0 as Index],
     client,
   });
 
@@ -194,7 +226,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('getParams with options', () => {
-    const params = testTable.getParams({ P: 'pk', S: 'sk' }, { ReturnConsumedCapacity: 'TOTAL' });
+    const params = testTable.getParams({ P: 'pk', S: 'sk' }, { params: { ReturnConsumedCapacity: 'TOTAL' } });
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
       ReturnConsumedCapacity: 'TOTAL',
@@ -211,7 +243,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('deleteParams with options', () => {
-    const params = testTable.deleteParams({ P: 'pk', S: 'sk' }, { ReturnConsumedCapacity: 'TOTAL' });
+    const params = testTable.deleteParams({ P: 'pk', S: 'sk' }, { params: { ReturnConsumedCapacity: 'TOTAL' } });
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
       ReturnConsumedCapacity: 'TOTAL',
@@ -254,7 +286,9 @@ describe('Validate Table with indexes', () => {
   });
 
   it('updateParams', () => {
-    const params = testTable.updateParams({ P: 'pk', S: 'sk' }, undefined, { ReturnConsumedCapacity: 'TOTAL' });
+    const params = testTable.updateParams({ P: 'pk', S: 'sk' }, undefined, {
+      params: { ReturnConsumedCapacity: 'TOTAL' },
+    });
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
       ReturnConsumedCapacity: 'TOTAL',

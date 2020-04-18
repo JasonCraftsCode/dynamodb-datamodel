@@ -8,8 +8,9 @@ module.exports = {
   coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/', '<rootDir>/__test__/'],
   watchman: true,
   coverageThreshold: {
+    // Goal is 100% code coverage and add /* istanbul ignore next: [comment] */ where needed
     global: {
-      branches: 98,
+      branches: 100,
       functions: 100,
       lines: 100,
       statements: 100,

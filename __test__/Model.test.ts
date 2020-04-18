@@ -3,9 +3,9 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import * as yup from 'yup';
 import * as joi from '@hapi/joi';
 
-import { Field } from '../src/Fields';
+import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
-import { TableBase, Table, IndexBase, Index } from '../src/Table';
+import { Table, Index } from '../src/Table';
 import { Update } from '../src/Update';
 import { delay } from './testCommon';
 
@@ -23,59 +23,59 @@ it('Validate Model exports', () => {
 });
 
 interface TableKey {
-  P: Table.StringPartitionKey;
-  S?: Table.StringSortKey;
+  P: Table.PrimaryKey.PartitionString;
+  S?: Table.PrimaryKey.SortString;
 }
 
 interface GSI0Key {
-  G0P: Table.StringPartitionKey;
-  G0S?: Table.StringSortKey;
+  G0P: Table.PrimaryKey.PartitionString;
+  G0S?: Table.PrimaryKey.SortString;
 }
 
 interface LSI0Key {
-  P: Table.StringPartitionKey;
-  L0S?: Table.NumberSortKey;
+  P: Table.PrimaryKey.PartitionString;
+  L0S?: Table.PrimaryKey.SortNumber;
 }
 
 interface TableAttributes extends TableKey, GSI0Key, LSI0Key {}
 
-const gsi0 = new Index<GSI0Key>({
+const gsi0 = Index.createIndex<GSI0Key>({
   name: 'GSI0',
   keySchema: {
-    G0P: { keyType: 'HASH' },
-    G0S: { keyType: 'RANGE' },
+    G0P: Table.PrimaryKey.PartitionKeyType,
+    G0S: Table.PrimaryKey.SortKeyType,
   },
   projection: { type: 'ALL' },
 });
 
-const lsi0 = new Index<LSI0Key>({
+const lsi0 = Index.createIndex<LSI0Key>({
   name: 'LSI0',
   keySchema: {
-    P: { keyType: 'HASH' },
-    L0S: { keyType: 'RANGE' },
+    P: Table.PrimaryKey.PartitionKeyType,
+    L0S: Table.PrimaryKey.SortKeyType,
   },
   projection: { type: 'ALL' },
 });
 
-const table = new Table<TableKey, TableAttributes>({
+const table = Table.createTable<TableKey, TableAttributes>({
   name: 'MainTable',
   keyAttributes: {
-    P: { type: 'S' },
-    S: { type: 'S' },
-    G0P: { type: 'S' },
-    G0S: { type: 'S' },
-    L0S: { type: 'N' },
+    P: Table.PrimaryKey.StringType,
+    S: Table.PrimaryKey.StringType,
+    G0P: Table.PrimaryKey.StringType,
+    G0S: Table.PrimaryKey.StringType,
+    L0S: Table.PrimaryKey.NumberType,
   },
   keySchema: {
-    P: { keyType: 'HASH' },
-    S: { keyType: 'RANGE' },
+    P: Table.PrimaryKey.PartitionKeyType,
+    S: Table.PrimaryKey.SortKeyType,
   },
-  globalIndexes: [gsi0 as IndexBase],
-  localIndexes: [lsi0 as IndexBase],
+  globalIndexes: [gsi0 as Index],
+  localIndexes: [lsi0 as Index],
   client,
 });
 
-const location = Field.namedComposite('G0S', {
+const location = Fields.namedComposite('G0S', {
   city: 0,
   state: 1,
   country: 2,
@@ -88,9 +88,9 @@ interface ChildModel {
 }
 
 const childSchema = {
-  name: Field.string(),
-  age: Field.number(),
-  adult: Field.boolean(),
+  name: Fields.string(),
+  age: Fields.number(),
+  adult: Fields.boolean(),
 };
 
 interface SpouseModel {
@@ -100,9 +100,9 @@ interface SpouseModel {
 }
 
 const spouseSchema = {
-  name: Field.string(),
-  age: Field.number(),
-  married: Field.boolean(),
+  name: Fields.string(),
+  age: Fields.number(),
+  married: Fields.boolean(),
 };
 
 enum Role {
@@ -117,7 +117,7 @@ interface GroupModel {
 }
 
 const groupSchema = {
-  role: Field.number(),
+  role: Fields.number(),
 };
 
 interface UserKey {
@@ -147,63 +147,31 @@ interface UserModel extends UserKey {
 }
 
 const userSchema = {
-  id: Field.split(['P', 'S']),
+  id: Fields.split(['P', 'S']),
   city: location.slots.city(),
   state: location.slots.state(),
   country: location.slots.country(),
-  name: Field.string(),
-  count: Field.number(),
-  description: Field.string('desc'),
-  revision: Field.number('rev'),
-  adult: Field.boolean(),
-  photo: Field.binary(),
-  interests: Field.stringSet(),
-  modified: Field.numberSet(),
-  children: Field.listT<ChildModel, 'Child'>('Child', childSchema),
-  spouse: Field.object<SpouseModel, 'Spouse'>('Spouse', spouseSchema),
-  groups: Field.mapT<GroupModel, 'Groups'>('Groups', groupSchema),
-  created: Field.date(),
-  hide: Field.hidden(),
-  nickname: Field.string().default('none'),
-  rangeYup: Field.number().yup(yup.number().integer().positive()),
-  rangeJoi: Field.number().joi(joi.number().integer().positive()),
+  name: Fields.string(),
+  count: Fields.number(),
+  description: Fields.string('desc'),
+  revision: Fields.number('rev'),
+  adult: Fields.boolean(),
+  photo: Fields.binary(),
+  interests: Fields.stringSet(),
+  modified: Fields.numberSet(),
+  children: Fields.listT<ChildModel, 'Child'>('Child', childSchema),
+  spouse: Fields.object<SpouseModel, 'Spouse'>('Spouse', spouseSchema),
+  groups: Fields.mapT<GroupModel, 'Groups'>('Groups', groupSchema),
+  created: Fields.date(),
+  hide: Fields.hidden(),
+  nickname: Fields.string().default('none'),
+  rangeYup: Fields.number().yup(yup.number().integer().positive()),
+  rangeJoi: Fields.number().joi(joi.number().integer().positive()),
 };
 
-const userModel = new Model<UserKey, UserModel>({
+const userModel = Model.createModel<UserKey, UserModel>({
   schema: userSchema,
-  table: table as TableBase,
-});
-
-describe('Whem Model.create*Set', () => {
-  it('expect createBinarySet type to be Binary', async () => {
-    const set = userModel.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')]);
-    expect(set.type).toEqual('Binary');
-  });
-
-  it('expect createBinarySet with validate type to be Binary', async () => {
-    const set = userModel.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')], { validate: true });
-    expect(set.type).toEqual('Binary');
-  });
-
-  it('expect createStringSet type to be String', async () => {
-    const set = userModel.createStringSet(['abc', 'xyz']);
-    expect(set.type).toEqual('String');
-  });
-
-  it('expect createStringSet with validate type to be String', async () => {
-    const set = userModel.createStringSet(['abc', 'xyz'], { validate: true });
-    expect(set.type).toEqual('String');
-  });
-
-  it('expect createNumberSet type to be Number', async () => {
-    const set = userModel.createNumberSet([4, 9]);
-    expect(set.type).toEqual('Number');
-  });
-
-  it('expect createNumberSet with validate type to be Number', async () => {
-    const set = userModel.createNumberSet([4, 9], { validate: true });
-    expect(set.type).toEqual('Number');
-  });
+  table: table as Table,
 });
 
 describe('Validate Model with Table and Indexes', () => {
@@ -299,8 +267,8 @@ describe('Validate Model with Table and Indexes', () => {
             adult: false,
           },
         ],
-        modified: userModel.createNumberSet([1585553302, 1585563302]),
-        interests: userModel.createStringSet(['basketball', 'soccer', 'football']),
+        modified: table.createNumberSet([1585553302, 1585563302]),
+        interests: table.createStringSet(['basketball', 'soccer', 'football']),
         groups: { group1: { role: Role.Guest }, group3: { role: Role.Member } },
         hide: new Set([new Date(), new Date()]),
         rangeYup: 1,
@@ -335,8 +303,8 @@ describe('Validate Model with Table and Indexes', () => {
               role: 1,
             },
           },
-          interests: userModel.createStringSet(['basketball', 'soccer', 'football']),
-          modified: userModel.createNumberSet([1585553302, 1585563302]),
+          interests: table.createStringSet(['basketball', 'soccer', 'football']),
+          modified: table.createNumberSet([1585553302, 1585563302]),
           name: 'name1',
           nickname: 'none',
           photo: Buffer.from('abcdefghijklmn'),
@@ -385,8 +353,8 @@ describe('Validate Model with Table and Indexes', () => {
         }),
         children: Update.prepend([{ name: 'child3', age: 3, adult: false }]),
         photo: Update.path('photo'),
-        modified: Update.addToSet(userModel.createNumberSet([1585533302, 1585543302])),
-        interests: Update.removeFromSet(userModel.createStringSet(['soccer', 'football'])),
+        modified: Update.addToSet(table.createNumberSet([1585533302, 1585543302])),
+        interests: Update.removeFromSet(table.createStringSet(['soccer', 'football'])),
         groups: Update.map({
           group1: Update.del(),
           'group3.role': Role.Leader,
@@ -425,8 +393,8 @@ describe('Validate Model with Table and Indexes', () => {
           ':v11': 1585553302,
           ':v2': 3,
           ':v3': 1,
-          ':v4': userModel.createStringSet(['soccer', 'football']),
-          ':v5': userModel.createNumberSet([1585533302, 1585543302]),
+          ':v4': table.createStringSet(['soccer', 'football']),
+          ':v5': table.createNumberSet([1585533302, 1585543302]),
           ':v6': [
             {
               adult: false,
@@ -528,8 +496,8 @@ describe('Validate Model with Table and Indexes', () => {
                 role: 1,
               },
             },
-            interests: userModel.createStringSet(['basketball', 'soccer', 'football']),
-            modified: userModel.createNumberSet([1585553302, 1585563302]),
+            interests: table.createStringSet(['basketball', 'soccer', 'football']),
+            modified: table.createNumberSet([1585553302, 1585563302]),
             name: 'name1',
             photo: Buffer.from('abcdefghijklmn'),
             rev: 1,
@@ -570,8 +538,8 @@ describe('Validate Model with Table and Indexes', () => {
           },
         },
         id: 'id1.id2',
-        interests: userModel.createStringSet(['basketball', 'soccer', 'football']),
-        modified: userModel.createNumberSet([1585553302, 1585563302]),
+        interests: table.createStringSet(['basketball', 'soccer', 'football']),
+        modified: table.createNumberSet([1585553302, 1585563302]),
         name: 'name1',
         photo: Buffer.from('abcdefghijklmn'),
         revision: 1,

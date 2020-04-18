@@ -1,17 +1,38 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6", // same as es2015
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["es6", "es2015"],
+    "lib": ["es6"], // same as es2015
     "outDir": "dist",
     "declaration": true,
-    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     // "sourceMap": true,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
     "noUnusedLocals": true,
-    "esModuleInterop": true
+    // "noUnusedParameters": true, // due to function params to enforce type checking
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "coverage", "dist", "**/*.spec.ts", "**/*.test.ts", "**/__tests__/*"]
+  "exclude": ["node_modules", "coverage", "dist", "**/*.spec.ts", "**/*.test.ts", "**/__test__/*"],
+  "typedocOptions": {
+    "excludeExternals": true,
+    "excludeNotExported": true,
+    "excludePrivate": true,
+    "includeVersion": true,
+    "inputFiles": "./src/index.ts",
+    "mode": "library", // requires: "typedoc": "^0.17.0-3",
+    "out": "docs",
+    "theme": "default"
+    // "toc": ["Table", "Model"]
+  }
 }

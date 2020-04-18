@@ -1,0 +1,751 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>KeyCondition | dynamodb-datamodel - v0.1.3</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.3</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="keycondition.html">KeyCondition</a>
+				</li>
+			</ul>
+			<h1>Class KeyCondition</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">KeyCondition</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#attributeresolver" class="tsd-kind-icon">Attribute<wbr>Resolver</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#binaryresolver" class="tsd-kind-icon">Binary<wbr>Resolver</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#comparisonoperators" class="tsd-kind-icon">Comparison<wbr>Operators</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#numberresolver" class="tsd-kind-icon">Number<wbr>Resolver</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#resolver" class="tsd-kind-icon">Resolver</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#stringresolver" class="tsd-kind-icon">String<wbr>Resolver</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#equal" class="tsd-kind-icon">equal</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#greaterthen" class="tsd-kind-icon">greater<wbr>Then</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#greaterthenequal" class="tsd-kind-icon">greater<wbr>Then<wbr>Equal</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#lessthen" class="tsd-kind-icon">less<wbr>Then</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#lessthenequal" class="tsd-kind-icon">less<wbr>Then<wbr>Equal</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#beginswith" class="tsd-kind-icon">begins<wbr>With</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#between" class="tsd-kind-icon">between</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#buildexpression" class="tsd-kind-icon">build<wbr>Expression</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#buildinput" class="tsd-kind-icon">build<wbr>Input</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#eq" class="tsd-kind-icon">eq</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#ge" class="tsd-kind-icon">ge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#gt" class="tsd-kind-icon">gt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#le" class="tsd-kind-icon">le</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#lt" class="tsd-kind-icon">lt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#op" class="tsd-kind-icon">op</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+					<a name="attributeresolver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Attribute<wbr>Resolver</h3>
+					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#stringresolver" class="tsd-signature-type">StringResolver</a><span class="tsd-signature-symbol"> | </span><a href="keycondition.html#numberresolver" class="tsd-signature-type">NumberResolver</a><span class="tsd-signature-symbol"> | </span><a href="keycondition.html#binaryresolver" class="tsd-signature-type">BinaryResolver</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L84">src/KeyCondition.ts:84</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+					<a name="binaryresolver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Binary<wbr>Resolver</h3>
+					<div class="tsd-signature tsd-kind-icon">Binary<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"B"</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L83">src/KeyCondition.ts:83</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+					<a name="comparisonoperators" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Comparison<wbr>Operators</h3>
+					<div class="tsd-signature tsd-kind-icon">Comparison<wbr>Operators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BETWEEN"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"begins_with"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L86">src/KeyCondition.ts:86</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+					<a name="numberresolver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Number<wbr>Resolver</h3>
+					<div class="tsd-signature tsd-kind-icon">Number<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L82">src/KeyCondition.ts:82</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="resolver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Resolver</h3>
+					<div class="tsd-signature tsd-kind-icon">Resolver&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L75">src/KeyCondition.ts:75</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T</h4>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>name: <span class="tsd-signature-type">string</span></h5>
+											</li>
+											<li>
+												<h5>exp: <a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> type: <a href="" class="tsd-signature-type">T</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+					<a name="stringresolver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> String<wbr>Resolver</h3>
+					<div class="tsd-signature tsd-kind-icon">String<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"S"</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L81">src/KeyCondition.ts:81</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="equal" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> equal</h3>
+					<div class="tsd-signature tsd-kind-icon">equal<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#eq" class="tsd-signature-type">eq</a><span class="tsd-signature-symbol"> = KeyCondition.eq</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L9">src/KeyCondition.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="greaterthen" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> greater<wbr>Then</h3>
+					<div class="tsd-signature tsd-kind-icon">greater<wbr>Then<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#gt" class="tsd-signature-type">gt</a><span class="tsd-signature-symbol"> = KeyCondition.gt</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L24">src/KeyCondition.ts:24</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="greaterthenequal" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> greater<wbr>Then<wbr>Equal</h3>
+					<div class="tsd-signature tsd-kind-icon">greater<wbr>Then<wbr>Equal<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#ge" class="tsd-signature-type">ge</a><span class="tsd-signature-symbol"> = KeyCondition.ge</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L29">src/KeyCondition.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="lessthen" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> less<wbr>Then</h3>
+					<div class="tsd-signature tsd-kind-icon">less<wbr>Then<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#lt" class="tsd-signature-type">lt</a><span class="tsd-signature-symbol"> = KeyCondition.lt</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L14">src/KeyCondition.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="lessthenequal" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> less<wbr>Then<wbr>Equal</h3>
+					<div class="tsd-signature tsd-kind-icon">less<wbr>Then<wbr>Equal<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#le" class="tsd-signature-type">le</a><span class="tsd-signature-symbol"> = KeyCondition.le</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L19">src/KeyCondition.ts:19</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="beginswith" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> begins<wbr>With</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">begins<wbr>With<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L35">src/KeyCondition.ts:35</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="between" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> between</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">between&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, and<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L31">src/KeyCondition.ts:31</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5>and: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="buildexpression" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> build<wbr>Expression</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Expression<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a>, exp<span class="tsd-signature-symbol">: </span><a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L45">src/KeyCondition.ts:45</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a></h5>
+								</li>
+								<li>
+									<h5>exp: <a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="buildinput" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> build<wbr>Input</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Input<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a>, exp<span class="tsd-signature-symbol">?: </span><a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol">; </span>KeyConditionExpression<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L57">src/KeyCondition.ts:57</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> exp: <a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a><span class="tsd-signature-symbol"> = new KeyConditionExpression()</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol">; </span>KeyConditionExpression<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>Expression<wbr>Attribute<wbr>Names<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>Expression<wbr>Attribute<wbr>Values<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>Key<wbr>Condition<wbr>Expression<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="eq" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> eq</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">eq&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L6">src/KeyCondition.ts:6</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="ge" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> ge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">ge&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L26">src/KeyCondition.ts:26</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="gt" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> gt</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">gt&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L21">src/KeyCondition.ts:21</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="le" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> le</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">le&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L16">src/KeyCondition.ts:16</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="lt" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> lt</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">lt&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L11">src/KeyCondition.ts:11</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="op" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> op</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">op&lt;T&gt;<span class="tsd-signature-symbol">(</span>op<span class="tsd-signature-symbol">: </span><a href="keycondition.html#comparisonoperators" class="tsd-signature-type">ComparisonOperators</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, and<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/62d494b/src/KeyCondition.ts#L39">src/KeyCondition.ts:39</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>op: <a href="keycondition.html#comparisonoperators" class="tsd-signature-type">ComparisonOperators</a></h5>
+								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> and: <a href="" class="tsd-signature-type">T</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="condition.html" class="tsd-kind-icon">Condition</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="fields.html" class="tsd-kind-icon">Fields</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="index.html" class="tsd-kind-icon">Index</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="keycondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
+						<ul>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#attributeresolver" class="tsd-kind-icon">Attribute<wbr>Resolver</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#binaryresolver" class="tsd-kind-icon">Binary<wbr>Resolver</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#comparisonoperators" class="tsd-kind-icon">Comparison<wbr>Operators</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#numberresolver" class="tsd-kind-icon">Number<wbr>Resolver</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#resolver" class="tsd-kind-icon">Resolver</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#stringresolver" class="tsd-kind-icon">String<wbr>Resolver</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#equal" class="tsd-kind-icon">equal</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#greaterthen" class="tsd-kind-icon">greater<wbr>Then</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#greaterthenequal" class="tsd-kind-icon">greater<wbr>Then<wbr>Equal</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#lessthen" class="tsd-kind-icon">less<wbr>Then</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#lessthenequal" class="tsd-kind-icon">less<wbr>Then<wbr>Equal</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#beginswith" class="tsd-kind-icon">begins<wbr>With</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#between" class="tsd-kind-icon">between</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#buildexpression" class="tsd-kind-icon">build<wbr>Expression</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#buildinput" class="tsd-kind-icon">build<wbr>Input</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#eq" class="tsd-kind-icon">eq</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#ge" class="tsd-kind-icon">ge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#gt" class="tsd-kind-icon">gt</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#le" class="tsd-kind-icon">le</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#lt" class="tsd-kind-icon">lt</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#op" class="tsd-kind-icon">op</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="keyconditionexpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="model.html" class="tsd-kind-icon">Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="table.html" class="tsd-kind-icon">Table</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="update.html" class="tsd-kind-icon">Update</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="updateexpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="../globals.html#validatetable" class="tsd-kind-icon">validate<wbr>Table</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

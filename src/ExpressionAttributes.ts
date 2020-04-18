@@ -12,7 +12,7 @@ export class ExpressionAttributes {
   treatNameAsPath: boolean = true;
   names: ExpressionAttributeNameMap = {};
   nextName: number = 0;
-  values: Table.AttributeValueMap = {};
+  values: Table.AttributeValuesMap = {};
   nextValue: number = 0;
 
   private addName(name: string) {
@@ -52,7 +52,7 @@ export class ExpressionAttributes {
     return this.addName(name);
   }
 
-  addValue(value: Table.AttributeValue) {
+  addValue(value: Table.AttributeValues) {
     const name = `:v${this.nextValue++}`;
     this.values[name] = value;
     return name;

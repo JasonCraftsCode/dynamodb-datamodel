@@ -60,7 +60,7 @@ export class UpdateExpression {
     this.delList.push(`${name} ${value}`);
   }
 
-  ifNotExist(name: string, value: Table.AttributeValue): string {
+  ifNotExist(name: string, value: Table.AttributeValues): string {
     return `if_not_exists(${name}, ${value})`;
   }
   listAppend(left: string, right: string): string {
@@ -76,13 +76,13 @@ export class UpdateExpression {
   addPath(name: string) {
     return this.attributes.addPath(name);
   }
-  addValue(value: Table.AttributeValue) {
+  addValue(value: Table.AttributeValues) {
     return this.attributes.addValue(value);
   }
-  addAnyValue(value: Table.AttributeValue | Update.UpdateFunction, name: string): string {
+  addAnyValue(value: Table.AttributeValues | Update.UpdateFunction, name: string): string {
     return typeof value === 'function' ? value(name, this) : this.addValue(value);
   }
-  addNonStringValue(value: Table.AttributeValue | Update.UpdateFunction, name: string): string {
+  addNonStringValue(value: Table.AttributeValues | Update.UpdateFunction, name: string): string {
     switch (typeof value) {
       case 'function':
         return value(name, this); // type?: 'string'
@@ -129,13 +129,13 @@ export class Update {
     };
   };
 
-  static pathWithDefault<T extends Table.AttributeValue>(path: string, value: T): Update.UpdateFunction {
+  static pathWithDefault<T extends Table.AttributeValues>(path: string, value: T): Update.UpdateFunction {
     return (name: string, exp: UpdateExpression): string => {
       return exp.ifNotExist(exp.addPath(path), exp.addValue(value));
     };
   }
 
-  static default<T extends Table.AttributeValue>(value: T) {
+  static default<T extends Table.AttributeValues>(value: T) {
     return (name: string, exp: UpdateExpression, type?: T) => {
       exp.set(name, exp.ifNotExist(name, exp.addValue(value)));
     };
@@ -149,7 +149,7 @@ export class Update {
   static delete = Update.del;
 
   // TODO: remove not needed, or maybe is the default behavior
-  static set<T extends Table.AttributeValue>(value: T | Update.UpdateFunction) {
+  static set<T extends Table.AttributeValues>(value: T | Update.UpdateFunction) {
     return (name: string, exp: UpdateExpression, type?: string) => {
       exp.set(name, exp.addAnyValue(value, name));
     };
@@ -206,7 +206,7 @@ export class Update {
     };
   }
 
-  static setIndexes(values: { [key: number]: Table.AttributeValue | Update.UpdateFunction }) {
+  static setIndexes(values: { [key: number]: Table.AttributeValues | Update.UpdateFunction }) {
     return (name: string, exp: UpdateExpression, type?: 'L') => {
       const listValues: { [key: number]: string } = {};
       Object.keys(values).forEach((key) => {
@@ -216,12 +216,12 @@ export class Update {
     };
   }
 
-  static addToSet(value: Table.AttributeSetValue) {
+  static addToSet(value: Table.AttributeSetValues) {
     return (name: string, exp: UpdateExpression, type?: 'SS' | 'NS' | 'BS') => {
       exp.addToSet(name, exp.addSetValue(value, name));
     };
   }
-  static removeFromSet(value: Table.AttributeSetValue) {
+  static removeFromSet(value: Table.AttributeSetValues) {
     return (name: string, exp: UpdateExpression, type?: 'SS' | 'NS' | 'BS') => {
       exp.removeFromSet(name, exp.addSetValue(value, name));
     };
@@ -258,7 +258,7 @@ export class Update {
   ):
     | {
         ExpressionAttributeNames: ExpressionAttributeNameMap;
-        ExpressionAttributeValues: Table.AttributeValueMap;
+        ExpressionAttributeValues: Table.AttributeValuesMap;
         UpdateExpression: string;
       }
     | undefined {
@@ -293,11 +293,11 @@ export namespace Update {
 
   export type UpdateFunction = (name: string, exp: UpdateExpression) => string;
   export type UpdateNumberValue = number | string | UpdateFunction;
-  export type UpdateSetValue = Table.AttributeSetValue | string | UpdateFunction;
+  export type UpdateSetValue = Table.AttributeSetValues | string | UpdateFunction;
   export type UpdateListValueT<T> = string | UpdateFunction | T[];
-  export type UpdateListValue = UpdateListValueT<Table.AttributeValue>;
+  export type UpdateListValue = UpdateListValueT<Table.AttributeValues>;
   export type UpdateMapValueT<T> = {
     [key: string]: T | UpdateInput<string> | undefined;
   };
-  export type UpdateMapValue = UpdateMapValueT<Table.AttributeValue>;
+  export type UpdateMapValue = UpdateMapValueT<Table.AttributeValues>;
 }

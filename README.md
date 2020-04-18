@@ -8,13 +8,24 @@
 [![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)](https://img.shields.io/npm/types/dynamodb-datamodel)
 [![npm](https://img.shields.io/npm/l/dynamodb-datamodel.svg)](https://www.npmjs.com/package/dynamodb-datamodel)
 
-### **NOTE:** This project is in BETA. Please submit [issues/feedback](https://github.com/jasonuwbadger/dynamodb-datamodel/issues).
+**NOTE:** This project is in BETA. Please submit [issues/feedback](https://github.com/jasonuwbadger/dynamodb-datamodel/issues).
 
 The **DynamoDB DataModel** is a javascript and typescript library to simplify working with single table designs on [Amazon DynamoDB](https://aws.amazon.com/dynamodb/). The goal is to be able to easily map an object model into a table based storage model and provide operations for conditions and updates.
 
 ## Why
 
+While developing a side project using single table design I found I was frequenly writting simular code to map model data to and from table data. Additional writing update and condition expressions was combersome. I looked around to see if there was an npm package, including [@aws/dynamodb-data-mapper](https://github.com/awslabs/dynamodb-data-mapper-js), [@awspilot/dynamodb](https://github.com/awspilot/dynamodb-oop) project, [@baseprime's dynamodb](https://github.com/baseprime/dynamodb), [jeremydaly's dynamodb-toolbox](https://github.com/jeremydaly/dynamodb-toolbox) and others.
+
+This is not a Object-Relational Mapping (ORM) module, so it doesn't use any SQL concepts. Many SQL concepts don't directly apply to NoSQL data bases like dynamodb, so this tool focuses on the unique capibility of dynamodb.
+
+This is also not a table management module, since with single table design the table will be created by CloudFormation. This module solely focused on reading and writing table and index data.
+
 ## Features
+
+- **Typescript support** - Model and table data can be modeled as typescript intefaces to provide compiler checks and code editor autocomplete. Module is also written in typescript so typings are always up todate.
+- **Bidirectional data mapping** - Maps model data to and from table data.
+- **Extensible data mapping** - Consumers can define new model types and the bidirectional data mapping, update and conditions expressions for that type.
+- **Easy to use update and condition generation** -
 
 ## Installation and Basic Usage
 
@@ -30,14 +41,59 @@ or yarn:
 yarn add dynamodb-datamodel
 ```
 
-Require or import `Table` and `Model` from `dynamodb-datamodel`:
+Import or require `Table` and `Model` from `dynamodb-datamodel`:
 
-```javascript
-const { Table, Model } = require('dynamodb-datamodel');
+```typescript
+import { Table, Model, Field } from 'dynamodb-datamodel';
 ```
 
-Create your Table and Model schema:
+Create your Table and Model schema (typescript):
 
-```javascript
-const { Table, Model } = require('dynamodb-datamodel');
+```typescript
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { Table, Model, Fields } from 'dynamodb-datamodel';
+
+const client = new DocumentClient();
+
+interface SimpleTableKey {
+  P: Table.PrimaryKey.PartitionString;
+  S?: Table.PrimaryKey.SortString;
+}
+
+const simpleTable = Table.createTable<SimpleTableKey, SimpleTableKey>({
+  name: 'SimpleTable',
+  keyAttributes: {
+    P: Table.PrimaryKey.StringType,
+    S: Table.PrimaryKey.StringType,
+  },
+  keySchema: {
+    P: Table.PrimaryKey.PartitionKeyType,
+    S: Table.PrimaryKey.SortKeyType,
+  },
+  client,
+});
+
+interface SimpleKey {
+  id: string;
+}
+
+interface SimpleModel extends SimpleKey {
+  name: string;
+}
+
+const simpleModel = Model.createModel<SimpleKey, SimpleModel>({
+  schema: {
+    id: Fields.split(['P', 'S']),
+    name: Fields.string(),
+  },
+  table: table as Table, // 'as Table' needed for TypeScript
+});
 ```
+
+## Table Actions
+
+## Update Expression
+
+## Condition Expression
+
+## Model Schema Fields

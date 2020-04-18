@@ -3,46 +3,46 @@ import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 export class KeyCondition {
-  static eq<T extends Table.PrimaryAttributeValue>(value: T) {
+  static eq<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
     return KeyCondition.op<T>('=', value);
   }
   static equal = KeyCondition.eq;
 
-  static lt<T extends Table.PrimaryAttributeValue>(value: T) {
+  static lt<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
     return KeyCondition.op<T>('<', value);
   }
   static lessThen = KeyCondition.lt;
 
-  static le<T extends Table.PrimaryAttributeValue>(value: T) {
+  static le<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
     return KeyCondition.op<T>('<=', value);
   }
   static lessThenEqual = KeyCondition.le;
 
-  static gt<T extends Table.PrimaryAttributeValue>(value: T) {
+  static gt<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
     return KeyCondition.op<T>('>', value);
   }
   static greaterThen = KeyCondition.gt;
 
-  static ge<T extends Table.PrimaryAttributeValue>(value: T) {
+  static ge<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
     return KeyCondition.op<T>('>=', value);
   }
   static greaterThenEqual = KeyCondition.ge;
 
-  static between<T extends Table.PrimaryAttributeValue>(value: T, and: T) {
+  static between<T extends Table.AttributeValues>(value: T, and: T): KeyCondition.Resolver {
     return KeyCondition.op<T>('BETWEEN', value, and);
   }
 
-  static beginsWith(value: string) {
+  static beginsWith(value: string): KeyCondition.Resolver {
     return KeyCondition.op<string>('begins_with', value);
   }
 
-  static op<T extends Table.PrimaryAttributeValue>(op: Table.SortComparisonOperator, value: T, and?: T) {
-    return (name: string, exp: KeyConditionExpression, type?: Table.PrimaryAttributeType): void => {
+  static op<T extends Table.AttributeValues>(op: KeyCondition.ComparisonOperators, value: T, and?: T) {
+    return (name: string, exp: KeyConditionExpression, type?: Table.PrimaryKey.AttributeTypes): void => {
       exp.addSortCondition(name, op, value, and);
     };
   }
 
-  static buildExpression(key: Table.PrimaryKeyQuery, exp: KeyConditionExpression): string {
+  static buildExpression(key: Table.PrimaryKey.KeyQueryMap, exp: KeyConditionExpression): string {
     Object.keys(key).forEach((name) => {
       const value = key[name];
       if (typeof value === 'function') {
@@ -55,12 +55,12 @@ export class KeyCondition {
   }
 
   static buildInput(
-    key: Table.PrimaryKeyQuery,
+    key: Table.PrimaryKey.KeyQueryMap,
     exp = new KeyConditionExpression(),
   ): {
     KeyConditionExpression: string;
     ExpressionAttributeNames: ExpressionAttributeNameMap;
-    ExpressionAttributeValues: Table.AttributeValueMap;
+    ExpressionAttributeValues: Table.AttributeValuesMap;
   } {
     const keyCond = KeyCondition.buildExpression(key, exp);
     return {
@@ -69,6 +69,21 @@ export class KeyCondition {
       ExpressionAttributeValues: exp.attributes.getValues(),
     };
   }
+}
+/* tslint:disable:no-namespace */
+export namespace KeyCondition {
+  export type Resolver<T = Table.PrimaryKey.AttributeTypes> = (
+    name: string,
+    exp: KeyConditionExpression,
+    type?: T,
+  ) => void;
+
+  export type StringResolver = KeyCondition.Resolver<'S'>;
+  export type NumberResolver = KeyCondition.Resolver<'N'>;
+  export type BinaryResolver = KeyCondition.Resolver<'B'>;
+  export type AttributeResolver = StringResolver | NumberResolver | BinaryResolver;
+
+  export type ComparisonOperators = '=' | '<' | '<=' | '>' | '>=' | 'BETWEEN' | 'begins_with';
 }
 
 export class KeyConditionExpression {
@@ -79,19 +94,19 @@ export class KeyConditionExpression {
     this.attributes = attributes;
   }
 
-  addPath(path: string) {
+  addPath(path: string): string {
     return this.attributes.addPath(path);
   }
 
-  addValue(value: Table.PrimaryAttributeValue) {
+  addValue(value: Table.AttributeValues): string {
     return this.attributes.addValue(value);
   }
 
   createSortCondition(
     name: string,
-    op: Table.SortComparisonOperator,
-    value: Table.PrimaryAttributeValue,
-    and?: Table.PrimaryAttributeValue,
+    op: KeyCondition.ComparisonOperators,
+    value: Table.AttributeValues,
+    and?: Table.AttributeValues,
   ) {
     const n = this.addPath(name);
     const v = this.addValue(value);
@@ -106,15 +121,15 @@ export class KeyConditionExpression {
 
   addSortCondition(
     name: string,
-    op: Table.SortComparisonOperator,
-    value: Table.PrimaryAttributeValue,
-    and?: Table.PrimaryAttributeValue,
+    op: KeyCondition.ComparisonOperators,
+    value: Table.AttributeValues,
+    and?: Table.AttributeValues,
   ) {
     const cond = this.createSortCondition(name, op, value, and);
     this.addCondition(cond);
   }
 
-  addEqualCondition(name: string, value: Table.PrimaryAttributeValue) {
+  addEqualCondition(name: string, value: Table.AttributeValues) {
     this.addSortCondition(name, '=', value);
   }
 
