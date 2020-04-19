@@ -1,5 +1,7 @@
 # Tasks
 
+Note: To publish run 'npm version patch' then 'npm publish'
+
 - Add a readme.md with the following sections:
   - Title w/ image
   - Shields: git hub build status, code coverage, npm version, SemVer, static code analysis, dependencies,
@@ -10,13 +12,11 @@
   - Documentation
   - Examples
 - Add to build:
-  - Code coverage
   - Pritter
   - Generate documents
   - Auto increment version
   - Auto push to npm
 - Add jdocs
-- Add types to class namespaces (Table, Model, Condition, Update)
 - Validate Model (add options to validate)
 - Non-Validator coerce (see dynamodb-toolbox)
 - Write a Medium artical on Single Table Design and using
@@ -28,6 +28,7 @@
   - Each action with expressions
 - Naming guidance
 - Globals: delimiters (split, composite), reserve names, validate names, ?onError, default put
+- Should we use "type": "module" in package.json? Use ES modules to support better tree shaking?
 
 ## Future direction
 
@@ -71,9 +72,9 @@
 
 ## Notes
 
-- Use: https://shields.io/category/build
+- Use: [shields](https://shields.io/category/build)
 
-## Taken from @sullux/aws-sdk
+## Taken from @sullux/aws-sdk to make errors easier to understand
 
 ```javascript
 class AWSEnhancedError extends Error {

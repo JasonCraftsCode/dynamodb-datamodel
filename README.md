@@ -44,7 +44,7 @@ yarn add dynamodb-datamodel
 Import or require `Table` and `Model` from `dynamodb-datamodel`:
 
 ```typescript
-import { Table, Model, Field } from 'dynamodb-datamodel';
+import { Table, Model, Fields } from 'dynamodb-datamodel';
 ```
 
 Create your Table and Model schema (typescript):
@@ -55,11 +55,13 @@ import { Table, Model, Fields } from 'dynamodb-datamodel';
 
 const client = new DocumentClient();
 
+// Define table primary keys so you get type safety when using table actions
 interface SimpleTableKey {
   P: Table.PrimaryKey.PartitionString;
   S?: Table.PrimaryKey.SortString;
 }
 
+// Create and configure table
 const simpleTable = Table.createTable<SimpleTableKey, SimpleTableKey>({
   name: 'SimpleTable',
   keyAttributes: {
@@ -73,14 +75,17 @@ const simpleTable = Table.createTable<SimpleTableKey, SimpleTableKey>({
   client,
 });
 
+// Define model key for model actions like get and delete
 interface SimpleKey {
   id: string;
 }
 
+// Define model data that derives from the key
 interface SimpleModel extends SimpleKey {
   name: string;
 }
 
+// Create the model with a schema based on the above model interface
 const simpleModel = Model.createModel<SimpleKey, SimpleModel>({
   schema: {
     id: Fields.split(['P', 'S']),
