@@ -562,9 +562,9 @@
     pretty-format "^25.2.1"
 
 "@types/node@^13.11.1":
-  version "13.11.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.11.1.tgz#49a2a83df9d26daacead30d0ccc8762b128d53c7"
-  integrity sha512-eWQGP3qtxwL8FGneRrC5DwrJLGN4/dH1clNTuLfN81HCrxVtxRjygDTUoZJ5ASlDEeo0ppYFQjQIlXhtXpOn6g==
+  version "13.13.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.2.tgz#160d82623610db590a64e8ca81784e11117e5a54"
+  integrity sha512-LB2R1Oyhpg8gu4SON/mfforE525+Hi/M1ineICEDftqNVTyFg1aRIeGuTvXAoWHc4nbrFncWtJgMmoyRvuGh7A==
 
 "@types/prettier@^1.19.0":
   version "1.19.1"
@@ -3181,6 +3181,14 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
+source-map-support@^0.5.17:
+  version "0.5.18"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.18.tgz#f5f33489e270bd7f7d7e7b8debf283f3a4066960"
+  integrity sha512-9luZr/BZ2QeU6tO2uG8N2aZpVSli4TSAOAqFOyTO51AJcD9P99c0K1h6dD6r6qo5dyT44BR5exweOaLLeldTkQ==
+  dependencies:
+    buffer-from "^1.0.0"
+    source-map "^0.6.0"
+
 source-map-support@^0.5.6:
   version "0.5.16"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.16.tgz#0ae069e7fe3ba7538c64c98515e35339eac5a042"
@@ -3442,15 +3450,15 @@ ts-jest@^25.3.1:
     semver "6.x"
     yargs-parser "18.x"
 
-ts-node@^8.8.1:
-  version "8.8.2"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.8.2.tgz#0b39e690bee39ea5111513a9d2bcdc0bc121755f"
-  integrity sha512-duVj6BpSpUpD/oM4MfhO98ozgkp3Gt9qIp3jGxwU2DFvl/3IRaEAvbLa8G60uS7C77457e/m5TMowjedeRxI1Q==
+ts-node@^8.8.2:
+  version "8.9.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.9.0.tgz#d7bf7272dcbecd3a2aa18bd0b96c7d2f270c15d4"
+  integrity sha512-rwkXfOs9zmoHrV8xE++dmNd6ZIS+nmHHCxcV53ekGJrxFLMbp+pizpPS07ARvhwneCIECPppOwbZHvw9sQtU4w==
   dependencies:
     arg "^4.1.0"
     diff "^4.0.1"
     make-error "^1.1.1"
-    source-map-support "^0.5.6"
+    source-map-support "^0.5.17"
     yn "3.1.1"
 
 tslib@^1.10.0, tslib@^1.8.1:
@@ -3532,7 +3540,7 @@ typedoc-default-themes@^0.10.0:
   dependencies:
     lunr "^2.3.8"
 
-typedoc@^0.17.4:
+typedoc@^0.17.0-3:
   version "0.17.4"
   resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.17.4.tgz#1de11e2e5e741af20bcdd73b9525f8ad04b59863"
   integrity sha512-4Lotef1l6lNU5Fulpux809WPlF9CkmcXfv5QFyanrjYlxMFxSdARRdsy8Jv1OU3z0vjR4JsvUQT0YpiPqztcOA==
