@@ -1,4 +1,3 @@
-import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
@@ -54,20 +53,16 @@ export class KeyCondition {
     return exp.getExpression();
   }
 
-  static buildInput(
-    key: Table.PrimaryKey.KeyQueryMap,
-    exp = new KeyConditionExpression(),
-  ): {
-    KeyConditionExpression: string;
-    ExpressionAttributeNames: ExpressionAttributeNameMap;
-    ExpressionAttributeValues: Table.AttributeValuesMap;
-  } {
-    const keyCond = KeyCondition.buildExpression(key, exp);
-    return {
-      KeyConditionExpression: keyCond,
-      ExpressionAttributeNames: exp.attributes.getPaths(),
-      ExpressionAttributeValues: exp.attributes.getValues(),
-    };
+  static addParam(
+    key: Table.PrimaryKey.KeyQueryMap | undefined,
+    exp: ExpressionAttributes,
+    params: { KeyConditionExpression?: string },
+  ) {
+    if (key) {
+      const condition = KeyCondition.buildExpression(key, new KeyConditionExpression(exp));
+      if (condition) params.KeyConditionExpression = condition;
+    }
+    return params;
   }
 }
 /* tslint:disable:no-namespace */

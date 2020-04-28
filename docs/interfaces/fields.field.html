@@ -128,7 +128,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L86">src/Fields.ts:86</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Fields.ts#L99">src/Fields.ts:99</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -145,7 +145,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L87">src/Fields.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Fields.ts#L100">src/Fields.ts:100</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -162,13 +162,13 @@
 					<a name="tomodel" class="tsd-anchor"></a>
 					<h3>to<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modeldata" class="tsd-signature-type">ModelData</a>, model<span class="tsd-signature-symbol">: </span><a href="model.modelbase.html" class="tsd-signature-type">ModelBase</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modeldata" class="tsd-signature-type">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="fields.modelcontext.html" class="tsd-signature-type">ModelContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L88">src/Fields.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Fields.ts#L101">src/Fields.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -183,10 +183,10 @@
 									<h5>modelData: <a href="../classes/model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
 								</li>
 								<li>
-									<h5>model: <a href="model.modelbase.html" class="tsd-signature-type">ModelBase</a></h5>
+									<h5>context: <a href="fields.modelcontext.html" class="tsd-signature-type">ModelContext</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -194,13 +194,13 @@
 					<a name="totable" class="tsd-anchor"></a>
 					<h3>to<wbr>Table</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modeldata" class="tsd-signature-type">ModelData</a>, tableData<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, model<span class="tsd-signature-symbol">: </span><a href="model.modelbase.html" class="tsd-signature-type">ModelBase</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modeldata" class="tsd-signature-type">ModelData</a>, tableData<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, context<span class="tsd-signature-symbol">: </span><a href="fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L95">src/Fields.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Fields.ts#L110">src/Fields.ts:110</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -215,10 +215,10 @@
 									<h5>tableData: <a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
 								</li>
 								<li>
-									<h5>model: <a href="model.modelbase.html" class="tsd-signature-type">ModelBase</a></h5>
+									<h5>context: <a href="fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -226,13 +226,13 @@
 					<a name="totableupdate" class="tsd-anchor"></a>
 					<h3>to<wbr>Table<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, tableData<span class="tsd-signature-symbol">: </span><a href="../classes/update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a>, model<span class="tsd-signature-symbol">: </span><a href="model.modelbase.html" class="tsd-signature-type">ModelBase</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, tableData<span class="tsd-signature-symbol">: </span><a href="../classes/update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a>, context<span class="tsd-signature-symbol">: </span><a href="fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L102">src/Fields.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Fields.ts#L117">src/Fields.ts:117</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -247,10 +247,10 @@
 									<h5>tableData: <a href="../classes/update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a></h5>
 								</li>
 								<li>
-									<h5>model: <a href="model.modelbase.html" class="tsd-signature-type">ModelBase</a></h5>
+									<h5>context: <a href="fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>

@@ -76,14 +76,14 @@ export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUT
   validateKeyAttribute(table.keyAttributes, table.name, table.onError);
   const { pk, sk } = validateKeySchema(table.keySchema, table.keyAttributes, table.name, table.onError);
   const names = new Set<string>();
-  table.globalIndexes?.forEach((index) => {
+  table.globalIndexes.forEach((index) => {
     validateIndexes(index, names, table.onError);
     const { name, keySchema } = index;
     const ikeys = validateKeySchema(keySchema, table.keyAttributes, name, table.onError);
     if (ikeys.pk === pk && ikeys.sk === sk)
       table.onError(`${name} has same partition key '${pk}' and sort key '${sk}' as table`);
   });
-  table.localIndexes?.forEach((index) => {
+  table.localIndexes.forEach((index) => {
     validateIndexes(index, names, table.onError);
     const { name, keySchema } = index;
     const ikeys = validateKeySchema(keySchema, table.keyAttributes, name, table.onError);

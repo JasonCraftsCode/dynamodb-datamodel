@@ -62,6 +62,39 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Represents either Global Secondary Index (GSI) or Local Secondary Index (LSI) for a table.  GSIs and LSIs can be
+							associated with a <a href="table.html">Table</a> by add GSIs to the <a href="table.html#globalindexes">Table.globalIndexes</a> array property and LSIs to the <a href="table.html#localindexes">Table.localIndexes</a>
+						array property, either through the <a href="table.html#constructor">Table.constructor</a> or by calling <a href="table.html#addglobalindexes">Table.addGlobalIndexes</a> or <a href="table.html#addlocalindexes">Table.addLocalIndexes</a>.</p>
+					</div>
+					<p>When the index is added to the Table either through the constructor, addGlobalIndexes or addLocalIndexes each index&#39;s
+						<a href="index.html#init">init</a> will be passed the Table it is associated with to support the Index methods:
+					<a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>.</p>
+					<p>Once the GSIs and LSIs are associated with a table they can be validated using <a href="../globals.html#validatetable">validateTable</a>.</p>
+					<p>If you are using TypeScript you can use <a href="index.html#createindex">Index.createIndex</a> to create an Index with strong typing for the primary key.
+					This provides striong types for the <a href="index.html#keyschema">Index.keySchema</a> property, <a href="index.html#queryparams">Index.queryParams</a> and <a href="index.html#scan">Index.scan</a> methods.</p>
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Index, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+<span class="hljs-keyword">interface</span> GSI0Key {
+  G0P: Table.PrimaryKey.PartitionString;
+  G0S?: Table.PrimaryKey.SortString;
+}
+<span class="hljs-keyword">const</span> gsi0 = Index.createIndex&lt;GSI0Key&gt;({
+  name: <span class="hljs-string">'GSI0'</span>,
+  keySchema: {
+    G0P: Table.PrimaryKey.PartitionKeyType,
+    G0S: Table.PrimaryKey.SortKeyType,
+  },
+  projection: { <span class="hljs-keyword">type</span>: <span class="hljs-string">'ALL'</span> },
+});
+<span class="hljs-comment">// gsi0 can then be added to the tables globalIndexes property.</span></code></pre>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -134,13 +167,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L26">src/Table.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L79">src/Table.ts:79</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>params: <a href="../interfaces/index.indexparams.html" class="tsd-signature-type">IndexParams</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Initalize the Index&#39;s name, keySchema and projection properties.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="index.html" class="tsd-signature-type">Index</a></h4>
@@ -156,9 +196,14 @@
 					<div class="tsd-signature tsd-kind-icon">key<wbr>Schema<span class="tsd-signature-symbol">:</span> <a href="table.primarykey.html#keytypesmap" class="tsd-signature-type">KeyTypesMap</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L21">src/Table.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L62">src/Table.ts:62</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Schema map for the Secondary Index&#39;s primary key, in the form of { <partition key name>: { keyType: &#39;HASH&#39;} }.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="name" class="tsd-anchor"></a>
@@ -166,9 +211,14 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L20">src/Table.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L58">src/Table.ts:58</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Name of the table&#39;s secondary index, used to set the IndexName for dynamodb scan and query actions.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="projection" class="tsd-anchor"></a>
@@ -176,17 +226,32 @@
 					<div class="tsd-signature tsd-kind-icon">projection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><a href="table.html#projectiontype" class="tsd-signature-type">ProjectionType</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L22">src/Table.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L66">src/Table.ts:66</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines how the other attributes for an entity are projected to the index.</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Only relivant when type is &#39;INCLUDE&#39;, list of the attributes to project to the secondary index.</p>
+									</div>
+								</div>
 							</li>
 							<li class="tsd-parameter">
 								<h5>type<span class="tsd-signature-symbol">: </span><a href="table.html#projectiontype" class="tsd-signature-type">ProjectionType</a></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Defines what general set of attributes are projected into the secondary index.</p>
+									</div>
+								</div>
 							</li>
 						</ul>
 					</div>
@@ -197,9 +262,14 @@
 					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="table.html" class="tsd-signature-type">Table</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L26">src/Table.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L79">src/Table.ts:79</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The table this index is associated with.  Used in <a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -214,10 +284,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L38">src/Table.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L101">src/Table.ts:101</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The name of the primary (or HASH) key.</p>
 						</li>
 					</ul>
 				</section>
@@ -231,16 +304,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L46">src/Table.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L117">src/Table.ts:117</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add the IndexName to query options.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.queryoptions.html" class="tsd-signature-type">QueryOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options to add IndexName to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/table.queryoptions.html" class="tsd-signature-type">QueryOptions</a></h4>
+							<p>Query options with the IndexName set to the <a href="index.html#name">Index.name</a></p>
 						</li>
 					</ul>
 				</section>
@@ -254,16 +336,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L50">src/Table.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L126">src/Table.ts:126</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add the IndexName to scan options</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.scanoptions.html" class="tsd-signature-type">ScanOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options to add IndexName to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/table.scanoptions.html" class="tsd-signature-type">ScanOptions</a></h4>
+							<p>Scan options with the IndexName set to the <a href="index.html#name">Index.name</a></p>
 						</li>
 					</ul>
 				</section>
@@ -277,10 +368,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L42">src/Table.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L108">src/Table.ts:108</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The name of the sort (or RANGE) key.</p>
 						</li>
 					</ul>
 				</section>
@@ -294,13 +388,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L34">src/Table.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L94">src/Table.ts:94</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Used to initalize the Index with the table to support <a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>..</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>table: <a href="table.html" class="tsd-signature-type">Table</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>table to initalize the index with.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -317,19 +419,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L61">src/Table.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L156">src/Table.ts:156</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Wrapper around <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property" class="external">DocumentClient.query</a>
+									method that uses the index and table properties with the key and options params.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Primary key with optional KeyCondition to query the secondary index with</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/table.queryoptions.html" class="tsd-signature-type">QueryOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Used in building the query params</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">QueryOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Primise with the query results, including items fetched</p>
 						</li>
 					</ul>
 				</section>
@@ -343,19 +458,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L54">src/Table.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L136">src/Table.ts:136</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates the params that can be used when calling the <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property" class="external">DocumentClient.query</a> method.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Primary key with optional KeyCondition to query the secondary index with</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/table.queryoptions.html" class="tsd-signature-type">QueryOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Used in building the query params</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">QueryInput</span></h4>
+							<p>DynamoDB query method params containing the table, index, key and options.</p>
 						</li>
 					</ul>
 				</section>
@@ -369,16 +496,26 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L64">src/Table.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L165">src/Table.ts:165</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Wrapper around <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property" class="external">DocumentClient.scan</a>
+									method that uses the index and table properties with the options param.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/table.scanoptions.html" class="tsd-signature-type">ScanOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Used in building the scan params</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ScanOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Primise with the scan results, including items fetched</p>
 						</li>
 					</ul>
 				</section>
@@ -392,16 +529,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L57">src/Table.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L145">src/Table.ts:145</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates the params that can be used when calling the <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property" class="external">DocumentClient.scan</a> method.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/table.scanoptions.html" class="tsd-signature-type">ScanOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Used in building the scan params</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ScanInput</span></h4>
+							<p>DocumentClient scan method&#39;s params containing the table, index and options.</p>
 						</li>
 					</ul>
 				</section>
@@ -415,9 +561,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L102">src/Table.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/60099c9/src/Table.ts#L263">src/Table.ts:263</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates the generic form of Index used in TypeScript to get strong typing</p>
+								</div>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -428,6 +579,9 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>params: <a href="../interfaces/index.indexparamst.html" class="tsd-signature-type">IndexParamsT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index constructor params</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/index.indext.html" class="tsd-signature-type">IndexT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h4>

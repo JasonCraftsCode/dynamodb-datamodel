@@ -8,7 +8,7 @@ it('Validate Condition exports', () => {
   expect(typeof Update.buildExpression).toEqual('function');
 });
 
-export function buildUpdate(updateMap: Update.UpdateMapValue, exp = new UpdateExpression()) {
+function buildUpdate(updateMap: Update.UpdateMapValue, exp = new UpdateExpression()) {
   const update = Update.buildExpression(updateMap, exp);
   return {
     UpdateExpression: update,
@@ -23,19 +23,15 @@ describe('Validate Update.buildExpression for each type', () => {
     exp.reset();
   });
 
-  it('Update.buildInput', () => {
-    expect(Update.buildInput({ testString: 'string' }, exp)).toEqual({
-      UpdateExpression: 'SET #n0 = :v0',
-      ExpressionAttributeNames: { '#n0': 'testString' },
-      ExpressionAttributeValues: { ':v0': 'string' },
-    });
+  it('Update.addParam with undefined updateMap', () => {
+    expect(Update.addParam(undefined, exp.attributes, {})).toEqual({});
   });
-
-  it('Update.buildInput with no exp', () => {
-    expect(Update.buildInput({ testString: 'string' })).toEqual({
+  it('Update.addParam with empty updateMap', () => {
+    expect(Update.addParam({}, exp.attributes, {})).toEqual({});
+  });
+  it('Update.addParam', () => {
+    expect(Update.addParam({ testString: 'string' }, exp.attributes, {})).toEqual({
       UpdateExpression: 'SET #n0 = :v0',
-      ExpressionAttributeNames: { '#n0': 'testString' },
-      ExpressionAttributeValues: { ':v0': 'string' },
     });
   });
 

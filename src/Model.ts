@@ -1,4 +1,5 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { Condition } from './Condition';
 import { Fields } from './Fields';
 import { Table } from './Table';
 import { Update } from './Update';
@@ -27,80 +28,91 @@ export class Model implements Model.ModelBase {
     return { key, item };
   }
 
-  async toTable(data: Model.ModelData): Promise<Model.TableData> {
+  async toTable(data: Model.ModelData, context: Fields.TableContext): Promise<Model.TableData> {
     const tableData: Table.AttributeValuesMap = {};
     // enumerate schema so each field gets called
     // ... handled by table to* if supported (do we need each field to return array of names proccessed)
     const keys = Object.keys(this.schema);
     for (const name of keys) {
       const schema: Fields.Field = this.schema[name];
-      await schema.toTable(name, data, tableData, this);
+      const result = schema.toTable(name, data, tableData, context);
+      if (result !== undefined) await result;
     }
-    return this.splitTableData(tableData);
+    const { key, item } = this.splitTableData(tableData);
+    return { key, item, conditions: context.conditions };
   }
 
-  async toTableKey(key: Model.ModelCore): Promise<Table.PrimaryKey.AttributeValuesMap> {
-    return (await this.toTable(key)).key;
+  async toTableKey(key: Model.ModelCore, context: Fields.TableContext): Promise<Table.PrimaryKey.AttributeValuesMap> {
+    return (await this.toTable(key, context)).key;
   }
 
-  async toTableUpdate(data: Model.ModelUpdate): Promise<Model.TableUpdateData> {
+  async toTableUpdate(data: Model.ModelUpdate, context: Fields.TableContext): Promise<Model.TableUpdateData> {
     const tableData: Table.AttributeValuesMap = {};
     // enumerate schema so each field gets called
     // ... handled by table to* if supported (do we need each field to return array of names proccessed)
     const keys = Object.keys(this.schema);
     for (const name of keys) {
       const schema: Fields.Field = this.schema[name];
-      await schema.toTableUpdate(name, data, tableData, this);
+      const result = schema.toTableUpdate(name, data, tableData, context);
+      if (result !== undefined) await result;
     }
-    return this.splitTableData(tableData);
+    const { key, item } = this.splitTableData(tableData);
+    return { key, item, conditions: context.conditions };
   }
 
-  async toModel(data: Table.AttributeValuesMap): Promise<Model.ModelOut> {
+  async toModel(
+    data: Table.AttributeValuesMap | undefined,
+    context: Fields.ModelContext,
+  ): Promise<Model.ModelOut | undefined> {
+    data = data || {};
     const out: Model.ModelOut = {};
     const keys = Object.keys(this.schema);
     for (const name of keys) {
       const schema: Fields.Field = this.schema[name];
-      await schema.toModel(name, data, out, this);
+      const result = schema.toModel(name, data, out, context);
+      if (result !== undefined) await result;
     }
-    return out as Model.ModelOut;
+    if (Object.keys(out).length > 0) return out as Model.ModelOut;
+    return undefined;
   }
 
   async getParams(key: Model.ModelCore, options?: Table.GetOptions): Promise<DocumentClient.GetItemInput> {
-    const tableKey = await this.toTableKey(key);
+    const tableKey = await this.toTableKey(key, { action: 'get', model: this });
     return this.table.getParams(tableKey, options);
   }
-  async putParams(data: Model.ModelCore, options?: Table.PutOptions): Promise<DocumentClient.PutItemInput> {
-    const tableData = await this.toTable(data);
+  async putParams(data: Model.ModelCore, options: Table.PutOptions = {}): Promise<DocumentClient.PutItemInput> {
+    const tableData = await this.toTable(data, { action: 'put', conditions: [], model: this });
     return this.table.putParams(tableData.key, tableData.item, options);
   }
   async deleteParams(key: Model.ModelCore, options?: Table.DeleteOptions): Promise<DocumentClient.DeleteItemInput> {
-    const tableKey = await this.toTableKey(key);
+    const tableKey = await this.toTableKey(key, { action: 'delete', conditions: [], model: this });
     return this.table.deleteParams(tableKey, options);
   }
   async updateParams(data: Model.ModelUpdate, options?: Table.UpdateOptions): Promise<DocumentClient.UpdateItemInput> {
-    const tableData = await this.toTableUpdate(data);
+    const tableData = await this.toTableUpdate(data, { action: 'update', conditions: [], model: this });
     return this.table.updateParams(tableData.key, tableData.item, options);
   }
 
   async get(key: Model.ModelCore, options?: Table.GetOptions): Promise<Model.ModelOut | undefined> {
-    const tableKey = await this.toTableKey(key);
+    const tableKey = await this.toTableKey(key, { action: 'get', model: this });
     const result = await this.table.get(tableKey, options);
-    return result.Item ? this.toModel(result.Item!) : undefined;
+    return this.toModel(result.Item, { action: 'get', model: this });
   }
-  async put(data: Model.ModelCore, options?: Table.PutOptions): Promise<Model.ModelOut> {
-    const tableData = await this.toTable(data);
+  async put(data: Model.ModelCore, options?: Table.PutOptions): Promise<Model.ModelOut | undefined> {
+    const context: Fields.TableContext = { action: 'put', conditions: [], model: this };
+    const tableData = await this.toTable(data, context);
     await this.table.put(tableData.key, tableData.item, options);
-    return this.toModel({ ...tableData.key, ...tableData.item });
+    return this.toModel({ ...tableData.key, ...tableData.item }, { action: 'put', model: this });
   }
   async delete(key: Model.ModelCore, options?: Table.DeleteOptions): Promise<Model.ModelOut | undefined> {
-    const tableKey = await this.toTableKey(key);
+    const tableKey = await this.toTableKey(key, { action: 'delete', conditions: [], model: this });
     const result = await this.table.delete(tableKey, options);
-    return result.Attributes ? this.toModel(result.Attributes) : undefined;
+    return this.toModel(result.Attributes, { action: 'delete', model: this });
   }
   async update(data: Model.ModelUpdate, options?: Table.UpdateOptions): Promise<Model.ModelOut | undefined> {
-    const tableData = await this.toTableUpdate(data);
+    const tableData = await this.toTableUpdate(data, { action: 'update', conditions: [], model: this });
     const result = await this.table.update(tableData.key, tableData.item, options);
-    return result.Attributes ? this.toModel(result.Attributes) : undefined;
+    return this.toModel(result.Attributes, { action: 'update', model: this });
   }
 }
 
@@ -118,12 +130,14 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
 
   export type TableData = {
     key: Table.PrimaryKey.AttributeValuesMap;
-    item: Table.AttributeValuesMap;
+    item?: Table.AttributeValuesMap;
+    conditions?: Condition.Resolver[];
   };
 
   export type TableUpdateData = {
     key: Table.PrimaryKey.AttributeValuesMap;
-    item: Update.UpdateMapValue;
+    item?: Update.UpdateMapValue;
+    conditions?: Condition.Resolver[];
   };
 
   export interface ModelParams {
