@@ -65,6 +65,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Used in <a href="../classes/index.html">constructor</a></p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -101,9 +108,14 @@
 					<div class="tsd-signature tsd-kind-icon">key<wbr>Schema<span class="tsd-signature-symbol">:</span> <a href="../classes/table.primarykey.html#keytypesmap" class="tsd-signature-type">KeyTypesMap</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L73">src/Table.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L184">src/Table.ts:184</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Schema map for the Secondary Index&#39;s primary key, in the form of { <partition key name>: { keyType: &#39;HASH&#39;} }.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="name" class="tsd-anchor"></a>
@@ -111,9 +123,14 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L72">src/Table.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L180">src/Table.ts:180</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Name of the table&#39;s secondary index, used to set the IndexName for dynamodb scan and query actions.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="projection" class="tsd-anchor"></a>
@@ -121,17 +138,32 @@
 					<div class="tsd-signature tsd-kind-icon">projection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#projectiontype" class="tsd-signature-type">ProjectionType</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L74">src/Table.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L188">src/Table.ts:188</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines how the other attributes for an entity are projected to the index.</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Only relivant when type is &#39;INCLUDE&#39;, list of the attributes to project to the secondary index.</p>
+									</div>
+								</div>
 							</li>
 							<li class="tsd-parameter">
 								<h5>type<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#projectiontype" class="tsd-signature-type">ProjectionType</a></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>Defines what general set of attributes are projected into the secondary index.</p>
+									</div>
+								</div>
 							</li>
 						</ul>
 					</div>

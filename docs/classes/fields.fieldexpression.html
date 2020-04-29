@@ -208,10 +208,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 					<a name="defaultfunction" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Default<wbr>Function</h3>
-					<div class="tsd-signature tsd-kind-icon">Default<wbr>Function&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, model<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></div>
+					<div class="tsd-signature tsd-kind-icon">Default<wbr>Function&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L281">src/Fields.ts:281</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L298">src/Fields.ts:298</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -225,7 +225,7 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, model<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -241,7 +241,7 @@
 												<h5>modelData: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
 											</li>
 											<li>
-												<h5>model: <a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a></h5>
+												<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -257,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Validator&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdatevalue" class="tsd-signature-type">ModelUpdateValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.html#modelupdatevalue" class="tsd-signature-type">ModelUpdateValue</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L279">src/Fields.ts:279</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L296">src/Fields.ts:296</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -294,7 +294,7 @@
 					<div class="tsd-signature tsd-kind-icon">Validator&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L278">src/Fields.ts:278</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L295">src/Fields.ts:295</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -339,7 +339,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L120">src/Fields.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L135">src/Fields.ts:135</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -365,7 +365,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#_alias">_alias</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L115">src/Fields.ts:115</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L130">src/Fields.ts:130</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -376,7 +376,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#_coerce">_coerce</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L120">src/Fields.ts:120</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L135">src/Fields.ts:135</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -387,7 +387,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#_default">_default</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L114">src/Fields.ts:114</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L129">src/Fields.ts:129</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -398,7 +398,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#_hidden">_hidden</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L117">src/Fields.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L132">src/Fields.ts:132</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -409,7 +409,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#_required">_required</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L116">src/Fields.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L131">src/Fields.ts:131</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -420,7 +420,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#_updatevalidator">_updateValidator</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L119">src/Fields.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L134">src/Fields.ts:134</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -431,7 +431,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#_validator">_validator</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L118">src/Fields.ts:118</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L133">src/Fields.ts:133</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -441,7 +441,7 @@
 					<div class="tsd-signature tsd-kind-icon">equal<span class="tsd-signature-symbol">:</span> <a href="fields.fieldexpression.html#eq" class="tsd-signature-type">eq</a><span class="tsd-signature-symbol"> = this.eq</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L298">src/Fields.ts:298</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L315">src/Fields.ts:315</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -451,7 +451,7 @@
 					<div class="tsd-signature tsd-kind-icon">greater<wbr>Then<span class="tsd-signature-symbol">:</span> <a href="fields.fieldexpression.html#gt" class="tsd-signature-type">gt</a><span class="tsd-signature-symbol"> = this.gt</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L318">src/Fields.ts:318</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L335">src/Fields.ts:335</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -461,7 +461,7 @@
 					<div class="tsd-signature tsd-kind-icon">greater<wbr>Then<wbr>Equal<span class="tsd-signature-symbol">:</span> <a href="fields.fieldexpression.html#ge" class="tsd-signature-type">ge</a><span class="tsd-signature-symbol"> = this.ge</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L323">src/Fields.ts:323</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L340">src/Fields.ts:340</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -471,7 +471,7 @@
 					<div class="tsd-signature tsd-kind-icon">less<wbr>Then<span class="tsd-signature-symbol">:</span> <a href="fields.fieldexpression.html#lt" class="tsd-signature-type">lt</a><span class="tsd-signature-symbol"> = this.lt</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L308">src/Fields.ts:308</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L325">src/Fields.ts:325</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -481,7 +481,7 @@
 					<div class="tsd-signature tsd-kind-icon">less<wbr>Then<wbr>Equal<span class="tsd-signature-symbol">:</span> <a href="fields.fieldexpression.html#le" class="tsd-signature-type">le</a><span class="tsd-signature-symbol"> = this.le</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L313">src/Fields.ts:313</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L330">src/Fields.ts:330</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -493,7 +493,7 @@
 						<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#name">name</a></p>
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L112">src/Fields.ts:112</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L127">src/Fields.ts:127</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -503,7 +503,7 @@
 					<div class="tsd-signature tsd-kind-icon">not<wbr>Equal<span class="tsd-signature-symbol">:</span> <a href="fields.fieldexpression.html#ne" class="tsd-signature-type">ne</a><span class="tsd-signature-symbol"> = this.ne</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L303">src/Fields.ts:303</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L320">src/Fields.ts:320</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -514,7 +514,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L111">src/Fields.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L126">src/Fields.ts:126</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -532,7 +532,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#alias">alias</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L180">src/Fields.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L195">src/Fields.ts:195</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -555,7 +555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L325">src/Fields.ts:325</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L342">src/Fields.ts:342</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -603,7 +603,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#coerce">coerce</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L175">src/Fields.ts:175</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L190">src/Fields.ts:190</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -627,7 +627,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#default">default</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L185">src/Fields.ts:185</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L200">src/Fields.ts:200</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -650,7 +650,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L349">src/Fields.ts:349</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L366">src/Fields.ts:366</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
@@ -667,7 +667,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L295">src/Fields.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L312">src/Fields.ts:312</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -711,7 +711,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L337">src/Fields.ts:337</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L354">src/Fields.ts:354</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>exp<span class="tsd-signature-symbol">: </span><a href="expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></h4>
@@ -749,7 +749,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L320">src/Fields.ts:320</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L337">src/Fields.ts:337</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -793,7 +793,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L346">src/Fields.ts:346</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L363">src/Fields.ts:363</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -840,7 +840,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L315">src/Fields.ts:315</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L332">src/Fields.ts:332</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -885,7 +885,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#hidden">hidden</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L190">src/Fields.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L205">src/Fields.ts:205</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -908,7 +908,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L329">src/Fields.ts:329</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L346">src/Fields.ts:346</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -954,7 +954,7 @@
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#init">init</a></p>
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L127">src/Fields.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L142">src/Fields.ts:142</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -978,7 +978,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#joi">joi</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L139">src/Fields.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L154">src/Fields.ts:154</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1004,7 +1004,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L310">src/Fields.ts:310</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L327">src/Fields.ts:327</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1048,7 +1048,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L305">src/Fields.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L322">src/Fields.ts:322</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1092,7 +1092,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L300">src/Fields.ts:300</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L317">src/Fields.ts:317</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1136,7 +1136,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L341">src/Fields.ts:341</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L358">src/Fields.ts:358</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>exp<span class="tsd-signature-symbol">: </span><a href="expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></h4>
@@ -1174,7 +1174,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L291">src/Fields.ts:291</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L308">src/Fields.ts:308</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>exp<span class="tsd-signature-symbol">: </span><a href="expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></h4>
@@ -1213,7 +1213,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#regex">regex</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L147">src/Fields.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L162">src/Fields.ts:162</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1237,7 +1237,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#required">required</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L195">src/Fields.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L210">src/Fields.ts:210</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1260,7 +1260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L352">src/Fields.ts:352</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L369">src/Fields.ts:369</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1283,7 +1283,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L355">src/Fields.ts:355</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L372">src/Fields.ts:372</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1307,7 +1307,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#tablename">tableName</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L200">src/Fields.ts:200</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L215">src/Fields.ts:215</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -1318,7 +1318,7 @@
 					<a name="tomodel" class="tsd-anchor"></a>
 					<h3>to<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, model<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modelcontext.html" class="tsd-signature-type">ModelContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1326,7 +1326,7 @@
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#tomodel">toModel</a></p>
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#tomodel">toModel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L204">src/Fields.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L219">src/Fields.ts:219</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1341,7 +1341,7 @@
 									<h5>modelData: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
 								</li>
 								<li>
-									<h5>model: <a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a></h5>
+									<h5>context: <a href="../interfaces/fields.modelcontext.html" class="tsd-signature-type">ModelContext</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1352,7 +1352,7 @@
 					<a name="totable" class="tsd-anchor"></a>
 					<h3>to<wbr>Table</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, model<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1360,7 +1360,7 @@
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totable">toTable</a></p>
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#totable">toTable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L220">src/Fields.ts:220</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L235">src/Fields.ts:235</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1375,7 +1375,7 @@
 									<h5>tableData: <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
 								</li>
 								<li>
-									<h5>model: <a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a></h5>
+									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1386,7 +1386,7 @@
 					<a name="totableupdate" class="tsd-anchor"></a>
 					<h3>to<wbr>Table<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, tableData<span class="tsd-signature-symbol">: </span><a href="update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a>, model<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, tableData<span class="tsd-signature-symbol">: </span><a href="update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1394,7 +1394,7 @@
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totableupdate">toTableUpdate</a></p>
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#totableupdate">toTableUpdate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L254">src/Fields.ts:254</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L271">src/Fields.ts:271</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1409,7 +1409,7 @@
 									<h5>tableData: <a href="update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a></h5>
 								</li>
 								<li>
-									<h5>model: <a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a></h5>
+									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1426,7 +1426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L333">src/Fields.ts:333</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L350">src/Fields.ts:350</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1471,7 +1471,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#updatevalidator-1">updateValidator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L162">src/Fields.ts:162</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L177">src/Fields.ts:177</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1495,7 +1495,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#validate">validate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L167">src/Fields.ts:167</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L182">src/Fields.ts:182</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1519,7 +1519,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#validateupdate">validateUpdate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L171">src/Fields.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L186">src/Fields.ts:186</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1543,7 +1543,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#validator-1">validator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L158">src/Fields.ts:158</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L173">src/Fields.ts:173</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1567,7 +1567,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldbase.html">FieldBase</a>.<a href="fields.fieldbase.html#yup">yup</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Fields.ts#L131">src/Fields.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Fields.ts#L146">src/Fields.ts:146</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

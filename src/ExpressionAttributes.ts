@@ -71,4 +71,13 @@ export class ExpressionAttributes {
     this.values = {};
     this.nextValue = 0;
   }
+
+  addParams(input: {
+    ExpressionAttributeNames?: ExpressionAttributeNameMap;
+    ExpressionAttributeValues?: Table.AttributeValuesMap;
+  }) {
+    if (Object.keys(this.names).length > 0) input.ExpressionAttributeNames = this.names;
+    if (Object.keys(this.values).length > 0) input.ExpressionAttributeValues = this.values;
+    return input;
+  }
 }

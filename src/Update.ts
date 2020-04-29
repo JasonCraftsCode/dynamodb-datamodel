@@ -1,4 +1,3 @@
-import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
@@ -252,27 +251,16 @@ export class Update {
     return exp.buildExpression();
   }
 
-  static buildInput(
+  static addParam(
     updateMap: Update.UpdateMapValue | undefined,
-    exp = new UpdateExpression(),
-  ):
-    | {
-        ExpressionAttributeNames: ExpressionAttributeNameMap;
-        ExpressionAttributeValues: Table.AttributeValuesMap;
-        UpdateExpression: string;
-      }
-    | undefined {
+    exp: ExpressionAttributes,
+    params: { UpdateExpression?: string },
+  ) {
     if (updateMap) {
-      const expression = Update.buildExpression(updateMap, exp);
-      if (expression) {
-        return {
-          ExpressionAttributeNames: exp.getPaths(),
-          ExpressionAttributeValues: exp.getValues(),
-          UpdateExpression: expression,
-        };
-      }
+      const expression = Update.buildExpression(updateMap, new UpdateExpression(exp));
+      if (expression) params.UpdateExpression = expression;
     }
-    return undefined;
+    return params;
   }
 }
 

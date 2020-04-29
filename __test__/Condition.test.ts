@@ -265,17 +265,45 @@ describe('Validate Condition', () => {
     expect(logical3(attribs)).toEqual('((NOT #n0 <= :v0) OR #n1 >= :v1 OR #n2 = :v2)');
   });
 
-  it('buildInput', () => {
+  it('addAndParam with undefined conditions', () => {
+    expect(Condition.addAndParam(undefined, new ExpressionAttributes(), {})).toEqual({});
+  });
+
+  it('addAndParam with empty conditions', () => {
+    expect(Condition.addAndParam([], new ExpressionAttributes(), {})).toEqual({});
+  });
+  it('addAndParam with single conditions', () => {
     const cond = Condition.eq('path1', 'value1');
-    expect(Condition.buildInput(cond)).toEqual({
+    expect(Condition.addAndParam([cond], new ExpressionAttributes(), {})).toEqual({
       ConditionExpression: '#n0 = :v0',
-      ExpressionAttributeNames: { '#n0': 'path1' },
-      ExpressionAttributeValues: { ':v0': 'value1' },
     });
-    expect(Condition.buildInput(cond, new ExpressionAttributes())).toEqual({
-      ConditionExpression: '#n0 = :v0',
-      ExpressionAttributeNames: { '#n0': 'path1' },
-      ExpressionAttributeValues: { ':v0': 'value1' },
+  });
+
+  it('addAndParam with two conditions', () => {
+    const conds = [Condition.eq('path1', 'value1'), Condition.gt('path2', 'value2')];
+    expect(Condition.addAndParam(conds, new ExpressionAttributes(), {})).toEqual({
+      ConditionExpression: '(#n0 = :v0 AND #n1 > :v1)',
+    });
+  });
+
+  it('addAndFilterParam with undefined conditions', () => {
+    expect(Condition.addAndFilterParam(undefined, new ExpressionAttributes(), {})).toEqual({});
+  });
+
+  it('addAndFilterParam with empty conditions', () => {
+    expect(Condition.addAndFilterParam([], new ExpressionAttributes(), {})).toEqual({});
+  });
+  it('addAndFilterParam with single conditions', () => {
+    const cond = Condition.eq('path1', 'value1');
+    expect(Condition.addAndFilterParam([cond], new ExpressionAttributes(), {})).toEqual({
+      FilterExpression: '#n0 = :v0',
+    });
+  });
+
+  it('addAndaddAndFilterParamParam with two conditions', () => {
+    const conds = [Condition.eq('path1', 'value1'), Condition.gt('path2', 'value2')];
+    expect(Condition.addAndFilterParam(conds, new ExpressionAttributes(), {})).toEqual({
+      FilterExpression: '(#n0 = :v0 AND #n1 > :v1)',
     });
   });
 });

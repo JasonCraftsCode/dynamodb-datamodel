@@ -32,7 +32,8 @@
     "inputFiles": "./src/index.ts",
     "mode": "library", // requires: "typedoc": "^0.17.0-3",
     "out": "docs",
-    "theme": "default"
+    "theme": "default",
+    "gitRevision": "master"
     // "toc": ["Table", "Model"]
   }
 }

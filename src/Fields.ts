@@ -82,6 +82,19 @@ export class Fields {
 }
 
 export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
+  export interface TableContext {
+    action: Table.ItemActions;
+    conditions?: Condition.Resolver[];
+    model: Model.ModelBase;
+    extra?: any;
+  }
+
+  export interface ModelContext {
+    action: Table.ItemActions;
+    model: Model.ModelBase;
+    extra?: any;
+  }
+
   export interface Field {
     name?: string;
     init(name: string): void;
@@ -89,22 +102,24 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
-      model: Model.ModelBase,
-    ): Promise<void>;
+      context: ModelContext,
+    ): Promise<void> | void;
 
+    // get, delete, put (new, exist or put)
+    // tableData { action: 'get'|'delete'|'put'|'new'|'set'|'update', data, conditions }
     toTable(
       name: string,
       modelData: Model.ModelData,
       tableData: Table.AttributeValuesMap,
-      model: Model.ModelBase,
-    ): Promise<void>;
+      context: TableContext,
+    ): Promise<void> | void;
 
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.UpdateMapValue,
-      model: Model.ModelBase,
-    ): Promise<void>;
+      context: TableContext,
+    ): Promise<void> | void;
   }
 
   export class FieldBase<V, T> implements Field {
@@ -205,7 +220,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
-      model: Model.ModelBase,
+      context: ModelContext,
     ): Promise<void> {
       return new Promise<void>((resolve) => {
         const value = tableData[this._alias || name];
@@ -221,7 +236,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelData,
       tableData: Table.AttributeValuesMap,
-      model: Model.ModelBase,
+      context: TableContext,
     ): Promise<void> {
       let value = (modelData[name] as unknown) as V;
       if (this._validator) {
@@ -239,7 +254,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
         const def = this._default;
         if (def !== undefined) {
           value =
-            typeof def === 'function' ? (def as FieldBase.DefaultFunction<V>)(name, tableData, modelData, model) : def;
+            typeof def === 'function'
+              ? (def as FieldBase.DefaultFunction<V>)(name, tableData, modelData, context)
+              : def;
         } else if (this._required) {
           throw new Error(`Field ${this.name} is required`);
         } else {
@@ -255,7 +272,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.UpdateMapValue,
-      model: Model.ModelBase,
+      context: TableContext,
     ): Promise<void> {
       let value = modelData[name];
       if (this._updateValidator) {
@@ -282,7 +299,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
-      model: Model.ModelBase,
+      context: TableContext,
     ) => T;
   }
 
@@ -502,9 +519,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
-      model: Model.ModelBase,
+      context: ModelContext,
     ) {
-      await super.toModel(name, tableData, modelData, model);
+      await super.toModel(name, tableData, modelData, context);
       const value = modelData[name];
       if (value === undefined) return;
       modelData[name] = new Date((value as number) * 1000);
@@ -514,21 +531,16 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelData,
       tableData: Table.AttributeValuesMap,
-      model: Model.ModelBase,
+      context: TableContext,
     ) {
-      await super.toTable(name, tableData, modelData, model);
+      await super.toTable(name, tableData, modelData, context);
       const value = modelData[this._alias || name];
       if (value === undefined) return;
       tableData[this._alias || name] = Math.round((value as Date).valueOf() / 1000);
     }
 
-    toTableUpdate(
-      name: string,
-      modelData: Model.ModelUpdate,
-      tableData: Update.UpdateMapValue,
-      model: Model.ModelBase,
-    ) {
-      return this.toTable(name, modelData, tableData as Table.AttributeValuesMap, model);
+    toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.UpdateMapValue, context: TableContext) {
+      return this.toTable(name, modelData, tableData as Table.AttributeValuesMap, context);
     }
   }
 
@@ -553,28 +565,23 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.name = name;
     }
 
-    toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, model: Model.ModelBase) {
+    toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext) {
       return new Promise<void>((resolve) => {
-        this.composite.toModel(this.slot, name, tableData, modelData, model);
+        this.composite.toModel(this.slot, name, tableData, modelData, context);
         resolve();
       });
     }
 
-    toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, model: Model.ModelBase) {
+    toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext) {
       return new Promise<void>((resolve) => {
-        this.composite.toTable(this.slot, name, modelData, tableData, model);
+        this.composite.toTable(this.slot, name, modelData, tableData, context);
         resolve();
       });
     }
 
-    toTableUpdate(
-      name: string,
-      modelData: Model.ModelUpdate,
-      tableData: Update.UpdateMapValue,
-      model: Model.ModelBase,
-    ) {
+    toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.UpdateMapValue, context: TableContext) {
       return new Promise<void>((resolve) => {
-        this.composite.toTableUpdate(this.slot, name, modelData, tableData, model);
+        this.composite.toTableUpdate(this.slot, name, modelData, tableData, context);
         resolve();
       });
     }
@@ -600,7 +607,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
-      model: Model.ModelBase,
+      context: ModelContext,
     ): void {
       const value = tableData[this.alias];
       if (typeof value !== 'string') return;
@@ -614,7 +621,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelData,
       tableData: Table.AttributeValuesMap,
-      model: Model.ModelBase,
+      context: TableContext,
     ): void {
       const value = modelData[name];
       if (value === undefined) return;
@@ -629,9 +636,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.UpdateMapValue,
-      model: Model.ModelBase,
+      context: TableContext,
     ): void {
-      this.toTable(slot, name, modelData, tableData as Table.AttributeValuesMap, model);
+      this.toTable(slot, name, modelData, tableData as Table.AttributeValuesMap, context);
     }
   }
 
@@ -684,51 +691,89 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
-      model: Model.ModelBase,
-    ): Promise<void> {
-      return new Promise<void>((resolve) => {
-        const parts: string[] = [];
-        this.aliases.forEach((alias) => {
-          const part = tableData[alias];
-          if (part) parts.push(part.toString());
-        });
-        modelData[name] = parts.join(this.delim);
-        resolve();
+      context: ModelContext,
+    ): void {
+      const parts: string[] = [];
+      this.aliases.forEach((alias) => {
+        const part = tableData[alias];
+        if (part) parts.push(part.toString());
       });
+      if (parts.length > 0) modelData[name] = parts.join(this.delim);
     }
 
     toTable(
       name: string,
       modelData: Model.ModelData,
       tableData: Table.AttributeValuesMap,
-      model: Model.ModelBase,
-    ): Promise<void> {
-      return new Promise<void>((resolve) => {
-        // TODO: should we throw for this?
-        const value = modelData[name];
-        if (value !== undefined && typeof value === 'string') {
-          // skip any field that is not a string and is split aliased
-          let parts = value.split(this.delim);
-          const extraParts = parts.length - this.aliases.length;
-          if (extraParts > 0) {
-            parts[extraParts] = parts.slice(0, extraParts + 1).join(this.delim);
-            parts = parts.slice(extraParts);
-          }
-          for (let i = 0; i < parts.length; i++) {
-            tableData[this.aliases[i]] = parts[i];
-          }
+      context: TableContext,
+    ): void {
+      // TODO: should we throw for this?
+      const value = modelData[name];
+      if (value !== undefined && typeof value === 'string') {
+        // skip any field that is not a string and is split aliased
+        let parts = value.split(this.delim);
+        const extraParts = parts.length - this.aliases.length;
+        if (extraParts > 0) {
+          parts[extraParts] = parts.slice(0, extraParts + 1).join(this.delim);
+          parts = parts.slice(extraParts);
         }
-        resolve();
-      });
+        for (let i = 0; i < parts.length; i++) {
+          tableData[this.aliases[i]] = parts[i];
+        }
+      }
     }
 
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.UpdateMapValue,
-      model: Model.ModelBase,
-    ): Promise<void> {
-      return this.toTable(name, modelData, tableData as Table.AttributeValuesMap, model);
+      context: TableContext,
+    ): void {
+      this.toTable(name, modelData, tableData as Table.AttributeValuesMap, context);
     }
   }
+
+  /*
+   export class FieldCreated extends Field<Date, 'CREATED'> {
+    name?: string;
+    alias?: string;
+    constructor(alias?: string) {
+      this.alias = alias;
+    }
+    init(name: string) {
+      this.name = name;
+    }
+    async toModel(
+      name: string,
+      tableData: Table.AttributeValuesMap,
+      modelData: Model.ModelData,
+      context: ModelContext,
+    ) {
+      const value = tableData[this.alias | name];
+      if (value === undefined) return;
+      modelData[name] = new Date((value as number) * 1000);
+    }
+
+    async toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: TableContext,
+    ) {
+      // Only if new
+      const value = modelData[this._alias || name];
+      if (value === undefined) return;
+      tableData[this._alias || name] = Math.round((value as Date).valueOf() / 1000);
+    }
+
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.UpdateMapValue,
+      context: TableContext,
+    ) {
+      // Don't update created date
+    }
+  }
+  */
 }

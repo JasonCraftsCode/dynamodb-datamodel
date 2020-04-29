@@ -155,6 +155,33 @@ describe('Validate ExpressionAttributes', () => {
     expect(attrs.getValues()).toEqual({ ':v0': 'value1', ':v1': 2 });
   });
 
+  it('addParams with no values', () => {
+    const attrs = new ExpressionAttributes();
+    expect(attrs.addParams({})).toEqual({});
+  });
+
+  it('addParams with just name', () => {
+    const attrs = new ExpressionAttributes();
+    attrs.addPath('name1');
+    expect(attrs.addParams({})).toEqual({ ExpressionAttributeNames: { '#n0': 'name1' } });
+  });
+
+  it('addParams with just value', () => {
+    const attrs = new ExpressionAttributes();
+    attrs.addValue('value1');
+    expect(attrs.addParams({})).toEqual({ ExpressionAttributeValues: { ':v0': 'value1' } });
+  });
+
+  it('addParams with both name and value', () => {
+    const attrs = new ExpressionAttributes();
+    attrs.addPath('name2');
+    attrs.addValue('value2');
+    expect(attrs.addParams({})).toEqual({
+      ExpressionAttributeNames: { '#n0': 'name2' },
+      ExpressionAttributeValues: { ':v0': 'value2' },
+    });
+  });
+
   it('reset', () => {
     const attrs = new ExpressionAttributes();
     attrs.addPath('path1');

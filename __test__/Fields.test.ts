@@ -166,21 +166,21 @@ describe('When FieldBase', () => {
   it('toTable with hidden field expect not in table data', async () => {
     const field = Fields.number().hidden();
     const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: '5' }, tabelData, {} as Model.ModelBase);
+    await field.toTable('test', { test: '5' }, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({});
   });
 
   it('toTable with coerce validator expect coerce value', async () => {
     const field = Fields.number().coerce().yup(yup.number().min(1).max(10));
     const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: '5' }, tabelData, {} as Model.ModelBase);
+    await field.toTable('test', { test: '5' }, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({ test: 5 });
   });
 
   it('toTable with coerce expect coerce value', async () => {
     const field = Fields.number().coerce();
     const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: 8 }, tabelData, {} as Model.ModelBase);
+    await field.toTable('test', { test: 8 }, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({ test: 8 });
   });
 
@@ -188,7 +188,7 @@ describe('When FieldBase', () => {
   it('toTableUpdate with hidden field expect not in table data', async () => {
     const field = Fields.number().hidden();
     const tabelData: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Model.ModelBase);
+    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({});
   });
 
@@ -202,7 +202,7 @@ describe('When FieldBase', () => {
       });
     field.init('test');
     const tabelData: Update.UpdateMapValue = {};
-    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Model.ModelBase);
+    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({ test: 15 });
   });
 
@@ -216,14 +216,14 @@ describe('When FieldBase', () => {
       });
     field.init('test');
     const tabelData: Update.UpdateMapValue = {};
-    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Model.ModelBase);
+    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({ test: '5' });
   });
 
   it('toTableUpdate with coerce expect coerce value', async () => {
     const field = Fields.number().coerce();
     const tabelData: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('test', { test: 9 }, tabelData, {} as Model.ModelBase);
+    await field.toTableUpdate('test', { test: 9 }, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({ test: 9 });
   });
 
@@ -231,7 +231,7 @@ describe('When FieldBase', () => {
   it('required field missing from model expect toTable to throw', async () => {
     const field = Fields.string().required();
     field.init('test');
-    await expect(field.toTable('test', {}, {}, {} as Model.ModelBase)).rejects.toThrowError(
+    await expect(field.toTable('test', {}, {}, {} as Fields.TableContext)).rejects.toThrowError(
       new Error('Field test is required'),
     );
   });
@@ -239,7 +239,7 @@ describe('When FieldBase', () => {
   it('toTable with default expects default return', async () => {
     const field = Fields.string().default('default');
     const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', {}, tabelData, {} as Model.ModelBase);
+    await field.toTable('test', {}, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({ test: 'default' });
   });
 
@@ -248,7 +248,7 @@ describe('When FieldBase', () => {
       return name + '-default';
     });
     const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', {}, tabelData, {} as Model.ModelBase);
+    await field.toTable('test', {}, tabelData, {} as Fields.TableContext);
     expect(tabelData).toEqual({ test: 'test-default' });
   });
 });
@@ -590,19 +590,19 @@ describe('When FieldDate', () => {
 
   it('toModel expect date data', async () => {
     const data: Model.ModelData = {};
-    await field.toModel('date', { date: 1585564302000 }, data, {} as Model.ModelBase);
+    await field.toModel('date', { date: 1585564302000 }, data, {} as Fields.ModelContext);
     expect(data).toEqual({ date: new Date(1585564302000000) });
   });
 
   it('toTable expect date as number', async () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTable('date', { date: new Date(1585574302000000) }, data, {} as Model.ModelBase);
+    await field.toTable('date', { date: new Date(1585574302000000) }, data, {} as Fields.TableContext);
     expect(data).toEqual({ date: 1585574302000 });
   });
 
   it('toTableUpdate expect date as number', async () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('date', { date: new Date(1585584302000000) }, data, {} as Model.ModelBase);
+    await field.toTableUpdate('date', { date: new Date(1585584302000000) }, data, {} as Fields.TableContext);
     expect(data).toEqual({ date: 1585584302000 });
   });
 });
@@ -642,14 +642,14 @@ describe('When FieldComposite', () => {
   it('slot.toModel expect existing slot to map', async () => {
     const slot = field.slot(1);
     const data: Model.ModelData = {};
-    await slot.toModel('split', { G0S: 'part1.part2.part3' }, data, {} as Model.ModelBase);
+    await slot.toModel('split', { G0S: 'part1.part2.part3' }, data, {} as Fields.ModelContext);
     expect(data).toEqual({ split: 'part2' });
   });
 
   it('slot.toModel expect missing slot to skip', async () => {
     const slot = field.slot(2);
     const data: Model.ModelData = {};
-    await slot.toModel('split', { G0S: 'part1.part2' }, data, {} as Model.ModelBase);
+    await slot.toModel('split', { G0S: 'part1.part2' }, data, {} as Fields.ModelContext);
     expect(data).toEqual({});
   });
 
@@ -657,30 +657,30 @@ describe('When FieldComposite', () => {
     const slot2 = field.slot(2);
     const slot1 = field.slot(1);
     const data: Table.AttributeValuesMap = {};
-    await slot2.toTable('split2', { split2: 'part2' }, data, {} as Model.ModelBase);
+    await slot2.toTable('split2', { split2: 'part2' }, data, {} as Fields.TableContext);
     expect(data).toEqual({ G0S: '..part2' });
-    await slot1.toTable('split1', { split1: 'part1' }, data, {} as Model.ModelBase);
+    await slot1.toTable('split1', { split1: 'part1' }, data, {} as Fields.TableContext);
     expect(data).toEqual({ G0S: '.part1.part2' });
   });
 
   it('slot.toTable missing slot expect empty data', async () => {
     const slot = field.slot(1);
     const data: Table.AttributeValuesMap = {};
-    await slot.toTable('split', { split1: 'part1' }, data, {} as Model.ModelBase);
+    await slot.toTable('split', { split1: 'part1' }, data, {} as Fields.TableContext);
     expect(data).toEqual({});
   });
 
   it('slot.toTable slot is function expect empty data', async () => {
     const slot = field.slot(1);
     const data: Table.AttributeValuesMap = {};
-    await slot.toTable('split', { split: () => 'value' }, data, {} as Model.ModelBase);
+    await slot.toTable('split', { split: () => 'value' }, data, {} as Fields.TableContext);
     expect(data).toEqual({});
   });
 
   it('slot.toTableUpdate expect fields to map to key', async () => {
     const slot = field.slot(1);
     const data: Table.AttributeValuesMap = {};
-    await slot.toTableUpdate('split', { split: 'part1' }, data, {} as Model.ModelBase);
+    await slot.toTableUpdate('split', { split: 'part1' }, data, {} as Fields.TableContext);
     expect(data).toEqual({ G0S: '.part1.' });
   });
 });
@@ -757,63 +757,63 @@ describe('When FieldSplit', () => {
     expect(field1.delim).toEqual(':');
   });
 
-  it('toModel expect join of all aliases', async () => {
+  it('toModel expect join of all aliases', () => {
     const data: Model.ModelData = {};
-    await field.toModel('split', { P: 'id1', S: 'id2' }, data, {} as Model.ModelBase);
+    field.toModel('split', { P: 'id1', S: 'id2' }, data, {} as Fields.ModelContext);
     expect(data).toEqual({ split: 'id1.id2' });
   });
 
-  it('toModel expect join of single aliases', async () => {
+  it('toModel expect join of single aliases', () => {
     const data: Model.ModelData = {};
-    await field.toModel('split', { P: 'id1' }, data, {} as Model.ModelBase);
+    field.toModel('split', { P: 'id1' }, data, {} as Fields.ModelContext);
     expect(data).toEqual({ split: 'id1' });
   });
 
-  it('toModel expect join of first aliases', async () => {
+  it('toModel expect join of first aliases', () => {
     const data: Model.ModelData = {};
-    await field.toModel('split', { S: 'id2' }, data, {} as Model.ModelBase);
+    field.toModel('split', { S: 'id2' }, data, {} as Fields.ModelContext);
     expect(data).toEqual({ split: 'id2' });
   });
 
-  it('toTable expect split of all aliases', async () => {
+  it('toTable expect split of all aliases', () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTable('split', { split: 'id1.id2' }, data, {} as Model.ModelBase);
+    field.toTable('split', { split: 'id1.id2' }, data, {} as Fields.TableContext);
     expect(data).toEqual({ P: 'id1', S: 'id2' });
   });
 
-  it('toTable expect split of more then number of aliases', async () => {
+  it('toTable expect split of more then number of aliases', () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTable('split', { split: 'id1.id2.id3.id4' }, data, {} as Model.ModelBase);
+    field.toTable('split', { split: 'id1.id2.id3.id4' }, data, {} as Fields.TableContext);
     expect(data).toEqual({ P: 'id1.id2.id3', S: 'id4' });
   });
 
-  it('toTable expect join of first aliases', async () => {
+  it('toTable expect join of first aliases', () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTable('split', { split: 'id1' }, data, {} as Model.ModelBase);
+    field.toTable('split', { split: 'id1' }, data, {} as Fields.TableContext);
     expect(data).toEqual({ P: 'id1' });
   });
 
-  it('toTable missing field expect empty data', async () => {
+  it('toTable missing field expect empty data', () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTable('split', { split1: 'id1' }, data, {} as Model.ModelBase);
+    field.toTable('split', { split1: 'id1' }, data, {} as Fields.TableContext);
     expect(data).toEqual({});
   });
 
-  it('toTable not a string field expect empty data', async () => {
+  it('toTable not a string field expect empty data', () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTable('split', { split: 5.2 }, data, {} as Model.ModelBase);
+    field.toTable('split', { split: 5.2 }, data, {} as Fields.TableContext);
     expect(data).toEqual({});
   });
 
-  it('toTableUpdate expect join of all aliases', async () => {
+  it('toTableUpdate expect join of all aliases', () => {
     const data: Update.UpdateMapValue = {};
-    await field.toTableUpdate('split', { split: 'id1.id2' }, data, {} as Model.ModelBase);
+    field.toTableUpdate('split', { split: 'id1.id2' }, data, {} as Fields.TableContext);
     expect(data).toEqual({ P: 'id1', S: 'id2' });
   });
 
-  it('toTableUpdate expect join of first aliases', async () => {
+  it('toTableUpdate expect join of first aliases', () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('split', { split: 'id1' }, data, {} as Model.ModelBase);
+    field.toTableUpdate('split', { split: 'id1' }, data, {} as Fields.TableContext);
     expect(data).toEqual({ P: 'id1' });
   });
 });

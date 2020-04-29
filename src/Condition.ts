@@ -1,4 +1,3 @@
-import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
@@ -133,20 +132,24 @@ export class Condition {
     };
   }
 
-  static buildInput(
-    cond: Condition.Resolver,
-    exp = new ExpressionAttributes(),
-  ): {
-    ConditionExpression: string;
-    ExpressionAttributeNames: ExpressionAttributeNameMap;
-    ExpressionAttributeValues: Table.AttributeValuesMap;
-  } {
-    const condExp = cond(exp);
-    return {
-      ConditionExpression: condExp,
-      ExpressionAttributeNames: exp.getPaths(),
-      ExpressionAttributeValues: exp.getValues(),
-    };
+  static addAndParam(
+    conditions: Condition.Resolver[] | undefined,
+    exp: ExpressionAttributes,
+    params: { ConditionExpression?: string },
+  ) {
+    if (conditions && conditions.length > 0)
+      params.ConditionExpression = conditions.length === 1 ? conditions[0](exp) : Condition.and(conditions)(exp);
+    return params;
+  }
+
+  static addAndFilterParam(
+    conditions: Condition.Resolver[] | undefined,
+    exp: ExpressionAttributes,
+    params: { FilterExpression?: string },
+  ) {
+    if (conditions && conditions.length > 0)
+      params.FilterExpression = conditions.length === 1 ? conditions[0](exp) : Condition.and(conditions)(exp);
+    return params;
   }
 }
 

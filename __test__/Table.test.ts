@@ -213,6 +213,19 @@ describe('Validate Table with indexes', () => {
     expect(testTable.getSortKey()).toEqual('S');
   });
 
+  it('Table.getSortKey empty when does not exist', () => {
+    interface HashOnlyTableKey {
+      P: Table.PrimaryKey.PartitionString;
+    }
+    const hashTable = Table.createTable<HashOnlyTableKey, HashOnlyTableKey>({
+      name: 'hashTable',
+      keyAttributes: { P: { type: 'S' } },
+      keySchema: { P: { keyType: 'HASH' } },
+      client,
+    });
+    expect(hashTable.getSortKey()).toEqual('');
+  });
+
   it('Table.onError', () => {
     expect(() => testTable.onError('Error message')).toThrow();
   });
@@ -252,7 +265,9 @@ describe('Validate Table with indexes', () => {
   });
 
   it('putParams', () => {
-    const params = testTable.putParams({ P: 'pk', S: 'sk' });
+    const params = testTable.putParams({ P: 'pk', S: 'sk' }, undefined, {
+      writeOptions: 'Always',
+    });
     expect(params).toEqual({
       Item: { P: 'pk', S: 'sk' },
       TableName: 'TestTable',
@@ -266,7 +281,6 @@ describe('Validate Table with indexes', () => {
     expect(params).toEqual({
       ConditionExpression: 'attribute_exists(#n0)',
       ExpressionAttributeNames: { '#n0': 'P' },
-      ExpressionAttributeValues: {},
       Item: { P: 'pk', S: 'sk' },
       TableName: 'TestTable',
     });
@@ -279,7 +293,6 @@ describe('Validate Table with indexes', () => {
     expect(params).toEqual({
       ConditionExpression: 'attribute_not_exists(#n0)',
       ExpressionAttributeNames: { '#n0': 'P' },
-      ExpressionAttributeValues: {},
       Item: { P: 'pk', S: 'sk' },
       TableName: 'TestTable',
     });
@@ -346,7 +359,6 @@ describe('Validate Table with indexes', () => {
     expect(client.put).toBeCalledWith({
       ConditionExpression: 'attribute_exists(#n0)',
       ExpressionAttributeNames: { '#n0': 'P' },
-      ExpressionAttributeValues: {},
       Item: { P: 'pk', S: 'sk' },
       TableName: 'TestTable',
     });
@@ -362,7 +374,6 @@ describe('Validate Table with indexes', () => {
     expect(client.put).toBeCalledWith({
       ConditionExpression: 'attribute_not_exists(#n0)',
       ExpressionAttributeNames: { '#n0': 'P' },
-      ExpressionAttributeValues: {},
       Item: { P: 'pk', S: 'sk' },
       TableName: 'TestTable',
     });

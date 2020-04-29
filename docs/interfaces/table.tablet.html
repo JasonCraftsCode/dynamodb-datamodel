@@ -113,6 +113,8 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#addglobalindexes" class="tsd-kind-icon">add<wbr>Global<wbr>Indexes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#addlocalindexes" class="tsd-kind-icon">add<wbr>Local<wbr>Indexes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#createbinaryset" class="tsd-kind-icon">create<wbr>Binary<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#createnumberset" class="tsd-kind-icon">create<wbr>Number<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#createset" class="tsd-kind-icon">create<wbr>Set</a></li>
@@ -122,6 +124,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#get" class="tsd-kind-icon">get</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#getparams" class="tsd-kind-icon">get<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#getpartitionkey" class="tsd-kind-icon">get<wbr>Partition<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#getputcondition" class="tsd-kind-icon">get<wbr>Put<wbr>Condition</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#getsortkey" class="tsd-kind-icon">get<wbr>Sort<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#onerror" class="tsd-kind-icon">on<wbr>Error</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#put" class="tsd-kind-icon">put</a></li>
@@ -150,7 +153,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L116">src/Table.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L280">src/Table.ts:280</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -173,18 +176,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#client">client</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L113">src/Table.ts:113</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L277">src/Table.ts:277</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="globalindexes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> global<wbr>Indexes</h3>
+					<h3>global<wbr>Indexes</h3>
 					<div class="tsd-signature tsd-kind-icon">global<wbr>Indexes<span class="tsd-signature-symbol">:</span> <a href="../classes/index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#globalindexes">globalIndexes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L111">src/Table.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L275">src/Table.ts:275</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -195,7 +198,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#keyattributes">keyAttributes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L388">src/Table.ts:388</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L586">src/Table.ts:586</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -206,18 +209,18 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#keyschema">keySchema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L389">src/Table.ts:389</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L587">src/Table.ts:587</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="localindexes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> local<wbr>Indexes</h3>
+					<h3>local<wbr>Indexes</h3>
 					<div class="tsd-signature tsd-kind-icon">local<wbr>Indexes<span class="tsd-signature-symbol">:</span> <a href="../classes/index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#localindexes">localIndexes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L112">src/Table.ts:112</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L276">src/Table.ts:276</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,13 +231,61 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L108">src/Table.ts:108</a></li>
+							<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L272">src/Table.ts:272</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="addglobalindexes" class="tsd-anchor"></a>
+					<h3>add<wbr>Global<wbr>Indexes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Global<wbr>Indexes<span class="tsd-signature-symbol">(</span>gsi<span class="tsd-signature-symbol">: </span><a href="../classes/index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#addglobalindexes">addGlobalIndexes</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L291">src/Table.ts:291</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>gsi: <a href="../classes/index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="addlocalindexes" class="tsd-anchor"></a>
+					<h3>add<wbr>Local<wbr>Indexes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Local<wbr>Indexes<span class="tsd-signature-symbol">(</span>lsi<span class="tsd-signature-symbol">: </span><a href="../classes/index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#addlocalindexes">addLocalIndexes</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L296">src/Table.ts:296</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>lsi: <a href="../classes/index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 					<a name="createbinaryset" class="tsd-anchor"></a>
 					<h3>create<wbr>Binary<wbr>Set</h3>
@@ -246,7 +297,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#createbinaryset">createBinarySet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L150">src/Table.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L321">src/Table.ts:321</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -273,7 +324,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#createnumberset">createNumberSet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L146">src/Table.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L317">src/Table.ts:317</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -300,7 +351,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#createset">createSet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L138">src/Table.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L309">src/Table.ts:309</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -327,7 +378,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#createstringset">createStringSet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L142">src/Table.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L313">src/Table.ts:313</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -354,7 +405,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L411">src/Table.ts:411</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L609">src/Table.ts:609</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -381,7 +432,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#deleteparams">deleteParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L392">src/Table.ts:392</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L590">src/Table.ts:590</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -408,7 +459,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L410">src/Table.ts:410</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L608">src/Table.ts:608</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -435,7 +486,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getparams">getParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L391">src/Table.ts:391</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L589">src/Table.ts:589</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -462,10 +513,34 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getpartitionkey">getPartitionKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L130">src/Table.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L301">src/Table.ts:301</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="getputcondition" class="tsd-anchor"></a>
+					<h3>get<wbr>Put<wbr>Condition</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Put<wbr>Condition<span class="tsd-signature-symbol">(</span>writeOptions<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#putwriteoptions" class="tsd-signature-type">PutWriteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getputcondition">getPutCondition</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L350">src/Table.ts:350</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>writeOptions: <a href="../classes/table.html#putwriteoptions" class="tsd-signature-type">PutWriteOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -480,7 +555,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getsortkey">getSortKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L134">src/Table.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L305">src/Table.ts:305</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -498,7 +573,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#onerror">onError</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L114">src/Table.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L278">src/Table.ts:278</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -522,7 +597,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#put">put</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L415">src/Table.ts:415</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L613">src/Table.ts:613</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -552,7 +627,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#putparams">putParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L396">src/Table.ts:396</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L594">src/Table.ts:594</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -582,7 +657,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#query">query</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L426">src/Table.ts:426</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L624">src/Table.ts:624</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -609,7 +684,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#queryparams">queryParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L406">src/Table.ts:406</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L604">src/Table.ts:604</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -636,7 +711,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#scan">scan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L427">src/Table.ts:427</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L625">src/Table.ts:625</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -660,7 +735,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#scanparams">scanParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L407">src/Table.ts:407</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L605">src/Table.ts:605</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -684,7 +759,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#update">update</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L420">src/Table.ts:420</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L618">src/Table.ts:618</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -714,7 +789,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#updateparams">updateParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/8a7515c/src/Table.ts#L401">src/Table.ts:401</a></li>
+									<li>Defined in <a href="https://github.com/jasonuwbadger/dynamodb-datamodel/blob/master/src/Table.ts#L599">src/Table.ts:599</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -796,6 +871,12 @@
 										<a href="table.tablet.html#name" class="tsd-kind-icon">name</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.tablet.html#addglobalindexes" class="tsd-kind-icon">add<wbr>Global<wbr>Indexes</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.tablet.html#addlocalindexes" class="tsd-kind-icon">add<wbr>Local<wbr>Indexes</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 										<a href="table.tablet.html#createbinaryset" class="tsd-kind-icon">create<wbr>Binary<wbr>Set</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
@@ -821,6 +902,9 @@
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 										<a href="table.tablet.html#getpartitionkey" class="tsd-kind-icon">get<wbr>Partition<wbr>Key</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.tablet.html#getputcondition" class="tsd-kind-icon">get<wbr>Put<wbr>Condition</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 										<a href="table.tablet.html#getsortkey" class="tsd-kind-icon">get<wbr>Sort<wbr>Key</a>
