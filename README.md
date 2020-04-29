@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/v/dynamodb-datamodel.svg)](https://www.npmjs.com/package/dynamodb-datamodel)
 [![dependencies Status](https://david-dm.org/jasoncraftscode/dynamodb-datamodel/status.svg)](https://david-dm.org/jasoncraftscode/dynamodb-datamodel)
 [![codecov](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/master/graph/badge.svg)](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel)
-[![DeepScan grade](https://deepscan.io/api/teams/8443/projects/10631/branches/149533/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=8443&pid=10631&bid=149533)
+[![DeepScan grade](https://deepscan.io/api/teams/8443/projects/11172/branches/162758/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=8443&pid=11172&bid=162758)
 [![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)](https://img.shields.io/npm/types/dynamodb-datamodel)
 [![npm](https://img.shields.io/npm/l/dynamodb-datamodel.svg)](https://www.npmjs.com/package/dynamodb-datamodel)
 
