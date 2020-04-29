@@ -11,13 +11,13 @@
   ],
   "author": "Jason Christensen",
   "license": "MIT",
-  "homepage": "https://github.com/jasonuwbadger/dynamodb-datamodel",
+  "homepage": "https://github.com/JasonCraftsCode/dynamodb-datamodel",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jasonuwbadger/dynamodb-datamodel.git"
+    "url": "git+https://github.com/JasonCraftsCode/dynamodb-datamodel.git"
   },
   "bugs": {
-    "url": "https://github.com/jasonuwbadger/dynamodb-datamodel/issues"
+    "url": "https://github.com/JasonCraftsCode/dynamodb-datamodel/issues"
   },
   "publishConfig": {
     "access": "public"
