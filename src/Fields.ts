@@ -4,70 +4,79 @@ import { Table } from './Table';
 import { Update } from './Update';
 
 export class Fields {
-  /* tslint:disable:variable-name */
-  static string(alias?: string) {
+  static string(alias?: string): Fields.FieldString {
     return new Fields.FieldString('S', alias);
   }
 
-  /* tslint:disable:variable-name */
-  static number(alias?: string) {
+  static number(alias?: string): Fields.FieldNumber {
     return new Fields.FieldNumber('N', alias);
   }
 
-  static binary(alias?: string) {
+  static binary(alias?: string): Fields.FieldBinary {
     return new Fields.FieldBinary('B', alias);
   }
 
-  /* tslint:disable:variable-name */
-  static boolean(alias?: string) {
+  static boolean(alias?: string): Fields.FieldBoolean {
     return new Fields.FieldBoolean('BOOL', alias);
   }
 
-  static stringSet(alias?: string) {
+  static stringSet(alias?: string): Fields.FieldStringSet {
     return new Fields.FieldStringSet('SS', alias);
   }
 
-  static numberSet(alias?: string) {
+  static numberSet(alias?: string): Fields.FieldNumberSet {
     return new Fields.FieldNumberSet('NS', alias);
   }
 
-  static binarySet(alias?: string) {
+  static binarySet(alias?: string): Fields.FieldBinarySet {
     return new Fields.FieldBinarySet('BS', alias);
   }
 
-  static list(alias?: string) {
+  static list(alias?: string): Fields.FieldList<Table.AttributeValues, 'L'> {
     return new Fields.FieldList('L', alias);
   }
 
-  static listT<V, T>(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
+  static listT<V, T extends Table.AttributeTypes>(
+    type: string,
+    schema: Model.ModelSchemaT<V>,
+    alias?: string,
+  ): Fields.FieldListT<V, T> {
     return new Fields.FieldListT<V, T>(type, schema, alias);
   }
 
-  static map(alias?: string) {
+  static map(alias?: string): Fields.FieldMap<Table.AttributeValues, 'M'> {
     return new Fields.FieldMap('M', alias);
   }
 
-  static mapT<V, T>(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
+  static mapT<V, T extends Table.AttributeTypes>(
+    type: string,
+    schema: Model.ModelSchemaT<V>,
+    alias?: string,
+  ): Fields.FieldMapT<V, T> {
     return new Fields.FieldMapT<V, T>(type, schema, alias);
   }
 
-  static object<V, T>(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
+  static object<V, T extends Table.AttributeTypes>(
+    type: string,
+    schema: Model.ModelSchemaT<V>,
+    alias?: string,
+  ): Fields.FieldObject<V, T> {
     return new Fields.FieldObject<V, T>(type, schema, alias);
   }
 
-  static date(alias?: string) {
+  static date(alias?: string): Fields.FieldDate {
     return new Fields.FieldDate('DATE', alias);
   }
 
-  static hidden() {
+  static hidden(): Fields.FieldHidden {
     return new Fields.FieldHidden();
   }
 
-  static split(aliases: string[], delim?: string) {
+  static split(aliases: string[], delim?: string): Fields.FieldSplit {
     return new Fields.FieldSplit(aliases, delim);
   }
 
-  static composite(alias: string, count: number, delim?: string) {
+  static composite(alias: string, count: number, delim?: string): Fields.FieldComposite {
     return new Fields.FieldComposite(alias, count, delim);
   }
 
@@ -76,22 +85,25 @@ export class Fields {
     slotMap: T,
     slots?: Fields.CompositeSlot<T>,
     delim?: string,
-  ) {
+  ): Fields.FieldCompositeT<T> {
     return new Fields.FieldCompositeT<T>(alias, slotMap, slots, delim);
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   export interface TableContext {
     action: Table.ItemActions;
     conditions?: Condition.Resolver[];
     model: Model.ModelBase;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     extra?: any;
   }
 
   export interface ModelContext {
     action: Table.ItemActions;
     model: Model.ModelBase;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     extra?: any;
   }
 
@@ -123,7 +135,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   export class FieldBase<V, T> implements Field {
-    readonly type: T;
+    readonly type: string;
     name?: string; // set by init function in Model or Field constructor
     // TODO: is there a default where we don't set or remove the attribute, then toModel will always return?
     _default?: V | FieldBase.DefaultFunction<V>;
@@ -134,7 +146,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     _updateValidator?: FieldBase.UpdateValidator<V>;
     _coerce?: boolean; // default: false
 
-    constructor(type: T, alias?: string) {
+    constructor(type: string, alias?: string) {
       this.type = type;
       this._alias = alias;
     }
@@ -143,7 +155,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.name = name;
     }
 
-    yup(schema: any, options?: any) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    yup(schema: any, options?: any): FieldBase<V, T> {
       return this.validator((value) => {
         return schema.validate(value, {
           strict: !(this._coerce || false),
@@ -151,7 +164,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
         });
       });
     }
-    joi(schema: any, options?: any) {
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    joi(schema: any, options?: any): FieldBase<V, T> {
       return this.validator((value) => {
         return schema.validateAsync(value, {
           convert: this._coerce || false,
@@ -159,9 +174,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
         });
       });
     }
-    regex(regex: RegExp) {
+    regex(regex: RegExp): FieldBase<V, T> {
       return this.validator((value: V) => {
         return new Promise<void | V>((resolve, reject) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           if (regex.test((value as any).toString())) {
             resolve(value);
           } else {
@@ -170,49 +186,52 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
         });
       });
     }
-    validator(validator: FieldBase.Validator<V>) {
+    validator(validator: FieldBase.Validator<V>): FieldBase<V, T> {
       this._validator = validator;
       return this;
     }
-    updateValidator(validator: FieldBase.UpdateValidator<V>) {
+    updateValidator(validator: FieldBase.UpdateValidator<V>): FieldBase<V, T> {
       this._updateValidator = validator;
       return this;
     }
 
-    validate(value: V) {
+    validate(value: V): Promise<void | V> {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return this._validator!(value);
     }
 
-    validateUpdate(value: Model.ModelUpdateValue<V>) {
+    validateUpdate(value: Model.ModelUpdateValue<V>): Promise<Model.ModelUpdateValue<V> | void> {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return this._updateValidator!(value);
     }
 
-    coerce(value = true) {
+    coerce(value = true): FieldBase<V, T> {
       this._coerce = value;
       return this;
     }
 
-    alias(value?: string) {
+    alias(value?: string): FieldBase<V, T> {
       this._alias = value;
       return this;
     }
 
-    default(value: V | FieldBase.DefaultFunction<V>) {
+    default(value: V | FieldBase.DefaultFunction<V>): FieldBase<V, T> {
       this._default = value;
       return this;
     }
 
-    hidden(value = true) {
+    hidden(value = true): FieldBase<V, T> {
       this._hidden = value;
       return this;
     }
 
-    required(value = true) {
+    required(value = true): FieldBase<V, T> {
       this._required = value;
       return this;
     }
 
-    tableName() {
+    tableName(): string {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return this._alias || this.name!;
     }
 
@@ -220,6 +239,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: ModelContext,
     ): Promise<void> {
       return new Promise<void>((resolve) => {
@@ -240,9 +260,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): Promise<void> {
       let value = (modelData[name] as unknown) as V;
       if (this._validator) {
-        const coerced = await this._validator(value as V);
+        const coerced = await this._validator(value);
         if (this._coerce && coerced !== undefined) {
-          value = coerced as V;
+          value = coerced;
         }
       } else if (this._coerce) {
         // Simple coercion
@@ -272,13 +292,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.UpdateMapValue,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: TableContext,
     ): Promise<void> {
       let value = modelData[name];
       if (this._updateValidator) {
         const coerced = await this._updateValidator(value as Model.ModelUpdateValue<V>);
         if (this._coerce && coerced !== undefined) {
-          value = coerced as Model.ModelUpdateValue<V>;
+          value = coerced;
         }
       } else if (this._coerce) {
         // Simple coercion
@@ -290,7 +311,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
-  /* tslint:disable:no-namespace */
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace FieldBase {
     export type Validator<T> = (value: T) => Promise<T | void>;
     export type UpdateValidator<T> = (value: Model.ModelUpdateValue<T>) => Promise<Model.ModelUpdateValue<T> | void>;
@@ -303,127 +324,133 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ) => T;
   }
 
-  export class FieldExpression<V, T> extends FieldBase<V, T> {
+  export class FieldExpression<V, T extends Table.AttributeTypes> extends FieldBase<V, T> {
     // Conditions
-    path() {
+    path(): Condition.Resolver<T> {
       return Condition.path(this.tableName());
     }
 
-    eq(v: V) {
+    eq(v: V): Condition.Resolver<T> {
       return Condition.eq(this.tableName(), v);
     }
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     equal = this.eq;
 
-    ne(v: V) {
+    ne(v: V): Condition.Resolver<T> {
       return Condition.ne(this.tableName(), v);
     }
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     notEqual = this.ne;
 
-    lt(v: V) {
+    lt(v: V): Condition.Resolver<T> {
       return Condition.lt(this.tableName(), v);
     }
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     lessThen = this.lt;
 
-    le(v: V) {
+    le(v: V): Condition.Resolver<T> {
       return Condition.le(this.tableName(), v);
     }
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     lessThenEqual = this.le;
 
-    gt(v: V) {
+    gt(v: V): Condition.Resolver<T> {
       return Condition.gt(this.tableName(), v);
     }
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     greaterThen = this.gt;
 
-    ge(v: V) {
+    ge(v: V): Condition.Resolver<T> {
       return Condition.ge(this.tableName(), v);
     }
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     greaterThenEqual = this.ge;
 
-    between(from: V, to: V) {
+    between(from: V, to: V): Condition.Resolver<T> {
       return Condition.between(this.tableName(), from, to);
     }
 
-    in(v: V[]) {
+    in(v: V[]): Condition.Resolver<T> {
       return Condition.in(this.tableName(), v);
     }
 
-    typeOf(type: Table.AttributeTypes) {
+    typeOf(type: Table.AttributeTypes): Condition.Resolver<T> {
       return Condition.type(this.tableName(), type);
     }
 
-    exists() {
+    exists(): Condition.Resolver<T> {
       return Condition.exists(this.tableName());
     }
 
-    notExists() {
+    notExists(): Condition.Resolver<T> {
       return Condition.notExists(this.tableName());
     }
 
     // Update
-    getPath(path: string, defaultValue?: V) {
+    getPath(path: string, defaultValue?: V): Update.UpdateFunction {
       return defaultValue === undefined ? Update.path(path) : Update.pathWithDefault(path, defaultValue);
     }
-    del() {
+    del(): Update.UpdateInput<string> {
       return Update.del();
     }
-    set(value: V | Update.UpdateFunction) {
+    set(value: V | Update.UpdateFunction): Update.UpdateInput<string> {
       return Update.set(value);
     }
-    setDefault(value: V | Update.UpdateFunction) {
+    setDefault(value: V | Update.UpdateFunction): Update.UpdateInput<string> {
       return Update.default(value);
     }
   }
 
   export class FieldString extends FieldExpression<string, 'S'> {
     // Condition
-    size() {
+    size(): Condition.Resolver<'S'> {
       return Condition.size(this.tableName());
     }
-    contains(value: string) {
+    contains(value: string): Condition.Resolver<'S'> {
       return Condition.contains(this.tableName(), value);
     }
-    beginsWith(value: string) {
+    beginsWith(value: string): Condition.Resolver<'S'> {
       return Condition.beginsWith(this.tableName(), value);
     }
   }
 
   export class FieldNumber extends FieldExpression<number, 'N'> {
     // Update
-    inc(value: Update.UpdateNumberValue) {
+    inc(value: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
       return Update.inc(value);
     }
-    dec(value: Update.UpdateNumberValue) {
+    dec(value: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
       return Update.dec(value);
     }
-    add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue) {
+    add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
       return Update.add(left, right);
     }
-    sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue) {
+    sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
       return Update.sub(left, right);
     }
   }
 
-  export class FieldSet<V, T> extends FieldExpression<V, T> {
+  export class FieldSet<V, T extends 'BS' | 'NS' | 'SS'> extends FieldExpression<V, T> {
     // Condition
-    size() {
+    size(): Condition.Resolver<T> {
       return Condition.size(this.tableName());
     }
-    contains(value: string) {
+    contains(value: string): Condition.Resolver<T> {
       return Condition.contains(this.tableName(), value);
     }
 
     // Update
-    add(value: Table.AttributeSetValues) {
+    add(value: Table.AttributeSetValues): Update.UpdateInput<T> {
       return Update.addToSet(value);
     }
-    remove(value: Table.AttributeSetValues) {
+    remove(value: Table.AttributeSetValues): Update.UpdateInput<T> {
       return Update.removeFromSet(value);
     }
   }
 
   export class FieldBinary extends FieldExpression<Table.BinaryValue, 'B'> {
     // Condition
-    size() {
+    size(): Condition.Resolver<'B'> {
       return Condition.size(this.tableName());
     }
   }
@@ -438,78 +465,90 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   export class FieldBinarySet extends FieldSet<Table.BinarySetValue, 'BS'> {}
 
-  export class FieldList<V extends Table.AttributeValues, T> extends FieldExpression<V[], T> {
+  export class FieldList<V extends Table.AttributeValues, T extends Table.AttributeTypes> extends FieldExpression<
+    V[],
+    T
+  > {
     // Condition
-    size() {
+    size(): Condition.Resolver<'L'> {
       return Condition.size(this.tableName());
     }
 
     // Update
-    append(value: Update.UpdateListValueT<V>) {
+    append(value: Update.UpdateListValueT<V>): Update.UpdateInput<'L'> {
       return Update.append(value);
     }
-    prepend(value: Update.UpdateListValueT<V>) {
+    prepend(value: Update.UpdateListValueT<V>): Update.UpdateInput<'L'> {
       return Update.prepend(value);
     }
-    join(left: Update.UpdateListValueT<V>, right: Update.UpdateListValueT<V>) {
+    join(left: Update.UpdateListValueT<V>, right: Update.UpdateListValueT<V>): Update.UpdateInput<'L'> {
       return Update.join(left, right);
     }
-    delIndexes(indexes: number[]) {
+    delIndexes(indexes: number[]): Update.UpdateInput<'L'> {
       return Update.delIndexes(indexes);
     }
-    setIndexes(indexes: { [key: number]: V | Update.UpdateFunction }) {
+    setIndexes(indexes: { [key: number]: V | Update.UpdateFunction }): Update.UpdateInput<'L'> {
       return Update.setIndexes(indexes);
     }
   }
 
-  export class FieldListT<V extends { [key: string]: any }, T> extends FieldList<V, T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export class FieldListT<V extends { [key: string]: any }, T extends Table.AttributeTypes> extends FieldList<V, T> {
     schema: Model.ModelSchemaT<V>;
 
-    constructor(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
+    constructor(type: string, schema: Model.ModelSchemaT<V>, alias?: string) {
       super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = schema;
       Object.keys(schema).forEach((key) => schema[key].init(key));
     }
   }
 
-  export class FieldMap<V extends Table.AttributeValues, T> extends FieldExpression<{ [key: string]: V }, T> {
+  export class FieldMap<V extends Table.AttributeValues, T extends Table.AttributeTypes> extends FieldExpression<
+    { [key: string]: V },
+    T
+  > {
     // Condition
-    size() {
+    size(): Condition.Resolver<'M'> {
       return Condition.size(this.tableName());
     }
 
     // Update
-    map(map: { [key: string]: V }) {
+    map(map: { [key: string]: V }): Update.UpdateInput<'M'> {
       return Update.map(map);
     }
   }
 
-  export class FieldMapT<V extends { [key: string]: any }, T> extends FieldMap<V, T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export class FieldMapT<V extends { [key: string]: any }, T extends Table.AttributeTypes> extends FieldMap<V, T> {
     schema: Model.ModelSchemaT<V>;
 
-    constructor(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
+    constructor(type: string, schema: Model.ModelSchemaT<V>, alias?: string) {
       super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = schema;
       Object.keys(schema).forEach((key) => schema[key].init(key));
     }
   }
 
-  export class FieldObject<V extends { [key: string]: any }, T> extends FieldExpression<V, T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export class FieldObject<V extends { [key: string]: any }, T extends Table.AttributeTypes> extends FieldExpression<
+    V,
+    T
+  > {
     schema: Model.ModelSchemaT<V>;
 
-    constructor(type: T, schema: Model.ModelSchemaT<V>, alias?: string) {
+    constructor(type: string, schema: Model.ModelSchemaT<V>, alias?: string) {
       super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = schema;
       Object.keys(schema).forEach((key) => schema[key].init(key));
     }
 
     // Condition
-    size() {
+    size(): Condition.Resolver<'M'> {
       return Condition.size(this.tableName());
     }
 
     // Update
-    map(map: Model.ModelUpdateT<V>) {
+    map(map: Model.ModelUpdateT<V>): Update.UpdateInput<'M'> {
       return Update.map(map);
     }
   }
@@ -520,7 +559,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
       context: ModelContext,
-    ) {
+    ): Promise<void> {
       await super.toModel(name, tableData, modelData, context);
       const value = modelData[name];
       if (value === undefined) return;
@@ -532,14 +571,19 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       modelData: Model.ModelData,
       tableData: Table.AttributeValuesMap,
       context: TableContext,
-    ) {
+    ): Promise<void> {
       await super.toTable(name, tableData, modelData, context);
       const value = modelData[this._alias || name];
       if (value === undefined) return;
       tableData[this._alias || name] = Math.round((value as Date).valueOf() / 1000);
     }
 
-    toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.UpdateMapValue, context: TableContext) {
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.UpdateMapValue,
+      context: TableContext,
+    ): Promise<void> {
       return this.toTable(name, modelData, tableData as Table.AttributeValuesMap, context);
     }
   }
@@ -565,21 +609,36 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.name = name;
     }
 
-    toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext) {
+    toModel(
+      name: string,
+      tableData: Table.AttributeValuesMap,
+      modelData: Model.ModelData,
+      context: ModelContext,
+    ): Promise<void> {
       return new Promise<void>((resolve) => {
         this.composite.toModel(this.slot, name, tableData, modelData, context);
         resolve();
       });
     }
 
-    toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext) {
+    toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: TableContext,
+    ): Promise<void> {
       return new Promise<void>((resolve) => {
         this.composite.toTable(this.slot, name, modelData, tableData, context);
         resolve();
       });
     }
 
-    toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.UpdateMapValue, context: TableContext) {
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.UpdateMapValue,
+      context: TableContext,
+    ): Promise<void> {
       return new Promise<void>((resolve) => {
         this.composite.toTableUpdate(this.slot, name, modelData, tableData, context);
         resolve();
@@ -592,13 +651,13 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     count: number;
     delim: string;
 
-    constructor(alias: string, count: number, delim: string = '.') {
+    constructor(alias: string, count: number, delim = '.') {
       this.alias = alias;
       this.count = count;
       this.delim = delim;
     }
 
-    slot(value: number) {
+    slot(value: number): FieldCompositeSlot {
       return new FieldCompositeSlot(this, value);
     }
 
@@ -607,6 +666,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: ModelContext,
     ): void {
       const value = tableData[this.alias];
@@ -621,12 +681,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelData,
       tableData: Table.AttributeValuesMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: TableContext,
     ): void {
       const value = modelData[name];
       if (value === undefined) return;
       if (typeof value === 'function') return; // throw and error
       const slots = (tableData[this.alias] as string)?.split(this.delim) || new Array<string>(this.count);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       slots[slot] = value!.toString();
       tableData[this.alias] = slots.join(this.delim);
     }
@@ -660,7 +722,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
         keys.forEach((key) => {
           // TODO: validate slot is < keys.length
           const slot = map[key];
-          newSlots[key] = () => new FieldCompositeSlot(this, slot, key);
+          newSlots[key] = (): FieldCompositeSlot => new FieldCompositeSlot(this, slot, key);
         });
         this.slots = newSlots as CompositeSlot<T>;
       }
@@ -680,17 +742,18 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     aliases: string[];
     delim: string;
 
-    constructor(aliases: string[], delim: string = '.') {
+    constructor(aliases: string[], delim = '.') {
       this.aliases = aliases;
       this.delim = delim;
     }
-    init(name: string) {
+    init(name: string): void {
       this.name = name;
     }
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: ModelContext,
     ): void {
       const parts: string[] = [];
@@ -705,6 +768,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelData,
       tableData: Table.AttributeValuesMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: TableContext,
     ): void {
       // TODO: should we throw for this?

@@ -475,11 +475,11 @@ describe('When FieldList', () => {
 });
 
 describe('When FieldListT', () => {
-  const field = Fields.listT<ChildModel, 'Child'>('Child', childSchema);
+  const field = Fields.listT<ChildModel, 'L'>('Child', childSchema);
   field.init('children');
 
   it('expect constructor to init correctly', () => {
-    const field1 = Fields.listT<ChildModel, 'Child'>('Child', childSchema, 'children');
+    const field1 = Fields.listT<ChildModel, 'L'>('Child', childSchema, 'children');
     expect(field1._alias).toEqual('children');
     expect(field1.type).toEqual('Child');
     expect(field1.schema.adult.name).toEqual('adult');
@@ -543,7 +543,7 @@ describe('When FieldMap', () => {
 });
 
 describe('When FieldMapT', () => {
-  const field = Fields.mapT<GroupModel, 'Groups'>('Groups', groupSchema);
+  const field = Fields.mapT<GroupModel, 'M'>('Groups', groupSchema);
   field.init('groups');
   it('expect size returns condition expression', () => {
     const exp = new ExpressionAttributes();
@@ -558,11 +558,11 @@ describe('When FieldMapT', () => {
 });
 
 describe('When FieldObject', () => {
-  const field = Fields.object<SpouseModel, 'Spouse'>('Spouse', spouseSchema);
+  const field = Fields.object<SpouseModel, 'M'>('Spouse', spouseSchema);
   field.init('spouse');
 
   it('expect constructed with alias to have alias', () => {
-    const field1 = Fields.object<SpouseModel, 'Spouse'>('Spouse', spouseSchema, 'spouse');
+    const field1 = Fields.object<SpouseModel, 'M'>('Spouse', spouseSchema, 'spouse');
     expect(field1._alias).toEqual('spouse');
   });
 

@@ -12,6 +12,7 @@ export interface KeyName {
   sk?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function validateKeyAttribute<ATTRIBUTES extends { [index: string]: any }>(
   keyAttributes: Table.PrimaryKey.AttributeTypesMapT<ATTRIBUTES>,
   name: string,
@@ -26,7 +27,9 @@ export function validateKeyAttribute<ATTRIBUTES extends { [index: string]: any }
 }
 
 export function validateKeySchema<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   KEY extends { [index: string]: any },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ATTRIBUTES extends { [index: string]: any } = KEY
 >(
   keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>,
@@ -55,7 +58,7 @@ export function validateKeySchema<
   return { pk, sk };
 }
 
-export function validateIndexes(index: Index, names: Set<string>, onError: (msg: string) => void) {
+export function validateIndexes(index: Index, names: Set<string>, onError: (msg: string) => void): void {
   if (!index.name) onError(`Global index must have a name`);
   if (names.has(index.name)) onError(`Duplicate index name '${index.name}'`);
   names.add(index.name);
@@ -71,7 +74,7 @@ export function validateIndexes(index: Index, names: Set<string>, onError: (msg:
   }
 }
 
-export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>) {
+export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>): void {
   if (!table.name) table.onError(`Table must have a name`);
   validateKeyAttribute(table.keyAttributes, table.name, table.onError);
   const { pk, sk } = validateKeySchema(table.keySchema, table.keyAttributes, table.name, table.onError);

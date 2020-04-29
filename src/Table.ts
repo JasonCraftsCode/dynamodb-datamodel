@@ -91,7 +91,7 @@ export class Index {
    * Used to initalize the Index with the table to support {@link queryParams}, {@link scanParams}, {@link query}, and {@link scan}..
    * @param table table to initalize the index with.
    */
-  init(table: Table) {
+  init(table: Table): void {
     this.table = table;
   }
 
@@ -134,6 +134,7 @@ export class Index {
    * @returns DynamoDB query method params containing the table, index, key and options.
    */
   queryParams(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): DocumentClient.QueryInput {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.table!.queryParams(key, this.getQueryOptions(options));
   }
 
@@ -143,6 +144,7 @@ export class Index {
    * @returns DocumentClient scan method's params containing the table, index and options.
    */
   scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.table!.scanParams(this.getScanOptions(options));
   }
 
@@ -153,7 +155,8 @@ export class Index {
    * @param options Used in building the query params
    * @returns Primise with the query results, including items fetched
    */
-  query(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions) {
+  query(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput> {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.table!.query(key, this.getQueryOptions(options));
   }
   /**
@@ -162,12 +165,13 @@ export class Index {
    * @param options Used in building the scan params
    * @returns Primise with the scan results, including items fetched
    */
-  scan(options?: Table.ScanOptions) {
+  scan(options?: Table.ScanOptions): Promise<DocumentClient.ScanOutput> {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.table!.scan(this.getScanOptions(options));
   }
 }
 
-/* tslint:disable:no-namespace */
+// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
   // NOTE: if you update the docs for the properties of IndexParams also update the docs for Index properties
   /**
@@ -260,6 +264,7 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
    * Creates the generic form of Index used in TypeScript to get strong typing
    * @param params Index constructor params
    */
+  // eslint-disable-next-line no-inner-declarations
   export function createIndex<KEY = DefaultGlobalIndexKey>(params: IndexParamsT<KEY>): IndexT<KEY> {
     return new Index(params) as IndexT<KEY>;
   }
@@ -288,12 +293,12 @@ export class Table {
     this.client = params.client;
   }
 
-  addGlobalIndexes(gsi: Index[]) {
+  addGlobalIndexes(gsi: Index[]): void {
     gsi.forEach((index) => index.init(this));
     this.globalIndexes = this.globalIndexes.concat(gsi);
   }
 
-  addLocalIndexes(lsi: Index[]) {
+  addLocalIndexes(lsi: Index[]): void {
     lsi.forEach((index) => index.init(this));
     this.localIndexes = this.localIndexes.concat(lsi);
   }
@@ -306,8 +311,11 @@ export class Table {
     return getKeyName(this.keySchema, 'RANGE');
   }
 
-  createSet(list: string[] | number[] | Table.BinaryValue[], options?: DocumentClient.CreateSetOptions) {
-    return this.client!.createSet(list, options);
+  createSet(
+    list: string[] | number[] | Table.BinaryValue[],
+    options?: DocumentClient.CreateSetOptions,
+  ): Table.AttributeSetValues {
+    return this.client.createSet(list, options);
   }
 
   createStringSet(list: string[], options?: DocumentClient.CreateSetOptions): Table.StringSetValue {
@@ -445,7 +453,7 @@ export class Table {
   }
 }
 
-/* tslint:disable:no-namespace */
+// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   // export type PromiseResult<D, E> = D & { $response: Response<D, E> };
   export type Optional<T> = { [P in keyof T]?: T[P] };
@@ -491,11 +499,11 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     static readonly PartitionKeyType: { keyType: 'HASH' } = { keyType: 'HASH' };
     static readonly SortKeyType: { keyType: 'RANGE' } = { keyType: 'RANGE' };
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace PrimaryKey {
-    /* tslint:disable:no-shadowed-variable */
     export type AttributeValues = string | number | Table.BinaryValue;
     // ScalarAttributeType
-    /* tslint:disable:no-shadowed-variable */
     export type AttributeTypes = 'B' | 'N' | 'S';
     export type KeyTypes = 'HASH' | 'RANGE';
 
@@ -511,7 +519,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     export type AttributeTypesMap = { [key: string]: { type: AttributeTypes } };
     export type KeyTypesMap = { [key: string]: { keyType: KeyTypes } };
     export type KeyQueryMap = { [key: string]: AttributeValues | KeyCondition.AttributeResolver };
-    /* tslint:disable:sno-shadowed-variable */
     export type AttributeValuesMap = { [key: string]: AttributeValues };
 
     // *MapT used as key based params in TableT
@@ -541,16 +548,22 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}
    */
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface GetInput extends Omit<DocumentClient.GetItemInput, 'AttributesToGet'> {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface PutInput extends Omit<DocumentClient.PutItemInput, 'Expected' | 'ConditionalOperator'> {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface DeleteInput extends Omit<DocumentClient.DeleteItemInput, 'Expected' | 'ConditionalOperator'> {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface UpdateInput
     extends Omit<DocumentClient.UpdateItemInput, 'AttributeUpdates' | 'Expected' | 'ConditionalOperator'> {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface QueryInput
     extends Omit<
       DocumentClient.QueryInput,
       'AttributesToGet' | 'KeyConditions' | 'QueryFilter' | 'ConditionalOperator'
     > {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ScanInput
     extends Omit<DocumentClient.ScanInput, 'AttributesToGet' | 'ScanFilter' | 'ConditionalOperator'> {}
 
@@ -559,14 +572,19 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     conditions?: Condition.Resolver[];
     params?: Optional<T>;
   }
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface GetOptions extends BaseOptions<GetInput> {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface DeleteOptions extends BaseOptions<DeleteInput> {}
   export type PutWriteOptions = 'Always' | 'Exists' | 'NotExists';
   export interface PutOptions extends BaseOptions<PutInput> {
     writeOptions?: PutWriteOptions;
   }
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface UpdateOptions extends BaseOptions<UpdateInput> {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface QueryOptions extends BaseOptions<QueryInput> {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ScanOptions extends BaseOptions<ScanInput> {}
 
   // Default Key definitions
@@ -625,6 +643,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     scan(options?: ScanOptions): Promise<DocumentClient.ScanOutput>;
   }
 
+  // eslint-disable-next-line no-inner-declarations
   export function createTable<KEY = Table.DefaultTableKey, ATTRIBUTES = KEY>(
     params: TableParamsT<KEY, ATTRIBUTES>,
   ): TableT<KEY, ATTRIBUTES> {

@@ -3,19 +3,19 @@ import { Table } from './Table';
 
 export class ExpressionAttributes {
   static validAttributeNameRegEx = /^[A-Za-z][A-Za-z0-9]*$/;
-  static isValidAttributeName(name: string) {
+  static isValidAttributeName(name: string): boolean {
     return ExpressionAttributes.validAttributeNameRegEx.test(name);
   }
 
   isReservedName: (name: string) => boolean = () => false;
   isValidName: (name: string) => boolean = () => false;
-  treatNameAsPath: boolean = true;
+  treatNameAsPath = true;
   names: ExpressionAttributeNameMap = {};
-  nextName: number = 0;
+  nextName = 0;
   values: Table.AttributeValuesMap = {};
-  nextValue: number = 0;
+  nextValue = 0;
 
-  private addName(name: string) {
+  private addName(name: string): string {
     const names = this.names;
     if (this.isReservedName(name)) {
       const attName = `#${name}`;
@@ -34,7 +34,7 @@ export class ExpressionAttributes {
     return name;
   }
 
-  addPath(name: string) {
+  addPath(name: string): string {
     // split '.' and '[]' then add each and append with '.'
     if (this.treatNameAsPath) {
       const pathList = name.split('.').reduce((prev, curr) => {
@@ -52,20 +52,20 @@ export class ExpressionAttributes {
     return this.addName(name);
   }
 
-  addValue(value: Table.AttributeValues) {
+  addValue(value: Table.AttributeValues): string {
     const name = `:v${this.nextValue++}`;
     this.values[name] = value;
     return name;
   }
 
-  getPaths() {
+  getPaths(): ExpressionAttributeNameMap {
     return this.names;
   }
-  getValues() {
+  getValues(): Table.AttributeValuesMap {
     return this.values;
   }
 
-  reset() {
+  reset(): void {
     this.names = {};
     this.nextName = 0;
     this.values = {};
@@ -75,7 +75,10 @@ export class ExpressionAttributes {
   addParams(input: {
     ExpressionAttributeNames?: ExpressionAttributeNameMap;
     ExpressionAttributeValues?: Table.AttributeValuesMap;
-  }) {
+  }): {
+    ExpressionAttributeNames?: ExpressionAttributeNameMap;
+    ExpressionAttributeValues?: Table.AttributeValuesMap;
+  } {
     if (Object.keys(this.names).length > 0) input.ExpressionAttributeNames = this.names;
     if (Object.keys(this.values).length > 0) input.ExpressionAttributeValues = this.values;
     return input;

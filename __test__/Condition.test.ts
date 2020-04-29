@@ -7,6 +7,7 @@ it('Validate Condition exports', () => {
 });
 
 it('Validate Condition aliased names are the same', () => {
+  /* eslint-disable @typescript-eslint/unbound-method */
   expect(Condition.eq).toEqual(Condition.equal);
   expect(Condition.ne).toEqual(Condition.notEqual);
   expect(Condition.lt).toEqual(Condition.lessThen);

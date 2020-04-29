@@ -17,7 +17,12 @@ export class Model implements Model.ModelBase {
     Object.keys(this.schema).forEach((key) => this.schema[key].init(key));
   }
 
-  private splitTableData(data: Table.AttributeValuesMap) {
+  private splitTableData(
+    data: Table.AttributeValuesMap,
+  ): {
+    key: Table.PrimaryKey.AttributeValuesMap;
+    item: Table.AttributeValuesMap;
+  } {
     const key: Table.PrimaryKey.AttributeValuesMap = {};
     const item: Table.AttributeValuesMap = { ...data };
     Object.keys(this.table.keySchema).forEach((name) => {
@@ -72,7 +77,7 @@ export class Model implements Model.ModelBase {
       const result = schema.toModel(name, data, out, context);
       if (result !== undefined) await result;
     }
-    if (Object.keys(out).length > 0) return out as Model.ModelOut;
+    if (Object.keys(out).length > 0) return out;
     return undefined;
   }
 
@@ -116,7 +121,7 @@ export class Model implements Model.ModelBase {
   }
 }
 
-/* tslint:disable:no-namespace */
+// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   export interface ModelBase {
     name?: string;
@@ -158,6 +163,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
 
   // ModelT
   // *MapT used as model data based params in ModelT
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export type ModelSchemaT<T extends { [key: string]: any }> = {
     [P in keyof Required<T>]: Fields.Field;
   };
@@ -175,6 +181,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     schema: ModelSchemaT<MODEL>;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export interface ModelT<KEY extends { [key: string]: any }, MODEL extends KEY = KEY> extends Model {
     schema: Model.ModelSchemaT<MODEL>;
 
@@ -197,9 +204,10 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     update(data: Model.ModelUpdateT<MODEL>, options?: Table.UpdateOptions): Promise<Model.ModelOutT<MODEL> | undefined>;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-inner-declarations
   export function createModel<KEY extends { [key: string]: any }, MODEL extends KEY = KEY>(
     params: ModelParamsT<KEY, MODEL>,
-  ) {
+  ): Model.ModelT<KEY, MODEL> {
     return new Model(params) as Model.ModelT<KEY, MODEL>;
   }
 }
