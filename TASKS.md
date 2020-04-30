@@ -117,7 +117,7 @@ Goals:
   - automate: PR checks (linting, docs, dependencies, tests, commit comments, api validation)
   - clear: roadmap, contribution, issue/pr templates, versioning, changelog, licensing,
   - place to discuss and contact maintainer
-  -
+  - maintainted versions?
 
 Environment:
 
@@ -179,6 +179,7 @@ Components:
   - deepscan.io - security?, code quality and code health
   - snyk.io - security, depedency,
   - codacy.com - security, dependency
+  - sonarsource.com -
   - github also has a beta security service.
   - codecov.io - code coverage
   - shields.io
@@ -216,4 +217,4 @@ Components:
   - .prettyrc
   - tsconfig.json
 - tools:
-  - https://github.com/jvitor83/types-autoinstaller
+  - [https://github.com/jvitor83/types-autoinstaller]
