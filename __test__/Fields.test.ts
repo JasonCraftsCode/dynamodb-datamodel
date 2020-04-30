@@ -81,6 +81,7 @@ describe('When FieldBase', () => {
 
   it('yup with coerce expect return value coerce', async () => {
     const field = Fields.number().coerce().yup(yup.number().min(1).max(10));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await expect(field.validate('5' as any)).resolves.toEqual(5);
   });
 
@@ -91,6 +92,7 @@ describe('When FieldBase', () => {
 
   it('joi with coerce expect return value coerce', async () => {
     const field = Fields.number().joi(joi.number().min(1).max(10)).coerce();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await expect(field.validate('5' as any)).resolves.toEqual(5);
   });
 
@@ -107,7 +109,7 @@ describe('When FieldBase', () => {
   });
 
   it('validator always throw expect to throw', async () => {
-    const field = Fields.string().validator((value: string) => {
+    const field = Fields.string().validator(() => {
       return new Promise<string | void>((resolve, reject) => {
         reject(new Error(`always throw`));
       });
@@ -116,8 +118,8 @@ describe('When FieldBase', () => {
   });
 
   it('updateValidator with does not throw expect success', async () => {
-    const field = Fields.string().updateValidator((value: Model.ModelUpdateValue<string>) => {
-      return new Promise<string | void>((resolve, reject) => {
+    const field = Fields.string().updateValidator(() => {
+      return new Promise<string | void>((resolve) => {
         resolve('abc');
       });
     });
@@ -125,7 +127,7 @@ describe('When FieldBase', () => {
   });
 
   it('updateValidator always throw expect to throw', async () => {
-    const field = Fields.string().updateValidator((value: any) => {
+    const field = Fields.string().updateValidator(() => {
       return new Promise<void>((resolve, reject) => {
         reject(new Error(`always throw`));
       });
@@ -195,8 +197,8 @@ describe('When FieldBase', () => {
   it('toTableUpdate with coerce validator expect coerce value', async () => {
     const field = Fields.number()
       .coerce()
-      .updateValidator((value: Model.ModelUpdateValue<number>) => {
-        return new Promise<number | void>((resolve, reject) => {
+      .updateValidator(() => {
+        return new Promise<number | void>((resolve) => {
           resolve(15);
         });
       });
@@ -209,8 +211,8 @@ describe('When FieldBase', () => {
   it('toTableUpdate with coerce validator and undefine keep value', async () => {
     const field = Fields.number()
       .coerce()
-      .updateValidator((value: Model.ModelUpdateValue<number>) => {
-        return new Promise<number | void>((resolve, reject) => {
+      .updateValidator(() => {
+        return new Promise<number | void>((resolve) => {
           resolve();
         });
       });
@@ -244,7 +246,7 @@ describe('When FieldBase', () => {
   });
 
   it('toTable with default function expects default return', async () => {
-    const field = Fields.string().default((name, tableData, modelData, model) => {
+    const field = Fields.string().default((name) => {
       return name + '-default';
     });
     const tabelData: Table.AttributeValuesMap = {};

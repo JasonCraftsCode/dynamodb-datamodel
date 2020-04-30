@@ -1,3 +1,4 @@
+import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 import { KeyCondition, KeyConditionExpression } from '../src/KeyCondition';
 import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Table } from '../src/Table';
@@ -5,10 +6,16 @@ import { Table } from '../src/Table';
 it('Validate Condition exports', () => {
   expect(typeof KeyCondition).toEqual('function');
   expect(typeof KeyConditionExpression).toEqual('function');
-  expect(typeof buildKeyCondition).toEqual('function');
 });
 
-function buildKeyCondition(key: Table.PrimaryKey.KeyQueryMap, exp = new KeyConditionExpression()) {
+function buildKeyCondition(
+  key: Table.PrimaryKey.KeyQueryMap,
+  exp = new KeyConditionExpression(),
+): {
+  KeyConditionExpression: string;
+  Paths: ExpressionAttributeNameMap;
+  Values: Table.AttributeValuesMap;
+} {
   const keyCond = KeyCondition.buildExpression(key, exp);
   return {
     KeyConditionExpression: keyCond,

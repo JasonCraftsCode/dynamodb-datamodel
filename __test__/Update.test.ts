@@ -1,6 +1,8 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { DocumentClient, ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
+import { Table } from '../src/Table';
 import { Update, UpdateExpression } from '../src/Update';
-var documentClient = new DocumentClient();
+
+const documentClient = new DocumentClient();
 
 it('Validate Condition exports', () => {
   expect(typeof Update).toEqual('function');
@@ -8,7 +10,14 @@ it('Validate Condition exports', () => {
   expect(typeof Update.buildExpression).toEqual('function');
 });
 
-function buildUpdate(updateMap: Update.UpdateMapValue, exp = new UpdateExpression()) {
+function buildUpdate(
+  updateMap: Update.UpdateMapValue,
+  exp = new UpdateExpression(),
+): {
+  UpdateExpression: string | undefined;
+  Paths: ExpressionAttributeNameMap;
+  Values: Table.AttributeValuesMap;
+} {
   const update = Update.buildExpression(updateMap, exp);
   return {
     UpdateExpression: update,

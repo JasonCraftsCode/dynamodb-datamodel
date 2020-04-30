@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
@@ -38,7 +39,7 @@ describe('Validate Simple Table', () => {
   });
 
   it('validateTable', () => {
-    validateTable(testTable);
+    expect(() => validateTable(testTable)).not.toThrow();
   });
 
   it('queryParams with P', () => {
@@ -68,7 +69,7 @@ describe('Validate Simple Table', () => {
   });
 
   it('query', async () => {
-    client.query = jest.fn((params) => request);
+    client.query = jest.fn(() => request);
     const results = await testTable.query({ P: 'xyz' });
     expect(results).toEqual({ Attributes: {} });
     expect(client.query).toBeCalledWith({
@@ -88,7 +89,7 @@ describe('Validate Simple Table', () => {
   });
 
   it('scan', async () => {
-    client.scan = jest.fn((params) => request);
+    client.scan = jest.fn(() => request);
     const results = await testTable.scan();
     expect(results).toEqual({ Attributes: {} });
     expect(client.scan).toBeCalledWith({
@@ -98,32 +99,32 @@ describe('Validate Simple Table', () => {
   });
 
   describe('Whem Model.create*Set', () => {
-    it('expect createBinarySet type to be Binary', async () => {
+    it('expect createBinarySet type to be Binary', () => {
       const set = testTable.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')]);
       expect(set.type).toEqual('Binary');
     });
 
-    it('expect createBinarySet with validate type to be Binary', async () => {
+    it('expect createBinarySet with validate type to be Binary', () => {
       const set = testTable.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')], { validate: true });
       expect(set.type).toEqual('Binary');
     });
 
-    it('expect createStringSet type to be String', async () => {
+    it('expect createStringSet type to be String', () => {
       const set = testTable.createStringSet(['abc', 'xyz']);
       expect(set.type).toEqual('String');
     });
 
-    it('expect createStringSet with validate type to be String', async () => {
+    it('expect createStringSet with validate type to be String', () => {
       const set = testTable.createStringSet(['abc', 'xyz'], { validate: true });
       expect(set.type).toEqual('String');
     });
 
-    it('expect createNumberSet type to be Number', async () => {
+    it('expect createNumberSet type to be Number', () => {
       const set = testTable.createNumberSet([4, 9]);
       expect(set.type).toEqual('Number');
     });
 
-    it('expect createNumberSet with validate type to be Number', async () => {
+    it('expect createNumberSet with validate type to be Number', () => {
       const set = testTable.createNumberSet([4, 9], { validate: true });
       expect(set.type).toEqual('Number');
     });
@@ -194,7 +195,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('Table with Index', () => {
-    validateTable(testTable);
+    expect(() => validateTable(testTable)).not.toThrow();
   });
 
   it('Index.getPartitionKey', () => {
@@ -318,7 +319,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('get', async () => {
-    client.get = jest.fn((params) => request);
+    client.get = jest.fn(() => request);
     const results = await testTable.get({ P: 'pk', S: 'sk' });
     expect(results).toEqual({ Attributes: {} });
     expect(client.get).toBeCalledWith({
@@ -329,7 +330,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('delete', async () => {
-    client.delete = jest.fn((params) => request);
+    client.delete = jest.fn(() => request);
     const results = await testTable.delete({ P: 'pk', S: 'sk' });
     expect(results).toEqual({ Attributes: {} });
     expect(client.delete).toBeCalledWith({
@@ -340,7 +341,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('put just key', async () => {
-    client.put = jest.fn((params) => request);
+    client.put = jest.fn(() => request);
     const results = await testTable.put({ P: 'pk', S: 'sk' });
     expect(results).toEqual({ Attributes: {} });
     expect(client.put).toBeCalledWith({
@@ -351,7 +352,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('put exists just key', async () => {
-    client.put = jest.fn((params) => request);
+    client.put = jest.fn(() => request);
     const results = await testTable.put({ P: 'pk', S: 'sk' }, undefined, {
       writeOptions: 'Exists',
     });
@@ -366,7 +367,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('put not exists just key', async () => {
-    client.put = jest.fn((params) => request);
+    client.put = jest.fn(() => request);
     const results = await testTable.put({ P: 'pk', S: 'sk' }, undefined, {
       writeOptions: 'NotExists',
     });
@@ -381,7 +382,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('put with item', async () => {
-    client.put = jest.fn((params) => request);
+    client.put = jest.fn(() => request);
     const results = await testTable.put({ P: 'pk', S: 'sk' }, { string: 'string', number: 8, bool: true });
     expect(results).toEqual({ Attributes: {} });
     expect(client.put).toBeCalledWith({
@@ -392,7 +393,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('update just key', async () => {
-    client.update = jest.fn((params) => request);
+    client.update = jest.fn(() => request);
     const results = await testTable.update({ P: 'pk', S: 'sk' });
     expect(results).toEqual({ Attributes: {} });
     expect(client.update).toBeCalledWith({
@@ -403,7 +404,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('update with item', async () => {
-    client.update = jest.fn((params) => request);
+    client.update = jest.fn(() => request);
     const results = await testTable.update({ P: 'pk', S: 'sk' }, { string: 'string', number: 18, bool: true });
     expect(results).toEqual({ Attributes: {} });
     expect(client.update).toBeCalledWith({
@@ -447,7 +448,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('gsi query', async () => {
-    client.query = jest.fn((params) => request);
+    client.query = jest.fn(() => request);
     const results = await gsi0.query({ G0P: 'zyx', G0S: '321' });
     expect(results).toEqual({ Attributes: {} });
     expect(client.query).toBeCalledWith({
@@ -469,7 +470,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('gsi scan', async () => {
-    client.scan = jest.fn((params) => request);
+    client.scan = jest.fn(() => request);
     const results = await gsi0.scan();
     expect(results).toEqual({ Attributes: {} });
     expect(client.scan).toBeCalledWith({

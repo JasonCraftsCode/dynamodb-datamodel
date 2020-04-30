@@ -69,13 +69,13 @@ describe('Validate ExpressionAttributes', () => {
 
   it('addPath with isReservedName', () => {
     const attrs = new ExpressionAttributes();
-    attrs.isReservedName = () => true;
+    attrs.isReservedName = (): boolean => true;
     expect(attrs.addPath('path')).toEqual('#path');
     expect(attrs.getPaths()).toEqual({ '#path': 'path' });
   });
   it('addPath with isValidName', () => {
     const attrs = new ExpressionAttributes();
-    attrs.isValidName = () => true;
+    attrs.isValidName = (): boolean => true;
     expect(attrs.addPath('path')).toEqual('path');
     expect(attrs.getPaths()).toEqual({});
   });

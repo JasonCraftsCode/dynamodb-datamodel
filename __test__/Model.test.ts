@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import * as yup from 'yup';
@@ -10,7 +11,8 @@ import { Update } from '../src/Update';
 import { delay } from './testCommon';
 
 const client = new DocumentClient({ convertEmptyValues: true });
-const request = (out: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const request = (out: any): Request<DocumentClient.GetItemOutput, AWSError> => {
   return {
     promise() {
       return delay(1, out);
@@ -199,7 +201,7 @@ describe('Validate Model with Table and Indexes', () => {
       });
     });
 
-    it('Model.getParams with single id', async () => {
+    it('Model.getParams with two id', async () => {
       const params = await userModel.getParams({ id: 'id1.id2' });
       expect(params).toEqual({
         Key: {
@@ -423,7 +425,7 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.get with single id', async () => {
-      client.get = jest.fn((params) => request({ Item: { P: 'id1' } }));
+      client.get = jest.fn(() => request({ Item: { P: 'id1' } }));
       // TODO: should probably throw in SplitField
       const results = await userModel.get({ id: 'id1' });
       expect(results).toEqual({ id: 'id1' });
@@ -435,13 +437,13 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.get no Item expect results undefined ', async () => {
-      client.get = jest.fn((params) => request({}));
+      client.get = jest.fn(() => request({}));
       const results = await userModel.get({ id: 'id1' });
       expect(results).toBeUndefined();
     });
 
     it('Model.get with multiple id', async () => {
-      client.get = jest.fn((params) => request({ Item: { P: 'id1.id2.id3', S: 'id4' } }));
+      client.get = jest.fn(() => request({ Item: { P: 'id1.id2.id3', S: 'id4' } }));
       const results = await userModel.get({ id: 'id1.id2.id3.id4' });
       expect(results).toEqual({ id: 'id1.id2.id3.id4' });
       expect(client.get).toBeCalledWith({
@@ -451,8 +453,8 @@ describe('Validate Model with Table and Indexes', () => {
       expect(client.get).toBeCalledTimes(1);
     });
 
-    it('Model.get with single id', async () => {
-      client.get = jest.fn((params) => request({ Item: { P: 'id1', S: 'id2' } }));
+    it('Model.get with simple single id', async () => {
+      client.get = jest.fn(() => request({ Item: { P: 'id1', S: 'id2' } }));
       const results = await userModel.get({ id: 'id1.id2' });
       expect(results).toEqual({ id: 'id1.id2' });
       expect(client.get).toBeCalledWith({
@@ -466,7 +468,7 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.get with full data', async () => {
-      client.get = jest.fn((params) =>
+      client.get = jest.fn(() =>
         request({
           Item: {
             G0S: 'new york.new york.usa',
@@ -561,7 +563,7 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.delete', async () => {
-      client.delete = jest.fn((params) => request({ Attributes: { P: 'id1', S: 'id2' } }));
+      client.delete = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
       const results = await userModel.delete({ id: 'id1.id2' });
       expect(results).toEqual({ id: 'id1.id2' });
       expect(client.delete).toBeCalledWith({
@@ -572,13 +574,13 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.delete Attributes missing expect results undefined', async () => {
-      client.delete = jest.fn((params) => request({}));
+      client.delete = jest.fn(() => request({}));
       const results = await userModel.delete({ id: 'id1.id2' });
       expect(results).toBeUndefined();
     });
 
     it('Model.put', async () => {
-      client.put = jest.fn((params) => request({ Attributes: { P: 'id1', S: 'id2' } }));
+      client.put = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
       const results = await userModel.put({
         id: 'id1.id2',
         name: 'name1',
@@ -607,7 +609,7 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.update min args', async () => {
-      client.update = jest.fn((params) => request({ Attributes: { P: 'id1', S: 'id2' } }));
+      client.update = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
       const results = await userModel.update({
         id: 'id1.id2',
       });
@@ -623,7 +625,7 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.update Attributes missing expect results undefined', async () => {
-      client.update = jest.fn((params) => request({}));
+      client.update = jest.fn(() => request({}));
       const results = await userModel.update({
         id: 'id1.id2',
       });
@@ -631,7 +633,7 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.update with all fields', async () => {
-      client.update = jest.fn((params) =>
+      client.update = jest.fn(() =>
         request({
           Attributes: {
             P: 'id1',

@@ -12,6 +12,7 @@ https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FA
 Happy linting! 💖
 */
 module.exports = {
+  root: true,
   env: {
     es6: true,
     node: true,
@@ -21,6 +22,7 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:jest/recommended',
     'prettier',
     'prettier/@typescript-eslint',
   ],
@@ -28,10 +30,10 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
     sourceType: 'module',
-    projectFolderIgnoreList: ['node_modules', '__test__'],
+    projectFolderIgnoreList: ['/node_modules/', '/docs/', '/dist/'],
     ecmaVersion: 6,
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'jest'],
   rules: {
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-require-imports': 'error',

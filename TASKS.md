@@ -99,3 +99,121 @@ const functionFor = (target: any, name: string, targetName: string) => (...args:
   }
 };
 ```
+
+## Best practices and template for typescript (or javascript) npm module
+
+Goals:
+
+- template (or cli) with opinionated best practices
+- well commented and linked to document (w/ additional info)
+- easy to customize or change
+- easy to update existing code to latest best practices with updated dependencies
+- dependencies always up todate
+- works well with vscode
+- open source:
+  - well documented
+  - well tested (100% code coverage)
+  - dependencies up todate
+  - automate: PR checks (linting, docs, dependencies, tests, commit comments, api validation)
+  - clear: roadmap, contribution, issue/pr templates, versioning, changelog, licensing,
+  - place to discuss and contact maintainer
+  -
+
+Environment:
+
+- typescript (or javascript or mix)
+- npm
+- github
+- vscode with following extensions:
+  - eslint
+  - pritter
+  - jest/mocha
+- jest (or mocha)
+- tsc, webpack or rollup
+- framework: none, react or vue
+- single or multi project
+
+Targets:
+
+- web browsers
+- node server
+- node tool
+
+vscode integrations:
+
+- test runner
+- code coverage
+- linter
+- prettier
+- compiler
+- debugging
+- symver based commit comments
+
+general core:
+
+- build/package: bundler, transpiler/compiler, minifier
+- validation: lint, tests, code coverage
+- publish/release
+- docs, examples and playgrounds
+- editor integration
+- services and badges
+- project management
+
+Components:
+
+- linter - eslint w/ typescript, jest/mocha, docs (not tslint)
+- prettier
+- compiler - tsc
+- bundler - tsc or webpack or rollup w/ babel
+- test w/ code coverage - jest or mocha
+- docs - typedoc (or jsdoc)
+- multi-project - lerna
+- npm cli - yarn or npm
+- publishing - semver and breaking change
+- sponsorships
+- services:
+  - github.com - see below
+  - dependabot.com - dependency updater
+  - npm.org - package repro
+  - david-dm.org - dependency monitor
+  - deepscan.io - security?, code quality and code health
+  - snyk.io - security, depedency,
+  - codacy.com - security, dependency
+  - github also has a beta security service.
+  - codecov.io - code coverage
+  - shields.io
+  - badgesize.io
+  - gist (for chat)
+- github:
+  - actions: pr, build and release (could also use circle-ci or travis-ci)
+  - releases
+  - issue template - stale issues
+  - PR template
+  - project
+  - docs
+  - license
+  - security policy and alerts
+- badges
+  - build
+  - npm w/ version
+  - dependencies
+  - code coverage
+  - deepscan
+  - types: TypeScript
+  - license
+  - browser or node min version
+  - dependabot
+  - semver
+- files:
+  - package.json
+  - .eslintignore
+  - .eslintrc.js
+  - .github/workflows
+  - .github/\*
+  - .vscode
+  - .gitignore
+  - .npmignore
+  - .prettyrc
+  - tsconfig.json
+- tools:
+  - https://github.com/jvitor83/types-autoinstaller

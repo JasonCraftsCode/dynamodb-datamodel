@@ -1,11 +1,16 @@
 import { Table, Index } from '../src/Table';
 import { validateKeySchema, validateTable } from '../src/TableValidate';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
 it('Validate ValidateTable exports', () => {
   expect(typeof validateKeySchema).toEqual('function');
   expect(typeof validateTable).toEqual('function');
 });
 
+function getTestClient(): DocumentClient {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return {} as DocumentClient;
+}
 interface SimpleTableKey {
   P: Table.PrimaryKey.PartitionString;
   S?: Table.PrimaryKey.SortString;
@@ -36,10 +41,10 @@ const testTableParams: Table.TableParamsT<SimpleTableKey, SimpleKeyAttributes> =
     P: Table.PrimaryKey.PartitionKeyType,
     S: Table.PrimaryKey.SortKeyType,
   },
-  client: {} as any,
+  client: getTestClient(),
 };
 
-function TestIndex<KEY>(keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>, name = 'GSI0') {
+function TestIndex<KEY>(keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>, name = 'GSI0'): Index.IndexT<KEY> {
   return Index.createIndex<KEY>({
     name,
     keySchema,
@@ -60,7 +65,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: Table.PrimaryKey.StringType },
       keySchema: { P: Table.PrimaryKey.PartitionKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).not.toThrow();
   });
@@ -70,7 +75,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: Table.PrimaryKey.StringType, S: Table.PrimaryKey.StringType },
       keySchema: { P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).not.toThrow();
   });
@@ -80,7 +85,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: Table.PrimaryKey.NumberType, S: Table.PrimaryKey.NumberType },
       keySchema: { P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).not.toThrow();
   });
@@ -90,7 +95,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: Table.PrimaryKey.BinaryType, S: Table.PrimaryKey.BinaryType },
       keySchema: { P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).not.toThrow();
   });
@@ -100,7 +105,7 @@ describe('When table', () => {
       name: '',
       keyAttributes: { P: Table.PrimaryKey.StringType },
       keySchema: { P: Table.PrimaryKey.PartitionKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(new Error('Table must have a name'));
   });
@@ -110,9 +115,9 @@ describe('When table', () => {
       P: Table.PrimaryKey.PartitionString;
     }>({
       name: 'TestTable',
-      keyAttributes: { P: { type: 'BOOL' } as any },
+      keyAttributes: { P: { type: 'BOOL' as 'S' } },
       keySchema: { P: Table.PrimaryKey.PartitionKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(
       new Error("Primary key 'P' has an invalid type of 'BOOL' in table 'TestTable'"),
@@ -127,7 +132,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: Table.PrimaryKey.StringType, P1: Table.PrimaryKey.StringType },
       keySchema: { P: Table.PrimaryKey.PartitionKeyType, P1: Table.PrimaryKey.PartitionKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(
       new Error("Key 'P1' invalid, TestTable already has partition key 'P'"),
@@ -141,7 +146,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { S: Table.PrimaryKey.StringType },
       keySchema: { S: Table.PrimaryKey.SortKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(new Error('TestTable needs partition key'));
   });
@@ -151,7 +156,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: {},
       keySchema: { P: Table.PrimaryKey.PartitionKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'P' not in table's keyAttributes"));
   });
@@ -173,7 +178,7 @@ describe('When table', () => {
         S: Table.PrimaryKey.SortKeyType,
         S1: Table.PrimaryKey.SortKeyType,
       },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'S1' invalid, TestTable already has sort key 'S'"));
   });
@@ -186,7 +191,7 @@ describe('When table', () => {
       name: 'TestTable',
       keyAttributes: { P: Table.PrimaryKey.StringType },
       keySchema: { P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType },
-      client: {} as any,
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'S' not in table's keyAttributes"));
   });
@@ -197,8 +202,8 @@ describe('When table', () => {
     }>({
       name: 'TestTable',
       keyAttributes: { P: Table.PrimaryKey.StringType },
-      keySchema: { P: { keyType: 'PARTITION' } as any },
-      client: {} as any,
+      keySchema: { P: { keyType: 'PARTITION' as 'HASH' } },
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'P' has an invalid key type of 'PARTITION'"));
   });
@@ -210,8 +215,8 @@ describe('When table', () => {
     }>({
       name: 'TestTable',
       keyAttributes: { P: Table.PrimaryKey.StringType, S: Table.PrimaryKey.StringType },
-      keySchema: { P: Table.PrimaryKey.PartitionKeyType, S: { keyType: 'SORT' } as any },
-      client: {} as any,
+      keySchema: { P: Table.PrimaryKey.PartitionKeyType, S: { keyType: 'SORT' as 'RANGE' } },
+      client: getTestClient(),
     });
     expect(() => validateTable(table)).toThrowError(new Error("Key 'S' has an invalid key type of 'SORT'"));
   });
@@ -224,7 +229,12 @@ describe('When global index', () => {
     testTable.localIndexes = [];
   });
 
-  function ProjectionIndex(projection: { type: Table.ProjectionType; attributes?: string[] }) {
+  function ProjectionIndex(projection: {
+    type: Table.ProjectionType;
+    attributes?: string[];
+  }): Index.IndexT<{
+    G0P: Table.PrimaryKey.PartitionString;
+  }> {
     return Index.createIndex<{
       G0P: Table.PrimaryKey.PartitionString;
     }>({
@@ -276,7 +286,7 @@ describe('When global index', () => {
   });
 
   it('has invalidate projection type expect throw', () => {
-    const gsi = ProjectionIndex({ type: 'PARTIAL' } as any);
+    const gsi = ProjectionIndex({ type: 'PARTIAL' as 'KEYS_ONLY' });
     testTable.globalIndexes = [gsi as Index];
     expect(() => validateTable(testTable)).toThrowError(new Error("'GSI' projection type is invalidate 'PARTIAL'"));
   });
@@ -446,7 +456,7 @@ describe('When local index', () => {
     );
   });
 
-  it('has same name expect throw', () => {
+  it('two local indexes have same name expect throw', () => {
     const lsi0 = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       L0S: Table.PrimaryKey.SortString;
@@ -459,7 +469,7 @@ describe('When local index', () => {
     expect(() => validateTable(testTable)).toThrowError(new Error("Duplicate index name 'GSI0'"));
   });
 
-  it('has same name expect throw', () => {
+  it('global and local has same name expect throw', () => {
     const lsi0 = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       L0S: Table.PrimaryKey.SortString;

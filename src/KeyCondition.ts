@@ -27,8 +27,7 @@ export class KeyConditionExpression {
     const v = this.addValue(value);
     switch (op) {
       case 'BETWEEN':
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return `${n} ${op} ${v} AND ${this.addValue(and!)}`;
+        return `${n} ${op} ${v} AND ${this.addValue(and as Table.AttributeValues)}`;
       case 'begins_with':
         return `${op}(${n}, ${v})`;
     }

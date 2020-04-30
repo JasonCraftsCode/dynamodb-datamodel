@@ -22,8 +22,7 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true
   },
-  "include": ["src/**/*.ts"], // , "__test__/**/*.ts"], // In order to enable
-  "exclude": ["node_modules", "coverage", "dist", "__test__", "**/*.spec.ts", "**/*.test.ts", "**/__test__/*"],
+  "exclude": ["/node_modules/", "/coverage/", "/dist/"],
   "typedocOptions": {
     "excludeExternals": true,
     "excludeNotExported": true,
