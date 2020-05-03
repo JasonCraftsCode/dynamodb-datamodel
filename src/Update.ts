@@ -83,14 +83,10 @@ export class UpdateExpression {
     return typeof value === 'function' ? value(name, this) : this.addValue(value);
   }
   addNonStringValue(value: Table.AttributeValues | Update.UpdateFunction, name: string): string {
-    switch (typeof value) {
-      case 'function':
-        return value(name, this); // type?: 'string'
-      case 'string':
-        // For non-string values we allow strings to specify paths, for strings paths need to
-        // use the path() function to wrap the path
-        return this.addPath(value);
-    }
+    if (typeof value === 'function') return value(name, this); // type?: 'string'
+    // For non-string values we allow strings to specify paths, for strings paths need to
+    // use the path() function to wrap the path
+    if (typeof value === 'string') return this.addPath(value);
     return this.addValue(value);
   }
   addNumberValue(value: Update.UpdateNumberValue, name: string): string {
@@ -150,7 +146,6 @@ export class Update {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   static delete = Update.del;
 
-  // TODO: remove not needed, or maybe is the default behavior
   static set<T extends Table.AttributeValues>(value: T | Update.UpdateFunction): Update.UpdateInput<string> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: string): void => {
@@ -280,6 +275,7 @@ export class Update {
     if (updateMap) {
       const expression = Update.buildExpression(updateMap, new UpdateExpression(exp));
       if (expression) params.UpdateExpression = expression;
+      else delete params.UpdateExpression;
     }
     return params;
   }

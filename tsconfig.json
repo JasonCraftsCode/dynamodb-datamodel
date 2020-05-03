@@ -29,7 +29,7 @@
     "excludePrivate": true,
     "includeVersion": true,
     "inputFiles": "./src/index.ts",
-    "mode": "library", // requires: "typedoc": "^0.17.0-3",
+    "mode": "library", // requires: npm add -D typedoc@0.17.0-3 --save-exact
     "out": "docs",
     "theme": "default",
     "gitRevision": "master"

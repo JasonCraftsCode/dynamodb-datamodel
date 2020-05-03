@@ -25,12 +25,8 @@ export class KeyConditionExpression {
   ): string {
     const n = this.addPath(name);
     const v = this.addValue(value);
-    switch (op) {
-      case 'BETWEEN':
-        return `${n} ${op} ${v} AND ${this.addValue(and as Table.AttributeValues)}`;
-      case 'begins_with':
-        return `${op}(${n}, ${v})`;
-    }
+    if (op === 'BETWEEN') return `${n} ${op} ${v} AND ${this.addValue(and as Table.AttributeValues)}`;
+    if (op === 'begins_with') return `${op}(${n}, ${v})`;
     return `${n} ${op} ${v}`;
   }
 
@@ -123,6 +119,7 @@ export class KeyCondition {
     if (key) {
       const condition = KeyCondition.buildExpression(key, new KeyConditionExpression(exp));
       if (condition) params.KeyConditionExpression = condition;
+      else delete params.KeyConditionExpression;
     }
     return params;
   }

@@ -24,10 +24,12 @@ This is also not a table management module, since with single table design the t
 
 - **Typescript support** - Model and table data can be modeled as typescript intefaces to provide compiler checks and code editor autocomplete. Module is also written in typescript so typings are always up todate.
 - **Bidirectional data mapping** - Maps model data to and from table data.
-- **Extensible data mapping** - Consumers can define new model types and the bidirectional data mapping, update and conditions expressions for that type.
-- **Easy to use update and condition generation** -
+- **Extensible data mapping** - Consumers can define new model types (refered to as Field) and the bidirectional data mapping, update and conditions expressions for that type.
+- **Easy to use condition expressions** -
+- **Easy to use update expressions** -
+- **Composable and extensible components** -
 
-## Installation and Basic Usage
+## Installation
 
 Install the DynamoDB DataModel with npm:
 
@@ -41,28 +43,47 @@ or yarn:
 yarn add dynamodb-datamodel
 ```
 
+Dependencies:
+
+- aws-sdk > 2.585.0 (peerDependency)
+- node.js > 8.0.0
+
+## Basic usage
+
 Import or require `Table` and `Model` from `dynamodb-datamodel`:
 
 ```typescript
 import { Table, Model, Fields } from 'dynamodb-datamodel';
 ```
 
-Create your Table and Model schema (typescript):
+General usage flow:
+
+1. Import or require `Table`, `Model` and `Fields` from `dynamodb-datamodel`
+2. Create DynamoDB DocumentClient
+3. _[TypeScript]_ Define Table's primary key interface
+4. Create Table and define key attributes and schema
+5. _[TypeScript]_ Define each Model key and data interface
+6. Create each Model and define data schema
+7. Use the model to read and write data
+
+Example:
 
 ```typescript
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+// 1. Import or require `Table`, `Model` and `Fields` from `dynamodb-datamodel`
 import { Table, Model, Fields } from 'dynamodb-datamodel';
 
+// 2. Create DynamoDB DocumentClient
 const client = new DocumentClient();
 
-// Define table primary keys so you get type safety when using table actions
-interface SimpleTableKey {
+// 3. [TypeScript] Define Table's primary key
+interface TableKey {
   P: Table.PrimaryKey.PartitionString;
   S?: Table.PrimaryKey.SortString;
 }
 
-// Create and configure table
-const simpleTable = Table.createTable<SimpleTableKey, SimpleTableKey>({
+// 4. Create Table and define key attributes and schema
+const table = Table.createTable<TableKey, TableKey>({
   name: 'SimpleTable',
   keyAttributes: {
     P: Table.PrimaryKey.StringType,
@@ -75,30 +96,64 @@ const simpleTable = Table.createTable<SimpleTableKey, SimpleTableKey>({
   client,
 });
 
-// Define model key for model actions like get and delete
-interface SimpleKey {
+// 5. [TypeScript] Define each Model key and data interface
+interface ModelKey {
   id: string;
 }
-
 // Define model data that derives from the key
-interface SimpleModel extends SimpleKey {
+interface ModelItem extends ModelKey {
   name: string;
 }
 
-// Create the model with a schema based on the above model interface
-const simpleModel = Model.createModel<SimpleKey, SimpleModel>({
+// 6. Create each Model and define data schema
+const model = Model.createModel<ModelKey, ModelItem>({
   schema: {
     id: Fields.split(['P', 'S']),
     name: Fields.string(),
   },
   table: table as Table, // 'as Table' needed for TypeScript
 });
+
+// Additional models can also be defined
+
+// 7. Use the model to read and write data
+// Write item
+await model.put({ id: 'P-GUID.S-0', name: 'user name' });
+// Update item
+await model.update({ id: 'P-GUID.S-0', name: 'new user name' });
+// Get item
+const item = await model.get({ id: 'P-GUID.S-0' });
+// Delete item
+await model.delete({ id: 'P-GUID.S-0' });
 ```
 
-## Table Actions
+## Components
 
-## Update Expression
+DynamoDB-DataMode is composed of several components that can be used on their own and are used by the higher level components like Fields and Model.
 
-## Condition Expression
+- [Condition](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html) - Contains methods to build complex condition expressions.
+- [ExpressionAttributes](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/ExpressionAttributes.html) - Classs to hold the condition, key condition and update expressions attribute names and values
+- [Fields](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html) - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.
+- [Index](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html) - Classes that represends Global or Local Secondary Indexes associated with a table
+- [KeyCondition](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html) - Contains the method to build sort key conditions for Table.query
+- [KeyExpressionAttributes](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/KeyExpressionAttributes.html) - Help class used to build the key condition expression
+- [Model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) - Class that uses the model scheam and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.
+- [Table](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html) - Class the represents the Table and wraps table actions
+- [Update](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html) - Contains the methods to build any update expression
+- [UpdateExpression](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/UpdateExpression.html) - Help class used to help build update expressions
 
-## Model Schema Fields
+## Table of Contents
+
+## Table
+
+## Index
+
+## Model
+
+## Fields
+
+## Update Expressions
+
+## Condition Expressions
+
+## KeyCondition Expressions

@@ -94,17 +94,19 @@ export class Fields {
 export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   export interface TableContext {
     action: Table.ItemActions;
-    conditions?: Condition.Resolver[];
+    conditions: Condition.Resolver[];
+    options: Table.BaseOptions;
     model: Model.ModelBase;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    extra?: any;
+    custom?: any;
   }
 
   export interface ModelContext {
     action: Table.ItemActions;
+    options: Table.BaseOptions;
     model: Model.ModelBase;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    extra?: any;
+    custom?: any;
   }
 
   export interface Field {

@@ -84,32 +84,54 @@
 				<ul>
 					<li><strong>Typescript support</strong> - Model and table data can be modeled as typescript intefaces to provide compiler checks and code editor autocomplete. Module is also written in typescript so typings are always up todate.</li>
 					<li><strong>Bidirectional data mapping</strong> - Maps model data to and from table data.</li>
-					<li><strong>Extensible data mapping</strong> - Consumers can define new model types and the bidirectional data mapping, update and conditions expressions for that type.</li>
-					<li><strong>Easy to use update and condition generation</strong> -</li>
+					<li><strong>Extensible data mapping</strong> - Consumers can define new model types (refered to as Field) and the bidirectional data mapping, update and conditions expressions for that type.</li>
+					<li><strong>Easy to use condition expressions</strong> -</li>
+					<li><strong>Easy to use update expressions</strong> -</li>
+					<li><strong>Composable and extensible components</strong> -</li>
 				</ul>
-				<a href="#installation-and-basic-usage" id="installation-and-basic-usage" style="color: inherit; text-decoration: none;">
-					<h2>Installation and Basic Usage</h2>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
 				</a>
 				<p>Install the DynamoDB DataModel with npm:</p>
 				<pre><code class="language-bash">npm i dynamodb-datamodel</code></pre>
 				<p>or yarn:</p>
 				<pre><code class="language-bash">yarn add dynamodb-datamodel</code></pre>
+				<p>Dependencies:</p>
+				<ul>
+					<li>aws-sdk &gt; 2.585.0 (peerDependency)</li>
+					<li>node.js &gt; 8.0.0</li>
+				</ul>
+				<a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
+					<h2>Basic usage</h2>
+				</a>
 				<p>Import or require <code>Table</code> and <code>Model</code> from <code>dynamodb-datamodel</code>:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Table, Model, Fields } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;</code></pre>
-				<p>Create your Table and Model schema (typescript):</p>
+				<p>General usage flow:</p>
+				<ol>
+					<li>Import or require <code>Table</code>, <code>Model</code> and <code>Fields</code> from <code>dynamodb-datamodel</code></li>
+					<li>Create DynamoDB DocumentClient</li>
+					<li><em>[TypeScript]</em> Define Table&#39;s primary key interface</li>
+					<li>Create Table and define key attributes and schema</li>
+					<li><em>[TypeScript]</em> Define each Model key and data interface</li>
+					<li>Create each Model and define data schema</li>
+					<li>Use the model to read and write data</li>
+				</ol>
+				<p>Example:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DocumentClient } <span class="hljs-keyword">from</span> <span class="hljs-string">'aws-sdk/clients/dynamodb'</span>;
+<span class="hljs-comment">// 1. Import or require `Table`, `Model` and `Fields` from `dynamodb-datamodel`</span>
 <span class="hljs-keyword">import</span> { Table, Model, Fields } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 
+<span class="hljs-comment">// 2. Create DynamoDB DocumentClient</span>
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> DocumentClient();
 
-<span class="hljs-comment">// Define table primary keys so you get type safety when using table actions</span>
-<span class="hljs-keyword">interface</span> SimpleTableKey {
+<span class="hljs-comment">// 3. [TypeScript] Define Table's primary key</span>
+<span class="hljs-keyword">interface</span> TableKey {
   P: Table.PrimaryKey.PartitionString;
   S?: Table.PrimaryKey.SortString;
 }
 
-<span class="hljs-comment">// Create and configure table</span>
-<span class="hljs-keyword">const</span> simpleTable = Table.createTable&lt;SimpleTableKey, SimpleTableKey&gt;({
+<span class="hljs-comment">// 4. Create Table and define key attributes and schema</span>
+<span class="hljs-keyword">const</span> table = Table.createTable&lt;TableKey, TableKey&gt;({
   name: <span class="hljs-string">'SimpleTable'</span>,
   keyAttributes: {
     P: Table.PrimaryKey.StringType,
@@ -122,35 +144,74 @@
   client,
 });
 
-<span class="hljs-comment">// Define model key for model actions like get and delete</span>
-<span class="hljs-keyword">interface</span> SimpleKey {
+<span class="hljs-comment">// 5. [TypeScript] Define each Model key and data interface</span>
+<span class="hljs-keyword">interface</span> ModelKey {
   id: <span class="hljs-built_in">string</span>;
 }
-
 <span class="hljs-comment">// Define model data that derives from the key</span>
-<span class="hljs-keyword">interface</span> SimpleModel <span class="hljs-keyword">extends</span> SimpleKey {
+<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
   name: <span class="hljs-built_in">string</span>;
 }
 
-<span class="hljs-comment">// Create the model with a schema based on the above model interface</span>
-<span class="hljs-keyword">const</span> simpleModel = Model.createModel&lt;SimpleKey, SimpleModel&gt;({
+<span class="hljs-comment">// 6. Create each Model and define data schema</span>
+<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
   schema: {
     id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
     name: Fields.string(),
   },
   table: table <span class="hljs-keyword">as</span> Table, <span class="hljs-comment">// 'as Table' needed for TypeScript</span>
-});</code></pre>
-				<a href="#table-actions" id="table-actions" style="color: inherit; text-decoration: none;">
-					<h2>Table Actions</h2>
+});
+
+<span class="hljs-comment">// Additional models can also be defined</span>
+
+<span class="hljs-comment">// 7. Use the model to read and write data</span>
+<span class="hljs-comment">// Write item</span>
+<span class="hljs-keyword">await</span> model.put({ id: <span class="hljs-string">'P-GUID.S-0'</span>, name: <span class="hljs-string">'user name'</span> });
+<span class="hljs-comment">// Update item</span>
+<span class="hljs-keyword">await</span> model.update({ id: <span class="hljs-string">'P-GUID.S-0'</span>, name: <span class="hljs-string">'new user name'</span> });
+<span class="hljs-comment">// Get item</span>
+<span class="hljs-keyword">const</span> item = <span class="hljs-keyword">await</span> model.get({ id: <span class="hljs-string">'P-GUID.S-0'</span> });
+<span class="hljs-comment">// Delete item</span>
+<span class="hljs-keyword">await</span> model.delete({ id: <span class="hljs-string">'P-GUID.S-0'</span> });</code></pre>
+				<a href="#components" id="components" style="color: inherit; text-decoration: none;">
+					<h2>Components</h2>
 				</a>
-				<a href="#update-expression" id="update-expression" style="color: inherit; text-decoration: none;">
-					<h2>Update Expression</h2>
+				<p>DynamoDB-DataMode is composed of several components that can be used on their own and are used by the higher level components like Fields and Model.</p>
+				<ul>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html">Condition</a> - Contains methods to build complex condition expressions.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/ExpressionAttributes.html">ExpressionAttributes</a> - Classs to hold the condition, key condition and update expressions attribute names and values</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html">Fields</a> - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html">Index</a> - Classes that represends Global or Local Secondary Indexes associated with a table</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html">KeyCondition</a> - Contains the method to build sort key conditions for Table.query</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/KeyExpressionAttributes.html">KeyExpressionAttributes</a> - Help class used to build the key condition expression</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html">Model</a> - Class that uses the model scheam and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html">Table</a> - Class the represents the Table and wraps table actions</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> - Contains the methods to build any update expression</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/UpdateExpression.html">UpdateExpression</a> - Help class used to help build update expressions</li>
+				</ul>
+				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+					<h2>Table of Contents</h2>
 				</a>
-				<a href="#condition-expression" id="condition-expression" style="color: inherit; text-decoration: none;">
-					<h2>Condition Expression</h2>
+				<a href="#table" id="table" style="color: inherit; text-decoration: none;">
+					<h2>Table</h2>
 				</a>
-				<a href="#model-schema-fields" id="model-schema-fields" style="color: inherit; text-decoration: none;">
-					<h2>Model Schema Fields</h2>
+				<a href="#index" id="index" style="color: inherit; text-decoration: none;">
+					<h2>Index</h2>
+				</a>
+				<a href="#model" id="model" style="color: inherit; text-decoration: none;">
+					<h2>Model</h2>
+				</a>
+				<a href="#fields" id="fields" style="color: inherit; text-decoration: none;">
+					<h2>Fields</h2>
+				</a>
+				<a href="#update-expressions" id="update-expressions" style="color: inherit; text-decoration: none;">
+					<h2>Update Expressions</h2>
+				</a>
+				<a href="#condition-expressions" id="condition-expressions" style="color: inherit; text-decoration: none;">
+					<h2>Condition Expressions</h2>
+				</a>
+				<a href="#keycondition-expressions" id="keycondition-expressions" style="color: inherit; text-decoration: none;">
+					<h2>KeyCondition Expressions</h2>
 				</a>
 			</div>
 		</div>

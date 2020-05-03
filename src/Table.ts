@@ -274,12 +274,14 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
  *
  */
 export class Table {
+  private _client?: DocumentClient;
+
   name: string;
   keyAttributes: Table.PrimaryKey.AttributeTypesMap;
   keySchema: Table.PrimaryKey.KeyTypesMap;
   globalIndexes: Index[] = [];
   localIndexes: Index[] = [];
-  client: DocumentClient;
+  createClient: DocumentClient | (() => DocumentClient);
   onError: (msg: string) => void = (msg: string) => {
     throw new Error(msg);
   };
@@ -290,7 +292,12 @@ export class Table {
     this.keySchema = params.keySchema;
     if (params.globalIndexes) this.addGlobalIndexes(params.globalIndexes);
     if (params.localIndexes) this.addLocalIndexes(params.localIndexes);
-    this.client = params.client;
+    this.createClient = params.client;
+  }
+
+  get client(): DocumentClient {
+    if (!this._client) this._client = typeof this.createClient === 'function' ? this.createClient() : this.createClient;
+    return this._client;
   }
 
   addGlobalIndexes(gsi: Index[]): void {
@@ -355,13 +362,9 @@ export class Table {
     attributes.addParams(params);
     return params;
   }
-  getPutCondition(writeOptions: Table.PutWriteOptions): Condition.Resolver | void {
-    switch (writeOptions) {
-      case 'Exists':
-        return Condition.exists(this.getPartitionKey());
-      case 'NotExists':
-        return Condition.notExists(this.getPartitionKey());
-    }
+  getPutCondition(options: Table.PutWriteOptions): Condition.Resolver | void {
+    if (options === 'Exists') return Condition.exists(this.getPartitionKey());
+    if (options === 'NotExists') return Condition.notExists(this.getPartitionKey());
   }
   // Consider having writeOptions default to be 'NotExists'
   putParams(
@@ -451,6 +454,12 @@ export class Table {
   scan(options?: Table.ScanOptions): Promise<DocumentClient.ScanOutput> {
     return this.client.scan(this.scanParams(options)).promise();
   }
+
+  static getPutAction(options?: Table.PutWriteOptions): 'put' | 'put-new' | 'put-replace' {
+    if (options === 'NotExists') return 'put-new';
+    if (options === 'Exists') return 'put-replace';
+    return 'put';
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
@@ -480,7 +489,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
 
   export type AttributeValuesMap = { [key: string]: AttributeValues };
 
-  export type ItemActions = 'get' | 'delete' | 'put' | 'put-new' | 'put-existing' | 'update';
+  export type ItemActions = 'get' | 'delete' | 'put' | 'put-new' | 'put-replace' | 'update';
 
   export interface TableParams {
     name: string;
@@ -488,7 +497,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     keySchema: PrimaryKey.KeyTypesMap;
     globalIndexes?: Index[];
     localIndexes?: Index[];
-    client: DocumentClient;
+    client: DocumentClient | (() => DocumentClient);
     onError?: (msg: string) => void;
   }
 
@@ -571,6 +580,8 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     attributes?: ExpressionAttributes;
     conditions?: Condition.Resolver[];
     params?: Optional<T>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context?: any;
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface GetOptions extends BaseOptions<GetInput> {}

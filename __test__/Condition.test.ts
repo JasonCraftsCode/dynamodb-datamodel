@@ -2,8 +2,8 @@ import { Condition } from '../src/Condition';
 import { ExpressionAttributes } from '../src/ExpressionAttributes';
 
 it('Validate Condition exports', () => {
-  expect(typeof Condition).toEqual('function');
-  expect(typeof Condition).toEqual('function');
+  expect(typeof Condition.eq).toEqual('function');
+  expect(typeof Condition.ne).toEqual('function');
 });
 
 it('Validate Condition aliased names are the same', () => {
@@ -206,12 +206,12 @@ describe('Validate Condition', () => {
   });
 
   it('add Conditions', () => {
-    const logical = Condition.and([cond1, cond2]);
+    const logical = Condition.and(cond1, cond2);
     expect(logical(attribs)).toEqual('(#n0 <= :v0 AND #n1 >= :v1)');
   });
 
   it('or Conditions', () => {
-    const logical = Condition.or([cond1, cond2]);
+    const logical = Condition.or(cond1, cond2);
     expect(logical(attribs)).toEqual('(#n0 <= :v0 OR #n1 >= :v1)');
   });
 
@@ -221,48 +221,48 @@ describe('Validate Condition', () => {
   });
 
   it('and Conditions with 1', () => {
-    const logical = Condition.and([cond1]);
+    const logical = Condition.and(cond1);
     expect(logical(attribs)).toEqual('(#n0 <= :v0)');
   });
 
   it('or Conditions with 1', () => {
-    const logical = Condition.or([cond1]);
+    const logical = Condition.or(cond1);
     expect(logical(attribs)).toEqual('(#n0 <= :v0)');
   });
 
   it('and with 4 conditions', () => {
-    const logical = Condition.and([cond1, cond2, cond3, cond4]);
+    const logical = Condition.and(cond1, cond2, cond3, cond4);
     expect(logical(attribs)).toEqual('(#n0 <= :v0 AND #n1 >= :v1 AND #n2 = :v2 AND #n3 <> :v3)');
   });
 
   it('and with Conditions', () => {
     const logical1 = Condition.not(cond1);
-    const logical2 = Condition.and([cond2, cond3]);
-    const logical3 = Condition.and([logical1, logical2]);
+    const logical2 = Condition.and(cond2, cond3);
+    const logical3 = Condition.and(logical1, logical2);
     expect(logical3(attribs)).toEqual('((NOT #n0 <= :v0) AND (#n1 >= :v1 AND #n2 = :v2))');
   });
 
   it('add with Conditions and Conditions', () => {
     const logical1 = Condition.not(cond1);
-    const logical3 = Condition.and([logical1, cond2, cond3]);
+    const logical3 = Condition.and(logical1, cond2, cond3);
     expect(logical3(attribs)).toEqual('((NOT #n0 <= :v0) AND #n1 >= :v1 AND #n2 = :v2)');
   });
 
   it('or with 4 conditions', () => {
-    const logical = Condition.or([cond1, cond2, cond3, cond4]);
+    const logical = Condition.or(cond1, cond2, cond3, cond4);
     expect(logical(attribs)).toEqual('(#n0 <= :v0 OR #n1 >= :v1 OR #n2 = :v2 OR #n3 <> :v3)');
   });
 
   it('or with Conditions', () => {
     const logical1 = Condition.not(cond1);
-    const logical2 = Condition.or([cond2, cond3]);
-    const logical3 = Condition.or([logical1, logical2]);
+    const logical2 = Condition.or(cond2, cond3);
+    const logical3 = Condition.or(logical1, logical2);
     expect(logical3(attribs)).toEqual('((NOT #n0 <= :v0) OR (#n1 >= :v1 OR #n2 = :v2))');
   });
 
   it('or with Conditions and Conditions', () => {
     const logical1 = Condition.not(cond1);
-    const logical3 = Condition.or([logical1, cond2, cond3]);
+    const logical3 = Condition.or(logical1, cond2, cond3);
     expect(logical3(attribs)).toEqual('((NOT #n0 <= :v0) OR #n1 >= :v1 OR #n2 = :v2)');
   });
 
@@ -283,7 +283,7 @@ describe('Validate Condition', () => {
   it('addAndParam with two conditions', () => {
     const conds = [Condition.eq('path1', 'value1'), Condition.gt('path2', 'value2')];
     expect(Condition.addAndParam(conds, new ExpressionAttributes(), {})).toEqual({
-      ConditionExpression: '(#n0 = :v0 AND #n1 > :v1)',
+      ConditionExpression: '#n0 = :v0 AND #n1 > :v1',
     });
   });
 
@@ -304,7 +304,7 @@ describe('Validate Condition', () => {
   it('addAndaddAndFilterParamParam with two conditions', () => {
     const conds = [Condition.eq('path1', 'value1'), Condition.gt('path2', 'value2')];
     expect(Condition.addAndFilterParam(conds, new ExpressionAttributes(), {})).toEqual({
-      FilterExpression: '(#n0 = :v0 AND #n1 > :v1)',
+      FilterExpression: '#n0 = :v0 AND #n1 > :v1',
     });
   });
 });

@@ -25,6 +25,10 @@ describe('Validate Simple Table', () => {
     S?: Table.PrimaryKey.SortString;
   }
 
+  const clientFn = jest.fn(() => {
+    return client;
+  });
+
   const testTable = Table.createTable<SimpleTableKey, SimpleTableKey>({
     name: 'TestTable',
     keyAttributes: {
@@ -35,7 +39,19 @@ describe('Validate Simple Table', () => {
       P: Table.PrimaryKey.PartitionKeyType,
       S: Table.PrimaryKey.SortKeyType,
     },
-    client,
+    client: clientFn,
+  });
+
+  it('getPutAction returns correct action', () => {
+    expect(Table.getPutAction('Always')).toEqual('put');
+    expect(Table.getPutAction('Exists')).toEqual('put-replace');
+    expect(Table.getPutAction('NotExists')).toEqual('put-new');
+  });
+
+  it('on demand create client to be call only when needed', () => {
+    expect(clientFn).not.toBeCalled();
+    expect(testTable.client).toEqual(client);
+    expect(clientFn).toBeCalledTimes(1);
   });
 
   it('validateTable', () => {

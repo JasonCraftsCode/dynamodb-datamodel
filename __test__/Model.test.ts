@@ -4,6 +4,7 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import * as yup from 'yup';
 import * as joi from '@hapi/joi';
 
+import { Condition } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table, Index } from '../src/Table';
@@ -177,6 +178,17 @@ const userModel = Model.createModel<UserKey, UserModel>({
 });
 
 describe('Validate Model with Table and Indexes', () => {
+  it('Model.getContext with empty options to return with conditions', () => {
+    const context = userModel.getContext('put', {});
+    expect(context).toEqual({ action: 'put', conditions: [], model: userModel, options: { conditions: [] } });
+  });
+
+  it('Model.getContext with exiting options.conditions', () => {
+    const options: Table.BaseOptions = { conditions: [Condition.eq('path', 'value')] };
+    const context = userModel.getContext('put', options);
+    expect(context).toEqual({ action: 'put', conditions: options.conditions, model: userModel, options });
+  });
+
   describe('model params', () => {
     it('Model.getParams with single id', async () => {
       // TODO: should probably throw in SplitField
@@ -579,33 +591,61 @@ describe('Validate Model with Table and Indexes', () => {
       expect(results).toBeUndefined();
     });
 
-    it('Model.put', async () => {
-      client.put = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
-      const results = await userModel.put({
+    describe('put based methods', () => {
+      const putModelData = {
         id: 'id1.id2',
         name: 'name1',
         revision: 1,
         adult: true,
-      });
-      expect(results).toEqual({
+      };
+      const putResultsData = {
+        ...putModelData,
+        nickname: 'none',
+      };
+      const putTableItem = {
         adult: true,
-        id: 'id1.id2',
+        P: 'id1',
+        S: 'id2',
         name: 'name1',
         nickname: 'none',
-        revision: 1,
+        rev: 1,
+      };
+      it('Model.put', async () => {
+        client.put = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
+        const results = await userModel.put(putModelData);
+        expect(results).toEqual(putResultsData);
+        expect(client.put).toBeCalledWith({
+          Item: putTableItem,
+          TableName: 'MainTable',
+        });
+        expect(client.put).toBeCalledTimes(1);
       });
-      expect(client.put).toBeCalledWith({
-        Item: {
-          adult: true,
-          P: 'id1',
-          S: 'id2',
-          name: 'name1',
-          nickname: 'none',
-          rev: 1,
-        },
-        TableName: 'MainTable',
+
+      it('Model.new', async () => {
+        client.put = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
+        const results = await userModel.new(putModelData);
+        expect(results).toEqual(putResultsData);
+        expect(client.put).toBeCalledWith({
+          ConditionExpression: 'attribute_not_exists(#n0)',
+          ExpressionAttributeNames: { '#n0': 'P' },
+          Item: putTableItem,
+          TableName: 'MainTable',
+        });
+        expect(client.put).toBeCalledTimes(1);
       });
-      expect(client.put).toBeCalledTimes(1);
+
+      it('Model.replace', async () => {
+        client.put = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
+        const results = await userModel.replace(putModelData);
+        expect(results).toEqual(putResultsData);
+        expect(client.put).toBeCalledWith({
+          ConditionExpression: 'attribute_exists(#n0)',
+          ExpressionAttributeNames: { '#n0': 'P' },
+          Item: putTableItem,
+          TableName: 'MainTable',
+        });
+        expect(client.put).toBeCalledTimes(1);
+      });
     });
 
     it('Model.update min args', async () => {

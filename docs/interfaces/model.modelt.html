@@ -120,9 +120,12 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#delete" class="tsd-kind-icon">delete</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#deleteparams" class="tsd-kind-icon">delete<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelt.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#getparams" class="tsd-kind-icon">get<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelt.html#new" class="tsd-kind-icon">new</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#put" class="tsd-kind-icon">put</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#putparams" class="tsd-kind-icon">put<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelt.html#replace" class="tsd-kind-icon">replace</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#totable" class="tsd-kind-icon">to<wbr>Table</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#totablekey" class="tsd-kind-icon">to<wbr>Table<wbr>Key</a></li>
@@ -177,7 +180,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="onerror" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Error</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#onerror">onError</a></p>
 						<ul>
@@ -192,7 +195,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#schema">schema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L186">Model.ts:186</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L208">Model.ts:208</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +224,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L203">Model.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L225">Model.ts:225</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -248,7 +251,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#deleteparams">deleteParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L195">Model.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L217">Model.ts:217</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -275,7 +278,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L201">Model.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L223">Model.ts:223</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -291,6 +294,33 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="getcontext" class="tsd-anchor"></a>
+					<h3>get<wbr>Context</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Context<span class="tsd-signature-symbol">(</span>action<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#itemactions" class="tsd-signature-type">ItemActions</a>, options<span class="tsd-signature-symbol">: </span><a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.tablecontext.html" class="tsd-signature-type">TableContext</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#getcontext">getContext</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L84">Model.ts:84</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>action: <a href="../classes/table.html#itemactions" class="tsd-signature-type">ItemActions</a></h5>
+								</li>
+								<li>
+									<h5>options: <a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="getparams" class="tsd-anchor"></a>
 					<h3>get<wbr>Params</h3>
@@ -302,7 +332,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#getparams">getParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L193">Model.ts:193</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L215">Model.ts:215</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -318,6 +348,33 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="new" class="tsd-anchor"></a>
+					<h3>new</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">new<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/model.html#modelout" class="tsd-signature-type">ModelOut</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#new">new</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L117">Model.ts:117</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>item: <a href="../classes/model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/model.html#modelout" class="tsd-signature-type">ModelOut</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="put" class="tsd-anchor"></a>
 					<h3>put</h3>
@@ -329,7 +386,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#put">put</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L202">Model.ts:202</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L224">Model.ts:224</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -356,7 +413,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#putparams">putParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L194">Model.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L216">Model.ts:216</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -372,6 +429,33 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="replace" class="tsd-anchor"></a>
+					<h3>replace</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/model.html#modelout" class="tsd-signature-type">ModelOut</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#replace">replace</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L121">Model.ts:121</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>item: <a href="../classes/model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/model.html#modelout" class="tsd-signature-type">ModelOut</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="tomodel" class="tsd-anchor"></a>
 					<h3>to<wbr>Model</h3>
@@ -383,7 +467,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#tomodel">toModel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L191">Model.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L213">Model.ts:213</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -407,7 +491,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#totable">toTable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L188">Model.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L210">Model.ts:210</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -431,7 +515,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#totablekey">toTableKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L189">Model.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L211">Model.ts:211</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -455,7 +539,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#totableupdate">toTableUpdate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L190">Model.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L212">Model.ts:212</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -479,7 +563,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#update">update</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L204">Model.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L226">Model.ts:226</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -506,7 +590,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#updateparams">updateParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L196">Model.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L218">Model.ts:218</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -593,14 +677,23 @@
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="model.modelt.html#get" class="tsd-kind-icon">get</a>
 									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+										<a href="model.modelt.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a>
+									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="model.modelt.html#getparams" class="tsd-kind-icon">get<wbr>Params</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+										<a href="model.modelt.html#new" class="tsd-kind-icon">new</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="model.modelt.html#put" class="tsd-kind-icon">put</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="model.modelt.html#putparams" class="tsd-kind-icon">put<wbr>Params</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+										<a href="model.modelt.html#replace" class="tsd-kind-icon">replace</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="model.modelt.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a>
@@ -686,13 +779,22 @@
 								<a href="../classes/model.html#get" class="tsd-kind-icon">get</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/model.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/model.html#getparams" class="tsd-kind-icon">get<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/model.html#new" class="tsd-kind-icon">new</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/model.html#put" class="tsd-kind-icon">put</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/model.html#putparams" class="tsd-kind-icon">put<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/model.html#replace" class="tsd-kind-icon">replace</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/model.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a>

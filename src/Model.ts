@@ -8,12 +8,14 @@ export class Model implements Model.ModelBase {
   name?: string;
   schema: Model.ModelSchema;
   table: Table;
-  onError?: () => void;
+  onError?: (msg: string) => void;
 
   constructor(params: Model.ModelParams) {
     this.name = params.name;
     this.schema = params.schema;
+    // TODO: registery model with table to support query and scan data mapping
     this.table = params.table;
+    this.onError = params.table.onError;
     Object.keys(this.schema).forEach((key) => this.schema[key].init(key));
   }
 
@@ -43,8 +45,7 @@ export class Model implements Model.ModelBase {
       const result = schema.toTable(name, data, tableData, context);
       if (result !== undefined) await result;
     }
-    const { key, item } = this.splitTableData(tableData);
-    return { key, item, conditions: context.conditions };
+    return this.splitTableData(tableData);
   }
 
   async toTableKey(key: Model.ModelCore, context: Fields.TableContext): Promise<Table.PrimaryKey.AttributeValuesMap> {
@@ -61,8 +62,7 @@ export class Model implements Model.ModelBase {
       const result = schema.toTableUpdate(name, data, tableData, context);
       if (result !== undefined) await result;
     }
-    const { key, item } = this.splitTableData(tableData);
-    return { key, item, conditions: context.conditions };
+    return this.splitTableData(tableData);
   }
 
   async toModel(
@@ -81,43 +81,65 @@ export class Model implements Model.ModelBase {
     return undefined;
   }
 
-  async getParams(key: Model.ModelCore, options?: Table.GetOptions): Promise<DocumentClient.GetItemInput> {
-    const tableKey = await this.toTableKey(key, { action: 'get', model: this });
+  getContext(action: Table.ItemActions, options: Table.BaseOptions): Fields.TableContext {
+    // Note: options.conditions is set on the passed in options even if
+    if (!options.conditions) options.conditions = [];
+    return { action, conditions: options.conditions, options, model: this };
+  }
+
+  async getParams(key: Model.ModelCore, options: Table.GetOptions = {}): Promise<DocumentClient.GetItemInput> {
+    const tableKey = await this.toTableKey(key, this.getContext('get', options));
     return this.table.getParams(tableKey, options);
   }
-  async putParams(data: Model.ModelCore, options: Table.PutOptions = {}): Promise<DocumentClient.PutItemInput> {
-    const tableData = await this.toTable(data, { action: 'put', conditions: [], model: this });
+  async putParams(item: Model.ModelCore, options: Table.PutOptions = {}): Promise<DocumentClient.PutItemInput> {
+    const action = Table.getPutAction(options.writeOptions);
+    const tableData = await this.toTable(item, this.getContext(action, options));
     return this.table.putParams(tableData.key, tableData.item, options);
   }
-  async deleteParams(key: Model.ModelCore, options?: Table.DeleteOptions): Promise<DocumentClient.DeleteItemInput> {
-    const tableKey = await this.toTableKey(key, { action: 'delete', conditions: [], model: this });
+  async deleteParams(key: Model.ModelCore, options: Table.DeleteOptions = {}): Promise<DocumentClient.DeleteItemInput> {
+    const tableKey = await this.toTableKey(key, this.getContext('delete', options));
     return this.table.deleteParams(tableKey, options);
   }
-  async updateParams(data: Model.ModelUpdate, options?: Table.UpdateOptions): Promise<DocumentClient.UpdateItemInput> {
-    const tableData = await this.toTableUpdate(data, { action: 'update', conditions: [], model: this });
+  async updateParams(
+    item: Model.ModelUpdate,
+    options: Table.UpdateOptions = {},
+  ): Promise<DocumentClient.UpdateItemInput> {
+    const tableData = await this.toTableUpdate(item, this.getContext('update', options));
     return this.table.updateParams(tableData.key, tableData.item, options);
   }
 
-  async get(key: Model.ModelCore, options?: Table.GetOptions): Promise<Model.ModelOut | undefined> {
-    const tableKey = await this.toTableKey(key, { action: 'get', model: this });
+  async get(key: Model.ModelCore, options: Table.GetOptions = {}): Promise<Model.ModelOut | undefined> {
+    const context = this.getContext('get', options);
+    const tableKey = await this.toTableKey(key, context);
     const result = await this.table.get(tableKey, options);
-    return this.toModel(result.Item, { action: 'get', model: this });
+    return this.toModel(result.Item, context);
   }
-  async put(data: Model.ModelCore, options?: Table.PutOptions): Promise<Model.ModelOut | undefined> {
-    const context: Fields.TableContext = { action: 'put', conditions: [], model: this };
-    const tableData = await this.toTable(data, context);
+  new(item: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.ModelOut | undefined> {
+    options.writeOptions = 'NotExists';
+    return this.put(item, options);
+  }
+  replace(item: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.ModelOut | undefined> {
+    options.writeOptions = 'Exists';
+    return this.put(item, options);
+  }
+  async put(item: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.ModelOut | undefined> {
+    const action = Table.getPutAction(options.writeOptions);
+    const context = this.getContext(action, options);
+    const tableData = await this.toTable(item, context);
     await this.table.put(tableData.key, tableData.item, options);
-    return this.toModel({ ...tableData.key, ...tableData.item }, { action: 'put', model: this });
+    return this.toModel({ ...tableData.key, ...tableData.item }, context);
   }
-  async delete(key: Model.ModelCore, options?: Table.DeleteOptions): Promise<Model.ModelOut | undefined> {
-    const tableKey = await this.toTableKey(key, { action: 'delete', conditions: [], model: this });
+  async delete(key: Model.ModelCore, options: Table.DeleteOptions = {}): Promise<Model.ModelOut | undefined> {
+    const context = this.getContext('delete', options);
+    const tableKey = await this.toTableKey(key, context);
     const result = await this.table.delete(tableKey, options);
-    return this.toModel(result.Attributes, { action: 'delete', model: this });
+    return this.toModel(result.Attributes, context);
   }
-  async update(data: Model.ModelUpdate, options?: Table.UpdateOptions): Promise<Model.ModelOut | undefined> {
-    const tableData = await this.toTableUpdate(data, { action: 'update', conditions: [], model: this });
+  async update(item: Model.ModelUpdate, options: Table.UpdateOptions = {}): Promise<Model.ModelOut | undefined> {
+    const context = this.getContext('update', options);
+    const tableData = await this.toTableUpdate(item, context);
     const result = await this.table.update(tableData.key, tableData.item, options);
-    return this.toModel(result.Attributes, { action: 'update', model: this });
+    return this.toModel(result.Attributes, context);
   }
 }
 
@@ -127,7 +149,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     name?: string;
     schema: Model.ModelSchema;
     table: Table;
-    onError?: () => void;
+    onError?: (msg: string) => void;
   }
 
   export type ModelType = number | string | boolean | null | object;
