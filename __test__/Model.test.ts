@@ -264,7 +264,7 @@ describe('Validate Model with Table and Indexes', () => {
         city: 'new york',
         state: 'new york',
         country: 'usa',
-        description: 'user desription',
+        description: 'user description',
         count: 2,
         created: new Date(1585563302000),
         photo: Buffer.from('abcdefghijklmn'),
@@ -308,7 +308,7 @@ describe('Validate Model with Table and Indexes', () => {
           ],
           count: 2,
           created: 1585563302,
-          desc: 'user desription',
+          desc: 'user description',
           groups: {
             group1: {
               role: 0,
@@ -501,7 +501,7 @@ describe('Validate Model with Table and Indexes', () => {
             ],
             count: 2,
             created: 1585563302,
-            desc: 'user desription',
+            desc: 'user description',
             groups: {
               group1: {
                 role: 0,
@@ -542,7 +542,7 @@ describe('Validate Model with Table and Indexes', () => {
         count: 2,
         country: 'usa',
         created: new Date('2020-03-30T10:15:02.000Z'),
-        description: 'user desription',
+        description: 'user description',
         groups: {
           group1: {
             role: 0,

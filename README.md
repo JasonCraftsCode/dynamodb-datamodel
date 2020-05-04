@@ -8,23 +8,23 @@
 [![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)](https://img.shields.io/npm/types/dynamodb-datamodel)
 [![npm](https://img.shields.io/npm/l/dynamodb-datamodel.svg)](https://www.npmjs.com/package/dynamodb-datamodel)
 
-**NOTE:** This project is in BETA. Please submit [issues/feedback](https://github.com/JasonCraftsCode/dynamodb-datamodel/issues).
+**NOTE:** This project is in BETA and is constantly being updated. Please submit [issues/feedback](https://github.com/JasonCraftsCode/dynamodb-datamodel/issues).
 
 The **DynamoDB DataModel** is a javascript and typescript library to simplify working with single table designs on [Amazon DynamoDB](https://aws.amazon.com/dynamodb/). The goal is to be able to easily map an object model into a table based storage model and provide operations for conditions and updates.
 
 ## Why
 
-While developing a side project using single table design I found I was frequenly writting simular code to map model data to and from table data. Additional writing update and condition expressions was combersome. I looked around to see if there was an npm package, including [@aws/dynamodb-data-mapper](https://github.com/awslabs/dynamodb-data-mapper-js), [@awspilot/dynamodb](https://github.com/awspilot/dynamodb-oop) project, [@baseprime's dynamodb](https://github.com/baseprime/dynamodb), [jeremydaly's dynamodb-toolbox](https://github.com/jeremydaly/dynamodb-toolbox) and others.
+While developing a side project using single table design I found I was frequently writing similar code to map model data to and from table data. Additional writing update and condition expressions was cumbersome. I looked around to see if there was an npm package, including [@aws/dynamodb-data-mapper](https://github.com/awslabs/dynamodb-data-mapper-js), [@awspilot/dynamodb](https://github.com/awspilot/dynamodb-oop) project, [@baseprime's dynamodb](https://github.com/baseprime/dynamodb), [jeremydaly's dynamodb-toolbox](https://github.com/jeremydaly/dynamodb-toolbox) and others.
 
-This is not a Object-Relational Mapping (ORM) module, so it doesn't use any SQL concepts. Many SQL concepts don't directly apply to NoSQL data bases like dynamodb, so this tool focuses on the unique capibility of dynamodb.
+This is not a Object-Relational Mapping (ORM) module, so it doesn't use any SQL concepts. Many SQL concepts don't directly apply to NoSQL data bases like dynamodb, so this tool focuses on the unique capabilities of dynamodb.
 
 This is also not a table management module, since with single table design the table will be created by CloudFormation. This module solely focused on reading and writing table and index data.
 
 ## Features
 
-- **Typescript support** - Model and table data can be modeled as typescript intefaces to provide compiler checks and code editor autocomplete. Module is also written in typescript so typings are always up todate.
+- **Typescript support** - Model and table data can be modeled as typescript interfaces to provide compiler checks and code editor autocomplete. Module is also written in typescript so typings are always up to date.
 - **Bidirectional data mapping** - Maps model data to and from table data.
-- **Extensible data mapping** - Consumers can define new model types (refered to as Field) and the bidirectional data mapping, update and conditions expressions for that type.
+- **Extensible data mapping** - Consumers can define new model types (referred to as Field) and the bidirectional data mapping, update and conditions expressions for that type.
 - **Easy to use condition expressions** -
 - **Easy to use update expressions** -
 - **Composable and extensible components** -
@@ -132,12 +132,12 @@ await model.delete({ id: 'P-GUID.S-0' });
 DynamoDB-DataMode is composed of several components that can be used on their own and are used by the higher level components like Fields and Model.
 
 - [Condition](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html) - Contains methods to build complex condition expressions.
-- [ExpressionAttributes](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/ExpressionAttributes.html) - Classs to hold the condition, key condition and update expressions attribute names and values
+- [ExpressionAttributes](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/ExpressionAttributes.html) - Class to hold the condition, key condition and update expressions attribute names and values
 - [Fields](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html) - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.
-- [Index](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html) - Classes that represends Global or Local Secondary Indexes associated with a table
+- [Index](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html) - Classes that represents Global or Local Secondary Indexes associated with a table
 - [KeyCondition](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html) - Contains the method to build sort key conditions for Table.query
 - [KeyExpressionAttributes](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/KeyExpressionAttributes.html) - Help class used to build the key condition expression
-- [Model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) - Class that uses the model scheam and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.
+- [Model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) - Class that uses the model schema and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.
 - [Table](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html) - Class the represents the Table and wraps table actions
 - [Update](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html) - Contains the methods to build any update expression
 - [UpdateExpression](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/UpdateExpression.html) - Help class used to help build update expressions

@@ -74,7 +74,7 @@
 					<a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>.</p>
 					<p>Once the GSIs and LSIs are associated with a table they can be validated using <a href="../globals.html#validatetable">validateTable</a>.</p>
 					<p>If you are using TypeScript you can use <a href="index.html#createindex">Index.createIndex</a> to create an Index with strong typing for the primary key.
-					This provides striong types for the <a href="index.html#keyschema">Index.keySchema</a> property, <a href="index.html#queryparams">Index.queryParams</a> and <a href="index.html#scan">Index.scan</a> methods.</p>
+					This provides strong types for the <a href="index.html#keyschema">Index.keySchema</a> property, <a href="index.html#queryparams">Index.queryParams</a> and <a href="index.html#scan">Index.scan</a> methods.</p>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
 						<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Index, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
@@ -178,7 +178,7 @@
 									<h5>params: <a href="../interfaces/index.indexparams.html" class="tsd-signature-type">IndexParams</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>Initalize the Index&#39;s name, keySchema and projection properties.</p>
+											<p>Initialize the Index&#39;s name, keySchema and projection properties.</p>
 										</div>
 									</div>
 								</li>
@@ -241,7 +241,7 @@
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
-										<p>Only relivant when type is &#39;INCLUDE&#39;, list of the attributes to project to the secondary index.</p>
+										<p>Only relevant when type is &#39;INCLUDE&#39;, list of the attributes to project to the secondary index.</p>
 									</div>
 								</div>
 							</li>
@@ -393,7 +393,7 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Used to initalize the Index with the table to support <a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>..</p>
+									<p>Used to initialize the Index with the table to support <a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>..</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -401,7 +401,7 @@
 								<li>
 									<h5>table: <a href="table.html" class="tsd-signature-type">Table</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>table to initalize the index with.</p>
+										<p>table to initialize the index with.</p>
 									</div>
 								</li>
 							</ul>
@@ -444,7 +444,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">QueryOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Primise with the query results, including items fetched</p>
+							<p>Promise with the query results, including items fetched</p>
 						</li>
 					</ul>
 				</section>
@@ -515,7 +515,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ScanOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Primise with the scan results, including items fetched</p>
+							<p>Promise with the scan results, including items fetched</p>
 						</li>
 					</ul>
 				</section>

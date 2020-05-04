@@ -24,7 +24,7 @@ export class ExpressionAttributes {
    * Property function to determine if the name is a reserved word and should use an alias.
    * For a current list of reserved words see dynamodb-reservedwords module in NPM.
    * The reason to set isReservedName and isValidName is to allow the attribute names to be directly
-   * embeded into the expression string, which can make them easier to read.
+   * embedded into the expression string, which can make them easier to read.
    * * @default '() => false;' To use aliases for all attribute names.
    */
   isReservedName: (name: string) => boolean = () => false;
@@ -37,15 +37,15 @@ export class ExpressionAttributes {
    */
   isValidName: (name: string) => boolean = () => false;
   /**
-   * Parse all names into paths by using the pathDelmiter, to make working with nested attributes easy.
-   * @default true Since most all names won't contain pathDelmiter then just do this by default.
+   * Parse all names into paths by using the pathDelimiter, to make working with nested attributes easy.
+   * @default true Since most all names won't contain pathDelimiter then just do this by default.
    */
   treatNameAsPath = true;
   /**
    * Delimiter to use for paths
    * @default '.' Period is used in javascript for nested objects.
    */
-  pathDelmiter = '.';
+  pathDelimiter = '.';
   /**
    * Attribute names mapping, used to populate the ExpressionAttributeNames param.
    */
@@ -59,7 +59,7 @@ export class ExpressionAttributes {
    */
   values: Table.AttributeValuesMap = {};
   /**
-   * Auto incrementing valke id used in values mapping.
+   * Auto incrementing value id used in values mapping.
    */
   nextValue = 0;
 
@@ -76,9 +76,7 @@ export class ExpressionAttributes {
       names[attName] = name;
       return attName;
     } else if (!this.isValidName(name)) {
-      for (const key in names) {
-        if (names[key] === name) return key;
-      }
+      for (const key in names) if (names[key] === name) return key;
       const attName = `#n${this.nextName++}`;
       names[attName] = name;
       return attName;
@@ -89,23 +87,24 @@ export class ExpressionAttributes {
   /**
    * Parse an attribute path and adds the names to the names mapping as needed and hands back an alias to use
    * in an expression.  If the name already exists in the map the existing alias will be used.
-   * @param name Attribute path that can be delimited by a pathDelmiter and contain array notations '[]'.
-   * @returns Alias path to use for the attribute name or the name if not aliasing is needed.
+   * When this.treatNameAsPath is true the name argument will be parsed as a path and will handle arrays
+   * embedded in the path correctly, to allow access to all deep attribute.
+   * @param name Attribute path that can be delimited by a pathDelimiter and contain array notations '[]'.
+   * @returns Alias path to use for the attribute name or the name if not aliasing is needed, delimited by '.'.
    */
   addPath(name: string): string {
-    // split '.' and '[]' then add each and append with '.'
+    // split pathDelimiter/'.' and '[]' then add each and append with '.'
     if (this.treatNameAsPath) {
-      const pathList = name.split(this.pathDelmiter).reduce((prev, curr) => {
+      const pathList = name.split(this.pathDelimiter).reduce((prev, curr) => {
         if (curr.endsWith(']')) {
           const beginBracket = curr.indexOf('[');
           const listName = this.addName(curr.substring(0, beginBracket));
           prev.push(`${listName}${curr.substring(beginBracket)}`);
-        } else {
-          prev.push(this.addName(curr));
-        }
+        } else prev.push(this.addName(curr));
+
         return prev;
       }, new Array<string>());
-      return pathList.join(this.pathDelmiter);
+      return pathList.join('.');
     }
     return this.addName(name);
   }

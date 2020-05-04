@@ -2,7 +2,7 @@ import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 // Note: Using classes to scope static methods, allow use of reserved words (like 'in') as methods and
-// let typedoc produce more consistant documentation (thought it does mean that Condition which acts
+// let typedoc produce more consistent documentation (thought it does mean that Condition which acts
 // more as a namespace or module has all static methods).
 
 /**
@@ -16,11 +16,11 @@ import { Table } from './Table';
  *
  * @example
  * ```typescript
- * import { Condition, ExperssionAttributes } from 'dynamodb-datamodel';
+ * import { Condition, ExpressionAttributes } from 'dynamodb-datamodel';
  * // Destructuring methods from Condition to make writing expression very concise
- * const { eq, ne, and, path, addAndParam } = Condition;
+ * const { eq, ne, and, path } = Condition;
  * const condition = and(eq('first', 'john'), eq('last', 'smith'), ne('first', path('nickname')));
- * const attributes = new ExperssionAttributes();
+ * const attributes = new ExpressionAttributes();
  * const expression = condition(attributes);
  * const params = {
  *   // (#n0 = :v0 AND #n1 = :v1 AND #n0 <> #n2)
@@ -32,17 +32,17 @@ import { Table } from './Table';
  * };
  * ```
  *
- * Short aliases exist for the compare and inList conditions:
- *  - eq = equal
- *  - ne = notEqual
- *  - lt = lessThen
- *  - le = lessThenEqual
- *  - gt = greaterThen
- *  - ge = greaterThenEqual
- *  - in = inList
+ * Short aliases exist for the compare and {@link inList} conditions:
+ *  - {@link eq} = {@link equal}
+ *  - {@link ne} = {@link notEqual}
+ *  - {@link lt} = {@link lessThen}
+ *  - {@link le} = {@link lessThenEqual}
+ *  - {@link gt} = {@link greaterThen}
+ *  - {@link ge} = {@link greaterThenEqual}
+ *  - {@link in} = {@link inList}
  *
  * Note: Condition is a class that contains only static methods to support using javascript reserved words as
- * method names, like 'in'.  Condition is also a namespace to scope the Condition specific typings, like Resolver.
+ * method names, like '{@link in}'.  Condition is also a namespace to scope the Condition specific typings, like Resolver.
  */
 export abstract class Condition {
   /**
@@ -55,7 +55,7 @@ export abstract class Condition {
   }
 
   /**
-   * Add a path to the ExpressionAttributes either directly or by resolving the path.
+   * Add a path to the {@link ExpressionAttributes} either directly or by resolving the path.
    * @param path Value to add or add via resolving.
    * @param exp Object to add path to.
    * @returns Generated name alias to use in condition expression.
@@ -65,7 +65,7 @@ export abstract class Condition {
   }
 
   /**
-   * Add a value to the ExpressionAttributes either directly or by resolving the values.
+   * Add a value to the {@link ExpressionAttributes}  either directly or by resolving the values.
    * @param values Array of values to add or add via resolving.
    * @param exp Object to add path to.
    * @returns Generated value alias to use in condition expression.
@@ -78,7 +78,7 @@ export abstract class Condition {
    * General compare condition used by equal, notEqual, and other comparators.
    * @param left Path to resolve or add.
    * @param op Compare operation to use.
-   * @param right Calue to resolve or add.
+   * @param right Value to resolve or add.
    * @returns Resolver to use when generate condition expression.
    */
   static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value) {
@@ -106,7 +106,7 @@ export abstract class Condition {
   }
 
   /**
-   * Inserts the size of the attribute value to compare the data size to a static value or another attribute velue.
+   * Inserts the size of the attribute value to compare the data size to a static value or another attribute value.
    * Supported Types:
    *   - String: length of string.
    *   - Binary: number of bytes in value.
@@ -409,7 +409,7 @@ export abstract class Condition {
   }
 
   /**
-   * 'NOT' - Not logical evaluations inverts the condition so true is now falue or falue is now true.
+   * 'NOT' - Not logical evaluations inverts the condition so true is now false or false is now true.
    * This condition will be evaluated with an outer '()' to ensure proper order of evaluation.
    * @example
    * ```typescript
@@ -426,8 +426,8 @@ export abstract class Condition {
   }
 
   /**
-   * Expands a list of contions into an 'AND' expression.
-   * This method is different then evaluating the above 'and' method, since it will not surround the condition with '()'.
+   * Expands a list of conditions into an 'AND' expression.
+   * This method is different then evaluating the above '{@link and}' method, since it will not surround the condition with '()'.
    * @param conditions List of conditions to evaluate with AND.
    * @param exp Used when evaluation conditions and store the names and values mappings.
    * @returns The list of conditions expanded as a string with 'AND' between each.
@@ -478,7 +478,7 @@ export namespace Condition {
    */
   export type CompareOperators = '=' | '<>' | '<' | '<=' | '>' | '>=';
   /**
-   * Suported logical based operators for condition expressions.
+   * Supported logical based operators for condition expressions.
    */
   export type LogicalOperators = 'AND' | 'OR' | 'NOT';
   /**
@@ -498,18 +498,18 @@ export namespace Condition {
 
   /**
    * Resolver function is return by most of the above conditions methods.  Returning a function allows conditions
-   * to easily be composible and extensible.  This allows consumers to create higher level conditions that are composed
-   * of the above primative conditions or support any new primatives that AWS would add in the future.
+   * to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
+   * of the above primitive conditions or support any new primitives that AWS would add in the future.
    */
   export type Resolver<T = Table.AttributeTypes> = (exp: ExpressionAttributes, type?: T) => string;
   /**
-   * The value used in the condition methods.  Can either be a primative DynamoDB value or a Resolver function,
-   * which allows for the use of functions like 'size' or reference other attributes.
+   * The value used in the condition methods.  Can either be a primitive DynamoDB value or a Resolver function,
+   * which allows for the use of functions like '{@link size}' or reference other attributes.
    */
   export type Value = Table.AttributeValues | Resolver;
   /**
    * The path or name used in the conditions methods.  Can either be a string or a Resolver function, which allows
-   * for the use of functions like 'size'.
+   * for the use of functions like '{@link size}'.
    */
   export type Path = string | Resolver;
 }

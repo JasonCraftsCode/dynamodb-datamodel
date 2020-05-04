@@ -3,6 +3,9 @@ import { Model } from './Model';
 import { Table } from './Table';
 import { Update } from './Update';
 
+/**
+ *
+ */
 export class Fields {
   static string(alias?: string): Fields.FieldString {
     return new Fields.FieldString('S', alias);
@@ -286,7 +289,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
         }
       }
       if (this._hidden) return;
-      // TODO: dynamodb atttributes can't have empty values like "", empty array, empty sets or null.
+      // TODO: dynamodb attributes can't have empty values like "", empty array, empty sets or null.
       tableData[this._alias || name] = value;
     }
 

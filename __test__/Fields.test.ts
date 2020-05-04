@@ -164,34 +164,34 @@ describe('When FieldBase', () => {
     expect(field._alias).toEqual('alias');
   });
 
-  // toTablw
+  // toTable
   it('toTable with hidden field expect not in table data', async () => {
     const field = Fields.number().hidden();
-    const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: '5' }, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({});
+    const tableData: Table.AttributeValuesMap = {};
+    await field.toTable('test', { test: '5' }, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({});
   });
 
   it('toTable with coerce validator expect coerce value', async () => {
     const field = Fields.number().coerce().yup(yup.number().min(1).max(10));
-    const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: '5' }, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({ test: 5 });
+    const tableData: Table.AttributeValuesMap = {};
+    await field.toTable('test', { test: '5' }, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({ test: 5 });
   });
 
   it('toTable with coerce expect coerce value', async () => {
     const field = Fields.number().coerce();
-    const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: 8 }, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({ test: 8 });
+    const tableData: Table.AttributeValuesMap = {};
+    await field.toTable('test', { test: 8 }, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({ test: 8 });
   });
 
   // toTableUpdate
   it('toTableUpdate with hidden field expect not in table data', async () => {
     const field = Fields.number().hidden();
-    const tabelData: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({});
+    const tableData: Table.AttributeValuesMap = {};
+    await field.toTableUpdate('test', { test: '5' }, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({});
   });
 
   it('toTableUpdate with coerce validator expect coerce value', async () => {
@@ -203,12 +203,12 @@ describe('When FieldBase', () => {
         });
       });
     field.init('test');
-    const tabelData: Update.UpdateMapValue = {};
-    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({ test: 15 });
+    const tableData: Update.UpdateMapValue = {};
+    await field.toTableUpdate('test', { test: '5' }, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({ test: 15 });
   });
 
-  it('toTableUpdate with coerce validator and undefine keep value', async () => {
+  it('toTableUpdate with coerce validator and undefined keep value', async () => {
     const field = Fields.number()
       .coerce()
       .updateValidator(() => {
@@ -217,16 +217,16 @@ describe('When FieldBase', () => {
         });
       });
     field.init('test');
-    const tabelData: Update.UpdateMapValue = {};
-    await field.toTableUpdate('test', { test: '5' }, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({ test: '5' });
+    const tableData: Update.UpdateMapValue = {};
+    await field.toTableUpdate('test', { test: '5' }, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({ test: '5' });
   });
 
   it('toTableUpdate with coerce expect coerce value', async () => {
     const field = Fields.number().coerce();
-    const tabelData: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('test', { test: 9 }, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({ test: 9 });
+    const tableData: Table.AttributeValuesMap = {};
+    await field.toTableUpdate('test', { test: 9 }, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({ test: 9 });
   });
 
   // toTable
@@ -240,18 +240,18 @@ describe('When FieldBase', () => {
 
   it('toTable with default expects default return', async () => {
     const field = Fields.string().default('default');
-    const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', {}, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({ test: 'default' });
+    const tableData: Table.AttributeValuesMap = {};
+    await field.toTable('test', {}, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({ test: 'default' });
   });
 
   it('toTable with default function expects default return', async () => {
     const field = Fields.string().default((name) => {
       return name + '-default';
     });
-    const tabelData: Table.AttributeValuesMap = {};
-    await field.toTable('test', {}, tabelData, {} as Fields.TableContext);
-    expect(tabelData).toEqual({ test: 'test-default' });
+    const tableData: Table.AttributeValuesMap = {};
+    await field.toTable('test', {}, tableData, {} as Fields.TableContext);
+    expect(tableData).toEqual({ test: 'test-default' });
   });
 });
 

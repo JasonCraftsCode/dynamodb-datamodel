@@ -13,7 +13,7 @@ export class Model implements Model.ModelBase {
   constructor(params: Model.ModelParams) {
     this.name = params.name;
     this.schema = params.schema;
-    // TODO: registery model with table to support query and scan data mapping
+    // TODO: register model with table to support query and scan data mapping
     this.table = params.table;
     this.onError = params.table.onError;
     Object.keys(this.schema).forEach((key) => this.schema[key].init(key));
@@ -38,7 +38,7 @@ export class Model implements Model.ModelBase {
   async toTable(data: Model.ModelData, context: Fields.TableContext): Promise<Model.TableData> {
     const tableData: Table.AttributeValuesMap = {};
     // enumerate schema so each field gets called
-    // ... handled by table to* if supported (do we need each field to return array of names proccessed)
+    // ... handled by table to* if supported (do we need each field to return array of names processed)
     const keys = Object.keys(this.schema);
     for (const name of keys) {
       const schema: Fields.Field = this.schema[name];

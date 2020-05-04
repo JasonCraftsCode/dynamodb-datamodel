@@ -2,6 +2,9 @@ import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
+/**
+ *
+ */
 export class UpdateExpression {
   setList: string[] = [];
   removeList: string[] = [];

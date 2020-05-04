@@ -124,7 +124,7 @@ describe('When table', () => {
     );
   });
 
-  it('has more then one partitation key expect throw', () => {
+  it('has more then one partition key expect throw', () => {
     const table = Table.createTable<{
       P: Table.PrimaryKey.PartitionString;
       P1: Table.PrimaryKey.PartitionString;
@@ -307,7 +307,7 @@ describe('When global index', () => {
     expect(() => validateTable(testTable)).not.toThrow();
   });
 
-  it('has validate parition and sort keys expect validateTable succeeds', () => {
+  it('has validate partition and sort keys expect validateTable succeeds', () => {
     const gsi = TestIndex<{
       G0P: Table.PrimaryKey.PartitionString;
       G0S: Table.PrimaryKey.SortString;
@@ -343,7 +343,7 @@ describe('When global index', () => {
     expect(() => validateTable(testTable)).toThrowError(new Error("Key 'Z0P' not in table's keyAttributes"));
   });
 
-  it('has more then one partitation key expect throw', () => {
+  it('has more then one partition key expect throw', () => {
     const gsi = TestIndex<{
       G0P: Table.PrimaryKey.PartitionString;
       G1P: Table.PrimaryKey.PartitionString;
@@ -394,7 +394,7 @@ describe('When local index', () => {
     testTable.localIndexes = [];
   });
 
-  it('has validate parition and sort keys expect validateTable succeeds', () => {
+  it('has validate partition and sort keys expect validateTable succeeds', () => {
     const lsi = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       G0S: Table.PrimaryKey.SortString;
@@ -409,7 +409,7 @@ describe('When local index', () => {
     expect(() => validateTable(testTable)).toThrowError(new Error("GSI0 partition key 'G0P' needs to be 'P'"));
   });
 
-  it('as more then one partitation key expect throw', () => {
+  it('as more then one partition key expect throw', () => {
     const gsi = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       G0P: Table.PrimaryKey.PartitionString;

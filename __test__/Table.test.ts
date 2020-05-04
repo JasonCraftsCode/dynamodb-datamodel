@@ -114,7 +114,7 @@ describe('Validate Simple Table', () => {
     expect(client.scan).toBeCalledTimes(1);
   });
 
-  describe('Whem Model.create*Set', () => {
+  describe('When Model.create*Set', () => {
     it('expect createBinarySet type to be Binary', () => {
       const set = testTable.createBinarySet([Buffer.from('abc'), Buffer.from('xyz')]);
       expect(set.type).toEqual('Binary');

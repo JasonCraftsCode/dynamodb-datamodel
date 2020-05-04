@@ -88,7 +88,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expressionattributes.html#names" class="tsd-kind-icon">names</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expressionattributes.html#nextname" class="tsd-kind-icon">next<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expressionattributes.html#nextvalue" class="tsd-kind-icon">next<wbr>Value</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expressionattributes.html#pathdelmiter" class="tsd-kind-icon">path<wbr>Delmiter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expressionattributes.html#pathdelimiter" class="tsd-kind-icon">path<wbr>Delimiter</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expressionattributes.html#treatnameaspath" class="tsd-kind-icon">treat<wbr>Name<wbr>AsPath</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expressionattributes.html#values" class="tsd-kind-icon">values</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="expressionattributes.html#validattributenameregex" class="tsd-kind-icon">valid<wbr>Attribute<wbr>Name<wbr>Reg<wbr>Ex</a></li>
@@ -154,14 +154,14 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Auto incrementing valke id used in values mapping.</p>
+							<p>Auto incrementing value id used in values mapping.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="pathdelmiter" class="tsd-anchor"></a>
-					<h3>path<wbr>Delmiter</h3>
-					<div class="tsd-signature tsd-kind-icon">path<wbr>Delmiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;.&quot;</span></div>
+					<a name="pathdelimiter" class="tsd-anchor"></a>
+					<h3>path<wbr>Delimiter</h3>
+					<div class="tsd-signature tsd-kind-icon">path<wbr>Delimiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;.&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L48">ExpressionAttributes.ts:48</a></li>
@@ -189,11 +189,11 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Parse all names into paths by using the pathDelmiter, to make working with nested attributes easy.</p>
+							<p>Parse all names into paths by using the pathDelimiter, to make working with nested attributes easy.</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>default</dt>
-							<dd><p>true Since most all names won&#39;t contain pathDelmiter then just do this by default.</p>
+							<dd><p>true Since most all names won&#39;t contain pathDelimiter then just do this by default.</p>
 							</dd>
 						</dl>
 					</div>
@@ -241,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L153">ExpressionAttributes.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L152">ExpressionAttributes.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -295,7 +295,9 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Parse an attribute path and adds the names to the names mapping as needed and hands back an alias to use
-									in an expression.  If the name already exists in the map the existing alias will be used.</p>
+										in an expression.  If the name already exists in the map the existing alias will be used.
+										When this.treatNameAsPath is true the name argument will be parsed as a path and will handle arrays
+									embedded in the path correctly, to allow access to all deep attribute.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -303,12 +305,12 @@
 								<li>
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Attribute path that can be delimited by a pathDelmiter and contain array notations &#39;[]&#39;.</p>
+										<p>Attribute path that can be delimited by a pathDelimiter and contain array notations &#39;[]&#39;.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>Alias path to use for the attribute name or the name if not aliasing is needed.</p>
+							<p>Alias path to use for the attribute name or the name if not aliasing is needed, delimited by &#39;.&#39;.</p>
 						</li>
 					</ul>
 				</section>
@@ -322,7 +324,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L119">ExpressionAttributes.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L118">ExpressionAttributes.ts:118</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -355,7 +357,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L128">ExpressionAttributes.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L127">ExpressionAttributes.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -377,7 +379,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L134">ExpressionAttributes.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L133">ExpressionAttributes.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -407,7 +409,7 @@
 									<p>Property function to determine if the name is a reserved word and should use an alias.
 										For a current list of reserved words see dynamodb-reservedwords module in NPM.
 										The reason to set isReservedName and isValidName is to allow the attribute names to be directly
-									embeded into the expression string, which can make them easier to read.</p>
+									embedded into the expression string, which can make them easier to read.</p>
 									<ul>
 										<li>@default &#39;() =&gt; false;&#39; To use aliases for all attribute names.</li>
 									</ul>
@@ -452,7 +454,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L141">ExpressionAttributes.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L140">ExpressionAttributes.ts:140</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -526,7 +528,7 @@
 								<a href="expressionattributes.html#nextvalue" class="tsd-kind-icon">next<wbr>Value</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="expressionattributes.html#pathdelmiter" class="tsd-kind-icon">path<wbr>Delmiter</a>
+								<a href="expressionattributes.html#pathdelimiter" class="tsd-kind-icon">path<wbr>Delimiter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="expressionattributes.html#treatnameaspath" class="tsd-kind-icon">treat<wbr>Name<wbr>AsPath</a>

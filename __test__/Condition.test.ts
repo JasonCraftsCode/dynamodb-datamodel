@@ -301,7 +301,7 @@ describe('Validate Condition', () => {
     });
   });
 
-  it('addAndaddAndFilterParamParam with two conditions', () => {
+  it('addAndFilterParam with two conditions', () => {
     const conds = [Condition.eq('path1', 'value1'), Condition.gt('path2', 'value2')];
     expect(Condition.addAndFilterParam(conds, new ExpressionAttributes(), {})).toEqual({
       FilterExpression: '#n0 = :v0 AND #n1 > :v1',

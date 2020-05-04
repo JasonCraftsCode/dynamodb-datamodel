@@ -74,11 +74,11 @@
 					for details on how each of the below comparison operations and functions work.</p>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
-						<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Condition, ExperssionAttributes } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+						<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Condition, ExpressionAttributes } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 <span class="hljs-comment">// Destructuring methods from Condition to make writing expression very concise</span>
-<span class="hljs-keyword">const</span> { eq, ne, and, path, addAndParam } = Condition;
+<span class="hljs-keyword">const</span> { eq, ne, and, path } = Condition;
 <span class="hljs-keyword">const</span> condition = and(eq(<span class="hljs-string">'first'</span>, <span class="hljs-string">'john'</span>), eq(<span class="hljs-string">'last'</span>, <span class="hljs-string">'smith'</span>), ne(<span class="hljs-string">'first'</span>, path(<span class="hljs-string">'nickname'</span>)));
-<span class="hljs-keyword">const</span> attributes = <span class="hljs-keyword">new</span> ExperssionAttributes();
+<span class="hljs-keyword">const</span> attributes = <span class="hljs-keyword">new</span> ExpressionAttributes();
 <span class="hljs-keyword">const</span> expression = condition(attributes);
 <span class="hljs-keyword">const</span> params = {
   <span class="hljs-comment">// (#n0 = :v0 AND #n1 = :v1 AND #n0 &lt;&gt; #n2)</span>
@@ -88,18 +88,18 @@
   <span class="hljs-comment">// { ':v0': john, ':v1': smith }</span>
   ExpressionAttributeValues: attributes.getValues(),
 };</code></pre>
-							<p>Short aliases exist for the compare and inList conditions:</p>
+							<p>Short aliases exist for the compare and <a href="condition.html#inlist">inList</a> conditions:</p>
 							<ul>
-								<li>eq = equal</li>
-								<li>ne = notEqual</li>
-								<li>lt = lessThen</li>
-								<li>le = lessThenEqual</li>
-								<li>gt = greaterThen</li>
-								<li>ge = greaterThenEqual</li>
-								<li>in = inList</li>
+								<li><a href="condition.html#eq">eq</a> = <a href="condition.html#equal">equal</a></li>
+								<li><a href="condition.html#ne">ne</a> = <a href="condition.html#notequal">notEqual</a></li>
+								<li><a href="condition.html#lt">lt</a> = <a href="condition.html#lessthen">lessThen</a></li>
+								<li><a href="condition.html#le">le</a> = <a href="condition.html#lessthenequal">lessThenEqual</a></li>
+								<li><a href="condition.html#gt">gt</a> = <a href="condition.html#greaterthen">greaterThen</a></li>
+								<li><a href="condition.html#ge">ge</a> = <a href="condition.html#greaterthenequal">greaterThenEqual</a></li>
+								<li><a href="condition.html#in">in</a> = <a href="condition.html#inlist">inList</a></li>
 							</ul>
 							<p>Note: Condition is a class that contains only static methods to support using javascript reserved words as
-							method names, like &#39;in&#39;.  Condition is also a namespace to scope the Condition specific typings, like Resolver.</p>
+							method names, like &#39;<a href="condition.html#in">in</a>&#39;.  Condition is also a namespace to scope the Condition specific typings, like Resolver.</p>
 						</dd>
 					</dl>
 				</div>
@@ -200,7 +200,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Suported logical based operators for condition expressions.</p>
+							<p>Supported logical based operators for condition expressions.</p>
 						</div>
 					</div>
 				</section>
@@ -231,7 +231,7 @@
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The path or name used in the conditions methods.  Can either be a string or a Resolver function, which allows
-							for the use of functions like &#39;size&#39;.</p>
+							for the use of functions like &#39;<a href="condition.html#size">size</a>&#39;.</p>
 						</div>
 					</div>
 				</section>
@@ -247,8 +247,8 @@
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Resolver function is return by most of the above conditions methods.  Returning a function allows conditions
-								to easily be composible and extensible.  This allows consumers to create higher level conditions that are composed
-							of the above primative conditions or support any new primatives that AWS would add in the future.</p>
+								to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
+							of the above primitive conditions or support any new primitives that AWS would add in the future.</p>
 						</div>
 					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -293,8 +293,8 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The value used in the condition methods.  Can either be a primative DynamoDB value or a Resolver function,
-							which allows for the use of functions like &#39;size&#39; or reference other attributes.</p>
+							<p>The value used in the condition methods.  Can either be a primitive DynamoDB value or a Resolver function,
+							which allows for the use of functions like &#39;<a href="condition.html#size">size</a>&#39; or reference other attributes.</p>
 						</div>
 					</div>
 				</section>
@@ -532,7 +532,7 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Add a path to the ExpressionAttributes either directly or by resolving the path.</p>
+									<p>Add a path to the <a href="expressionattributes.html">ExpressionAttributes</a> either directly or by resolving the path.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -570,7 +570,7 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Add a value to the ExpressionAttributes either directly or by resolving the values.</p>
+									<p>Add a value to the <a href="expressionattributes.html">ExpressionAttributes</a>  either directly or by resolving the values.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -764,7 +764,7 @@
 								<li>
 									<h5>right: <a href="condition.html#value" class="tsd-signature-type">Value</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Calue to resolve or add.</p>
+										<p>Value to resolve or add.</p>
 									</div>
 								</li>
 							</ul>
@@ -1167,7 +1167,7 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;NOT&#39; - Not logical evaluations inverts the condition so true is now falue or falue is now true.
+									<p>&#39;NOT&#39; - Not logical evaluations inverts the condition so true is now false or false is now true.
 									This condition will be evaluated with an outer &#39;()&#39; to ensure proper order of evaluation.</p>
 								</div>
 								<dl class="tsd-comment-tags">
@@ -1365,8 +1365,8 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Expands a list of contions into an &#39;AND&#39; expression.
-									This method is different then evaluating the above &#39;and&#39; method, since it will not surround the condition with &#39;()&#39;.</p>
+									<p>Expands a list of conditions into an &#39;AND&#39; expression.
+									This method is different then evaluating the above &#39;<a href="condition.html#and">and</a>&#39; method, since it will not surround the condition with &#39;()&#39;.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1404,7 +1404,7 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Inserts the size of the attribute value to compare the data size to a static value or another attribute velue.
+									<p>Inserts the size of the attribute value to compare the data size to a static value or another attribute value.
 									Supported Types:</p>
 									<ul>
 										<li>String: length of string.</li>
