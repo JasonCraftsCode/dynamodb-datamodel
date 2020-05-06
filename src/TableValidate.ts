@@ -7,13 +7,29 @@ import { Table, Index } from './Table';
 // - Table and Index name (regex)
 // - Attribute names (regex)
 
+/**
+ * Attribute names of the primary key for tables and indexes.
+ */
 export interface KeyName {
+  /**
+   * Partition key name.
+   */
   pk?: string;
+
+  /**
+   * Sort key name.
+   */
   sk?: string;
 }
 
+/**
+ * Validate the key attributes for a Table.
+ * @param keyAttributes Key attributes of the Table.
+ * @param name Name of Table.
+ * @param onError Method to call when there is a validation error.
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function validateKeyAttribute<ATTRIBUTES extends { [index: string]: any }>(
+export function validateKeyAttributes<ATTRIBUTES extends { [index: string]: any }>(
   keyAttributes: Table.PrimaryKey.AttributeTypesMapT<ATTRIBUTES>,
   name: string,
   onError: (msg: string) => void,
@@ -26,6 +42,13 @@ export function validateKeyAttribute<ATTRIBUTES extends { [index: string]: any }
   });
 }
 
+/**
+ * Validate the key schema for a Table.
+ * @param keySchema Key schema of the Table.
+ * @param keyAttributes Key attributes of the Table.
+ * @param name Name of the Table.
+ * @param onError Method to call when there is a validation error.
+ */
 export function validateKeySchema<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   KEY extends { [index: string]: any },
@@ -58,6 +81,12 @@ export function validateKeySchema<
   return { pk, sk };
 }
 
+/**
+ * Validates an index for a Table.
+ * @param index An index for a Table.
+ * @param names Name of the Table.
+ * @param onError Method to call when there is a validation error.
+ */
 export function validateIndexes(index: Index, names: Set<string>, onError: (msg: string) => void): void {
   if (!index.name) onError(`Global index must have a name`);
   if (names.has(index.name)) onError(`Duplicate index name '${index.name}'`);
@@ -74,9 +103,14 @@ export function validateIndexes(index: Index, names: Set<string>, onError: (msg:
   }
 }
 
+/**
+ * Validates that a table is configured correctly.  The Table's onError methods is called for any validation errors.
+ * This method should primarily be used in tests to validate the table.
+ * @param table Table to be validated.
+ */
 export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>): void {
   if (!table.name) table.onError(`Table must have a name`);
-  validateKeyAttribute(table.keyAttributes, table.name, table.onError);
+  validateKeyAttributes(table.keyAttributes, table.name, table.onError);
   const { pk, sk } = validateKeySchema(table.keySchema, table.keyAttributes, table.name, table.onError);
   const names = new Set<string>();
   table.globalIndexes.forEach((index) => {

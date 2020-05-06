@@ -382,38 +382,26 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     eq(v: V): Condition.Resolver<T> {
       return Condition.eq(this.tableName(), v);
     }
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    equal = this.eq;
 
     ne(v: V): Condition.Resolver<T> {
       return Condition.ne(this.tableName(), v);
     }
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    notEqual = this.ne;
 
     lt(v: V): Condition.Resolver<T> {
       return Condition.lt(this.tableName(), v);
     }
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    lessThen = this.lt;
 
     le(v: V): Condition.Resolver<T> {
       return Condition.le(this.tableName(), v);
     }
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    lessThenEqual = this.le;
 
     gt(v: V): Condition.Resolver<T> {
       return Condition.gt(this.tableName(), v);
     }
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    greaterThen = this.gt;
 
     ge(v: V): Condition.Resolver<T> {
       return Condition.ge(this.tableName(), v);
     }
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    greaterThenEqual = this.ge;
 
     between(from: V, to: V): Condition.Resolver<T> {
       return Condition.between(this.tableName(), from, to);

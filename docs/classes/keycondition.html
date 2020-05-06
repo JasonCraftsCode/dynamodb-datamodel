@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>KeyCondition | dynamodb-datamodel - v0.1.4</title>
+	<title>KeyCondition | dynamodb-datamodel - v0.1.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.4</a>
+					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -62,6 +62,49 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Set of helper methods to build KeyConditionExpressions used in DynamoDB query and scan operations.
+							All of the condition based methods return a <a href="keycondition.html#resolver">KeyCondition.Resolver</a> function in the form of
+							&#39;( name: string, exp: KeyConditionExpression, type?: T,): string&#39; this allow key conditions to be
+						composed together and even extended in a very simple way.</p>
+					</div>
+					<p>See <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.KeyConditionExpressions" class="external">Key Condition Expression</a>
+					for details on how each of the below key comparison operations and functions work.</p>
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { KeyCondition, KeyConditionExpression } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-comment">// [TypeScript] Define table primary key type</span>
+<span class="hljs-keyword">interface</span> Key {
+  P: Table.PrimaryKey.PartitionString;
+  S?: Table.PrimaryKey.SortString;
+}
+
+<span class="hljs-comment">// Create table object.  Use 'new Table()' if your not using TypeScript.</span>
+<span class="hljs-keyword">const</span> table = Table.createTable&lt;Key&gt;({
+  name: <span class="hljs-string">'TestTable'</span>,
+  keyAttributes: {
+    P: Table.PrimaryKey.StringType,
+    S: Table.PrimaryKey.StringType,
+  },
+  keySchema: {
+    P: Table.PrimaryKey.PartitionKeyType,
+    S: Table.PrimaryKey.SortKeyType,
+  },
+});
+
+<span class="hljs-comment">// Use KeyCondition to query the table with primary key of 'P-GUID' and sort key between (and including) 'a' and 'z'</span>
+<span class="hljs-keyword">const</span> key = {
+  P:<span class="hljs-string">'P-GUID'</span>,
+  S: KeyCondition.between(<span class="hljs-string">'a'</span>, <span class="hljs-string">'z'</span>)
+};
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -79,20 +122,11 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#attributeresolver" class="tsd-kind-icon">Attribute<wbr>Resolver</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#binaryresolver" class="tsd-kind-icon">Binary<wbr>Resolver</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#comparisonoperators" class="tsd-kind-icon">Comparison<wbr>Operators</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#compareoperators" class="tsd-kind-icon">Compare<wbr>Operators</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#numberresolver" class="tsd-kind-icon">Number<wbr>Resolver</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#operators" class="tsd-kind-icon">Operators</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#resolver" class="tsd-kind-icon">Resolver</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#stringresolver" class="tsd-kind-icon">String<wbr>Resolver</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#equal" class="tsd-kind-icon">equal</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#greaterthen" class="tsd-kind-icon">greater<wbr>Then</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#greaterthenequal" class="tsd-kind-icon">greater<wbr>Then<wbr>Equal</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#lessthen" class="tsd-kind-icon">less<wbr>Then</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#lessthenequal" class="tsd-kind-icon">less<wbr>Then<wbr>Equal</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -102,12 +136,12 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#beginswith" class="tsd-kind-icon">begins<wbr>With</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#between" class="tsd-kind-icon">between</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#buildexpression" class="tsd-kind-icon">build<wbr>Expression</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#compare" class="tsd-kind-icon">compare</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#eq" class="tsd-kind-icon">eq</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#ge" class="tsd-kind-icon">ge</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#gt" class="tsd-kind-icon">gt</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#le" class="tsd-kind-icon">le</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#lt" class="tsd-kind-icon">lt</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#op" class="tsd-kind-icon">op</a></li>
 							</ul>
 						</section>
 					</div>
@@ -121,9 +155,14 @@
 					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#stringresolver" class="tsd-signature-type">StringResolver</a><span class="tsd-signature-symbol"> | </span><a href="keycondition.html#numberresolver" class="tsd-signature-type">NumberResolver</a><span class="tsd-signature-symbol"> | </span><a href="keycondition.html#binaryresolver" class="tsd-signature-type">BinaryResolver</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L139">KeyCondition.ts:139</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L383">KeyCondition.ts:383</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Support key condition resolvers.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="binaryresolver" class="tsd-anchor"></a>
@@ -131,19 +170,29 @@
 					<div class="tsd-signature tsd-kind-icon">Binary<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"B"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L138">KeyCondition.ts:138</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L378">KeyCondition.ts:378</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Binary key condition resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="comparisonoperators" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Comparison<wbr>Operators</h3>
-					<div class="tsd-signature tsd-kind-icon">Comparison<wbr>Operators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BETWEEN"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"begins_with"</span></div>
+					<a name="compareoperators" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Compare<wbr>Operators</h3>
+					<div class="tsd-signature tsd-kind-icon">Compare<wbr>Operators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;&#x3D;"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L141">KeyCondition.ts:141</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L344">KeyCondition.ts:344</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Supported compare based operators for conditions expressions.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="numberresolver" class="tsd-anchor"></a>
@@ -151,9 +200,29 @@
 					<div class="tsd-signature tsd-kind-icon">Number<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L137">KeyCondition.ts:137</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L373">KeyCondition.ts:373</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Number key condition resolver.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+					<a name="operators" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Operators</h3>
+					<div class="tsd-signature tsd-kind-icon">Operators<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#compareoperators" class="tsd-signature-type">CompareOperators</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BETWEEN"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"begins_with"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L349">KeyCondition.ts:349</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Support operators and functions for condition expressions.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 					<a name="resolver" class="tsd-anchor"></a>
@@ -161,9 +230,27 @@
 					<div class="tsd-signature tsd-kind-icon">Resolver&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L130">KeyCondition.ts:130</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L359">KeyCondition.ts:359</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Resolver function is return by most of the above key conditions methods.  Returning a function allows key conditions
+								to easily be composable and extensible.  This allows consumers to create higher level key conditions that are composed
+							of the above primitive key conditions or support any new primitives that AWS would add in the future.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>Name of the primary key attribute to resolve.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>Object to get path and value aliases and store conditions array.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>Param to enforce type safety for conditions that only work on certain types.</p>
+							</dd>
+						</dl>
+					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
@@ -204,62 +291,14 @@
 					<div class="tsd-signature tsd-kind-icon">String<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"S"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L136">KeyCondition.ts:136</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L368">KeyCondition.ts:368</a></li>
 						</ul>
 					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="equal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> equal</h3>
-					<div class="tsd-signature tsd-kind-icon">equal<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#eq" class="tsd-signature-type">eq</a><span class="tsd-signature-symbol"> = KeyCondition.eq</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L61">KeyCondition.ts:61</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="greaterthen" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> greater<wbr>Then</h3>
-					<div class="tsd-signature tsd-kind-icon">greater<wbr>Then<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#gt" class="tsd-signature-type">gt</a><span class="tsd-signature-symbol"> = KeyCondition.gt</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L79">KeyCondition.ts:79</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="greaterthenequal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> greater<wbr>Then<wbr>Equal</h3>
-					<div class="tsd-signature tsd-kind-icon">greater<wbr>Then<wbr>Equal<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#ge" class="tsd-signature-type">ge</a><span class="tsd-signature-symbol"> = KeyCondition.ge</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L85">KeyCondition.ts:85</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="lessthen" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> less<wbr>Then</h3>
-					<div class="tsd-signature tsd-kind-icon">less<wbr>Then<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#lt" class="tsd-signature-type">lt</a><span class="tsd-signature-symbol"> = KeyCondition.lt</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L67">KeyCondition.ts:67</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="lessthenequal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> less<wbr>Then<wbr>Equal</h3>
-					<div class="tsd-signature tsd-kind-icon">less<wbr>Then<wbr>Equal<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#le" class="tsd-signature-type">le</a><span class="tsd-signature-symbol"> = KeyCondition.le</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L73">KeyCondition.ts:73</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>String key condition resolver.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -274,19 +313,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L114">KeyCondition.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L325">KeyCondition.ts:325</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Helper function to set a &#39;KeyConditionExpression&#39; value on the params argument if there are conditions to resolve.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>List of conditions to evaluate with AND.</p>
+									</div>
 								</li>
 								<li>
 									<h5>exp: <a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Used when evaluation conditions and store the names and values mappings.</p>
+									</div>
 								</li>
 								<li>
 									<h5>params: <span class="tsd-signature-symbol">{ </span>KeyConditionExpression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Params used for DocumentClient query methods.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> Key<wbr>Condition<wbr>Expression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
@@ -295,6 +348,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>KeyConditionExpression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h4>
+							<p>The params argument passed in.</p>
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter">
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> Key<wbr>Condition<wbr>Expression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
@@ -313,16 +367,36 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L91">KeyCondition.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L295">KeyCondition.ts:295</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;begins_with&#39; - Begins with function checks to see if the sort key begins with a string value.
+									Supported Types: String</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND begins_with(#n1, :v1)'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'guid'</span>,
+  S: KeyCondition.beginsWith(<span class="hljs-string">'a'</span>, <span class="hljs-string">'z'</span>)
+}
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>String to check if the sort key value begins with.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
 				</section>
@@ -330,15 +404,30 @@
 					<a name="between" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> between</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">between&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, and<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">between&lt;T&gt;<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L87">KeyCondition.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L274">KeyCondition.ts:274</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;BETWEEN&#39; - Between key condition compares if the sort key value is between two values.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 BETWEEN :v1 AND :v2'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'guid'</span>,
+  S: KeyCondition.between(<span class="hljs-string">'a'</span>, <span class="hljs-string">'z'</span>)
+}
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -348,13 +437,20 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<h5>from: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check if sort key is greater then and equal to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>and: <span class="tsd-signature-type">T</span></h5>
+									<h5>to: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check if sort key  is less then and equal to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
 				</section>
@@ -368,19 +464,84 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L102">KeyCondition.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L306">KeyCondition.ts:306</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a key condition expression from a primary key.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Primary key value to build the expression from.</p>
+									</div>
 								</li>
 								<li>
 									<h5>exp: <a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object used to get path and value aliases and store the key conditions array.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="compare" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> compare</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">compare&lt;T&gt;<span class="tsd-signature-symbol">(</span>op<span class="tsd-signature-symbol">: </span><a href="keycondition.html#compareoperators" class="tsd-signature-type">CompareOperators</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L163">KeyCondition.ts:163</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>General compare key condition used by eq, lt, le, gt, and ge.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &gt;= :v1'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'guid'</span>,
+  S: KeyCondition.compare(<span class="hljs-string">'&gt;='</span>, <span class="hljs-string">'value'</span>)
+}
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>op: <a href="keycondition.html#compareoperators" class="tsd-signature-type">CompareOperators</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Compare operation to use: =, &lt;, &lt;=. &gt; or &gt;=.</p>
+									</div>
+								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to compare the sort key value against.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
 				</section>
@@ -394,9 +555,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L57">KeyCondition.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L183">KeyCondition.ts:183</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;=&#39; - Equal condition compares if the sort key value is equal to a value.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 = :v1'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'guid'</span>,
+  S: KeyCondition.eq(<span class="hljs-string">'value'</span>)
+}
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -407,9 +583,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check if equal to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
 				</section>
@@ -423,9 +603,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L81">KeyCondition.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L255">KeyCondition.ts:255</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;&gt;=&#39; - Greater then or equal to condition compares if the sort key value is greater then or equal to a value.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &gt;= :v1'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'guid'</span>,
+  S: KeyCondition.ge(<span class="hljs-string">'value'</span>)
+}
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -436,9 +631,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check if greater then or equal to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
 				</section>
@@ -452,9 +651,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L75">KeyCondition.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L237">KeyCondition.ts:237</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;&gt;&#39; - Greater then condition compares if the sort key value is greater then a value.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &gt; :v1'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'guid'</span>,
+  S: KeyCondition.gt(<span class="hljs-string">'value'</span>)
+}
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -465,9 +679,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check if greater then.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
 				</section>
@@ -481,9 +699,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L69">KeyCondition.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L219">KeyCondition.ts:219</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;&lt;=&#39; - Less then or equal to condition compares if the sort key value is less then or equal to a value.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &lt;= :v1'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'guid'</span>,
+  S: KeyCondition.le(<span class="hljs-string">'value'</span>)
+}
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -494,9 +727,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check if less then or equal to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
 				</section>
@@ -510,9 +747,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L63">KeyCondition.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L201">KeyCondition.ts:201</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;&lt;&#39; - Less then condition compares if the sort key value is less then a value.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &lt; :v1'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'guid'</span>,
+  S: KeyCondition.lt(<span class="hljs-string">'value'</span>)
+}
+<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -523,44 +775,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check if less then.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="op" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> op</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">op&lt;T&gt;<span class="tsd-signature-symbol">(</span>op<span class="tsd-signature-symbol">: </span><a href="keycondition.html#comparisonoperators" class="tsd-signature-type">ComparisonOperators</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, and<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L95">KeyCondition.ts:95</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>op: <a href="keycondition.html#comparisonoperators" class="tsd-signature-type">ComparisonOperators</a></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">T</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> and: <a href="" class="tsd-signature-type">T</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
 				</section>
@@ -603,31 +824,19 @@
 								<a href="keycondition.html#binaryresolver" class="tsd-kind-icon">Binary<wbr>Resolver</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#comparisonoperators" class="tsd-kind-icon">Comparison<wbr>Operators</a>
+								<a href="keycondition.html#compareoperators" class="tsd-kind-icon">Compare<wbr>Operators</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 								<a href="keycondition.html#numberresolver" class="tsd-kind-icon">Number<wbr>Resolver</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="keycondition.html#operators" class="tsd-kind-icon">Operators</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="keycondition.html#resolver" class="tsd-kind-icon">Resolver</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 								<a href="keycondition.html#stringresolver" class="tsd-kind-icon">String<wbr>Resolver</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#equal" class="tsd-kind-icon">equal</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#greaterthen" class="tsd-kind-icon">greater<wbr>Then</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#greaterthenequal" class="tsd-kind-icon">greater<wbr>Then<wbr>Equal</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#lessthen" class="tsd-kind-icon">less<wbr>Then</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#lessthenequal" class="tsd-kind-icon">less<wbr>Then<wbr>Equal</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="keycondition.html#addparam" class="tsd-kind-icon">add<wbr>Param</a>
@@ -640,6 +849,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="keycondition.html#buildexpression" class="tsd-kind-icon">build<wbr>Expression</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="keycondition.html#compare" class="tsd-kind-icon">compare</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="keycondition.html#eq" class="tsd-kind-icon">eq</a>
@@ -655,9 +867,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="keycondition.html#lt" class="tsd-kind-icon">lt</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#op" class="tsd-kind-icon">op</a>
 							</li>
 						</ul>
 					</li>

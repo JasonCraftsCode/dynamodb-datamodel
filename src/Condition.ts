@@ -41,8 +41,8 @@ export class ConditionExpression {
 /**
  * Set of helper methods to build ConditionExpressions used in DynamoDB delete, put and update operations, and
  * FilterExpression used in DynamoDB query and scan operations.  All of the condition based methods return a
- * function in the form of '(exp: ConditionExpression): string' this allow conditions to be composed together
- * and even extended in a very simple way.
+ * {@link Condition.Resolver}  function in the form of '(exp: ConditionExpression): string' this allow conditions
+ * to be composed together and even extended in a very simple way.
  *
  *
  * See [Comparison Operator and Function Reference](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.OperatorsAndFunctions.html)
@@ -68,17 +68,6 @@ export class ConditionExpression {
  *   ExpressionAttributeValues: exp.attributes.getValues(),
  * };
  * ```
- *
- *
- * Short aliases exist for the compare and {@link inList} conditions:
- *  - {@link eq} = {@link equal}
- *  - {@link ne} = {@link notEqual}
- *  - {@link lt} = {@link lessThen}
- *  - {@link le} = {@link lessThenEqual}
- *  - {@link gt} = {@link greaterThen}
- *  - {@link ge} = {@link greaterThenEqual}
- *  - {@link in} = {@link inList}
- *
  *
  * Note: Condition is a class that contains only static methods to support using javascript reserved words as
  * method names, like '{@link in}'.  Condition is also a namespace to scope the Condition specific typings, like Resolver.
@@ -111,21 +100,6 @@ export abstract class Condition {
    */
   static addValues(values: Condition.Value[], exp: ConditionExpression): string[] {
     return values.map((value) => (Condition.isResolver(value) ? value(exp) : exp.addValue(value)));
-  }
-
-  /**
-   * General compare condition used by equal, notEqual, and other comparators.
-   * @param left Path to resolve or add.
-   * @param op Compare operation to use.
-   * @param right Value to resolve or add.
-   * @returns Resolver to use when generate condition expression.
-   */
-  static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value) {
-    return (exp: ConditionExpression): string => {
-      const path = Condition.addPath(left, exp);
-      const value = Condition.addValues([right], exp);
-      return `${path} ${op} ${value}`;
-    };
   }
 
   /**
@@ -167,124 +141,109 @@ export abstract class Condition {
   }
 
   /**
-   * '=' - Equal condition to compare if an attribute value is equal to a value or another attribute.
+   * General compare condition used by eq, ne, lt, le, gt, and ge.
+   * @param left Path to resolve or add.
+   * @param op Compare operation to use.
+   * @param right Value to resolve or add.
+   * @returns Resolver to use when generate condition expression.
+   */
+  static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value) {
+    return (exp: ConditionExpression): string => {
+      const path = Condition.addPath(left, exp);
+      const value = Condition.addValues([right], exp);
+      return `${path} ${op} ${value}`;
+    };
+  }
+
+  /**
+   * '=' - Equal condition compares if an attribute value is equal to a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 = :v0'
-   * const condition = Condition.equal('name', 'value');
+   * const condition = Condition.eq('name', 'value');
    * ```
    * @param left Path to attribute or size of attribute to compare.
    * @param right Value (or path to attribute) to check if equal to.
    * @returns Resolver to use when generate condition expression.
    */
-  static equal(left: Condition.Path, right: Condition.Value): Condition.Resolver {
+  static eq(left: Condition.Path, right: Condition.Value): Condition.Resolver {
     return Condition.compare(left, '=', right);
   }
-  /**
-   * See {@link Condition.equal}
-   */
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  static eq = Condition.equal;
 
   /**
-   * '<>' - Not equal condition to compare if an attribute value is not equal to a value or another attribute.
+   * '<>' - Not equal condition compares if an attribute value is not equal to a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 <> :v0'
-   * const condition = Condition.notEqual('name', 'value');
+   * const condition = Condition.ne('name', 'value');
    * ```
    * @param left Path to attribute or size of attribute to compare.
    * @param right Value (or path to attribute) to check if not equal to.
    * @returns Resolver to use when generate condition expression.
    */
-  static notEqual(left: Condition.Path, right: Condition.Value): Condition.Resolver {
+  static ne(left: Condition.Path, right: Condition.Value): Condition.Resolver {
     return Condition.compare(left, '<>', right);
   }
-  /**
-   * See {@link Condition.notEqual}
-   */
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  static ne = Condition.notEqual;
 
   /**
-   * '<' - Less then condition to compare if an attribute value is less then to a value or another attribute.
+   * '<' - Less then condition compares if an attribute value is less then a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 < :v0'
-   * const condition = Condition.lessThen('name', 'value');
+   * const condition = Condition.lt('name', 'value');
    * ```
    * @param left Path to attribute or size of attribute to compare.
    * @param right Value (or path to attribute) to check if less then.
    * @returns Resolver to use when generate condition expression.
    */
-  static lessThen(left: Condition.Path, right: Condition.Value): Condition.Resolver {
+  static lt(left: Condition.Path, right: Condition.Value): Condition.Resolver {
     return Condition.compare(left, '<', right);
   }
-  /**
-   * See {@link Condition.lessThen}
-   */
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  static lt = Condition.lessThen;
 
   /**
-   * '<=' - Less then and equal condition to compare if an attribute value is less then and equal to a value or another attribute.
+   * '<=' - Less then or equal to condition compares if an attribute value is less then or equal to a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 <= :v0'
-   * const condition = Condition.lessThenEqual('name', 'value');
+   * const condition = Condition.le('name', 'value');
    * ```
    * @param left Path to attribute or size of attribute to compare.
-   * @param right Value (or path to attribute) to check if less then and equal to.
+   * @param right Value (or path to attribute) to check if less then or equal to.
    * @returns Resolver to use when generate condition expression.
    */
-  static lessThenEqual(left: Condition.Path, right: Condition.Value): Condition.Resolver {
+  static le(left: Condition.Path, right: Condition.Value): Condition.Resolver {
     return Condition.compare(left, '<=', right);
   }
-  /**
-   * See {@link Condition.lessThenEqual}
-   */
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  static le = Condition.lessThenEqual;
 
   /**
-   * '>' - Greater then condition to compare if an attribute value is greater then a value or another attribute.
+   * '>' - Greater then condition compares if an attribute value is greater then a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 > :v0'
-   * const condition = Condition.greaterThen('name', 'value');
+   * const condition = Condition.gt('name', 'value');
    * ```
    * @param left Path to attribute or size of attribute to compare.
    * @param right Value (or path to attribute) to check if greater then.
    * @returns Resolver to use when generate condition expression.
    */
-  static greaterThen(left: Condition.Path, right: Condition.Value): Condition.Resolver {
+  static gt(left: Condition.Path, right: Condition.Value): Condition.Resolver {
     return Condition.compare(left, '>', right);
   }
-  /**
-   * See {@link Condition.greaterThen}
-   */
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  static gt = Condition.greaterThen;
 
   /**
-   * '>=' - Greater then and equal to condition to compare if an attribute value is greater then and equal to a value or another attribute.
+   * '>=' - Greater then or equal to condition compare sif an attribute value is greater then or equal to a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 >= :v0'
-   * const condition = Condition.greaterThenEqual('name', 'value');
+   * const condition = Condition.ge('name', 'value');
    * ```
    * @param left Path to attribute or size of attribute to compare.
-   * @param right Value (or path to attribute) to check if greater then and equal to.
+   * @param right Value (or path to attribute) to check if greater then or equal to.
    * @returns Resolver to use when generate condition expression.
    */
-  static greaterThenEqual(left: Condition.Path, right: Condition.Value): Condition.Resolver {
+  static ge(left: Condition.Path, right: Condition.Value): Condition.Resolver {
     return Condition.compare(left, '>=', right);
   }
-  /**
-   * See {@link Condition.greaterThenEqual}
-   */
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  static ge = Condition.greaterThenEqual;
 
   /**
    * 'BETWEEN' - Between condition compares if an attribute value is between two values or other attributes.
@@ -307,29 +266,24 @@ export abstract class Condition {
   }
 
   /**
-   * 'IN' - In condition compares the value of an attribute is equal to any of the list values or other attributes
+   * 'IN' - In condition compares the value of an attribute is equal to any of the list values or other attributes.
    * @example
    * ```typescript
    * // Expands to: '#n0 IN (:v0, :v1, :v2)'
-   * const condition = Condition.inList('name', [1, 2, 3]);
+   * const condition = Condition.in('name', [1, 2, 3]);
    * ```
    * @param path Path to attribute to get the value from.
    * @param values List of the values to check if equal to path attribute value.
    * @returns Resolver to use when generate condition expression.
    */
-  static inList(path: string, values: Condition.Value[]): Condition.Resolver {
+  static in(path: string, values: Condition.Value[]): Condition.Resolver {
     return (exp: ConditionExpression): string => {
       return `${exp.addPath(path)} IN (${Condition.addValues(values, exp).join(', ')})`;
     };
   }
-  /**
-   * See {@link Condition.inList}
-   */
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  static in = Condition.inList;
 
   /**
-   * 'contains' Contains function checks if the attribute string or set contains the string value
+   * 'contains' Contains function checks if the attribute string or set contains the string value.
    * @example
    * ```typescript
    * // Expands to: 'contains(#n0, :v0)'
@@ -347,7 +301,7 @@ export abstract class Condition {
   }
 
   /**
-   * 'begins_with' - Begins with function checks to see if a string attribute begins with a string value
+   * 'begins_with' - Begins with function checks to see if a string attribute begins with a string value.
    * Supported Types: String
    * @example
    * ```typescript
@@ -382,7 +336,7 @@ export abstract class Condition {
   }
 
   /**
-   * 'attribute_exists' - Attribute exists function check if the attribute exists for the item
+   * 'attribute_exists' - Attribute exists function check if the attribute exists for the item.
    * @example
    * ```typescript
    * // Expands to: 'attribute_exists(#n0)'
@@ -516,10 +470,12 @@ export namespace Condition {
    * Supported compare based operators for conditions expressions.
    */
   export type CompareOperators = '=' | '<>' | '<' | '<=' | '>' | '>=';
+
   /**
    * Supported logical based operators for condition expressions.
    */
   export type LogicalOperators = 'AND' | 'OR' | 'NOT';
+
   /**
    * Support operators and functions for condition expressions.
    */
@@ -539,13 +495,17 @@ export namespace Condition {
    * Resolver function is return by most of the above conditions methods.  Returning a function allows conditions
    * to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
    * of the above primitive conditions or support any new primitives that AWS would add in the future.
+   * @param exp Object to get path and value aliases.
+   * @param type Param to enforce type safety for conditions that only work on certain types.
    */
   export type Resolver<T = Table.AttributeTypes> = (exp: ConditionExpression, type?: T) => string;
+
   /**
    * The value used in the condition methods.  Can either be a primitive DynamoDB value or a Resolver function,
    * which allows for the use of functions like '{@link size}' or reference other attributes.
    */
   export type Value = Table.AttributeValues | Resolver;
+
   /**
    * The path or name used in the conditions methods.  Can either be a string or a Resolver function, which allows
    * for the use of functions like '{@link size}'.

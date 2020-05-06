@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Condition | dynamodb-datamodel - v0.1.4</title>
+	<title>Condition | dynamodb-datamodel - v0.1.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.4</a>
+					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -67,8 +67,8 @@
 					<div class="lead">
 						<p>Set of helper methods to build ConditionExpressions used in DynamoDB delete, put and update operations, and
 							FilterExpression used in DynamoDB query and scan operations.  All of the condition based methods return a
-							function in the form of &#39;(exp: ConditionExpression): string&#39; this allow conditions to be composed together
-						and even extended in a very simple way.</p>
+							<a href="condition.html#resolver">Condition.Resolver</a>  function in the form of &#39;(exp: ConditionExpression): string&#39; this allow conditions
+						to be composed together and even extended in a very simple way.</p>
 					</div>
 					<p>See <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.OperatorsAndFunctions.html">Comparison Operator and Function Reference</a>
 					for details on how each of the below comparison operations and functions work.</p>
@@ -88,16 +88,6 @@
   <span class="hljs-comment">// { ':v0': john, ':v1': smith }</span>
   ExpressionAttributeValues: exp.attributes.getValues(),
 };</code></pre>
-							<p>Short aliases exist for the compare and <a href="condition.html#inlist">inList</a> conditions:</p>
-							<ul>
-								<li><a href="condition.html#eq">eq</a> = <a href="condition.html#equal">equal</a></li>
-								<li><a href="condition.html#ne">ne</a> = <a href="condition.html#notequal">notEqual</a></li>
-								<li><a href="condition.html#lt">lt</a> = <a href="condition.html#lessthen">lessThen</a></li>
-								<li><a href="condition.html#le">le</a> = <a href="condition.html#lessthenequal">lessThenEqual</a></li>
-								<li><a href="condition.html#gt">gt</a> = <a href="condition.html#greaterthen">greaterThen</a></li>
-								<li><a href="condition.html#ge">ge</a> = <a href="condition.html#greaterthenequal">greaterThenEqual</a></li>
-								<li><a href="condition.html#in">in</a> = <a href="condition.html#inlist">inList</a></li>
-							</ul>
 							<p>Note: Condition is a class that contains only static methods to support using javascript reserved words as
 							method names, like &#39;<a href="condition.html#in">in</a>&#39;.  Condition is also a namespace to scope the Condition specific typings, like Resolver.</p>
 						</dd>
@@ -128,18 +118,6 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="condition.html#eq" class="tsd-kind-icon">eq</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="condition.html#ge" class="tsd-kind-icon">ge</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="condition.html#gt" class="tsd-kind-icon">gt</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="condition.html#in" class="tsd-kind-icon">in</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="condition.html#le" class="tsd-kind-icon">le</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="condition.html#lt" class="tsd-kind-icon">lt</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="condition.html#ne" class="tsd-kind-icon">ne</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#addandfilterparam" class="tsd-kind-icon">add<wbr>And<wbr>Filter<wbr>Param</a></li>
@@ -151,16 +129,16 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#between" class="tsd-kind-icon">between</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#compare" class="tsd-kind-icon">compare</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#contains" class="tsd-kind-icon">contains</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#equal" class="tsd-kind-icon">equal</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#eq" class="tsd-kind-icon">eq</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#exists" class="tsd-kind-icon">exists</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#greaterthen" class="tsd-kind-icon">greater<wbr>Then</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#greaterthenequal" class="tsd-kind-icon">greater<wbr>Then<wbr>Equal</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#inlist" class="tsd-kind-icon">in<wbr>List</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#ge" class="tsd-kind-icon">ge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#gt" class="tsd-kind-icon">gt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#in" class="tsd-kind-icon">in</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#isresolver" class="tsd-kind-icon">is<wbr>Resolver</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#lessthen" class="tsd-kind-icon">less<wbr>Then</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#lessthenequal" class="tsd-kind-icon">less<wbr>Then<wbr>Equal</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#le" class="tsd-kind-icon">le</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#lt" class="tsd-kind-icon">lt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#ne" class="tsd-kind-icon">ne</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#not" class="tsd-kind-icon">not</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#notequal" class="tsd-kind-icon">not<wbr>Equal</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#notexists" class="tsd-kind-icon">not<wbr>Exists</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#or" class="tsd-kind-icon">or</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="condition.html#path-1" class="tsd-kind-icon">path</a></li>
@@ -180,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">Compare<wbr>Operators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;&gt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;&#x3D;"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L518">Condition.ts:518</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L472">Condition.ts:472</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -195,7 +173,7 @@
 					<div class="tsd-signature tsd-kind-icon">Logical<wbr>Operators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"AND"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"OR"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"NOT"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L522">Condition.ts:522</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L477">Condition.ts:477</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -210,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">Operators<span class="tsd-signature-symbol">:</span> <a href="condition.html#compareoperators" class="tsd-signature-type">CompareOperators</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BETWEEN"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"IN"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"begins_with"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"contains"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"attribute_type"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"attribute_exists"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"attribute_not_exists"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"size"</span><span class="tsd-signature-symbol"> | </span><a href="condition.html#logicaloperators" class="tsd-signature-type">LogicalOperators</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L526">Condition.ts:526</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L482">Condition.ts:482</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -225,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L553">Condition.ts:553</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L513">Condition.ts:513</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -241,7 +219,7 @@
 					<div class="tsd-signature tsd-kind-icon">Resolver&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>exp<span class="tsd-signature-symbol">: </span><a href="conditionexpression.html" class="tsd-signature-type">ConditionExpression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L543">Condition.ts:543</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L501">Condition.ts:501</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -250,6 +228,14 @@
 								to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
 							of the above primitive conditions or support any new primitives that AWS would add in the future.</p>
 						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>Object to get path and value aliases.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>Param to enforce type safety for conditions that only work on certain types.</p>
+							</dd>
+						</dl>
 					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
@@ -288,121 +274,13 @@
 					<div class="tsd-signature tsd-kind-icon">Value<span class="tsd-signature-symbol">:</span> <a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol"> | </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L548">Condition.ts:548</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L507">Condition.ts:507</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The value used in the condition methods.  Can either be a primitive DynamoDB value or a Resolver function,
 							which allows for the use of functions like &#39;<a href="condition.html#size">size</a>&#39; or reference other attributes.</p>
-						</div>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="eq" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> eq</h3>
-					<div class="tsd-signature tsd-kind-icon">eq<span class="tsd-signature-symbol">:</span> <a href="condition.html#equal" class="tsd-signature-type">equal</a><span class="tsd-signature-symbol"> = Condition.equal</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L187">Condition.ts:187</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>See <a href="condition.html#equal">Condition.equal</a></p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="ge" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> ge</h3>
-					<div class="tsd-signature tsd-kind-icon">ge<span class="tsd-signature-symbol">:</span> <a href="condition.html#greaterthenequal" class="tsd-signature-type">greaterThenEqual</a><span class="tsd-signature-symbol"> = Condition.greaterThenEqual</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L287">Condition.ts:287</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>See <a href="condition.html#greaterthenequal">Condition.greaterThenEqual</a></p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="gt" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> gt</h3>
-					<div class="tsd-signature tsd-kind-icon">gt<span class="tsd-signature-symbol">:</span> <a href="condition.html#greaterthen" class="tsd-signature-type">greaterThen</a><span class="tsd-signature-symbol"> = Condition.greaterThen</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L267">Condition.ts:267</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>See <a href="condition.html#greaterthen">Condition.greaterThen</a></p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="in" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> in</h3>
-					<div class="tsd-signature tsd-kind-icon">in<span class="tsd-signature-symbol">:</span> <a href="condition.html#inlist" class="tsd-signature-type">inList</a><span class="tsd-signature-symbol"> = Condition.inList</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L329">Condition.ts:329</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>See <a href="condition.html#inlist">Condition.inList</a></p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="le" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> le</h3>
-					<div class="tsd-signature tsd-kind-icon">le<span class="tsd-signature-symbol">:</span> <a href="condition.html#lessthenequal" class="tsd-signature-type">lessThenEqual</a><span class="tsd-signature-symbol"> = Condition.lessThenEqual</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L247">Condition.ts:247</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>See <a href="condition.html#lessthenequal">Condition.lessThenEqual</a></p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="lt" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> lt</h3>
-					<div class="tsd-signature tsd-kind-icon">lt<span class="tsd-signature-symbol">:</span> <a href="condition.html#lessthen" class="tsd-signature-type">lessThen</a><span class="tsd-signature-symbol"> = Condition.lessThen</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L227">Condition.ts:227</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>See <a href="condition.html#lessthen">Condition.lessThen</a></p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="ne" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> ne</h3>
-					<div class="tsd-signature tsd-kind-icon">ne<span class="tsd-signature-symbol">:</span> <a href="condition.html#notequal" class="tsd-signature-type">notEqual</a><span class="tsd-signature-symbol"> = Condition.notEqual</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L207">Condition.ts:207</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>See <a href="condition.html#notequal">Condition.notEqual</a></p>
 						</div>
 					</div>
 				</section>
@@ -419,7 +297,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L502">Condition.ts:502</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L456">Condition.ts:456</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -473,7 +351,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L485">Condition.ts:485</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L439">Condition.ts:439</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -527,7 +405,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L102">Condition.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L91">Condition.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -565,7 +443,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L112">Condition.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L101">Condition.ts:101</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -603,7 +481,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L427">Condition.ts:427</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L381">Condition.ts:381</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -642,12 +520,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L361">Condition.ts:361</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L315">Condition.ts:315</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;begins_with&#39; - Begins with function checks to see if a string attribute begins with a string value
+									<p>&#39;begins_with&#39; - Begins with function checks to see if a string attribute begins with a string value.
 									Supported Types: String</p>
 								</div>
 								<dl class="tsd-comment-tags">
@@ -687,7 +565,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L303">Condition.ts:303</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L262">Condition.ts:262</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -739,12 +617,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L123">Condition.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L150">Condition.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>General compare condition used by equal, notEqual, and other comparators.</p>
+									<p>General compare condition used by eq, ne, lt, le, gt, and ge.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -783,12 +661,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L343">Condition.ts:343</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L297">Condition.ts:297</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;contains&#39; Contains function checks if the attribute string or set contains the string value</p>
+									<p>&#39;contains&#39; Contains function checks if the attribute string or set contains the string value.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
@@ -819,26 +697,26 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="equal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> equal</h3>
+					<a name="eq" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> eq</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">equal<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">eq<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L180">Condition.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L169">Condition.ts:169</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;=&#39; - Equal condition to compare if an attribute value is equal to a value or another attribute.</p>
+									<p>&#39;=&#39; - Equal condition compares if an attribute value is equal to a value or another attribute.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0'</span>
-<span class="hljs-keyword">const</span> condition = Condition.equal(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
+<span class="hljs-keyword">const</span> condition = Condition.eq(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -872,12 +750,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L394">Condition.ts:394</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L348">Condition.ts:348</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;attribute_exists&#39; - Attribute exists function check if the attribute exists for the item</p>
+									<p>&#39;attribute_exists&#39; - Attribute exists function check if the attribute exists for the item.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
@@ -901,26 +779,70 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="greaterthen" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> greater<wbr>Then</h3>
+					<a name="ge" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> ge</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">greater<wbr>Then<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">ge<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L260">Condition.ts:260</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L244">Condition.ts:244</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;&gt;&#39; - Greater then condition to compare if an attribute value is greater then a value or another attribute.</p>
+									<p>&#39;&gt;=&#39; - Greater then or equal to condition compare sif an attribute value is greater then or equal to a value or another attribute.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 &gt;= :v0'</span>
+<span class="hljs-keyword">const</span> condition = Condition.ge(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>left: <a href="condition.html#path" class="tsd-signature-type">Path</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Path to attribute or size of attribute to compare.</p>
+									</div>
+								</li>
+								<li>
+									<h5>right: <a href="condition.html#value" class="tsd-signature-type">Value</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value (or path to attribute) to check if greater then or equal to.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate condition expression.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="gt" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> gt</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">gt<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L229">Condition.ts:229</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;&gt;&#39; - Greater then condition compares if an attribute value is greater then a value or another attribute.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 &gt; :v0'</span>
-<span class="hljs-keyword">const</span> condition = Condition.greaterThen(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
+<span class="hljs-keyword">const</span> condition = Condition.gt(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -945,70 +867,26 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="greaterthenequal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> greater<wbr>Then<wbr>Equal</h3>
+					<a name="in" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> in</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">greater<wbr>Then<wbr>Equal<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">in<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, values<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L280">Condition.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L279">Condition.ts:279</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;&gt;=&#39; - Greater then and equal to condition to compare if an attribute value is greater then and equal to a value or another attribute.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 &gt;= :v0'</span>
-<span class="hljs-keyword">const</span> condition = Condition.greaterThenEqual(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>left: <a href="condition.html#path" class="tsd-signature-type">Path</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Path to attribute or size of attribute to compare.</p>
-									</div>
-								</li>
-								<li>
-									<h5>right: <a href="condition.html#value" class="tsd-signature-type">Value</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Value (or path to attribute) to check if greater then and equal to.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
-							<p>Resolver to use when generate condition expression.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="inlist" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> in<wbr>List</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">in<wbr>List<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, values<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L320">Condition.ts:320</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>&#39;IN&#39; - In condition compares the value of an attribute is equal to any of the list values or other attributes</p>
+									<p>&#39;IN&#39; - In condition compares the value of an attribute is equal to any of the list values or other attributes.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 IN (:v0, :v1, :v2)'</span>
-<span class="hljs-keyword">const</span> condition = Condition.inList(<span class="hljs-string">'name'</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);</code></pre>
+<span class="hljs-keyword">const</span> condition = Condition.in(<span class="hljs-string">'name'</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1042,7 +920,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L92">Condition.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L81">Condition.ts:81</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1065,26 +943,70 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="lessthen" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> less<wbr>Then</h3>
+					<a name="le" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> le</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">less<wbr>Then<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">le<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L220">Condition.ts:220</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L214">Condition.ts:214</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;&lt;&#39; - Less then condition to compare if an attribute value is less then to a value or another attribute.</p>
+									<p>&#39;&lt;=&#39; - Less then or equal to condition compares if an attribute value is less then or equal to a value or another attribute.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 &lt;= :v0'</span>
+<span class="hljs-keyword">const</span> condition = Condition.le(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>left: <a href="condition.html#path" class="tsd-signature-type">Path</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Path to attribute or size of attribute to compare.</p>
+									</div>
+								</li>
+								<li>
+									<h5>right: <a href="condition.html#value" class="tsd-signature-type">Value</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value (or path to attribute) to check if less then or equal to.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<p>Resolver to use when generate condition expression.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="lt" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> lt</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">lt<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L199">Condition.ts:199</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>&#39;&lt;&#39; - Less then condition compares if an attribute value is less then a value or another attribute.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 &lt; :v0'</span>
-<span class="hljs-keyword">const</span> condition = Condition.lessThen(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
+<span class="hljs-keyword">const</span> condition = Condition.lt(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1109,26 +1031,26 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="lessthenequal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> less<wbr>Then<wbr>Equal</h3>
+					<a name="ne" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> ne</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">less<wbr>Then<wbr>Equal<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">ne<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L240">Condition.ts:240</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L184">Condition.ts:184</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>&#39;&lt;=&#39; - Less then and equal condition to compare if an attribute value is less then and equal to a value or another attribute.</p>
+									<p>&#39;&lt;&gt;&#39; - Not equal condition compares if an attribute value is not equal to a value or another attribute.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 &lt;= :v0'</span>
-<span class="hljs-keyword">const</span> condition = Condition.lessThenEqual(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 &lt;&gt; :v0'</span>
+<span class="hljs-keyword">const</span> condition = Condition.ne(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1143,7 +1065,7 @@
 								<li>
 									<h5>right: <a href="condition.html#value" class="tsd-signature-type">Value</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Value (or path to attribute) to check if less then and equal to.</p>
+										<p>Value (or path to attribute) to check if not equal to.</p>
 									</div>
 								</li>
 							</ul>
@@ -1162,7 +1084,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L461">Condition.ts:461</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L415">Condition.ts:415</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1192,50 +1114,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="notequal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> not<wbr>Equal</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">not<wbr>Equal<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="condition.html#path" class="tsd-signature-type">Path</a>, right<span class="tsd-signature-symbol">: </span><a href="condition.html#value" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L200">Condition.ts:200</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>&#39;&lt;&gt;&#39; - Not equal condition to compare if an attribute value is not equal to a value or another attribute.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 &lt;&gt; :v0'</span>
-<span class="hljs-keyword">const</span> condition = Condition.notEqual(<span class="hljs-string">'name'</span>, <span class="hljs-string">'value'</span>);</code></pre>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>left: <a href="condition.html#path" class="tsd-signature-type">Path</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Path to attribute or size of attribute to compare.</p>
-									</div>
-								</li>
-								<li>
-									<h5>right: <a href="condition.html#value" class="tsd-signature-type">Value</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Value (or path to attribute) to check if not equal to.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
-							<p>Resolver to use when generate condition expression.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
 					<a name="notexists" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> not<wbr>Exists</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
@@ -1245,7 +1123,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L410">Condition.ts:410</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L364">Condition.ts:364</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1283,7 +1161,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L444">Condition.ts:444</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L398">Condition.ts:398</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1322,7 +1200,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L141">Condition.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L115">Condition.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1360,7 +1238,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L474">Condition.ts:474</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L428">Condition.ts:428</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1399,7 +1277,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L163">Condition.ts:163</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L137">Condition.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1445,7 +1323,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L378">Condition.ts:378</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L332">Condition.ts:332</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1514,27 +1392,6 @@
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 								<a href="condition.html#value" class="tsd-kind-icon">Value</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#eq" class="tsd-kind-icon">eq</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#ge" class="tsd-kind-icon">ge</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#gt" class="tsd-kind-icon">gt</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#in" class="tsd-kind-icon">in</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#le" class="tsd-kind-icon">le</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#lt" class="tsd-kind-icon">lt</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#ne" class="tsd-kind-icon">ne</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="condition.html#addandfilterparam" class="tsd-kind-icon">add<wbr>And<wbr>Filter<wbr>Param</a>
 							</li>
@@ -1563,34 +1420,34 @@
 								<a href="condition.html#contains" class="tsd-kind-icon">contains</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#equal" class="tsd-kind-icon">equal</a>
+								<a href="condition.html#eq" class="tsd-kind-icon">eq</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="condition.html#exists" class="tsd-kind-icon">exists</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#greaterthen" class="tsd-kind-icon">greater<wbr>Then</a>
+								<a href="condition.html#ge" class="tsd-kind-icon">ge</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#greaterthenequal" class="tsd-kind-icon">greater<wbr>Then<wbr>Equal</a>
+								<a href="condition.html#gt" class="tsd-kind-icon">gt</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#inlist" class="tsd-kind-icon">in<wbr>List</a>
+								<a href="condition.html#in" class="tsd-kind-icon">in</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="condition.html#isresolver" class="tsd-kind-icon">is<wbr>Resolver</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#lessthen" class="tsd-kind-icon">less<wbr>Then</a>
+								<a href="condition.html#le" class="tsd-kind-icon">le</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#lessthenequal" class="tsd-kind-icon">less<wbr>Then<wbr>Equal</a>
+								<a href="condition.html#lt" class="tsd-kind-icon">lt</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="condition.html#ne" class="tsd-kind-icon">ne</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="condition.html#not" class="tsd-kind-icon">not</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="condition.html#notequal" class="tsd-kind-icon">not<wbr>Equal</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="condition.html#notexists" class="tsd-kind-icon">not<wbr>Exists</a>

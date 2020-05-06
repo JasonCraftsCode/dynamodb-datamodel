@@ -414,6 +414,7 @@ export class Table {
       Key: key,
     };
   }
+
   /**
    * Creates the params that can be used when calling [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}
    * @param key Primary key of item to delete.
@@ -434,6 +435,7 @@ export class Table {
     attributes.addParams(params);
     return params;
   }
+
   /**
    * Get the condition that is needed to support a specific PutWriteOptions.
    * @param options Type of put to get the condition for.
@@ -443,6 +445,7 @@ export class Table {
     if (options === 'Exists') return Condition.exists(this.getPartitionKey());
     if (options === 'NotExists') return Condition.notExists(this.getPartitionKey());
   }
+
   // Consider having writeOptions default to be 'NotExists'
   /**
    * Creates the params that can be used when calling [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}
@@ -469,6 +472,7 @@ export class Table {
     attributes.addParams(params);
     return params;
   }
+
   /**
    * Creates the params that can be used when calling [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}
    * @param key Primary key of item to update.
@@ -510,6 +514,7 @@ export class Table {
     attributes.addParams(params);
     return params;
   }
+
   /**
    * Creates the params that can be used when calling [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
    * @param options Used in building the scan params
@@ -536,6 +541,7 @@ export class Table {
   get(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.GetOptions): Promise<DocumentClient.GetItemOutput> {
     return this.client.get(this.getParams(key, options)).promise();
   }
+
   /**
    * Wrapper method for [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property} method.
    * @param key Primary key of item to delete.
@@ -548,6 +554,7 @@ export class Table {
   ): Promise<DocumentClient.DeleteItemOutput> {
     return this.client.delete(this.deleteParams(key, options)).promise();
   }
+
   /**
    * Wrapper method for [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property} method.
    * @param key Primary key of item to put.
@@ -562,6 +569,7 @@ export class Table {
   ): Promise<DocumentClient.PutItemOutput> {
     return this.client.put(this.putParams(key, items, options)).promise();
   }
+
   /**
    * Wrapper method for [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property} method.
    * @param key Primary key of item to update.
@@ -576,6 +584,7 @@ export class Table {
   ): Promise<DocumentClient.UpdateItemOutput> {
     return this.client.update(this.updateParams(key, items, options)).promise();
   }
+
   /**
    * Wrapper around [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}
    * method that uses the index and table properties with the key and options params.
@@ -586,6 +595,7 @@ export class Table {
   query(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput> {
     return this.client.query(this.queryParams(key, options)).promise();
   }
+
   /**
    * Wrapper around [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property}
    * method that uses the index and table properties with the options param.

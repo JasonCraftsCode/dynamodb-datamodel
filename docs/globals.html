@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>dynamodb-datamodel - v0.1.4</title>
+	<title>dynamodb-datamodel - v0.1.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">dynamodb-datamodel - v0.1.4</a>
+					<a href="index.html" class="title">dynamodb-datamodel - v0.1.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1>dynamodb-datamodel - v0.1.4</h1>
+			<h1>dynamodb-datamodel - v0.1.6</h1>
 		</div>
 	</div>
 </header>
@@ -100,9 +100,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableValidate.ts#L77">TableValidate.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableValidate.ts#L111">TableValidate.ts:111</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Validates that a table is configured correctly.  The Table&#39;s onError methods is called for any validation errors.
+									This method should primarily be used in tests to validate the table.</p>
+								</div>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -116,6 +122,9 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>table: <a href="interfaces/table.tablet.html" class="tsd-signature-type">TableT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ATTRIBUTES</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Table to be validated.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
