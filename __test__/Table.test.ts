@@ -201,8 +201,8 @@ describe('Validate Table with indexes', () => {
       P: Table.PrimaryKey.PartitionKeyType,
       S: Table.PrimaryKey.SortKeyType,
     },
-    globalIndexes: [gsi0 as Index],
-    localIndexes: [lsi0 as Index],
+    globalIndexes: [gsi0] as Index[],
+    localIndexes: [lsi0] as Index[],
     client,
   });
 

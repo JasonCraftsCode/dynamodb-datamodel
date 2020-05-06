@@ -73,8 +73,8 @@ const table = Table.createTable<TableKey, TableAttributes>({
     P: Table.PrimaryKey.PartitionKeyType,
     S: Table.PrimaryKey.SortKeyType,
   },
-  globalIndexes: [gsi0 as Index],
-  localIndexes: [lsi0 as Index],
+  globalIndexes: [gsi0] as Index[],
+  localIndexes: [lsi0] as Index[],
   client,
 });
 

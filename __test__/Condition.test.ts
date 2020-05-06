@@ -5,19 +5,6 @@ it('Validate Condition exports', () => {
   expect(typeof Condition.ne).toEqual('function');
 });
 
-/*
-// Remove aliasing since it is confusing to have two methods do the same thing
-// Can always add aliasing in the future if there is a need
-it('Validate Condition aliased names are the same', () => {
-  expect(Condition.eq).toEqual(Condition.equal);
-  expect(Condition.ne).toEqual(Condition.notEqual);
-  expect(Condition.lt).toEqual(Condition.lessThen);
-  expect(Condition.le).toEqual(Condition.lessThenEqual);
-  expect(Condition.gt).toEqual(Condition.greaterThen);
-  expect(Condition.ge).toEqual(Condition.greaterThenEqual);
-});
-*/
-
 describe('Validate Condition with values', () => {
   const exp = new ConditionExpression();
   beforeEach(() => {

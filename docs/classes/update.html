@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Update | dynamodb-datamodel - v0.1.6</title>
+	<title>Update | dynamodb-datamodel - v0.1.7</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.6</a>
+					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.7</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -62,6 +62,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Set of helper methods used to build UpdateExpression for use in DynamoDB update method.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -132,13 +139,36 @@
 					<div class="tsd-signature tsd-kind-icon">Resolver&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="updateexpression.html" class="tsd-signature-type">UpdateExpression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L293">Update.ts:293</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L625">Update.ts:625</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Resolver function is return by most of the above key Update methods.  Returning a function allows key conditions
+								to easily be composable and extensible.  This allows consumers to create higher level key conditions that are composed
+							of the above primitive key conditions or support any new primitives that AWS would add in the future.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>Name of the primary key attribute to resolve.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>Object to get path and value aliases and store conditions array.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>Param to enforce type safety for conditions that only work on certain types.</p>
+							</dd>
+						</dl>
+					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
 							<h4>T</h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The type used for the value param.</p>
+								</div>
+							</div>
 						</li>
 					</ul>
 					<div class="tsd-type-declaration">
@@ -175,9 +205,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Binary<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"B"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L297">Update.ts:297</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L640">Update.ts:640</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Binary specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatebinaryset" class="tsd-anchor"></a>
@@ -185,9 +220,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Binary<wbr>Set<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"BS"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L302">Update.ts:302</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L665">Update.ts:665</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Binary Set specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updateboolean" class="tsd-anchor"></a>
@@ -195,9 +235,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Boolean<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"BOOL"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L298">Update.ts:298</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L645">Update.ts:645</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Boolean specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatefunction" class="tsd-anchor"></a>
@@ -205,9 +250,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="updateexpression.html" class="tsd-signature-type">UpdateExpression</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L306">Update.ts:306</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L680">Update.ts:680</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Update function return by path and pathWithDefault to support nested resolvers</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -239,9 +289,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>List<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"L"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L303">Update.ts:303</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L670">Update.ts:670</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>List specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatelistvalue" class="tsd-anchor"></a>
@@ -249,9 +304,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>List<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="update.html#updatelistvaluet" class="tsd-signature-type">UpdateListValueT</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L310">Update.ts:310</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L700">Update.ts:700</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Type used for list based update methods.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 					<a name="updatelistvaluet" class="tsd-anchor"></a>
@@ -259,9 +319,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>List<wbr>ValueT&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L309">Update.ts:309</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L695">Update.ts:695</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Type used for generic list based update methods.</p>
+						</div>
+					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
@@ -275,9 +340,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Map<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"M"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L304">Update.ts:304</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L675">Update.ts:675</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Map specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatemapvalue" class="tsd-anchor"></a>
@@ -285,9 +355,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Map<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="update.html#updatemapvaluet" class="tsd-signature-type">UpdateMapValueT</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L314">Update.ts:314</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L712">Update.ts:712</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Type used for map based update methods.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 					<a name="updatemapvaluet" class="tsd-anchor"></a>
@@ -295,9 +370,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Map<wbr>ValueT&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L311">Update.ts:311</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L705">Update.ts:705</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Type used for generic map based update methods.</p>
+						</div>
+					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
@@ -319,9 +399,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Null<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"NULL"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L299">Update.ts:299</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L650">Update.ts:650</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Null specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatenumber" class="tsd-anchor"></a>
@@ -329,9 +414,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Number<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L296">Update.ts:296</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L635">Update.ts:635</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Number specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatenumberset" class="tsd-anchor"></a>
@@ -339,9 +429,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Number<wbr>Set<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"NS"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L301">Update.ts:301</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L660">Update.ts:660</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Number Set specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatenumbervalue" class="tsd-anchor"></a>
@@ -349,9 +444,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Number<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L307">Update.ts:307</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L685">Update.ts:685</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Type used for number based update methods.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatesetvalue" class="tsd-anchor"></a>
@@ -359,9 +459,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Set<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="table.html#attributesetvalues" class="tsd-signature-type">AttributeSetValues</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L308">Update.ts:308</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L690">Update.ts:690</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Type used for set based update methods.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatestring" class="tsd-anchor"></a>
@@ -369,9 +474,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>String<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"S"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L295">Update.ts:295</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L630">Update.ts:630</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>String specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="updatestringset" class="tsd-anchor"></a>
@@ -379,9 +489,14 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>String<wbr>Set<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"SS"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L300">Update.ts:300</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L655">Update.ts:655</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>String Set specific update resolver.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -396,19 +511,37 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L193">Update.ts:193</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L420">Update.ts:420</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets an attribute to the result of adding two values.  Note: The reference attributes must exists for the update to succeed.
+									Support types: number</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>left: <a href="update.html#updatenumbervalue" class="tsd-signature-type">UpdateNumberValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A value (or reference attribute) to using in add operation.</p>
+									</div>
 								</li>
 								<li>
 									<h5>right: <a href="update.html#updatenumbervalue" class="tsd-signature-type">UpdateNumberValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A value (or reference attribute) to using in add operation..</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to set a number attribute to the result of adding two values.</p>
 						</li>
 					</ul>
 				</section>
@@ -422,19 +555,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L277">Update.ts:277</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L600">Update.ts:600</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Helper function to set a &#39;UpdateExpression&#39; value on the params argument if there are update expressions to resolve.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>updateMap: <a href="update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Map of update values and resolvers to evaluate.</p>
+									</div>
 								</li>
 								<li>
 									<h5>exp: <a href="expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Used when calling update resolver function to store the names and values mappings and update expressions.</p>
+									</div>
 								</li>
 								<li>
 									<h5>params: <span class="tsd-signature-symbol">{ </span>UpdateExpression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Params used for DocumentClient update method.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> Update<wbr>Expression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
@@ -443,6 +590,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>UpdateExpression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h4>
+							<p>The params argument passed in.</p>
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter">
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> Update<wbr>Expression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
@@ -461,16 +609,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L241">Update.ts:241</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L533">Update.ts:533</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds an array of values to a set based attribute.
+									Supported types: StringSet, NumberSet or BinarySet</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <a href="table.html#attributesetvalues" class="tsd-signature-type">AttributeSetValues</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of values to add</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"SS"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"NS"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BS"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to add an array of values to a set based attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -484,16 +647,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L205">Update.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L451">Update.ts:451</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Appends items to the end of an existing list attribute.
+									Supported types: list</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <a href="update.html#updatelistvalue" class="tsd-signature-type">UpdateListValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A list (or reference attribute) to append.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"L"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to append a list to an attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -507,19 +685,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L272">Update.ts:272</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L588">Update.ts:588</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Helper function that resolves the updateMap and returns an UpdateExpression to use in DocumentClient.update method calls.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>updateMap: <a href="update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Map of update values and resolvers to evaluate.</p>
+									</div>
 								</li>
 								<li>
 									<h5>exp: <a href="updateexpression.html" class="tsd-signature-type">UpdateExpression</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Used when calling update resolver function to store the names and values mappings and update expressions.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+							<p>Update expression to use in UpdateExpression for DocumentClient.update method calls.</p>
 						</li>
 					</ul>
 				</section>
@@ -533,16 +723,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L187">Update.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L404">Update.ts:404</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Decrements a number based attribute by a certain amount.  Note: The attribute that is being decremented must exist in the table item for this update to succeed.
+									Support types: number</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <a href="update.html#updatenumbervalue" class="tsd-signature-type">UpdateNumberValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A value (or reference attribute) to decrement the number attribute by.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to decrement the attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -556,9 +761,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L163">Update.ts:163</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L346">Update.ts:346</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the default value for an attribute that does not exist in on the table item.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+									<dt>paramtype</dt>
+									<dd><p>T Type of default value argument.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -569,9 +787,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Default value to set if attribute value does not exist.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to set default value.</p>
 						</li>
 					</ul>
 				</section>
@@ -585,10 +807,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L169">Update.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L359">Update.ts:359</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Delete the attribute from the table item.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to delete attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -602,16 +835,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L223">Update.ts:223</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L497">Update.ts:497</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Deletes an array of indices from an list based attribute.
+									Supported types: list</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>indexes: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of indices (numbered indexes into the list) to delete from the list.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"L"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to delete indices in a list based attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -625,16 +873,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L181">Update.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L389">Update.ts:389</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Increments a number based attribute by a certain amount.  Note: The attribute that is being incremented must exist in the table item for this update to succeed.
+									Support types: number</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <a href="update.html#updatenumbervalue" class="tsd-signature-type">UpdateNumberValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A value (or reference attribute) to increment the number attribute by.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to increment the attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -648,19 +911,37 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L217">Update.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L482">Update.ts:482</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets an attribute to the result of joining two lists.
+									Supported types: list</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>left: <a href="update.html#updatelistvalue" class="tsd-signature-type">UpdateListValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A list (or reference attribute) to add to the start.</p>
+									</div>
 								</li>
 								<li>
 									<h5>right: <a href="update.html#updatelistvalue" class="tsd-signature-type">UpdateListValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A list (or reference attribute) to add at the end.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"L"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to set an attribute to the joining of two lists.</p>
 						</li>
 					</ul>
 				</section>
@@ -674,16 +955,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L252">Update.ts:252</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L562">Update.ts:562</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the inner attributes of a map based attribute.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>map: <a href="update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Map of update values and resolvers to evaluate.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, exp<span class="tsd-signature-symbol">: </span><a href="updateexpression.html" class="tsd-signature-type">UpdateExpression</a>, type<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"M"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h4>
+							<p>Update resolver function to recursively set the inner attributes of a map based attribute.</p>
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter-signature">
 									<ul class="tsd-signatures tsd-kind-type-literal">
@@ -721,16 +1016,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L151">Update.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L315">Update.ts:315</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Used to reference other attributes for the value argument in Update.* methods.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>path: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Attribute path to resolve and get alias for.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a></h4>
+							<p>Update function that returns the alias for the path.</p>
 						</li>
 					</ul>
 				</section>
@@ -744,9 +1053,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L157">Update.ts:157</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L331">Update.ts:331</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Used to reference other attributes for the value argument in Update.* methods.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+									<dt>paramtype</dt>
+									<dd><p>T Type of default value argument.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -757,12 +1079,19 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>path: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Attribute path to resolve and get alias for.</p>
+									</div>
 								</li>
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The default value to set if the path attribute value does not exist.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a></h4>
+							<p>Update function that returns the alias for the path.</p>
 						</li>
 					</ul>
 				</section>
@@ -776,16 +1105,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L211">Update.ts:211</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L466">Update.ts:466</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Prepends items to the beginning of an existing list attribute.
+									Supported types: list</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <a href="update.html#updatelistvalue" class="tsd-signature-type">UpdateListValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A list (or reference attribute) to prepend.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"L"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to prepend a list to an attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -799,16 +1143,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L246">Update.ts:246</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L548">Update.ts:548</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes an array of values from a set based attribute.
+									Supported types: StringSet, NumberSet or BinarySet</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <a href="table.html#attributesetvalues" class="tsd-signature-type">AttributeSetValues</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of values to remove</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"SS"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"NS"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BS"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to remove an array of values from a set based attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -822,9 +1181,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L175">Update.ts:175</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L374">Update.ts:374</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the attribute to a new value.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+									<dt>paramtype</dt>
+									<dd><p>T Type of value argument to set.</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -835,9 +1207,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The value (or attribute reference) to update the item attribute to, will add attribute if not present.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to set attribute to a value.</p>
 						</li>
 					</ul>
 				</section>
@@ -851,9 +1227,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L229">Update.ts:229</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L512">Update.ts:512</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the values of select indices for list based attribute.
+									Supported types: list</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -866,6 +1253,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"L"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to set values for select indices in a list based attribute.</p>
 						</li>
 					</ul>
 				</section>
@@ -879,19 +1267,37 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L199">Update.ts:199</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L436">Update.ts:436</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets an attribute to the result of subtracting two values.  Note: The reference attributes must exists for the update to succeed.
+									Supported types: number</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"></code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>left: <a href="update.html#updatenumbervalue" class="tsd-signature-type">UpdateNumberValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A value (or reference attribute) to use on the left side of a subtract operation.</p>
+									</div>
 								</li>
 								<li>
 									<h5>right: <a href="update.html#updatenumbervalue" class="tsd-signature-type">UpdateNumberValue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A value (or reference attribute) to use on the right side of a subtract operation..</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Update resolver function to set a number attribute to the result of subtracting two values.</p>
 						</li>
 					</ul>
 				</section>

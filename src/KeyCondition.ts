@@ -156,6 +156,7 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
+   * @typeParam T The type used for the value param.
    * @param op Compare operation to use: =, <, <=. > or >=.
    * @param value Value to compare the sort key value against.
    * @returns Resolver to use when generate key condition expression.
@@ -177,6 +178,7 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
+   * @typeParam T The type used for the value param.
    * @param value Value to check if equal to.
    * @returns Resolver to use when generate key condition expression.
    */
@@ -195,6 +197,7 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
+   * @typeParam T The type used for the value param.
    * @param value Value to check if less then.
    * @returns Resolver to use when generate key condition expression.
    */
@@ -213,6 +216,7 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
+   * @typeParam T The type used for the value param.
    * @param value Value to check if less then or equal to.
    * @returns Resolver to use when generate key condition expression.
    */
@@ -231,6 +235,7 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
+   * @typeParam T The type used for the value param.
    * @param value Value to check if greater then.
    * @returns Resolver to use when generate key condition expression.
    */
@@ -249,6 +254,7 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
+   * @typeParam T The type used for the value param.
    * @param value Value to check if greater then or equal to.
    * @returns Resolver to use when generate key condition expression.
    */
@@ -267,6 +273,7 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
+   * @typeParam T The type used for the from and to param.
    * @param from Value to check if sort key is greater then and equal to.
    * @param to Value to check if sort key  is less then and equal to.
    * @returns Resolver to use when generate key condition expression.
@@ -289,6 +296,7 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
+   * @typeParam T The type used for the value param.
    * @param value String to check if the sort key value begins with.
    * @returns Resolver to use when generate key condition expression.
    */
@@ -349,9 +357,10 @@ export namespace KeyCondition {
   export type Operators = CompareOperators | 'BETWEEN' | 'begins_with';
 
   /**
-   * Resolver function is return by most of the above key conditions methods.  Returning a function allows key conditions
+   * Resolver function is return by most of the above KeyConditions methods.  Returning a function allows key conditions
    * to easily be composable and extensible.  This allows consumers to create higher level key conditions that are composed
    * of the above primitive key conditions or support any new primitives that AWS would add in the future.
+   * @typeParam T The type used for the value param.
    * @param name Name of the primary key attribute to resolve.
    * @param exp Object to get path and value aliases and store conditions array.
    * @param type Param to enforce type safety for conditions that only work on certain types.

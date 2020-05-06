@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Condition | dynamodb-datamodel - v0.1.6</title>
+	<title>Condition | dynamodb-datamodel - v0.1.7</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.6</a>
+					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.7</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -203,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L513">Condition.ts:513</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L514">Condition.ts:514</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -219,12 +219,12 @@
 					<div class="tsd-signature tsd-kind-icon">Resolver&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>exp<span class="tsd-signature-symbol">: </span><a href="conditionexpression.html" class="tsd-signature-type">ConditionExpression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L501">Condition.ts:501</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L502">Condition.ts:502</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Resolver function is return by most of the above conditions methods.  Returning a function allows conditions
+							<p>Resolver function is return by most of the above Conditions methods.  Returning a function allows conditions
 								to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
 							of the above primitive conditions or support any new primitives that AWS would add in the future.</p>
 						</div>
@@ -233,7 +233,7 @@
 							<dd><p>Object to get path and value aliases.</p>
 							</dd>
 							<dt>param</dt>
-							<dd><p>Param to enforce type safety for conditions that only work on certain types.</p>
+							<dd><p>Argument to enforce type safety for conditions that only work on certain types.</p>
 							</dd>
 						</dl>
 					</div>
@@ -241,6 +241,11 @@
 					<ul class="tsd-type-parameters">
 						<li>
 							<h4>T</h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The types that this resolver supports.</p>
+								</div>
+							</div>
 						</li>
 					</ul>
 					<div class="tsd-type-declaration">
@@ -274,7 +279,7 @@
 					<div class="tsd-signature tsd-kind-icon">Value<span class="tsd-signature-symbol">:</span> <a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol"> | </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L507">Condition.ts:507</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Condition.ts#L508">Condition.ts:508</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -364,7 +369,7 @@
 								<li>
 									<h5>conditions: <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>List of conditions to evaluate with AND.</p>
+										<p>List of conditions to evaluate and join together with AND.</p>
 									</div>
 								</li>
 								<li>

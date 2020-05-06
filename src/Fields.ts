@@ -104,14 +104,17 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Type of action that will be run after all field's {@link Field.toTable} or {@link Field.toTableUpdate} are called.
      */
     action: Table.ItemActions;
+
     /**
      * Array of conditions to resolve and joined with AND conditions, then set as the ConditionExpression param before calling DynamoDB method
      */
     conditions: Condition.Resolver[];
+
     /**
      * Options for the current {@link Model} method being called.
      */
     options: Table.BaseOptions;
+
     /**
      * The model that is calling the field's {@link Field.toTable} or {@link Field.toTableUpdate} methods
      */
@@ -127,10 +130,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Type of action that ran before all field's {@link Field.toModel} are called.
      */
     action: Table.ItemActions;
+
     /**
      * Options for the current {@link Model} method being called.
      */
     options: Table.BaseOptions;
+
     /**
      * The model that is calling the field's {@link Field.toModel} method.
      */

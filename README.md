@@ -2,7 +2,9 @@
 
 [![Actions Status](https://github.com/JasonCraftsCode/dynamodb-datamodel/workflows/build/badge.svg)](https://github.com/JasonCraftsCode/dynamodb-datamodel/actions)
 [![npm](https://img.shields.io/npm/v/dynamodb-datamodel.svg)](https://www.npmjs.com/package/dynamodb-datamodel)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/dynamodb-datamodel)](https://bundlephobia.com/result?p=dynamodb-datamodel@latest)
 [![dependencies Status](https://david-dm.org/jasoncraftscode/dynamodb-datamodel/status.svg)](https://david-dm.org/jasoncraftscode/dynamodb-datamodel)
+[![DependABot Status](https://flat.badgen.net/dependabot/JasonCraftsCode/dynamodb-datamodel?icon=dependabot)](https://github.com/JasonCraftsCode/dynamodb-datamodel/pulls?q=is%3Apr+label%3Adependencies+)
 [![CodeCov](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/master/graph/badge.svg)](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel)
 [![DeepScan grade](https://deepscan.io/api/teams/8443/projects/11172/branches/162758/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=8443&pid=11172&bid=162758)
 [![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)](https://img.shields.io/npm/types/dynamodb-datamodel)
@@ -84,6 +86,7 @@ interface TableKey {
 
 // 4. Create Table and define key attributes and schema
 const table = Table.createTable<TableKey, TableKey>({
+  client,
   name: 'SimpleTable',
   keyAttributes: {
     P: Table.PrimaryKey.StringType,
@@ -93,7 +96,6 @@ const table = Table.createTable<TableKey, TableKey>({
     P: Table.PrimaryKey.PartitionKeyType,
     S: Table.PrimaryKey.SortKeyType,
   },
-  client,
 });
 
 // 5. [TypeScript] Define each Model key and data interface

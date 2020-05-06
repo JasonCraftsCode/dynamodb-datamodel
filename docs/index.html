@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>dynamodb-datamodel - v0.1.6</title>
+	<title>dynamodb-datamodel - v0.1.7</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">dynamodb-datamodel - v0.1.6</a>
+					<a href="index.html" class="title">dynamodb-datamodel - v0.1.7</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1>dynamodb-datamodel - v0.1.6</h1>
+			<h1>dynamodb-datamodel - v0.1.7</h1>
 		</div>
 	</div>
 </header>
@@ -65,7 +65,9 @@
 				</a>
 				<p><a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/actions"><img src="https://github.com/JasonCraftsCode/dynamodb-datamodel/workflows/build/badge.svg" alt="Actions Status"></a>
 					<a href="https://www.npmjs.com/package/dynamodb-datamodel"><img src="https://img.shields.io/npm/v/dynamodb-datamodel.svg" alt="npm"></a>
+					<a href="https://bundlephobia.com/result?p=dynamodb-datamodel@latest"><img src="https://img.shields.io/bundlephobia/minzip/dynamodb-datamodel" alt="npm bundle size"></a>
 					<a href="https://david-dm.org/jasoncraftscode/dynamodb-datamodel"><img src="https://david-dm.org/jasoncraftscode/dynamodb-datamodel/status.svg" alt="dependencies Status"></a>
+					<a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/pulls?q=is%3Apr+label%3Adependencies+"><img src="https://flat.badgen.net/dependabot/JasonCraftsCode/dynamodb-datamodel?icon=dependabot" alt="DependABot Status"></a>
 					<a href="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel"><img src="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/master/graph/badge.svg" alt="CodeCov"></a>
 					<a href="https://deepscan.io/dashboard#view=project&amp;tid=8443&amp;pid=11172&amp;bid=162758"><img src="https://deepscan.io/api/teams/8443/projects/11172/branches/162758/badge/grade.svg" alt="DeepScan grade"></a>
 					<a href="https://img.shields.io/npm/types/dynamodb-datamodel"><img src="https://img.shields.io/npm/types/dynamodb-datamodel" alt="npm type definitions"></a>
@@ -132,6 +134,7 @@
 
 <span class="hljs-comment">// 4. Create Table and define key attributes and schema</span>
 <span class="hljs-keyword">const</span> table = Table.createTable&lt;TableKey, TableKey&gt;({
+  client,
   name: <span class="hljs-string">'SimpleTable'</span>,
   keyAttributes: {
     P: Table.PrimaryKey.StringType,
@@ -141,7 +144,6 @@
     P: Table.PrimaryKey.PartitionKeyType,
     S: Table.PrimaryKey.SortKeyType,
   },
-  client,
 });
 
 <span class="hljs-comment">// 5. [TypeScript] Define each Model key and data interface</span>

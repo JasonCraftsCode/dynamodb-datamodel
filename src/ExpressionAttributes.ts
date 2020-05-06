@@ -11,6 +11,7 @@ export class ExpressionAttributes {
    * RegEx that validates an attribute name would not need to use an alias.
    */
   static validAttributeNameRegEx = /^[A-Za-z][A-Za-z0-9]*$/;
+
   /**
    * Validates that an attribute name can be used without an alias.
    * @param name Name of an attribute
@@ -28,6 +29,7 @@ export class ExpressionAttributes {
    * * @default '() => false;' To use aliases for all attribute names.
    */
   isReservedName: (name: string) => boolean = () => false;
+
   /**
    * Property function to determine if the name is valid to use without an alias.
    * Can use ExpressionAttribute.isValidAttributeName.
@@ -36,28 +38,34 @@ export class ExpressionAttributes {
    * @default '() => false;' To use aliases for all attribute names.
    */
   isValidName: (name: string) => boolean = () => false;
+
   /**
    * Parse all names into paths by using the pathDelimiter, to make working with nested attributes easy.
    * @default true Since most all names won't contain pathDelimiter then just do this by default.
    */
   treatNameAsPath = true;
+
   /**
    * Delimiter to use for paths
    * @default '.' Period is used in javascript for nested objects.
    */
   pathDelimiter = '.';
+
   /**
    * Attribute names mapping, used to populate the ExpressionAttributeNames param.
    */
   names: ExpressionAttributeNameMap = {};
+
   /**
    * Auto incrementing name id used in names mapping.
    */
   nextName = 0;
+
   /**
    * Attribute values mapping, used to populate the ExpressionAttributeValues param.
    */
   values: Table.AttributeValuesMap = {};
+
   /**
    * Auto incrementing value id used in values mapping.
    */
@@ -127,6 +135,7 @@ export class ExpressionAttributes {
   getPaths(): ExpressionAttributeNameMap {
     return this.names;
   }
+
   /**
    * Gets the values map to assign to ExpressionAttributeValues.
    */

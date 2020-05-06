@@ -431,7 +431,7 @@ export abstract class Condition {
 
   /**
    * Helper function to set a 'ConditionExpression' value on the params argument if there are conditions to resolve.
-   * @param conditions  List of conditions to evaluate with AND.
+   * @param conditions  List of conditions to evaluate and join together with AND.
    * @param exp Used when evaluation conditions and store the names and values mappings.
    * @param params Params used for DocumentClient put, delete and update methods.
    * @returns The params argument passed in.
@@ -492,11 +492,12 @@ export namespace Condition {
     | LogicalOperators;
 
   /**
-   * Resolver function is return by most of the above conditions methods.  Returning a function allows conditions
+   * Resolver function is return by most of the above Conditions methods.  Returning a function allows conditions
    * to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
    * of the above primitive conditions or support any new primitives that AWS would add in the future.
+   * @typeParam T The types that this resolver supports.
    * @param exp Object to get path and value aliases.
-   * @param type Param to enforce type safety for conditions that only work on certain types.
+   * @param type Argument to enforce type safety for conditions that only work on certain types.
    */
   export type Resolver<T = Table.AttributeTypes> = (exp: ConditionExpression, type?: T) => string;
 
