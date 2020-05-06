@@ -82,16 +82,16 @@ export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUT
   table.globalIndexes.forEach((index) => {
     validateIndexes(index, names, table.onError);
     const { name, keySchema } = index;
-    const ikeys = validateKeySchema(keySchema, table.keyAttributes, name, table.onError);
-    if (ikeys.pk === pk && ikeys.sk === sk)
+    const iKeys = validateKeySchema(keySchema, table.keyAttributes, name, table.onError);
+    if (iKeys.pk === pk && iKeys.sk === sk)
       table.onError(`${name} has same partition key '${pk}' and sort key '${sk}' as table`);
   });
   table.localIndexes.forEach((index) => {
     validateIndexes(index, names, table.onError);
     const { name, keySchema } = index;
-    const ikeys = validateKeySchema(keySchema, table.keyAttributes, name, table.onError);
-    if (ikeys.pk !== pk) table.onError(`${name} partition key '${ikeys.pk}' needs to be '${pk}'`);
-    if (ikeys.sk === sk) table.onError(`${name} has same sort key '${sk}' as table`);
-    if (ikeys.sk === undefined) table.onError(`${name} must have a sort key`);
+    const iKeys = validateKeySchema(keySchema, table.keyAttributes, name, table.onError);
+    if (iKeys.pk !== pk) table.onError(`${name} partition key '${iKeys.pk}' needs to be '${pk}'`);
+    if (iKeys.sk === sk) table.onError(`${name} has same sort key '${sk}' as table`);
+    if (iKeys.sk === undefined) table.onError(`${name} must have a sort key`);
   });
 }

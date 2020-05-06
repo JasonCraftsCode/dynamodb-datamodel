@@ -3,19 +3,46 @@ import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 /**
- *
+ * Object passed into all Update.Resolver functions to support getting path and value aliases, appending
+ * update conditions to SET, REMOVE, ADD and DELETE update arrays and provide context to the resolver function to
+ * support advanced update resolvers.
  */
+
 export class UpdateExpression {
+  /**
+   * Array of SET expressions.
+   */
   setList: string[] = [];
+  /**
+   * Array of REMOVE expressions.
+   */
   removeList: string[] = [];
+  /**
+   * Array of ADD expressions.
+   */
   addList: string[] = [];
-  delList: string[] = [];
+  /**
+   * Array of DELETE expressions.
+   */
+  deleteList: string[] = [];
+  /**
+   * Object to support getting path and value aliases.
+   */
   attributes: ExpressionAttributes;
 
-  constructor(attributes?: ExpressionAttributes) {
-    this.attributes = attributes || new ExpressionAttributes();
+  /**
+   *
+   * @param attributes
+   */
+  constructor(attributes = new ExpressionAttributes()) {
+    this.attributes = attributes;
   }
   // Any
+  /**
+   *
+   * @param name
+   * @param value
+   */
   set(name: string, value: string): void {
     this.setList.push(`${name} = ${value}`);
   }
@@ -60,7 +87,7 @@ export class UpdateExpression {
     this.addList.push(`${name} ${value}`);
   }
   removeFromSet(name: string, value: string): void {
-    this.delList.push(`${name} ${value}`);
+    this.deleteList.push(`${name} ${value}`);
   }
 
   ifNotExist(name: string, value: Table.AttributeValues): string {
@@ -107,7 +134,7 @@ export class UpdateExpression {
     if (this.setList.length > 0) updates.push(`SET ${this.setList.join(', ')}`);
     if (this.removeList.length > 0) updates.push(`REMOVE ${this.removeList.join(', ')}`);
     if (this.addList.length > 0) updates.push(`ADD ${this.addList.join(', ')}`);
-    if (this.delList.length > 0) updates.push(`DELETE ${this.delList.join(', ')}`);
+    if (this.deleteList.length > 0) updates.push(`DELETE ${this.deleteList.join(', ')}`);
     if (updates.length > 0) return updates.join(' ');
     return undefined;
   }
@@ -116,7 +143,7 @@ export class UpdateExpression {
     this.setList = [];
     this.removeList = [];
     this.addList = [];
-    this.delList = [];
+    this.deleteList = [];
     this.attributes.reset();
   }
 }
@@ -134,14 +161,14 @@ export class Update {
     };
   }
 
-  static default<T extends Table.AttributeValues>(value: T): Update.UpdateInput<string> {
+  static default<T extends Table.AttributeValues>(value: T): Update.Resolver<string> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: string): void => {
       exp.set(name, exp.ifNotExist(name, exp.addValue(value)));
     };
   }
 
-  static del(): Update.UpdateInput<string> {
+  static del(): Update.Resolver<string> {
     return (name: string, exp: UpdateExpression): void => {
       exp.del(name);
     };
@@ -149,14 +176,14 @@ export class Update {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   static delete = Update.del;
 
-  static set<T extends Table.AttributeValues>(value: T | Update.UpdateFunction): Update.UpdateInput<string> {
+  static set<T extends Table.AttributeValues>(value: T | Update.UpdateFunction): Update.Resolver<string> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: string): void => {
       exp.set(name, exp.addAnyValue(value, name));
     };
   }
 
-  static inc(value: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
+  static inc(value: Update.UpdateNumberValue): Update.Resolver<'N'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'N'): void => {
       exp.inc(name, exp.addNumberValue(value, name));
@@ -165,7 +192,7 @@ export class Update {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   static increment = Update.inc;
 
-  static dec(value: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
+  static dec(value: Update.UpdateNumberValue): Update.Resolver<'N'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'N'): void => {
       exp.dec(name, exp.addNumberValue(value, name));
@@ -174,14 +201,14 @@ export class Update {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   static decrement = Update.dec;
 
-  static add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
+  static add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'N'): void => {
       exp.add(name, exp.addNumberValue(left, name), exp.addNumberValue(right, name));
     };
   }
 
-  static sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
+  static sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'N'): void => {
       exp.sub(name, exp.addNumberValue(left, name), exp.addNumberValue(right, name));
@@ -190,35 +217,35 @@ export class Update {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   static subtract = Update.sub;
 
-  static append(value: Update.UpdateListValue): Update.UpdateInput<'L'> {
+  static append(value: Update.UpdateListValue): Update.Resolver<'L'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'L'): void => {
       exp.append(name, exp.addListValue(value, name));
     };
   }
 
-  static prepend(value: Update.UpdateListValue): Update.UpdateInput<'L'> {
+  static prepend(value: Update.UpdateListValue): Update.Resolver<'L'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'L'): void => {
       exp.prepend(name, exp.addListValue(value, name));
     };
   }
 
-  static join(left: Update.UpdateListValue, right: Update.UpdateListValue): Update.UpdateInput<'L'> {
+  static join(left: Update.UpdateListValue, right: Update.UpdateListValue): Update.Resolver<'L'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'L'): void => {
       exp.join(name, exp.addListValue(left, name), exp.addListValue(right, name));
     };
   }
 
-  static delIndexes(indexes: number[]): Update.UpdateInput<'L'> {
+  static delIndexes(indexes: number[]): Update.Resolver<'L'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'L'): void => {
       exp.delIndexes(name, indexes);
     };
   }
 
-  static setIndexes(values: { [key: number]: Table.AttributeValues | Update.UpdateFunction }): Update.UpdateInput<'L'> {
+  static setIndexes(values: { [key: number]: Table.AttributeValues | Update.UpdateFunction }): Update.Resolver<'L'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'L'): void => {
       const listValues: {
@@ -231,13 +258,13 @@ export class Update {
     };
   }
 
-  static addToSet(value: Table.AttributeSetValues): Update.UpdateInput<'SS' | 'NS' | 'BS'> {
+  static addToSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'SS' | 'NS' | 'BS'): void => {
       exp.addToSet(name, exp.addSetValue(value, name));
     };
   }
-  static removeFromSet(value: Table.AttributeSetValues): Update.UpdateInput<'SS' | 'NS' | 'BS'> {
+  static removeFromSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (name: string, exp: UpdateExpression, type?: 'SS' | 'NS' | 'BS'): void => {
       exp.removeFromSet(name, exp.addSetValue(value, name));
@@ -286,18 +313,18 @@ export class Update {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Update {
-  export type UpdateInput<T> = (name: string, exp: UpdateExpression, type?: T) => void;
+  export type Resolver<T> = (name: string, exp: UpdateExpression, type?: T) => void;
 
-  export type UpdateString = UpdateInput<'S'>;
-  export type UpdateNumber = UpdateInput<'N'>;
-  export type UpdateBinary = UpdateInput<'B'>;
-  export type UpdateBoolean = UpdateInput<'BOOL'>;
-  export type UpdateNull = UpdateInput<'NULL'>;
-  export type UpdateStringSet = UpdateInput<'SS'>;
-  export type UpdateNumberSet = UpdateInput<'NS'>;
-  export type UpdateBinarySet = UpdateInput<'BS'>;
-  export type UpdateList = UpdateInput<'L'>;
-  export type UpdateMap = UpdateInput<'M'>;
+  export type UpdateString = Resolver<'S'>;
+  export type UpdateNumber = Resolver<'N'>;
+  export type UpdateBinary = Resolver<'B'>;
+  export type UpdateBoolean = Resolver<'BOOL'>;
+  export type UpdateNull = Resolver<'NULL'>;
+  export type UpdateStringSet = Resolver<'SS'>;
+  export type UpdateNumberSet = Resolver<'NS'>;
+  export type UpdateBinarySet = Resolver<'BS'>;
+  export type UpdateList = Resolver<'L'>;
+  export type UpdateMap = Resolver<'M'>;
 
   export type UpdateFunction = (name: string, exp: UpdateExpression) => string;
   export type UpdateNumberValue = number | string | UpdateFunction;
@@ -305,7 +332,7 @@ export namespace Update {
   export type UpdateListValueT<T> = string | UpdateFunction | T[];
   export type UpdateListValue = UpdateListValueT<Table.AttributeValues>;
   export type UpdateMapValueT<T> = {
-    [key: string]: T | UpdateInput<string> | undefined;
+    [key: string]: T | Resolver<string> | undefined;
   };
   export type UpdateMapValue = UpdateMapValueT<Table.AttributeValues>;
 }

@@ -25,8 +25,8 @@ describe('Validate ExpressionAttributes', () => {
   });
   it('addPath for two part path', () => {
     const attrs = new ExpressionAttributes();
-    expect(attrs.addPath('path.subpath')).toEqual('#n0.#n1');
-    expect(attrs.getPaths()).toEqual({ '#n0': 'path', '#n1': 'subpath' });
+    expect(attrs.addPath('path.subPath')).toEqual('#n0.#n1');
+    expect(attrs.getPaths()).toEqual({ '#n0': 'path', '#n1': 'subPath' });
   });
   it('addPath for 10 part path', () => {
     const attrs = new ExpressionAttributes();

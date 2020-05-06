@@ -66,7 +66,7 @@
 				<p><a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/actions"><img src="https://github.com/JasonCraftsCode/dynamodb-datamodel/workflows/build/badge.svg" alt="Actions Status"></a>
 					<a href="https://www.npmjs.com/package/dynamodb-datamodel"><img src="https://img.shields.io/npm/v/dynamodb-datamodel.svg" alt="npm"></a>
 					<a href="https://david-dm.org/jasoncraftscode/dynamodb-datamodel"><img src="https://david-dm.org/jasoncraftscode/dynamodb-datamodel/status.svg" alt="dependencies Status"></a>
-					<a href="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel"><img src="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/master/graph/badge.svg" alt="codecov"></a>
+					<a href="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel"><img src="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/master/graph/badge.svg" alt="CodeCov"></a>
 					<a href="https://deepscan.io/dashboard#view=project&amp;tid=8443&amp;pid=11172&amp;bid=162758"><img src="https://deepscan.io/api/teams/8443/projects/11172/branches/162758/badge/grade.svg" alt="DeepScan grade"></a>
 					<a href="https://img.shields.io/npm/types/dynamodb-datamodel"><img src="https://img.shields.io/npm/types/dynamodb-datamodel" alt="npm type definitions"></a>
 				<a href="https://www.npmjs.com/package/dynamodb-datamodel"><img src="https://img.shields.io/npm/l/dynamodb-datamodel.svg" alt="npm"></a></p>
@@ -75,7 +75,7 @@
 				<a href="#why" id="why" style="color: inherit; text-decoration: none;">
 					<h2>Why</h2>
 				</a>
-				<p>While developing a side project using single table design I found I was frequently writing similar code to map model data to and from table data. Additional writing update and condition expressions was cumbersome. I looked around to see if there was an npm package, including <a href="https://github.com/awslabs/dynamodb-data-mapper-js">@aws/dynamodb-data-mapper</a>, <a href="https://github.com/awspilot/dynamodb-oop">@awspilot/dynamodb</a> project, <a href="https://github.com/baseprime/dynamodb">@baseprime&#39;s dynamodb</a>, <a href="https://github.com/jeremydaly/dynamodb-toolbox">jeremydaly&#39;s dynamodb-toolbox</a> and others.</p>
+				<p>While developing a side project using single table design I found I was frequently writing similar code to map model data to and from table data. Additional writing update and condition expressions was cumbersome. I looked around to see if there was an npm package, including <a href="https://github.com/awslabs/dynamodb-data-mapper-js">@aws/dynamodb-data-mapper</a>, <a href="https://github.com/awspilot/dynamodb-oop">@AwsPilot/dynamodb</a> project, <a href="https://github.com/baseprime/dynamodb">@BasePrime&#39;s dynamodb</a>, <a href="https://github.com/jeremydaly/dynamodb-toolbox">Jeremy Daly&#39;s dynamodb-toolbox</a> and others.</p>
 				<p>This is not a Object-Relational Mapping (ORM) module, so it doesn&#39;t use any SQL concepts. Many SQL concepts don&#39;t directly apply to NoSQL data bases like dynamodb, so this tool focuses on the unique capabilities of dynamodb.</p>
 				<p>This is also not a table management module, since with single table design the table will be created by CloudFormation. This module solely focused on reading and writing table and index data.</p>
 				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
@@ -227,6 +227,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
 						<a href="classes/condition.html" class="tsd-kind-icon">Condition</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/conditionexpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>

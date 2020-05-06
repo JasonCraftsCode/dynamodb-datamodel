@@ -1,6 +1,5 @@
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 import { KeyCondition, KeyConditionExpression } from '../src/KeyCondition';
-import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Table } from '../src/Table';
 
 it('Validate Condition exports', () => {
@@ -16,9 +15,9 @@ function buildKeyCondition(
   Paths: ExpressionAttributeNameMap;
   Values: Table.AttributeValuesMap;
 } {
-  const keyCond = KeyCondition.buildExpression(key, exp);
+  const keyCondition = KeyCondition.buildExpression(key, exp);
   return {
-    KeyConditionExpression: keyCond,
+    KeyConditionExpression: keyCondition,
     Paths: exp.attributes.getPaths(),
     Values: exp.attributes.getValues(),
   };
@@ -26,24 +25,24 @@ function buildKeyCondition(
 
 describe('Validate KeyCondition', () => {
   it('addParam with undefined key', () => {
-    const exp = new ExpressionAttributes();
+    const exp = new KeyConditionExpression();
     expect(KeyCondition.addParam(undefined, exp, {})).toEqual({});
   });
   it('addParam with empty key', () => {
-    const exp = new ExpressionAttributes();
+    const exp = new KeyConditionExpression();
     expect(KeyCondition.addParam({}, exp, {})).toEqual({});
   });
   it('addParam', () => {
-    const exp = new ExpressionAttributes();
-    expect(KeyCondition.addParam({ P: KeyCondition.eq('keyvalue') }, exp, {})).toEqual({
+    const exp = new KeyConditionExpression();
+    expect(KeyCondition.addParam({ P: KeyCondition.eq('keyValue') }, exp, {})).toEqual({
       KeyConditionExpression: '#n0 = :v0',
     });
   });
 
   it('eq', () => {
-    expect(buildKeyCondition({ P: KeyCondition.eq('keyvalue') })).toEqual({
+    expect(buildKeyCondition({ P: KeyCondition.eq('keyValue') })).toEqual({
       Paths: { '#n0': 'P' },
-      Values: { ':v0': 'keyvalue' },
+      Values: { ':v0': 'keyValue' },
       KeyConditionExpression: '#n0 = :v0',
     });
   });
@@ -97,8 +96,8 @@ describe('Validate KeyCondition', () => {
   });
 
   it('buildInput with KeyConditionExpression', () => {
-    const attr = new ExpressionAttributes();
-    expect(buildKeyCondition({ P: KeyCondition.eq('with exp') }, new KeyConditionExpression(attr))).toEqual({
+    const exp = new KeyConditionExpression();
+    expect(buildKeyCondition({ P: KeyCondition.eq('with exp') }, exp)).toEqual({
       Paths: { '#n0': 'P' },
       Values: { ':v0': 'with exp' },
       KeyConditionExpression: '#n0 = :v0',
@@ -114,9 +113,9 @@ describe('Validate KeyCondition', () => {
   });
 
   it('buildInput with 3 keys', () => {
-    expect(buildKeyCondition({ P: 'abc', S: KeyCondition.beginsWith('with exp'), E: 'extrakey' })).toEqual({
+    expect(buildKeyCondition({ P: 'abc', S: KeyCondition.beginsWith('with exp'), E: 'extraKey' })).toEqual({
       Paths: { '#n0': 'P', '#n1': 'S', '#n2': 'E' },
-      Values: { ':v0': 'abc', ':v1': 'with exp', ':v2': 'extrakey' },
+      Values: { ':v0': 'abc', ':v1': 'with exp', ':v2': 'extraKey' },
       KeyConditionExpression: '#n0 = :v0 AND begins_with(#n1, :v1)',
     });
   });

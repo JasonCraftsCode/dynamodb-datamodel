@@ -12,14 +12,14 @@ Note: To publish run 'npm version patch' then 'npm publish'
   - Documentation
   - Examples
 - Add to build:
-  - Pritter
+  - Prettier
   - Generate documents
   - Auto increment version
   - Auto push to npm
-- Add jdocs
+- Add jDocs
 - Validate Model (add options to validate)
 - Non-Validator coerce (see dynamodb-toolbox)
-- Write a Medium artical on Single Table Design and using
+- Write a Medium article on Single Table Design and using
 - Write detailed examples (js and ts and graphql):
   - Simple table setup
   - Multi index table setup
@@ -54,7 +54,7 @@ Note: To publish run 'npm version patch' then 'npm publish'
   - created date (type: string, base64, number) = CD - put function add if not exists
   - modified date = MD - update function add set (or existing put)
   - model type = T or Type - Use table name to set T
-  - model version (compine with type, like modelType:1.0.2) = V or Ver - use table version
+  - model version (combine with type, like modelType:1.0.2) = V or Ver - use table version
   - created/modified user (have global or table based current user) = CU/MU - ??
   - delete = D or TTL - not exists for get/query/scan/put/update condition
   - hidden = H or Hide - not exist for get/query/scan condition
@@ -64,7 +64,7 @@ Note: To publish run 'npm version patch' then 'npm publish'
   - One-to-many
   - Many-to-many
   - model list (collection) == access patterns
-  - Prebuild access patterns (base class?)
+  - Pre-build access patterns (base class?)
 - Transactions
 - Batch
 - Make it easy to integrate graphql based data models
@@ -108,16 +108,16 @@ Goals:
 - well commented and linked to document (w/ additional info)
 - easy to customize or change
 - easy to update existing code to latest best practices with updated dependencies
-- dependencies always up todate
+- dependencies always up to date
 - works well with vscode
 - open source:
   - well documented
   - well tested (100% code coverage)
-  - dependencies up todate
+  - dependencies up to date
   - automate: PR checks (linting, docs, dependencies, tests, commit comments, api validation)
-  - clear: roadmap, contribution, issue/pr templates, versioning, changelog, licensing,
+  - clear: road map, contribution, issue/pr templates, versioning, changelog, licensing,
   - place to discuss and contact maintainer
-  - maintainted versions?
+  - maintained versions?
 
 Environment:
 
@@ -126,7 +126,7 @@ Environment:
 - github
 - vscode with following extensions:
   - eslint
-  - pritter
+  - prettier
   - jest/mocha
 - jest (or mocha)
 - tsc, webpack or rollup
@@ -147,11 +147,11 @@ vscode integrations:
 - prettier
 - compiler
 - debugging
-- symver based commit comments
+- symVer based commit comments
 
 general core:
 
-- build/package: bundler, transpiler/compiler, minifier
+- build/package: bundler, transpile/compile, minifier
 - validation: lint, tests, code coverage
 - publish/release
 - docs, examples and playgrounds
@@ -166,24 +166,24 @@ Components:
 - compiler - tsc
 - bundler - tsc or webpack or rollup w/ babel
 - test w/ code coverage - jest or mocha
-- docs - typedoc (or jsdoc)
+- docs - typeDoc (or jsdoc)
 - multi-project - lerna
 - npm cli - yarn or npm
 - publishing - semver and breaking change
 - sponsorships
 - services:
-  - github.com - see below
-  - dependabot.com - dependency updater
-  - npm.org - package repro
-  - david-dm.org - dependency monitor
-  - deepscan.io - security?, code quality and code health
-  - snyk.io - security, depedency,
-  - codacy.com - security, dependency
-  - sonarsource.com -
+  - [GitHub](http://www.github.com) - see below
+  - [DependABot](http://dependabot.com) - dependency updater
+  - [NPM](http://npm.org) - package repro
+  - [David DM](http://david-dm.org) - dependency monitor
+  - [DeepScan](http://deepScan.io) - security?, code quality and code health
+  - [Snyk](http://Snyk.io) - security, dependency,
+  - [Codacy](http://codacy.com) - security, dependency
+  - sonarSource.com -
   - github also has a beta security service.
-  - codecov.io - code coverage
+  - codeCov.io - code coverage
   - shields.io
-  - badgesize.io
+  - badgeSize.io
   - gist (for chat)
 - github:
   - actions: pr, build and release (could also use circle-ci or travis-ci)
@@ -199,22 +199,22 @@ Components:
   - npm w/ version
   - dependencies
   - code coverage
-  - deepscan
+  - deepScan
   - types: TypeScript
   - license
   - browser or node min version
-  - dependabot
+  - dependABot
   - semver
 - files:
   - package.json
-  - .eslintignore
+  - .esLintIgnore
   - .eslintrc.js
   - .github/workflows
   - .github/\*
   - .vscode
   - .gitignore
-  - .npmignore
-  - .prettyrc
+  - .npnIgnore
+  - .prettyRc
   - tsconfig.json
 - tools:
   - [https://github.com/jvitor83/types-autoinstaller]
