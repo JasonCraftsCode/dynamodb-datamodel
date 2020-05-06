@@ -65,14 +65,14 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Represents either Global Secondary Index (GSI) or Local Secondary Index (LSI) for a table.  GSIs and LSIs can be
-							associated with a <a href="table.html">Table</a> by add GSIs to the <a href="table.html#globalindexes">Table.globalIndexes</a> array property and LSIs to the <a href="table.html#localindexes">Table.localIndexes</a>
+						<p>Represents either Global Secondary Index (GSI) or Local Secondary Index (LSI) for a table.  GSI and LSI can be
+							associated with a <a href="table.html">Table</a> by add GSI to the <a href="table.html#globalindexes">Table.globalIndexes</a> array property and LSI to the <a href="table.html#localindexes">Table.localIndexes</a>
 						array property, either through the <a href="table.html#constructor">Table.constructor</a> or by calling <a href="table.html#addglobalindexes">Table.addGlobalIndexes</a> or <a href="table.html#addlocalindexes">Table.addLocalIndexes</a>.</p>
 					</div>
 					<p>When the index is added to the Table either through the constructor, addGlobalIndexes or addLocalIndexes each index&#39;s
 						<a href="index.html#init">init</a> will be passed the Table it is associated with to support the Index methods:
 					<a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>.</p>
-					<p>Once the GSIs and LSIs are associated with a table they can be validated using <a href="../globals.html#validatetable">validateTable</a>.</p>
+					<p>Once the GSI and LSI are associated with a table they can be validated using <a href="../globals.html#validatetable">validateTable</a>.</p>
 					<p>If you are using TypeScript you can use <a href="index.html#createindex">Index.createIndex</a> to create an Index with strong typing for the primary key.
 					This provides strong types for the <a href="index.html#keyschema">Index.keySchema</a> property, <a href="index.html#queryparams">Index.queryParams</a> and <a href="index.html#scan">Index.scan</a> methods.</p>
 					<dl class="tsd-comment-tags">
@@ -602,6 +602,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
 						<a href="condition.html" class="tsd-kind-icon">Condition</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="conditionexpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>

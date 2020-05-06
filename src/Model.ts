@@ -16,7 +16,7 @@ export class Model implements Model.ModelBase {
     // TODO: register model with table to support query and scan data mapping
     this.table = params.table;
     this.onError = params.table.onError;
-    Object.keys(this.schema).forEach((key) => this.schema[key].init(key));
+    Object.keys(this.schema).forEach((key) => this.schema[key].init(key, this));
   }
 
   private splitTableData(
@@ -55,7 +55,7 @@ export class Model implements Model.ModelBase {
   async toTableUpdate(data: Model.ModelUpdate, context: Fields.TableContext): Promise<Model.TableUpdateData> {
     const tableData: Table.AttributeValuesMap = {};
     // enumerate schema so each field gets called
-    // ... handled by table to* if supported (do we need each field to return array of names proccessed)
+    // ... handled by table to* if supported (do we need each field to return array of names processed)
     const keys = Object.keys(this.schema);
     for (const name of keys) {
       const schema: Fields.Field = this.schema[name];
@@ -173,7 +173,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     table: Table;
   }
 
-  export type ModelUpdateValue<T> = Extract<T, ModelType> | null | Update.UpdateInput<string>;
+  export type ModelUpdateValue<T> = Extract<T, ModelType> | null | Update.Resolver<string>;
 
   // *Map used as model data based params in Model
   export type ModelSchema = { [key: string]: Fields.Field };

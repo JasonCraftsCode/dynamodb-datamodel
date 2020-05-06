@@ -101,7 +101,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#alias" class="tsd-kind-icon">alias</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#count" class="tsd-kind-icon">count</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#delim" class="tsd-kind-icon">delim</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#delimiter" class="tsd-kind-icon">delimiter</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldcompositet.html#map" class="tsd-kind-icon">map</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldcompositet.html#slots" class="tsd-kind-icon">slots</a></li>
 							</ul>
@@ -124,14 +124,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Field<wbr>CompositeT<span class="tsd-signature-symbol">(</span>alias<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, map<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, slots<span class="tsd-signature-symbol">?: </span><a href="fields.html#compositeslot" class="tsd-signature-type">CompositeSlot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, delim<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcompositet.html" class="tsd-signature-type">FieldCompositeT</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Field<wbr>CompositeT<span class="tsd-signature-symbol">(</span>alias<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, map<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, slots<span class="tsd-signature-symbol">?: </span><a href="fields.html#compositeslot" class="tsd-signature-type">CompositeSlot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, delimiter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcompositet.html" class="tsd-signature-type">FieldCompositeT</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L718">Fields.ts:718</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L775">Fields.ts:775</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -146,7 +146,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> slots: <a href="fields.html#compositeslot" class="tsd-signature-type">CompositeSlot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> delim: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> delimiter: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcompositet.html" class="tsd-signature-type">FieldCompositeT</a></h4>
@@ -163,7 +163,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#alias">alias</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L655">Fields.ts:655</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L712">Fields.ts:712</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -174,18 +174,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#count">count</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L656">Fields.ts:656</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L713">Fields.ts:713</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="delim" class="tsd-anchor"></a>
-					<h3>delim</h3>
-					<div class="tsd-signature tsd-kind-icon">delim<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="delimiter" class="tsd-anchor"></a>
+					<h3>delimiter</h3>
+					<div class="tsd-signature tsd-kind-icon">delimiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#delim">delim</a></p>
+						<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#delimiter">delimiter</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L657">Fields.ts:657</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L714">Fields.ts:714</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -195,7 +195,7 @@
 					<div class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L718">Fields.ts:718</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L775">Fields.ts:775</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -205,7 +205,7 @@
 					<div class="tsd-signature tsd-kind-icon">slots<span class="tsd-signature-symbol">:</span> <a href="fields.html#compositeslot" class="tsd-signature-type">CompositeSlot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L717">Fields.ts:717</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L774">Fields.ts:774</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -223,7 +223,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#slot">slot</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L736">Fields.ts:736</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L793">Fields.ts:793</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -247,7 +247,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#tomodel">toModel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L669">Fields.ts:669</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L726">Fields.ts:726</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -283,7 +283,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#totable">toTable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L684">Fields.ts:684</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L741">Fields.ts:741</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -319,7 +319,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#totableupdate">toTableUpdate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L701">Fields.ts:701</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L758">Fields.ts:758</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -360,6 +360,9 @@
 						<a href="condition.html" class="tsd-kind-icon">Condition</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="conditionexpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
 					</li>
 				</ul>
@@ -380,7 +383,7 @@
 										<a href="fields.fieldcompositet.html#count" class="tsd-kind-icon">count</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-										<a href="fields.fieldcompositet.html#delim" class="tsd-kind-icon">delim</a>
+										<a href="fields.fieldcompositet.html#delimiter" class="tsd-kind-icon">delimiter</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="fields.fieldcompositet.html#map" class="tsd-kind-icon">map</a>

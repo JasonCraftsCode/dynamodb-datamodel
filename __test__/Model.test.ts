@@ -142,7 +142,7 @@ interface UserModel extends UserKey {
   spouse?: SpouseModel | Update.UpdateMap;
   children?: ChildModel[] | Update.UpdateList;
   groups?: { [key: string]: GroupModel } | Update.UpdateMap;
-  created?: Date | Update.UpdateInput<'Date'>;
+  created?: Date | Update.Resolver<'Date'>;
   hide?: Set<Date>;
   nickname?: string | Update.UpdateString;
   rangeYup?: number | Update.UpdateNumber;
@@ -267,7 +267,7 @@ describe('Validate Model with Table and Indexes', () => {
         description: 'user description',
         count: 2,
         created: new Date(1585563302000),
-        photo: Buffer.from('abcdefghijklmn'),
+        photo: Buffer.from('Photo Buffer'),
         spouse: { age: 40, married: true, name: 'spouse' },
         children: [
           {
@@ -321,7 +321,7 @@ describe('Validate Model with Table and Indexes', () => {
           modified: table.createNumberSet([1585553302, 1585563302]),
           name: 'name1',
           nickname: 'none',
-          photo: Buffer.from('abcdefghijklmn'),
+          photo: Buffer.from('Photo Buffer'),
           rev: 1,
           spouse: {
             age: 40,
@@ -513,7 +513,7 @@ describe('Validate Model with Table and Indexes', () => {
             interests: table.createStringSet(['basketball', 'soccer', 'football']),
             modified: table.createNumberSet([1585553302, 1585563302]),
             name: 'name1',
-            photo: Buffer.from('abcdefghijklmn'),
+            photo: Buffer.from('Photo Buffer'),
             rev: 1,
             spouse: {
               age: 40,
@@ -555,7 +555,7 @@ describe('Validate Model with Table and Indexes', () => {
         interests: table.createStringSet(['basketball', 'soccer', 'football']),
         modified: table.createNumberSet([1585553302, 1585563302]),
         name: 'name1',
-        photo: Buffer.from('abcdefghijklmn'),
+        photo: Buffer.from('Photo Buffer'),
         revision: 1,
         spouse: {
           age: 40,

@@ -36,16 +36,16 @@ export class KeyConditionExpression {
     value: Table.AttributeValues,
     and?: Table.AttributeValues,
   ): void {
-    const cond = this.createSortCondition(name, op, value, and);
-    this.addCondition(cond);
+    const condition = this.createSortCondition(name, op, value, and);
+    this.addCondition(condition);
   }
 
   addEqualCondition(name: string, value: Table.AttributeValues): void {
     this.addSortCondition(name, '=', value);
   }
 
-  addCondition(cond: string): void {
-    if (this.conditions.length < 2) this.conditions.push(cond);
+  addCondition(condition: string): void {
+    if (this.conditions.length < 2) this.conditions.push(condition);
   }
 
   getExpression(): string {
@@ -113,11 +113,11 @@ export class KeyCondition {
 
   static addParam(
     key: Table.PrimaryKey.KeyQueryMap | undefined,
-    exp: ExpressionAttributes,
+    exp: KeyConditionExpression,
     params: { KeyConditionExpression?: string },
   ): { KeyConditionExpression?: string } {
     if (key) {
-      const condition = KeyCondition.buildExpression(key, new KeyConditionExpression(exp));
+      const condition = KeyCondition.buildExpression(key, exp);
       if (condition) params.KeyConditionExpression = condition;
       else delete params.KeyConditionExpression;
     }

@@ -3,9 +3,9 @@
  * @packageDocumentation
  */
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { Condition } from './Condition';
+import { Condition, ConditionExpression } from './Condition';
 import { ExpressionAttributes } from './ExpressionAttributes';
-import { KeyCondition } from './KeyCondition';
+import { KeyCondition, KeyConditionExpression } from './KeyCondition';
 import { Update } from './Update';
 
 function getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.PrimaryKey.KeyTypes): string {
@@ -19,15 +19,15 @@ function getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.Primary
 }
 
 /**
- * Represents either Global Secondary Index (GSI) or Local Secondary Index (LSI) for a table.  GSIs and LSIs can be
- * associated with a {@link Table} by add GSIs to the {@link Table.globalIndexes} array property and LSIs to the {@link Table.localIndexes}
+ * Represents either Global Secondary Index (GSI) or Local Secondary Index (LSI) for a table.  GSI and LSI can be
+ * associated with a {@link Table} by add GSI to the {@link Table.globalIndexes} array property and LSI to the {@link Table.localIndexes}
  * array property, either through the {@link Table.constructor} or by calling {@link Table.addGlobalIndexes} or {@link Table.addLocalIndexes}.
  *
  * When the index is added to the Table either through the constructor, addGlobalIndexes or addLocalIndexes each index's
  * {@link init} will be passed the Table it is associated with to support the Index methods:
  * {@link queryParams}, {@link scanParams}, {@link query}, and {@link scan}.
  *
- * Once the GSIs and LSIs are associated with a table they can be validated using {@link validateTable}.
+ * Once the GSI and LSI are associated with a table they can be validated using {@link validateTable}.
  *
  * If you are using TypeScript you can use {@link Index.createIndex} to create an Index with strong typing for the primary key.
  * This provides strong types for the {@link Index.keySchema} property, {@link Index.queryParams} and {@link Index.scan} methods.
@@ -206,11 +206,11 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
    */
   export interface DefaultGlobalIndexKey {
     /**
-     * Partition key: G#P which represents **G**lobal + **#** of index + **P**artition key
+     * Partition key: G#P which represents G = Global + # = index number + P = Partition key
      */
     G0P: Table.PrimaryKey.PartitionString;
     /**
-     * Sort key: G#S which represents **G**lobal + **#** of index + **S**ort key. The sort key is optional to support the sort key as being option for queryParams and query methods.
+     * Sort key: G#S which represents G = Global + # = index number + S = Sort key. The sort key is optional to support the sort key as being option for queryParams and query methods.
      */
     G0S?: Table.PrimaryKey.SortString;
   }
@@ -224,7 +224,7 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
      */
     P: Table.PrimaryKey.PartitionString;
     /**
-     * Sort key: L#S which represents **G**lobal + **#** of index + **S**ort key.  The sort key is optional to support the sort key as being option for queryParams and query methods.
+     * Sort key: L#S which represents L = Local + # = index number + S = Sort key.  The sort key is optional to support the sort key as being option for queryParams and query methods.
      */
     L0S?: Table.PrimaryKey.SortString;
   }
@@ -271,7 +271,7 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
 }
 
 /**
- *
+ * Object that represents the DynamoDB table
  */
 export class Table {
   private _client?: DocumentClient;
@@ -295,11 +295,12 @@ export class Table {
    */
   globalIndexes: Index[] = [];
   /**
-   * List of the local secondary indexes (GSI) for the table.
+   * List of the local secondary indexes (LSI) for the table.
    */
   localIndexes: Index[] = [];
   /**
-   *
+   * Determines how errors should be handled.
+   * The default is to throw on any errors.
    */
   onError: (msg: string) => void = (msg: string) => {
     throw new Error(msg);
@@ -345,23 +346,25 @@ export class Table {
   }
 
   /**
-   * @returns The name of the primary (or HASH) key.
+   * @returns The name of the primary (or HASH) key attribute.
    */
   getPartitionKey(): string {
     return getKeyName(this.keySchema, 'HASH');
   }
 
   /**
-   * @returns The name of the sort (or RANGE) key.
+   * @returns The name of the sort (or RANGE) key attribute.
    */
   getSortKey(): string {
     return getKeyName(this.keySchema, 'RANGE');
   }
 
   /**
-   *
-   * @param list
-   * @param options
+   * Wrapper around the [DocumentClient.createSet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#createSet-property}
+   * used by the below create*Set methods to create type safe sets. Choose to leverage DocumentClient
+   * implementation of set to allow DocumentClient to correctly auto convert to DynamoDB's native types.
+   * @param list Array of items to create the set from.
+   * @param options Options to pass DocumentClient createSet.
    */
   createSet(
     list: string[] | number[] | Table.BinaryValue[],
@@ -370,23 +373,38 @@ export class Table {
     return this.client.createSet(list, options);
   }
 
+  /**
+   * Create a string set from a string array.
+   * @param list String array to create set from.
+   * @param options Options to pass DocumentClient createSet.
+   */
   createStringSet(list: string[], options?: DocumentClient.CreateSetOptions): Table.StringSetValue {
     return this.createSet(list, options) as Table.StringSetValue;
   }
 
+  /**
+   * Create a number set from a number array.
+   * @param list Number array to create set from.
+   * @param options Options to pass DocumentClient createSet.
+   */
   createNumberSet(list: number[], options?: DocumentClient.CreateSetOptions): Table.NumberSetValue {
     return this.createSet(list, options) as Table.NumberSetValue;
   }
 
+  /**
+   * Create a binary set from a binary array.
+   * @param list Binary array to create set from.
+   * @param options Options to pass DocumentClient createSet.
+   */
   createBinarySet(list: Table.BinaryValue[], options?: DocumentClient.CreateSetOptions): Table.BinarySetValue {
     return this.createSet(list, options) as Table.BinarySetValue;
   }
 
   // Action Params:
   /**
-   *
-   * @param key
-   * @param options
+   * Creates the params that can be used when calling [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}
+   * @param key Primary key of item to get.
+   * @param options Additional optional options to use for get.
    * @returns Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}
    */
   getParams(key: Table.PrimaryKey.AttributeValuesMap, options: Table.GetOptions = {}): Table.GetInput {
@@ -396,6 +414,12 @@ export class Table {
       Key: key,
     };
   }
+  /**
+   * Creates the params that can be used when calling [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}
+   * @param key Primary key of item to delete.
+   * @param options Additional optional options to use for delete.
+   * @returns Input params for [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}
+   */
   deleteParams(
     key: Table.PrimaryKey.AttributeValuesMap,
     options: Table.DeleteOptions = {},
@@ -406,15 +430,27 @@ export class Table {
       Key: key,
     };
     const attributes = options.attributes || new ExpressionAttributes();
-    Condition.addAndParam(options.conditions, attributes, params);
+    Condition.addAndParam(options.conditions, new ConditionExpression(attributes), params);
     attributes.addParams(params);
     return params;
   }
+  /**
+   * Get the condition that is needed to support a specific PutWriteOptions.
+   * @param options Type of put to get the condition for.
+   * @returns Condition resolver that maps to the PutWriteOptions.
+   */
   getPutCondition(options: Table.PutWriteOptions): Condition.Resolver | void {
     if (options === 'Exists') return Condition.exists(this.getPartitionKey());
     if (options === 'NotExists') return Condition.notExists(this.getPartitionKey());
   }
   // Consider having writeOptions default to be 'NotExists'
+  /**
+   * Creates the params that can be used when calling [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}
+   * @param key Primary key of item to put.
+   * @param item Attributes of the item to put.
+   * @param options Additional optional options to use for put.
+   * @returns Input params for [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}
+   */
   putParams(
     key: Table.PrimaryKey.AttributeValuesMap,
     item?: Table.AttributeValuesMap,
@@ -429,10 +465,17 @@ export class Table {
     const condition = this.getPutCondition(options.writeOptions || 'Always');
     if (condition) conditions.push(condition);
     const attributes = options.attributes || new ExpressionAttributes();
-    Condition.addAndParam(conditions, attributes, params);
+    Condition.addAndParam(conditions, new ConditionExpression(attributes), params);
     attributes.addParams(params);
     return params;
   }
+  /**
+   * Creates the params that can be used when calling [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}
+   * @param key Primary key of item to update.
+   * @param item Attributes of the item to update.
+   * @param options Additional optional options to use for update.
+   * @returns Input params for [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}
+   */
   updateParams(
     key: Table.PrimaryKey.AttributeValuesMap,
     item?: Update.UpdateMapValue,
@@ -445,16 +488,16 @@ export class Table {
     };
     const attributes = options.attributes || new ExpressionAttributes();
     Update.addParam(item, attributes, params);
-    Condition.addAndParam(options.conditions, attributes, params);
+    Condition.addAndParam(options.conditions, new ConditionExpression(attributes), params);
     attributes.addParams(params);
     return params;
   }
 
   /**
-   * Creates the params that can be used when calling the [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property} method.
+   * Creates the params that can be used when calling [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property} method.
    * @param key Primary key with optional KeyCondition to query the table with
    * @param options Used in building the query params
-   * @returns DynamoDB query method params containing the table, index, key and options.
+   * @returns Input params for [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}
    */
   queryParams(key: Table.PrimaryKey.KeyQueryMap, options: Table.QueryOptions = {}): DocumentClient.QueryInput {
     const params: DocumentClient.QueryInput = {
@@ -462,15 +505,15 @@ export class Table {
       TableName: this.name,
     };
     const attributes = options.attributes || new ExpressionAttributes();
-    KeyCondition.addParam(key, attributes, params);
-    Condition.addAndFilterParam(options.conditions, attributes, params);
+    KeyCondition.addParam(key, new KeyConditionExpression(attributes), params);
+    Condition.addAndFilterParam(options.conditions, new ConditionExpression(attributes), params);
     attributes.addParams(params);
     return params;
   }
   /**
-   * Creates the params that can be used when calling the [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
+   * Creates the params that can be used when calling [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
    * @param options Used in building the scan params
-   * @returns DocumentClient scan method's params containing the table, index and options.
+   * @returns Input params for [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
    */
   scanParams(options: Table.ScanOptions = {}): DocumentClient.ScanInput {
     const params: DocumentClient.ScanInput = {
@@ -478,21 +521,40 @@ export class Table {
       TableName: this.name,
     };
     const attributes = options.attributes || new ExpressionAttributes();
-    Condition.addAndFilterParam(options.conditions, attributes, params);
+    Condition.addAndFilterParam(options.conditions, new ConditionExpression(attributes), params);
     attributes.addParams(params);
     return params;
   }
 
   // actions:
+  /**
+   * Wrapper method for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property} method.
+   * @param key Primary key of item to get.
+   * @param options Additional optional options to use for get.
+   * @returns Async promise returned by [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property} method.
+   */
   get(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.GetOptions): Promise<DocumentClient.GetItemOutput> {
     return this.client.get(this.getParams(key, options)).promise();
   }
+  /**
+   * Wrapper method for [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property} method.
+   * @param key Primary key of item to delete.
+   * @param options Additional optional options to use for delete.
+   * @returns Async promise returned by [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property} method.
+   */
   delete(
     key: Table.PrimaryKey.AttributeValuesMap,
     options?: Table.DeleteOptions,
   ): Promise<DocumentClient.DeleteItemOutput> {
     return this.client.delete(this.deleteParams(key, options)).promise();
   }
+  /**
+   * Wrapper method for [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property} method.
+   * @param key Primary key of item to put.
+   * @param item Attributes of the item to put.
+   * @param options Additional optional options to use for put.
+   * @returns Async promise returned by [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property} method.
+   */
   put(
     key: Table.PrimaryKey.AttributeValuesMap,
     items?: Table.AttributeValuesMap,
@@ -500,6 +562,13 @@ export class Table {
   ): Promise<DocumentClient.PutItemOutput> {
     return this.client.put(this.putParams(key, items, options)).promise();
   }
+  /**
+   * Wrapper method for [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property} method.
+   * @param key Primary key of item to update.
+   * @param item Attributes of the item to update.
+   * @param options Additional optional options to use for update.
+   * @returns Async promise returned by [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property} method.
+   */
   update(
     key: Table.PrimaryKey.AttributeValuesMap,
     items?: Update.UpdateMapValue,
@@ -527,7 +596,11 @@ export class Table {
     return this.client.scan(this.scanParams(options)).promise();
   }
 
-  static getPutAction(options?: Table.PutWriteOptions): 'put' | 'put-new' | 'put-replace' {
+  /**
+   * Maps PutWriteOptions to one of the put based ItemActions used by Fields to tell the type of put operation.
+   * @param options Put write option to map into a put item action.
+   */
+  static getPutAction(options?: Table.PutWriteOptions): Table.PutItemActions {
     if (options === 'NotExists') return 'put-new';
     if (options === 'Exists') return 'put-replace';
     return 'put';
@@ -537,18 +610,55 @@ export class Table {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   // export type PromiseResult<D, E> = D & { $response: Response<D, E> };
+  /**
+   * TypeScript utility type that constructs a type consisting of all properties of T set to optional.
+   * Does the opposite of [Required]{@link https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredt}
+   */
   export type Optional<T> = { [P in keyof T]?: T[P] };
 
+  /**
+   * Attribute types support by {@link Table} and [DocumentClient]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html}.
+   */
   export type AttributeTypes = 'B' | 'N' | 'S' | 'BOOL' | 'NULL' | 'L' | 'M' | 'BS' | 'NS' | 'SS';
 
+  /**
+   * Binary value supported by {@link Table} and [DocumentClient]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html}.
+   */
   export type BinaryValue = DocumentClient.binaryType;
+
+  /**
+   * String set value supported by {@link Table} and [DocumentClient]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html}.
+   */
   export type StringSetValue = DocumentClient.StringSet;
+
+  /**
+   * Number set value supported by {@link Table} and [DocumentClient]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html}.
+   */
   export type NumberSetValue = DocumentClient.NumberSet;
+
+  /**
+   * Binary set value supported by {@link Table} and [DocumentClient]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html}.
+   */
   export type BinarySetValue = DocumentClient.BinarySet;
+
+  /**
+   * Map value supported by {@link Table} and [DocumentClient]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html}.
+   */
   export type MapValue = { [key: string]: AttributeValues };
+
+  /**
+   * List value supported by {@link Table} and [DocumentClient]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html}.
+   */
   export type ListValue = AttributeValues[];
 
+  /**
+   * Supported Table set based values
+   */
   export type AttributeSetValues = StringSetValue | NumberSetValue | BinarySetValue;
+
+  /**
+   * Supported Table values
+   */
   export type AttributeValues =
     | null
     | string
@@ -559,17 +669,52 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     | MapValue
     | ListValue;
 
+  /**
+   * Supported Table value map used for {@link put} method.
+   */
   export type AttributeValuesMap = { [key: string]: AttributeValues };
 
-  export type ItemActions = 'get' | 'delete' | 'put' | 'put-new' | 'put-replace' | 'update';
+  /**
+   * Put based item actions, used by {@link Fields} to determine what put based table operation will be executed.
+   */
+  export type PutItemActions = 'put' | 'put-new' | 'put-replace';
+  /**
+   * Item actions used by {@link Fields} to determine what table operation will be executed.
+   */
+  export type ItemActions = 'get' | 'delete' | PutItemActions | 'update';
 
+  /**
+   * Params used to construct a {@link Table}.
+   */
   export interface TableParams {
+    /**
+     * Name of the DynamoDB table, used to set the TableName when calling DynamoDB methods.
+     */
     name: string;
-    keyAttributes: PrimaryKey.AttributeTypesMap;
-    keySchema: PrimaryKey.KeyTypesMap;
+    /**
+     * Definition of the attribute types required for table and index primary key and for index projected attributes.
+     * These need to be defined at the table level since the attributes are table wide concept.
+     */
+    keyAttributes: Table.PrimaryKey.AttributeTypesMap;
+    /**
+     * Schema map for the Table's primary key, in the form of { <partition key name>: { keyType: 'HASH'} }.
+     */
+    keySchema: Table.PrimaryKey.KeyTypesMap;
+    /**
+     * List of the global secondary indexes (GSI) for the table.
+     */
     globalIndexes?: Index[];
+    /**
+     * List of the local secondary indexes (LSI) for the table.
+     */
     localIndexes?: Index[];
+    /**
+     * DocumentClient to use in the {@link Table}.  Can be a function to support creating the DocumentClient on demand.
+     */
     client: DocumentClient | (() => DocumentClient);
+    /**
+     * Determines how errors should be handled.
+     */
     onError?: (msg: string) => void;
   }
 
@@ -607,7 +752,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     export type AttributeValues = string | number | Table.BinaryValue;
     // ScalarAttributeType
     /**
-     * Support primary key attribute type define.
+     * Supported primary key attribute types.
      */
     export type AttributeTypes = 'B' | 'N' | 'S';
     /**
@@ -740,21 +885,49 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     extends Omit<DocumentClient.ScanInput, 'AttributesToGet' | 'ScanFilter' | 'ConditionalOperator'> {}
 
   /**
-   *
+   * Base options for all table operations like get, put, delete, update and others.
    */
   export interface BaseOptions<T = {}> {
+    /**
+     * Expression attributes to use for resolving conditions and updates.  Will be used to generate the ExpressionAttributeNames and ExpressionAttributeValues params in table operations.
+     */
     attributes?: ExpressionAttributes;
+    /**
+     * Array of expression condition resolvers that are joined together with AND, then used as ConditionExpression or FilterExpression params in table operations.
+     */
     conditions?: Condition.Resolver[];
+    /**
+     * Params to pass through to the DocumentClient methods.
+     */
     params?: Optional<T>;
+    // TODO: Consider passing BaseOptions or something similar to Condition, KeyCondition and Update
+    /**
+     * User defined context that gets passed through to all Fields.
+     */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context?: any;
   }
+  /**
+   *
+   */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface GetOptions extends BaseOptions<GetInput> {}
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface DeleteOptions extends BaseOptions<DeleteInput> {}
+  /**
+   * Put method write options that determine how put will execute.
+   * 'Always' - Default put behavior, that will always set the item weather it exists or now.
+   * 'Exists' - Only set the item if the item already exists, adds ConditionExpression="attribute_exists(#pk)", where #pk is the partition key name.
+   * 'NotExists' - Only set the item if the item does not exist, add ConditionExpression="attribute_not_exists(#pk)", where #pk is the partition key name.
+   */
   export type PutWriteOptions = 'Always' | 'Exists' | 'NotExists';
+  /**
+   *
+   */
   export interface PutOptions extends BaseOptions<PutInput> {
+    /**
+     * Allows put to be conditional based on if the item already exists.
+     */
     writeOptions?: PutWriteOptions;
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

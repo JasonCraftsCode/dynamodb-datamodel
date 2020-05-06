@@ -77,9 +77,9 @@ describe('Validate Update.buildExpression', () => {
         validate: true,
       }),
       testNumberSet: documentClient.createSet([1, 3, 6], { validate: true }),
-      testBinarySet: documentClient.createSet([Buffer.from('asdf'), Buffer.from('flmvc')], { validate: true }),
+      testBinarySet: documentClient.createSet([Buffer.from('Buffer 1'), Buffer.from('Buffer 2')], { validate: true }),
       testList: [1, 'string', true],
-      testMap: { tbool: true, tstring: 'str', tmap: { tnumber: 8 } },
+      testMap: { tBool: true, tString: 'str', tMap: { tNumber: 8 } },
       testNull: null,
     };
     const update = Update.buildExpression(input, exp);
@@ -148,15 +148,15 @@ describe('Validate Update.buildExpression', () => {
       testStringSet: Update.set(documentClient.createSet(['abc', 'def', 'xyz'], { validate: true })),
       testNumberSet: Update.set(documentClient.createSet([1, 3, 6], { validate: true })),
       testBinarySet: Update.set(
-        documentClient.createSet([Buffer.from('asdf'), Buffer.from('flmvc')], {
+        documentClient.createSet([Buffer.from('Buffer 1'), Buffer.from('Buffer 2')], {
           validate: true,
         }),
       ),
       testList: Update.set([1, 'string', true]),
       testMap: Update.set({
-        tbool: true,
-        tstring: 'str',
-        tmap: { tnumber: 8 },
+        tBool: true,
+        tString: 'str',
+        tMap: { tNumber: 8 },
       }),
       testDel: Update.del(),
       testFunction: Update.set(Update.path('testFunc1')),
@@ -203,12 +203,12 @@ describe('Validate Update.buildExpression', () => {
         validate: true,
       }),
       ':v5': documentClient.createSet([1, 3, 6], { validate: true }),
-      ':v6': documentClient.createSet([Buffer.from('asdf'), Buffer.from('flmvc')], { validate: true }),
+      ':v6': documentClient.createSet([Buffer.from('Buffer 1'), Buffer.from('Buffer 2')], { validate: true }),
       ':v7': [1, 'string', true],
       ':v8': {
-        tbool: true,
-        tstring: 'str',
-        tmap: { tnumber: 8 },
+        tBool: true,
+        tString: 'str',
+        tMap: { tNumber: 8 },
       },
     });
   });
@@ -222,15 +222,15 @@ describe('Validate Update.buildExpression', () => {
       testStringSet: Update.default(documentClient.createSet(['abc', 'def', 'xyz'], { validate: true })),
       testNumberSet: Update.default(documentClient.createSet([1, 3, 6], { validate: true })),
       testBinarySet: Update.default(
-        documentClient.createSet([Buffer.from('asdf'), Buffer.from('flmvc')], {
+        documentClient.createSet([Buffer.from('Buffer 1'), Buffer.from('Buffer 2')], {
           validate: true,
         }),
       ),
       testList: Update.default([1, 'string', true]),
       testMap: Update.default({
-        tbool: true,
-        tstring: 'str',
-        tmap: { tnumber: 8 },
+        tBool: true,
+        tString: 'str',
+        tMap: { tNumber: 8 },
       }),
     };
     const update = Update.buildExpression(input, exp);
@@ -268,12 +268,12 @@ describe('Validate Update.buildExpression', () => {
       ':v3': Buffer.from('the buffer'),
       ':v4': documentClient.createSet(['abc', 'def', 'xyz']),
       ':v5': documentClient.createSet([1, 3, 6]),
-      ':v6': documentClient.createSet([Buffer.from('asdf'), Buffer.from('flmvc')]),
+      ':v6': documentClient.createSet([Buffer.from('Buffer 1'), Buffer.from('Buffer 2')]),
       ':v7': [1, 'string', true],
       ':v8': {
-        tbool: true,
-        tstring: 'str',
-        tmap: { tnumber: 8 },
+        tBool: true,
+        tString: 'str',
+        tMap: { tNumber: 8 },
       },
     });
   });
@@ -530,7 +530,7 @@ describe('Validate Update.buildExpression', () => {
     };
     const update = Update.buildExpression(input, exp);
     expect(update).toEqual('DELETE #n0 :v0, #n1 :v1, #n2 :v2');
-    expect({ del: exp.delList }).toEqual({
+    expect({ del: exp.deleteList }).toEqual({
       del: ['#n0 :v0', '#n1 :v1', '#n2 :v2'],
     });
     expect(exp.getPaths()).toEqual({
@@ -631,7 +631,7 @@ describe('Validate Update.buildExpression', () => {
     );
     expect({
       add: exp.addList,
-      del: exp.delList,
+      del: exp.deleteList,
       remove: exp.removeList,
       set: exp.setList,
     }).toEqual({
@@ -709,7 +709,7 @@ describe('Validate Update.buildExpression', () => {
     });
   });
 
-  it('Update Map subpath', () => {
+  it('Update Map sub path', () => {
     const input = {
       testMap: Update.map({
         'l1List[5]': 'l1 string',

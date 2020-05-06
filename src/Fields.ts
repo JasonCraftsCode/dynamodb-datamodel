@@ -4,7 +4,7 @@ import { Table } from './Table';
 import { Update } from './Update';
 
 /**
- *
+ * Collection of functions for constructing a Model schema.
  */
 export class Fields {
   static string(alias?: string): Fields.FieldString {
@@ -75,46 +75,89 @@ export class Fields {
     return new Fields.FieldHidden();
   }
 
-  static split(aliases: string[], delim?: string): Fields.FieldSplit {
-    return new Fields.FieldSplit(aliases, delim);
+  static split(aliases: string[], delimiter?: string): Fields.FieldSplit {
+    return new Fields.FieldSplit(aliases, delimiter);
   }
 
-  static composite(alias: string, count: number, delim?: string): Fields.FieldComposite {
-    return new Fields.FieldComposite(alias, count, delim);
+  static composite(alias: string, count: number, delimiter?: string): Fields.FieldComposite {
+    return new Fields.FieldComposite(alias, count, delimiter);
   }
 
   static namedComposite<T extends { [key: string]: number }>(
     alias: string,
     slotMap: T,
     slots?: Fields.CompositeSlot<T>,
-    delim?: string,
+    delimiter?: string,
   ): Fields.FieldCompositeT<T> {
-    return new Fields.FieldCompositeT<T>(alias, slotMap, slots, delim);
+    return new Fields.FieldCompositeT<T>(alias, slotMap, slots, delimiter);
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
+  /**
+   * Context object passed to {@link Field.toTable} and {@link Field.toTableUpdate} to allow the fields to know
+   * about the broader context and provide more complex behavior, like appending to the conditions param.
+   */
   export interface TableContext {
+    /**
+     * Type of action that will be run after all field's {@link Field.toTable} or {@link Field.toTableUpdate} are called.
+     */
     action: Table.ItemActions;
+    /**
+     * Array of conditions to resolve and joined with AND conditions, then set as the ConditionExpression param before calling DynamoDB method
+     */
     conditions: Condition.Resolver[];
+    /**
+     * Options for the current {@link Model} method being called.
+     */
     options: Table.BaseOptions;
+    /**
+     * The model that is calling the field's {@link Field.toTable} or {@link Field.toTableUpdate} methods
+     */
     model: Model.ModelBase;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    custom?: any;
   }
 
+  /**
+   * Context object passed to {@link Field.toModel} to allow the fields to know
+   * about the broader context and provide more complex behavior.
+   */
   export interface ModelContext {
+    /**
+     * Type of action that ran before all field's {@link Field.toModel} are called.
+     */
     action: Table.ItemActions;
+    /**
+     * Options for the current {@link Model} method being called.
+     */
     options: Table.BaseOptions;
+    /**
+     * The model that is calling the field's {@link Field.toModel} method.
+     */
     model: Model.ModelBase;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    custom?: any;
   }
 
+  /**
+   * The core interface all Fields implement and is used by {@link Model} to basically map model data to and from the
+   * table data.
+   *
+   *
+   */
   export interface Field {
-    name?: string;
-    init(name: string): void;
+    /**
+     * Initialize the field with the field name from the Model's schema and the model.
+     * @param name Name of the model attribute this field is set on.
+     * @param model Model this field is associated with.
+     */
+    init(name: string, model: Model): void;
+
+    /**
+     * Method called after calling
+     * @param name Name of the model attribute this field is associated with (generally same as {@link init} name argument)
+     * @param tableData Data from the table that needs to be mapped to the model data.
+     * @param modelData Data object for the model that this method will append to.
+     * @param context Current context this method is being called in.
+     */
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
@@ -156,7 +199,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this._alias = alias;
     }
 
-    init(name: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    init(name: string, model: Model): void {
       this.name = name;
     }
 
@@ -395,13 +439,13 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     getPath(path: string, defaultValue?: V): Update.UpdateFunction {
       return defaultValue === undefined ? Update.path(path) : Update.pathWithDefault(path, defaultValue);
     }
-    del(): Update.UpdateInput<string> {
+    del(): Update.Resolver<string> {
       return Update.del();
     }
-    set(value: V | Update.UpdateFunction): Update.UpdateInput<string> {
+    set(value: V | Update.UpdateFunction): Update.Resolver<string> {
       return Update.set(value);
     }
-    setDefault(value: V | Update.UpdateFunction): Update.UpdateInput<string> {
+    setDefault(value: V | Update.UpdateFunction): Update.Resolver<string> {
       return Update.default(value);
     }
   }
@@ -421,16 +465,16 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   export class FieldNumber extends FieldExpression<number, 'N'> {
     // Update
-    inc(value: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
+    inc(value: Update.UpdateNumberValue): Update.Resolver<'N'> {
       return Update.inc(value);
     }
-    dec(value: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
+    dec(value: Update.UpdateNumberValue): Update.Resolver<'N'> {
       return Update.dec(value);
     }
-    add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
+    add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
       return Update.add(left, right);
     }
-    sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.UpdateInput<'N'> {
+    sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
       return Update.sub(left, right);
     }
   }
@@ -445,10 +489,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     // Update
-    add(value: Table.AttributeSetValues): Update.UpdateInput<T> {
+    add(value: Table.AttributeSetValues): Update.Resolver<T> {
       return Update.addToSet(value);
     }
-    remove(value: Table.AttributeSetValues): Update.UpdateInput<T> {
+    remove(value: Table.AttributeSetValues): Update.Resolver<T> {
       return Update.removeFromSet(value);
     }
   }
@@ -480,19 +524,19 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     // Update
-    append(value: Update.UpdateListValueT<V>): Update.UpdateInput<'L'> {
+    append(value: Update.UpdateListValueT<V>): Update.Resolver<'L'> {
       return Update.append(value);
     }
-    prepend(value: Update.UpdateListValueT<V>): Update.UpdateInput<'L'> {
+    prepend(value: Update.UpdateListValueT<V>): Update.Resolver<'L'> {
       return Update.prepend(value);
     }
-    join(left: Update.UpdateListValueT<V>, right: Update.UpdateListValueT<V>): Update.UpdateInput<'L'> {
+    join(left: Update.UpdateListValueT<V>, right: Update.UpdateListValueT<V>): Update.Resolver<'L'> {
       return Update.join(left, right);
     }
-    delIndexes(indexes: number[]): Update.UpdateInput<'L'> {
+    delIndexes(indexes: number[]): Update.Resolver<'L'> {
       return Update.delIndexes(indexes);
     }
-    setIndexes(indexes: { [key: number]: V | Update.UpdateFunction }): Update.UpdateInput<'L'> {
+    setIndexes(indexes: { [key: number]: V | Update.UpdateFunction }): Update.Resolver<'L'> {
       return Update.setIndexes(indexes);
     }
   }
@@ -504,7 +548,11 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     constructor(type: string, schema: Model.ModelSchemaT<V>, alias?: string) {
       super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = schema;
-      Object.keys(schema).forEach((key) => schema[key].init(key));
+    }
+
+    init(name: string, model: Model): void {
+      super.init(name, model);
+      Object.keys(this.schema).forEach((key) => this.schema[key].init(key, model));
     }
   }
 
@@ -518,7 +566,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     // Update
-    map(map: { [key: string]: V }): Update.UpdateInput<'M'> {
+    map(map: { [key: string]: V }): Update.Resolver<'M'> {
       return Update.map(map);
     }
   }
@@ -530,7 +578,11 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     constructor(type: string, schema: Model.ModelSchemaT<V>, alias?: string) {
       super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = schema;
-      Object.keys(schema).forEach((key) => schema[key].init(key));
+    }
+
+    init(name: string, model: Model): void {
+      super.init(name, model);
+      Object.keys(this.schema).forEach((key) => this.schema[key].init(key, model));
     }
   }
 
@@ -544,7 +596,11 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     constructor(type: string, schema: Model.ModelSchemaT<V>, alias?: string) {
       super(type, alias) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = schema;
-      Object.keys(schema).forEach((key) => schema[key].init(key));
+    }
+
+    init(name: string, model: Model): void {
+      super.init(name, model);
+      Object.keys(this.schema).forEach((key) => this.schema[key].init(key, model));
     }
 
     // Condition
@@ -553,7 +609,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     // Update
-    map(map: Model.ModelUpdateT<V>): Update.UpdateInput<'M'> {
+    map(map: Model.ModelUpdateT<V>): Update.Resolver<'M'> {
       return Update.map(map);
     }
   }
@@ -610,7 +666,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.name = name;
     }
 
-    init(name: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    init(name: string, model: Model): void {
       this.name = name;
     }
 
@@ -654,12 +711,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   export class FieldComposite {
     alias: string;
     count: number;
-    delim: string;
+    delimiter: string;
 
-    constructor(alias: string, count: number, delim = '.') {
+    constructor(alias: string, count: number, delimiter = '.') {
       this.alias = alias;
       this.count = count;
-      this.delim = delim;
+      this.delimiter = delimiter;
     }
 
     slot(value: number): FieldCompositeSlot {
@@ -676,7 +733,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       const value = tableData[this.alias];
       if (typeof value !== 'string') return;
-      const parts = value.split(this.delim);
+      const parts = value.split(this.delimiter);
       if (slot >= parts.length) return;
       modelData[name] = parts[slot];
     }
@@ -692,10 +749,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       const value = modelData[name];
       if (value === undefined) return;
       if (typeof value === 'function') return; // throw and error
-      const slots = (tableData[this.alias] as string)?.split(this.delim) || new Array<string>(this.count);
+      const slots = (tableData[this.alias] as string)?.split(this.delimiter) || new Array<string>(this.count);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       slots[slot] = value!.toString();
-      tableData[this.alias] = slots.join(this.delim);
+      tableData[this.alias] = slots.join(this.delimiter);
     }
 
     toTableUpdate(
@@ -717,9 +774,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     slots: CompositeSlot<T>;
     map: T;
 
-    constructor(alias: string, map: T, slots?: CompositeSlot<T>, delim?: string) {
+    constructor(alias: string, map: T, slots?: CompositeSlot<T>, delimiter?: string) {
       const keys = Object.keys(map);
-      super(alias, keys.length, delim);
+      super(alias, keys.length, delimiter);
       this.map = map;
       if (slots) this.slots = slots;
       else {
@@ -745,13 +802,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   export class FieldSplit implements Field {
     name?: string;
     aliases: string[];
-    delim: string;
+    delimiter: string;
 
-    constructor(aliases: string[], delim = '.') {
+    constructor(aliases: string[], delimiter = '.') {
       this.aliases = aliases;
-      this.delim = delim;
+      this.delimiter = delimiter;
     }
-    init(name: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    init(name: string, model: Model): void {
       this.name = name;
     }
     toModel(
@@ -766,7 +824,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
         const part = tableData[alias];
         if (part) parts.push(part.toString());
       });
-      if (parts.length > 0) modelData[name] = parts.join(this.delim);
+      if (parts.length > 0) modelData[name] = parts.join(this.delimiter);
     }
 
     toTable(
@@ -780,10 +838,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       const value = modelData[name];
       if (value !== undefined && typeof value === 'string') {
         // skip any field that is not a string and is split aliased
-        let parts = value.split(this.delim);
+        let parts = value.split(this.delimiter);
         const extraParts = parts.length - this.aliases.length;
         if (extraParts > 0) {
-          parts[extraParts] = parts.slice(0, extraParts + 1).join(this.delim);
+          parts[extraParts] = parts.slice(0, extraParts + 1).join(this.delimiter);
           parts = parts.slice(extraParts);
         }
         for (let i = 0; i < parts.length; i++) {

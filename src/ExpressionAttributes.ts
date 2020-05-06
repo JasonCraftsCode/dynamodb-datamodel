@@ -22,7 +22,7 @@ export class ExpressionAttributes {
 
   /**
    * Property function to determine if the name is a reserved word and should use an alias.
-   * For a current list of reserved words see dynamodb-reservedwords module in NPM.
+   * For a current list of reserved words see DynamoDB-ReservedWords module in NPM.
    * The reason to set isReservedName and isValidName is to allow the attribute names to be directly
    * embedded into the expression string, which can make them easier to read.
    * * @default '() => false;' To use aliases for all attribute names.
