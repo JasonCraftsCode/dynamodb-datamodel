@@ -15,7 +15,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    // "noUnusedParameters": true, // due to function params to enforce type checking
+    // "noUnusedParameters": true,  due to function params to enforce type checking
     "strict": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,

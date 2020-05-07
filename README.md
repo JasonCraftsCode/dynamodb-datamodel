@@ -62,9 +62,9 @@ General usage flow:
 
 1. Import or require `Table`, `Model` and `Fields` from `dynamodb-datamodel`
 2. Create DynamoDB DocumentClient
-3. _[TypeScript]_ Define Table's primary key interface
+3. (_TypeScript_) Define Table's primary key interface
 4. Create Table and define key attributes and schema
-5. _[TypeScript]_ Define each Model key and data interface
+5. (_TypeScript_) Define each Model key and data interface
 6. Create each Model and define data schema
 7. Use the model to read and write data
 

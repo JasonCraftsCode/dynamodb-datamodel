@@ -110,7 +110,8 @@ export function validateIndexes(index: Index, names: Set<string>, onError: (msg:
  * Validates that a table is configured correctly.  The Table's onError methods is called for any validation errors.
  * This method should primarily be used in tests to validate the table.
  * @typeParam KEY The interface of the table's primary key
- * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary key and all defined index projected attributes.
+ * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary
+ * key and all defined index projected attributes.
  * @param table Table to be validated.
  */
 export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>): void {

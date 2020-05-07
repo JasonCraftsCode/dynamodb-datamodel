@@ -19,22 +19,6 @@ export class Model implements Model.ModelBase {
     Object.keys(this.schema).forEach((key) => this.schema[key].init(key, this));
   }
 
-  private splitTableData(
-    data: Table.AttributeValuesMap,
-  ): {
-    key: Table.PrimaryKey.AttributeValuesMap;
-    item: Table.AttributeValuesMap;
-  } {
-    const key: Table.PrimaryKey.AttributeValuesMap = {};
-    const item: Table.AttributeValuesMap = { ...data };
-    Object.keys(this.table.keySchema).forEach((name) => {
-      if (data[name] === undefined) return;
-      key[name] = data[name] as Table.PrimaryKey.AttributeValues;
-      delete item[name];
-    });
-    return { key, item };
-  }
-
   async toTable(data: Model.ModelData, context: Fields.TableContext): Promise<Model.TableData> {
     const tableData: Table.AttributeValuesMap = {};
     // enumerate schema so each field gets called
@@ -144,6 +128,22 @@ export class Model implements Model.ModelBase {
     const result = await this.table.update(tableData.key, tableData.item, options);
     const item = await this.toModel(result.Attributes, context);
     return { item, result };
+  }
+
+  private splitTableData(
+    data: Table.AttributeValuesMap,
+  ): {
+    key: Table.PrimaryKey.AttributeValuesMap;
+    item: Table.AttributeValuesMap;
+  } {
+    const key: Table.PrimaryKey.AttributeValuesMap = {};
+    const item: Table.AttributeValuesMap = { ...data };
+    Object.keys(this.table.keySchema).forEach((name) => {
+      if (data[name] === undefined) return;
+      key[name] = data[name] as Table.PrimaryKey.AttributeValues;
+      delete item[name];
+    });
+    return { key, item };
   }
 }
 

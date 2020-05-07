@@ -48,9 +48,10 @@ describe('Validate KeyCondition', () => {
   });
 
   it('lt', () => {
-    expect(buildKeyCondition({ P: KeyCondition.lt(4) })).toEqual({
+    const ltValue = 4;
+    expect(buildKeyCondition({ P: KeyCondition.lt(ltValue) })).toEqual({
       Paths: { '#n0': 'P' },
-      Values: { ':v0': 4 },
+      Values: { ':v0': ltValue },
       KeyConditionExpression: '#n0 < :v0',
     });
   });

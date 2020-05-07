@@ -20,7 +20,7 @@ export class KeyConditionExpression {
    * Initialize KeyConditionExpression with existing or new {@link ExpressionAttributes}.
    * @param attributes Object used to get path and value aliases.
    */
-  constructor(attributes = new ExpressionAttributes()) {
+  constructor(attributes: ExpressionAttributes = new ExpressionAttributes()) {
     this.attributes = attributes;
   }
 

@@ -72,27 +72,6 @@ export class ExpressionAttributes {
   nextValue = 0;
 
   /**
-   * Private method to add an attribute name to the names mapping if needed and hand back an alias to use in
-   * an expression.
-   * @param name Attribute name.
-   * @returns Alias to use for the attribute name or the name if not aliasing is needed.
-   */
-  private addName(name: string): string {
-    const names = this.names;
-    if (this.isReservedName(name)) {
-      const attName = `#${name}`;
-      names[attName] = name;
-      return attName;
-    } else if (!this.isValidName(name)) {
-      for (const key in names) if (names[key] === name) return key;
-      const attName = `#n${this.nextName++}`;
-      names[attName] = name;
-      return attName;
-    }
-    return name;
-  }
-
-  /**
    * Parse an attribute path and adds the names to the names mapping as needed and hands back an alias to use
    * in an expression.  If the name already exists in the map the existing alias will be used.
    * When this.treatNameAsPath is true the name argument will be parsed as a path and will handle arrays
@@ -170,5 +149,26 @@ export class ExpressionAttributes {
     if (Object.keys(this.values).length > 0) params.ExpressionAttributeValues = this.values;
     else delete params.ExpressionAttributeValues;
     return params;
+  }
+
+  /**
+   * Private method to add an attribute name to the names mapping if needed and hand back an alias to use in
+   * an expression.
+   * @param name Attribute name.
+   * @returns Alias to use for the attribute name or the name if not aliasing is needed.
+   */
+  private addName(name: string): string {
+    const names = this.names;
+    if (this.isReservedName(name)) {
+      const attName = `#${name}`;
+      names[attName] = name;
+      return attName;
+    } else if (!this.isValidName(name)) {
+      for (const key in names) if (names[key] === name) return key;
+      const attName = `#n${this.nextName++}`;
+      names[attName] = name;
+      return attName;
+    }
+    return name;
   }
 }
