@@ -302,6 +302,9 @@ export class UpdateExpression {
 
 /**
  * Set of helper methods used to build UpdateExpression for use in DynamoDB update method.
+ * @example
+ * ```typescript
+ * ```
  */
 export class Update {
   /**
@@ -614,13 +617,13 @@ export class Update {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Update {
   /**
-   * Resolver function is return by most of the above key Update methods.  Returning a function allows key conditions
-   * to easily be composable and extensible.  This allows consumers to create higher level key conditions that are composed
-   * of the above primitive key conditions or support any new primitives that AWS would add in the future.
+   * Resolver function is return by most of the above key Update methods.  Returning a function allows table item updates
+   * to easily be composable and extensible.  This allows consumers to create higher level table item update that are composed
+   * of the primitive update expressions or support any new primitives that AWS would add in the future.
    * @typeParam T The type used for the value param.
-   * @param name Name of the primary key attribute to resolve.
-   * @param exp Object to get path and value aliases and store conditions array.
-   * @param type Param to enforce type safety for conditions that only work on certain types.
+   * @param name Name of the item attribute to resolve.
+   * @param exp Object to get path and value aliases and store update array.
+   * @param type Param to enforce type safety for update that only work on certain types.
    */
   export type Resolver<T> = (name: string, exp: UpdateExpression, type?: T) => void;
 
@@ -675,7 +678,10 @@ export namespace Update {
   export type UpdateMap = Resolver<'M'>;
 
   /**
-   * Update function return by path and pathWithDefault to support nested resolvers
+   * Update function return by path and pathWithDefault to support nested resolvers.
+   * @param name Name of the item attribute to resolve.
+   * @param exp Object to get path and value aliases and store update array.
+   * @returns The resolved value of the update function.
    */
   export type UpdateFunction = (name: string, exp: UpdateExpression) => string;
 
@@ -701,6 +707,7 @@ export namespace Update {
 
   /**
    * Type used for generic map based update methods.
+   * @paramType T
    */
   export type UpdateMapValueT<T> = {
     [key: string]: T | Resolver<string> | undefined;

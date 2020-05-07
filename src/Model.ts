@@ -108,38 +108,42 @@ export class Model implements Model.ModelBase {
     return this.table.updateParams(tableData.key, tableData.item, options);
   }
 
-  async get(key: Model.ModelCore, options: Table.GetOptions = {}): Promise<Model.ModelOut | undefined> {
+  async get(key: Model.ModelCore, options: Table.GetOptions = {}): Promise<Model.PutOutput> {
     const context = this.getContext('get', options);
     const tableKey = await this.toTableKey(key, context);
     const result = await this.table.get(tableKey, options);
-    return this.toModel(result.Item, context);
+    const item = await this.toModel(result.Item, context);
+    return { item, result };
   }
-  new(item: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.ModelOut | undefined> {
+  create(data: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.PutOutput> {
     options.writeOptions = 'NotExists';
-    return this.put(item, options);
+    return this.put(data, options);
   }
-  replace(item: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.ModelOut | undefined> {
+  replace(data: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.PutOutput> {
     options.writeOptions = 'Exists';
-    return this.put(item, options);
+    return this.put(data, options);
   }
-  async put(item: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.ModelOut | undefined> {
+  async put(data: Model.ModelCore, options: Table.PutOptions = {}): Promise<Model.PutOutput> {
     const action = Table.getPutAction(options.writeOptions);
     const context = this.getContext(action, options);
-    const tableData = await this.toTable(item, context);
-    await this.table.put(tableData.key, tableData.item, options);
-    return this.toModel({ ...tableData.key, ...tableData.item }, context);
+    const tableData = await this.toTable(data, context);
+    const result = await this.table.put(tableData.key, tableData.item, options);
+    const item = await this.toModel({ ...tableData.key, ...tableData.item }, context);
+    return { item, result };
   }
-  async delete(key: Model.ModelCore, options: Table.DeleteOptions = {}): Promise<Model.ModelOut | undefined> {
+  async delete(key: Model.ModelCore, options: Table.DeleteOptions = {}): Promise<Model.DeleteOutput> {
     const context = this.getContext('delete', options);
     const tableKey = await this.toTableKey(key, context);
     const result = await this.table.delete(tableKey, options);
-    return this.toModel(result.Attributes, context);
+    const item = await this.toModel(result.Attributes, context);
+    return { item, result };
   }
-  async update(item: Model.ModelUpdate, options: Table.UpdateOptions = {}): Promise<Model.ModelOut | undefined> {
+  async update(data: Model.ModelUpdate, options: Table.UpdateOptions = {}): Promise<Model.UpdateOutput> {
     const context = this.getContext('update', options);
-    const tableData = await this.toTableUpdate(item, context);
+    const tableData = await this.toTableUpdate(data, context);
     const result = await this.table.update(tableData.key, tableData.item, options);
-    return this.toModel(result.Attributes, context);
+    const item = await this.toModel(result.Attributes, context);
+    return { item, result };
   }
 }
 
@@ -183,6 +187,31 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     [key: string]: ModelUpdateValue<ModelType>;
   };
 
+  // Could add hidden property that contains properties not exposed in model schema,
+  // like type, create date, modify date, delete attribute.  Though in most cases I
+  // think they should be exposed to the model in some manor.  Though type may
+  // be the one property that isn't exposed, though then how do we differentiate
+  // a heterogeneous item query?
+  export interface GetOutput<T = ModelOut> {
+    item?: T;
+    result: DocumentClient.GetItemOutput;
+  }
+
+  export interface PutOutput<T = ModelOut> {
+    item?: T;
+    result: DocumentClient.PutItemOutput;
+  }
+
+  export interface DeleteOutput<T = ModelOut> {
+    item?: T;
+    result: DocumentClient.DeleteItemOutput;
+  }
+
+  export interface UpdateOutput<T = ModelOut> {
+    item?: T;
+    result: DocumentClient.UpdateItemOutput;
+  }
+
   // ModelT
   // *MapT used as model data based params in ModelT
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -220,10 +249,12 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
       options?: Table.UpdateOptions,
     ): Promise<DocumentClient.UpdateItemInput>;
 
-    get(key: Model.ModelCoreT<KEY>, options?: Table.GetOptions): Promise<Model.ModelOutT<MODEL> | undefined>;
-    put(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.ModelOutT<MODEL>>;
-    delete(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): Promise<Model.ModelOutT<MODEL> | undefined>;
-    update(data: Model.ModelUpdateT<MODEL>, options?: Table.UpdateOptions): Promise<Model.ModelOutT<MODEL> | undefined>;
+    get(key: Model.ModelCoreT<KEY>, options?: Table.GetOptions): Promise<Model.GetOutput<MODEL>>;
+    create(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
+    replace(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
+    put(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
+    delete(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): Promise<Model.DeleteOutput<MODEL>>;
+    update(data: Model.ModelUpdateT<MODEL>, options?: Table.UpdateOptions): Promise<Model.UpdateOutput<MODEL>>;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-inner-declarations

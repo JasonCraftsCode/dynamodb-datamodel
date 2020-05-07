@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ModelParamsT | dynamodb-datamodel - v0.1.7</title>
+	<title>GetOutput | dynamodb-datamodel - v0.1.7</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../classes/model.html">Model</a>
 				</li>
 				<li>
-					<a href="model.modelparamst.html">ModelParamsT</a>
+					<a href="model.getoutput.html">GetOutput</a>
 				</li>
 			</ul>
-			<h1>Interface ModelParamsT&lt;KEY, MODEL&gt;</h1>
+			<h1>Interface GetOutput&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -69,10 +69,7 @@
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>KEY</h4>
-					</li>
-					<li>
-						<h4>MODEL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">KEY</span></h4>
+						<h4>T</h4>
 					</li>
 				</ul>
 			</section>
@@ -80,12 +77,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="model.modelparams.html" class="tsd-signature-type">ModelParams</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">ModelParamsT</span>
-							</li>
-						</ul>
+						<span class="target">GetOutput</span>
 					</li>
 				</ul>
 			</section>
@@ -96,9 +88,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelparamst.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelparamst.html#schema" class="tsd-kind-icon">schema</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelparamst.html#table" class="tsd-kind-icon">table</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="model.getoutput.html#item" class="tsd-kind-icon">item</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="model.getoutput.html#result" class="tsd-kind-icon">result</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,36 +97,23 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="name" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="item" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> item</h3>
+					<div class="tsd-signature tsd-kind-icon">item<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">T</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="model.modelparams.html">ModelParams</a>.<a href="model.modelparams.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L175">Model.ts:175</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L196">Model.ts:196</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="schema" class="tsd-anchor"></a>
-					<h3>schema</h3>
-					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="../classes/model.html#modelschemat" class="tsd-signature-type">ModelSchemaT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MODEL</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="result" class="tsd-anchor"></a>
+					<h3>result</h3>
+					<div class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">GetItemOutput</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="model.modelparams.html">ModelParams</a>.<a href="model.modelparams.html#schema">schema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L232">Model.ts:232</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="table" class="tsd-anchor"></a>
-					<h3>table</h3>
-					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html" class="tsd-signature-type">Table</a></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="model.modelparams.html">ModelParams</a>.<a href="model.modelparams.html#table">table</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L177">Model.ts:177</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Model.ts#L197">Model.ts:197</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -178,16 +156,13 @@
 						<a href="../classes/model.html" class="tsd-kind-icon">Model</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="model.modelparamst.html" class="tsd-kind-icon">Model<wbr>ParamsT</a>
+								<a href="model.getoutput.html" class="tsd-kind-icon">Get<wbr>Output</a>
 								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="model.modelparamst.html#name" class="tsd-kind-icon">name</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="model.getoutput.html#item" class="tsd-kind-icon">item</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelparamst.html#schema" class="tsd-kind-icon">schema</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="model.modelparamst.html#table" class="tsd-kind-icon">table</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="model.getoutput.html#result" class="tsd-kind-icon">result</a>
 									</li>
 								</ul>
 							</li>

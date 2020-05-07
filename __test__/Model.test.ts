@@ -440,7 +440,7 @@ describe('Validate Model with Table and Indexes', () => {
       client.get = jest.fn(() => request({ Item: { P: 'id1' } }));
       // TODO: should probably throw in SplitField
       const results = await userModel.get({ id: 'id1' });
-      expect(results).toEqual({ id: 'id1' });
+      expect(results.item).toEqual({ id: 'id1' });
       expect(client.get).toBeCalledWith({
         Key: { P: 'id1' },
         TableName: 'MainTable',
@@ -451,13 +451,13 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.get no Item expect results undefined ', async () => {
       client.get = jest.fn(() => request({}));
       const results = await userModel.get({ id: 'id1' });
-      expect(results).toBeUndefined();
+      expect(results.item).toBeUndefined();
     });
 
     it('Model.get with multiple id', async () => {
       client.get = jest.fn(() => request({ Item: { P: 'id1.id2.id3', S: 'id4' } }));
       const results = await userModel.get({ id: 'id1.id2.id3.id4' });
-      expect(results).toEqual({ id: 'id1.id2.id3.id4' });
+      expect(results.item).toEqual({ id: 'id1.id2.id3.id4' });
       expect(client.get).toBeCalledWith({
         Key: { P: 'id1.id2.id3', S: 'id4' },
         TableName: 'MainTable',
@@ -468,7 +468,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.get with simple single id', async () => {
       client.get = jest.fn(() => request({ Item: { P: 'id1', S: 'id2' } }));
       const results = await userModel.get({ id: 'id1.id2' });
-      expect(results).toEqual({ id: 'id1.id2' });
+      expect(results.item).toEqual({ id: 'id1.id2' });
       expect(client.get).toBeCalledWith({
         Key: {
           P: 'id1',
@@ -524,7 +524,7 @@ describe('Validate Model with Table and Indexes', () => {
         }),
       );
       const results = await userModel.get({ id: 'id1.id2' });
-      expect(results).toEqual({
+      expect(results.item).toEqual({
         adult: true,
         children: [
           {
@@ -577,7 +577,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.delete', async () => {
       client.delete = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
       const results = await userModel.delete({ id: 'id1.id2' });
-      expect(results).toEqual({ id: 'id1.id2' });
+      expect(results.item).toEqual({ id: 'id1.id2' });
       expect(client.delete).toBeCalledWith({
         Key: { P: 'id1', S: 'id2' },
         TableName: 'MainTable',
@@ -588,7 +588,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.delete Attributes missing expect results undefined', async () => {
       client.delete = jest.fn(() => request({}));
       const results = await userModel.delete({ id: 'id1.id2' });
-      expect(results).toBeUndefined();
+      expect(results.item).toBeUndefined();
     });
 
     describe('put based methods', () => {
@@ -613,7 +613,7 @@ describe('Validate Model with Table and Indexes', () => {
       it('Model.put', async () => {
         client.put = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
         const results = await userModel.put(putModelData);
-        expect(results).toEqual(putResultsData);
+        expect(results.item).toEqual(putResultsData);
         expect(client.put).toBeCalledWith({
           Item: putTableItem,
           TableName: 'MainTable',
@@ -621,10 +621,10 @@ describe('Validate Model with Table and Indexes', () => {
         expect(client.put).toBeCalledTimes(1);
       });
 
-      it('Model.new', async () => {
+      it('Model.create', async () => {
         client.put = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
-        const results = await userModel.new(putModelData);
-        expect(results).toEqual(putResultsData);
+        const results = await userModel.create(putModelData);
+        expect(results.item).toEqual(putResultsData);
         expect(client.put).toBeCalledWith({
           ConditionExpression: 'attribute_not_exists(#n0)',
           ExpressionAttributeNames: { '#n0': 'P' },
@@ -637,7 +637,7 @@ describe('Validate Model with Table and Indexes', () => {
       it('Model.replace', async () => {
         client.put = jest.fn(() => request({ Attributes: { P: 'id1', S: 'id2' } }));
         const results = await userModel.replace(putModelData);
-        expect(results).toEqual(putResultsData);
+        expect(results.item).toEqual(putResultsData);
         expect(client.put).toBeCalledWith({
           ConditionExpression: 'attribute_exists(#n0)',
           ExpressionAttributeNames: { '#n0': 'P' },
@@ -653,7 +653,7 @@ describe('Validate Model with Table and Indexes', () => {
       const results = await userModel.update({
         id: 'id1.id2',
       });
-      expect(results).toEqual({ id: 'id1.id2' });
+      expect(results.item).toEqual({ id: 'id1.id2' });
       expect(client.update).toBeCalledWith({
         Key: {
           P: 'id1',
@@ -669,7 +669,7 @@ describe('Validate Model with Table and Indexes', () => {
       const results = await userModel.update({
         id: 'id1.id2',
       });
-      expect(results).toBeUndefined();
+      expect(results.item).toBeUndefined();
     });
 
     it('Model.update with all fields', async () => {
@@ -693,7 +693,7 @@ describe('Validate Model with Table and Indexes', () => {
         country: 'usa',
         created: new Date(1585553302000),
       });
-      expect(results).toEqual({
+      expect(results.item).toEqual({
         id: 'id1.id2',
         revision: 2,
         city: 'hudson',
