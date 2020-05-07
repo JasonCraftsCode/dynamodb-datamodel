@@ -139,8 +139,9 @@ export class Model implements Model.ModelBase {
     const key: Table.PrimaryKey.AttributeValuesMap = {};
     const item: Table.AttributeValuesMap = { ...data };
     Object.keys(this.table.keySchema).forEach((name) => {
-      if (data[name] === undefined) return;
-      key[name] = data[name] as Table.PrimaryKey.AttributeValues;
+      const value = data[name];
+      if (value === undefined || value === null) return;
+      key[name] = value;
       delete item[name];
     });
     return { key, item };

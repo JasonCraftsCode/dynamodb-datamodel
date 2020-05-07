@@ -88,6 +88,15 @@ describe('Validate KeyCondition', () => {
     });
   });
 
+  it('between with out upper bound', () => {
+    const upper = undefined;
+    expect(buildKeyCondition({ P: KeyCondition.between('a', (upper as unknown) as string) })).toEqual({
+      Paths: { '#n0': 'P' },
+      Values: { ':v0': 'a' },
+      KeyConditionExpression: '#n0 BETWEEN :v0 AND :v0',
+    });
+  });
+
   it('beginsWith', () => {
     expect(buildKeyCondition({ P: KeyCondition.beginsWith('abc') })).toEqual({
       Paths: { '#n0': 'P' },

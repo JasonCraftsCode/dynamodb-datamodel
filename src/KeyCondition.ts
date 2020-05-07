@@ -54,7 +54,7 @@ export class KeyConditionExpression {
   ): string {
     const n = this.addPath(name);
     const v = this.addValue(value);
-    if (op === 'BETWEEN') return `${n} ${op} ${v} AND ${this.addValue(upper as Table.AttributeValues)}`;
+    if (op === 'BETWEEN') return `${n} ${op} ${v} AND ${upper !== undefined ? this.addValue(upper) : v}`;
     if (op === 'begins_with') return `${op}(${n}, ${v})`;
     return `${n} ${op} ${v}`;
   }
