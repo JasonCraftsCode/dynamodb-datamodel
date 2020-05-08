@@ -302,8 +302,68 @@ export class UpdateExpression {
 
 /**
  * Set of helper methods used to build UpdateExpression for use in DynamoDB update method.
- * @example
+ *
+ * @example Using Model
  * ```typescript
+ * import { Fields, Model, Update } from 'dynamodb-datamodel';
+ *
+ * interface ModelKey {
+ *   id: string;
+ * }
+ * interface ModelItem extends ModelKey {
+ *   name: string;
+ *   revision: number;
+ * }
+ *
+ * const model = Model.createModel<ModelKey, ModelItem>({
+ *   schema: {
+ *     id: Fields.split(['P', 'S']),
+ *     name: Fields.string(),
+ *     nickName: Fields.string(),
+ *     revision: Fields.number(),
+ *   },
+ *   // ...additional properties like table
+ * });
+ *
+ * // update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.
+ * model.update({
+ *   id: 'P-GUID.S-0',
+ *   name: 'new name',
+ *   nickName: Update.del(),
+ *   revision: Update.inc(2),
+ * });
+ * ```
+ *
+ * @example Using Table (though in most cases you'll use Model)
+ * ```typescript
+ * import { Table, Update } from 'dynamodb-datamodel';
+ *
+ * interface Key {
+ *   P: Table.PrimaryKey.PartitionString;
+ *   S?: Table.PrimaryKey.SortString;
+ * }
+ *
+ * const table = Table.createTable<Key>({
+ *   name: 'TestTable',
+ *   keyAttributes: {
+ *     P: Table.PrimaryKey.StringType,
+ *     S: Table.PrimaryKey.StringType,
+ *   },
+ *   keySchema: {
+ *     P: Table.PrimaryKey.PartitionKeyType,
+ *     S: Table.PrimaryKey.SortKeyType,
+ *   },
+ *   // ...additional properties like client, globalIndexes and others
+ * });
+ * // update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.
+ * table.update(
+ *   {P: 'P-GUID', S: 'S-0' },
+ *   {
+ *     name: 'new name',
+ *     nickName: Update.del(),
+ *     revision: Update.inc(2),
+ *   }
+ * );
  * ```
  */
 export class Update {
@@ -311,6 +371,23 @@ export class Update {
    * Used to reference other attributes for the value argument in Update.* methods.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     fullName: Fields.string(),
+   *     name: Fields.string(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Sets name attribute to the value of the fullName attribute
+   * // Example: If fullName = 'John Smith', then name would be set to 'John Smith'
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   name: Update.path('fullName'),
+   * });
    * ```
    * @param path Attribute path to resolve and get alias for.
    * @returns Update function that returns the alias for the path.
@@ -325,8 +402,25 @@ export class Update {
    * Used to reference other attributes for the value argument in Update.* methods.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     fullName: Fields.string(),
+   *     name: Fields.string(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Sets name attribute to the value of the fullName attribute, if fullName attribute doesn't exists then set
+   * // name attribute to 'User Name'.
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   name: Update.pathWithDefault('fullName', 'User Name'),
+   * });
    * ```
-   * @paramType T Type of default value argument.
+   * @typeParam T Type of default value argument.
    * @param path Attribute path to resolve and get alias for.
    * @param value The default value to set if the path attribute value does not exist.
    * @returns Update function that returns the alias for the path.
@@ -341,8 +435,23 @@ export class Update {
    * Sets the default value for an attribute that does not exist in on the table item.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     name: Fields.string(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Set name attribute to 'Default Name' only if it doesn't exists
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   name: Update.default('Default Name'),
+   * });
    * ```
-   * @paramType T Type of default value argument.
+   * @typeParam T Type of default value argument.
    * @param value Default value to set if attribute value does not exist.
    * @returns Update resolver function to set default value.
    */
@@ -353,9 +462,24 @@ export class Update {
   }
 
   /**
-   * Delete the attribute from the table item.
+   * Delete the attribute from the table item.  Setting an model property to null also deletes the attribute.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     name: Fields.string(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Deletes name attribute from item.  Could also use "name: null" to do the same thing.
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   name: Update.del(),
+   * });
    * ```
    * @returns Update resolver function to delete attribute.
    */
@@ -366,11 +490,26 @@ export class Update {
   }
 
   /**
-   * Sets the attribute to a new value.
+   * Sets the attribute to a new value.  Set is the default action for model property not set to a Update.Resolver<string> or null.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     name: Fields.string(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Sets name attribute from item.  Could also use "name: 'new name'" to do the same thing.
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   name: Update.set('new name'),
+   * });
    * ```
-   * @paramType T Type of value argument to set.
+   * @typeParam T Type of value argument to set.
    * @param value The value (or attribute reference) to update the item attribute to, will add attribute if not present.
    * @returns Update resolver function to set attribute to a value.
    */
@@ -381,10 +520,27 @@ export class Update {
   }
 
   /**
-   * Increments a number based attribute by a certain amount.  Note: The attribute that is being incremented must exist in the table item for this update to succeed.
-   * Support types: number
+   * Increments a number based attribute by a certain amount.  Note: The attribute that is being incremented
+   * must exist in the table item for this update to succeed.
+   * Supported types: number.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     count: Fields.number(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Increments the count attribute by 1
+   * // Example: If count = 3, then after this update it would be 4
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   count: Update.inc(1),
+   * });
    * ```
    * @param value A value (or reference attribute) to increment the number attribute by.
    * @returns Update resolver function to increment the attribute.
@@ -396,10 +552,27 @@ export class Update {
   }
 
   /**
-   * Decrements a number based attribute by a certain amount.  Note: The attribute that is being decremented must exist in the table item for this update to succeed.
-   * Support types: number
+   * Decrements a number based attribute by a certain amount.  Note: The attribute that is being decremented
+   * must exist in the table item for this update to succeed.
+   * Supported types: number.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     count: Fields.number(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Decrements the count attribute by 2
+   * // Example: if count = 5, then after this update it would be 3
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   count: Update.dec(2),
+   * });
    * ```
    * @param value A value (or reference attribute) to decrement the number attribute by.
    * @returns Update resolver function to decrement the attribute.
@@ -411,13 +584,31 @@ export class Update {
   }
 
   /**
-   * Sets an attribute to the result of adding two values.  Note: The reference attributes must exists for the update to succeed.
-   * Support types: number
+   * Sets an attribute to the result of adding two values.  Note: The attribute that is being decremented
+   * must exist in the table item for this update to succeed.
+   * Supported types: number.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     base: Fields.number(),
+   *     count: Fields.number(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Sets count attribute to the result of adding 3 to the 'base' attribute
+   * // Example: If base = 5, then after this update count will be 8
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   count: Update.add('base', 3),
+   * });
    * ```
    * @param left A value (or reference attribute) to using in add operation.
-   * @param right A value (or reference attribute) to using in add operation..
+   * @param right A value (or reference attribute) to using in add operation.
    * @returns Update resolver function to set a number attribute to the result of adding two values.
    */
   static add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
@@ -427,13 +618,31 @@ export class Update {
   }
 
   /**
-   * Sets an attribute to the result of subtracting two values.  Note: The reference attributes must exists for the update to succeed.
-   * Supported types: number
+   * Sets an attribute to the result of subtracting two values.  Note: The reference attributes must exists
+   * for the update to succeed.
+   * Supported types: number.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     base: Fields.number(),
+   *     count: Fields.number(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Sets count attribute to the result of subtracting 2 from the 'base' attribute
+   * // Example: If base = 9, then after this update count would be 7
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   count: Update.sub('base', 2),
+   * });
    * ```
    * @param left A value (or reference attribute) to use on the left side of a subtract operation.
-   * @param right A value (or reference attribute) to use on the right side of a subtract operation..
+   * @param right A value (or reference attribute) to use on the right side of a subtract operation.
    * @returns Update resolver function to set a number attribute to the result of subtracting two values.
    */
   static sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
@@ -444,9 +653,25 @@ export class Update {
 
   /**
    * Appends items to the end of an existing list attribute.
-   * Supported types: list
+   * Supported types: list.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     groups: Fields.list(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Appends 'soccer' and 'tennis' to the end of the list in groups attribute
+   * // Example: If groups = ['baseball', 'swimming'], then after this update it would be ['baseball', 'swimming', 'soccer', 'tennis']
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   groups: Update.append(['soccer', 'tennis']),
+   * });
    * ```
    * @param value A list (or reference attribute) to append.
    * @returns Update resolver function to append a list to an attribute.
@@ -459,9 +684,25 @@ export class Update {
 
   /**
    * Prepends items to the beginning of an existing list attribute.
-   * Supported types: list
+   * Supported types: list.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     groups: Fields.list(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Prepends 'soccer', 'tennis' to the beginning of the list in groups attribute
+   * // Example: If groups = ['baseball', 'swimming'], then after this update it would be ['soccer', 'tennis', 'baseball', 'swimming']
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   groups: Update.prepend(['soccer', 'tennis']),
+   * });
    * ```
    * @param value A list (or reference attribute) to prepend.
    * @returns Update resolver function to prepend a list to an attribute.
@@ -474,9 +715,26 @@ export class Update {
 
   /**
    * Sets an attribute to the result of joining two lists.
-   * Supported types: list
+   * Supported types: list.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     parents: Fields.list(),
+   *     ancestors: Fields.list(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Sets ancestors attribute to the result of joining the list from the parents attribute with ['grandpa, 'grandma']
+   * // Example: if parents = ['mom', 'dad'], then after this update ancestors will be ['mom', 'dad', 'grandpa', 'grandma']
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   ancestors: Update.join('parents', ['grandpa', 'grandma']),
+   * });
    * ```
    * @param left A list (or reference attribute) to add to the start.
    * @param right A list (or reference attribute) to add at the end.
@@ -489,10 +747,26 @@ export class Update {
   }
 
   /**
-   * Deletes an array of indices from an list based attribute.
-   * Supported types: list
+   * Deletes an array of indices from an list based attribute (the lists are 0 based).
+   * Supported types: list.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     children: Fields.list(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Removes the values at the 1st and 2nd index in the children attribute.
+   * // Example: If children = ['john', 'jill', 'bob', 'betty'], then after this update children will be ['john', 'betty']
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   children: Update.delIndexes([1, 2]);
+   * });
    * ```
    * @param indexes Array of indices (numbered indexes into the list) to delete from the list.
    * @returns Update resolver function to delete indices in a list based attribute.
@@ -505,9 +779,25 @@ export class Update {
 
   /**
    * Sets the values of select indices for list based attribute.
-   * Supported types: list
+   * Supported types: list.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     children: Fields.list(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Sets the values at the 1st and 2nd index in the children attribute to be 'margret' and 'mathew' respectively
+   * // Example: If children = ['john', 'jill', 'bob', 'betty'], then after this update children will be ['john', 'margret', 'mathew', 'betty']
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   children: Update.setIndexes({1: 'margret', 2: 'mathew'});
+   * });
    * ```
    * @param indexes Map of indices with values to set in the list.
    * @returns Update resolver function to set values for select indices in a list based attribute.
@@ -525,12 +815,28 @@ export class Update {
   }
 
   /**
-   * Adds an array of values to a set based attribute.
-   * Supported types: StringSet, NumberSet or BinarySet
+   * Adds an array of values to a set based attribute (sets are ordered).
+   * Supported types: StringSet, NumberSet or BinarySet.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     color: Fields.stringSet(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Adds 'yellow' and 'red' to the color attribute
+   * // Example: If color = ['blue', 'yellow'], then after this update color will be ['blue', 'red', 'yellow']
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   color: Update.addToSet(model.table.createStringSet(['yellow', 'red']));
+   * });
    * ```
-   * @param value Array of values to add
+   * @param value Array of values to add.
    * @returns Update resolver function to add an array of values to a set based attribute.
    */
   static addToSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
@@ -540,12 +846,28 @@ export class Update {
   }
 
   /**
-   * Removes an array of values from a set based attribute.
-   * Supported types: StringSet, NumberSet or BinarySet
+   * Removes an array of values from a set based attribute (sets are ordered).
+   * Supported types: StringSet, NumberSet or BinarySet.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     color: Fields.stringSet(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Remove 'yellow' and 'red' from the color attribute
+   * // Example: If color = ['blue', 'yellow'], then after this update color will be ['blue']
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   color: Update.removeFromSet(model.table.createStringSet(['yellow', 'red']));
+   * });
    * ```
-   * @param value Array of values to remove
+   * @param value Array of values to remove.
    * @returns Update resolver function to remove an array of values from a set based attribute.
    */
   static removeFromSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
@@ -555,9 +877,32 @@ export class Update {
   }
 
   /**
-   * Sets the inner attributes of a map based attribute.
+   * Updates the inner attributes of a map based attribute.  {@link set} is used to overwrite the entire map attribute, while map updates the attributes
+   * inside of table attribute.  Example if an address attribute is set to { street: 'One Infinite Loop', city: 'Cupertino', state: 'CA, zip: '95014' } then
+   * using Update.map({street: '1 Apple Park Way'}) will result in { street: '1 Apple Park Way', city: 'Cupertino', state: 'CA, zip: '95014' }, while
+   * using Update.set({street: '1 Apple Park Way'}) will result in {street: '1 Apple Park Way'}.
+   * Supported types: map.
    * @example
    * ```typescript
+   * import { Fields, Model, Update } from 'dynamodb-datamodel';
+   *
+   * const model = new Model({
+   *   schema: {
+   *     id: Fields.split(['P', 'S']),
+   *     address: Fields.map(),
+   *   },
+   *   // ...additional properties like table
+   * });
+   *
+   * // Update only the street property inside of the address attribute
+   * // Example: If address = { street: 'One Infinite Loop', city: 'Cupertino', state: 'CA, zip: '95014' } then
+   * // after this update address will be { street: '1 Apple Park Way', city: 'Cupertino', state: 'CA, zip: '95014' }
+   * model.update({
+   *   id: 'P-GUID.S-0',
+   *   address: Update.map({
+   *     street: '1 Apple Park Way'
+   *   });
+   * });
    * ```
    * @param map Map of update values and resolvers to evaluate.
    * @returns Update resolver function to recursively set the inner attributes of a map based attribute.
@@ -707,7 +1052,7 @@ export namespace Update {
 
   /**
    * Type used for generic map based update methods.
-   * @paramType T
+   * @typeParam T The model interface.
    */
   export type UpdateMapValueT<T> = {
     [key: string]: T | Resolver<string> | undefined;

@@ -25,14 +25,14 @@ export class KeyConditionExpression {
   }
 
   /**
-   * @see ExpressionAttributes.addPath
+   * @see ExpressionAttributes.addPath.
    */
   addPath(path: string): string {
     return this.attributes.addPath(path);
   }
 
   /**
-   * @see ExpressionAttributes.addValue
+   * @see ExpressionAttributes.addValue.
    */
   addValue(value: Table.AttributeValues): string {
     return this.attributes.addValue(value);
@@ -78,9 +78,9 @@ export class KeyConditionExpression {
   }
 
   /**
-   * Add an equal condition for the partition key
-   * @param name Name of partition key
-   * @param value Value of the partition key
+   * Add an equal condition for the partition key.
+   * @param name Name of partition key.
+   * @param value Value of the partition key.
    */
   addEqualCondition(name: string, value: Table.AttributeValues): void {
     this.addSortCondition(name, '=', value);

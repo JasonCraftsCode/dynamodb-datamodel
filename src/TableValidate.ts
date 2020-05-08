@@ -23,8 +23,9 @@ export interface KeyName {
 }
 
 /**
- * Validate the key attributes for a Table.
- * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary key and all defined index projected attributes.
+ * Validate the key attributes for a {@link Table}.
+ * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index
+ * primary key and all defined index projected attributes.
  * @param keyAttributes Key attributes of the Table.
  * @param name Name of Table.
  * @param onError Method to call when there is a validation error.
@@ -44,9 +45,10 @@ export function validateKeyAttributes<ATTRIBUTES extends { [index: string]: any 
 }
 
 /**
- * Validate the key schema for a Table.
+ * Validate the key schema for a {@link Table}.
  * @typeParam KEY The interface of the table's primary key
- * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary key and all defined index projected attributes.
+ * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index
+ * primary key and all defined index projected attributes.
  * @param keySchema Key schema of the Table.
  * @param keyAttributes Key attributes of the Table.
  * @param name Name of the Table.
@@ -85,7 +87,7 @@ export function validateKeySchema<
 }
 
 /**
- * Validates an index for a Table.
+ * Validates an {@link Index} for a {@link Table}.
  * @param index An index for a Table.
  * @param names Name of the Table.
  * @param onError Method to call when there is a validation error.
@@ -107,9 +109,9 @@ export function validateIndexes(index: Index, names: Set<string>, onError: (msg:
 }
 
 /**
- * Validates that a table is configured correctly.  The Table's onError methods is called for any validation errors.
- * This method should primarily be used in tests to validate the table.
- * @typeParam KEY The interface of the table's primary key
+ * Validates that a {@link Table} is configured correctly.  The Table's onError methods is called for any
+ * validation errors.   This method should primarily be used in tests to validate the table.
+ * @typeParam KEY The interface of the table's primary key.
  * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary
  * key and all defined index projected attributes.
  * @param table Table to be validated.

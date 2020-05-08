@@ -1,5 +1,5 @@
 /**
- * Table.ts contains the classes used to model a single DynamoDB table with both local and global secondary indexes
+ * Table.ts contains the classes used to model a single DynamoDB table with both local and global secondary indexes.
  * @packageDocumentation
  */
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
@@ -95,7 +95,7 @@ function getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.Primary
  * ```
  */
 export class Index {
-  // NOTE: If you update the below property docs also update IndexParams
+  // NOTE: If you update the below property docs also update IndexParams.
   /**
    * Name of the table's secondary index, used to set the IndexName for dynamodb scan and query actions.
    */
@@ -132,7 +132,7 @@ export class Index {
   }
 
   /**
-   * Used to initialize the Index with the table to support {@link queryParams}, {@link scanParams}, {@link query}, and {@link scan}..
+   * Used to initialize the Index with the table to support {@link queryParams}, {@link scanParams}, {@link query}, and {@link scan}.
    * @param table table to initialize the index with.
    */
   init(table: Table): void {
@@ -156,16 +156,16 @@ export class Index {
   /**
    * Add the IndexName to query options.
    * @param options Options to add IndexName to.
-   * @returns Query options with the IndexName set to the {@link Index.name}
+   * @returns Query options with the IndexName set to the {@link Index.name}.
    */
   getQueryOptions(options: Table.QueryOptions = {}): Table.QueryOptions {
     return { ...options, params: { IndexName: this.name, ...options.params } };
   }
 
   /**
-   * Add the IndexName to scan options
+   * Add the IndexName to scan options.
    * @param options Options to add IndexName to.
-   * @returns Scan options with the IndexName set to the {@link Index.name}
+   * @returns Scan options with the IndexName set to the {@link Index.name}.
    */
   getScanOptions(options: Table.ScanOptions = {}): Table.ScanOptions {
     return { ...options, params: { IndexName: this.name, ...options.params } };
@@ -173,8 +173,8 @@ export class Index {
 
   /**
    * Creates the params that can be used when calling the [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property} method.
-   * @param key Primary key with optional KeyCondition to query the secondary index with
-   * @param options Used in building the query params
+   * @param key Primary key with optional KeyCondition to query the secondary index with.
+   * @param options Used in building the query params.
    * @returns DynamoDB query method params containing the table, index, key and options.
    */
   queryParams(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): DocumentClient.QueryInput {
@@ -184,7 +184,7 @@ export class Index {
 
   /**
    * Creates the params that can be used when calling the [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
-   * @param options Used in building the scan params
+   * @param options Used in building the scan params.
    * @returns DocumentClient scan method's params containing the table, index and options.
    */
   scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput {
@@ -195,9 +195,9 @@ export class Index {
   /**
    * Wrapper around [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}
    * method that uses the index and table properties with the key and options params.
-   * @param key Primary key with optional KeyCondition to query the secondary index with
-   * @param options Used in building the query params
-   * @returns Promise with the query results, including items fetched
+   * @param key Primary key with optional KeyCondition to query the secondary index with.
+   * @param options Used in building the query params.
+   * @returns Promise with the query results, including items fetched.
    */
   query(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput> {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -206,8 +206,8 @@ export class Index {
   /**
    * Wrapper around [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property}
    * method that uses the index and table properties with the options param.
-   * @param options Used in building the scan params
-   * @returns Promise with the scan results, including items fetched
+   * @param options Used in building the scan params.
+   * @returns Promise with the scan results, including items fetched.
    */
   scan(options?: Table.ScanOptions): Promise<DocumentClient.ScanOutput> {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -217,9 +217,9 @@ export class Index {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
-  // NOTE: if you update the docs for the properties of IndexParams also update the docs for Index properties
+  // NOTE: if you update the docs for the properties of IndexParams also update the docs for Index properties.
   /**
-   * Used in {@link Index constructor}
+   * Used in {@link Index constructor}.
    */
   export interface IndexParams {
     /**
@@ -250,11 +250,12 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
    */
   export interface DefaultGlobalIndexKey {
     /**
-     * Partition key: G#P which represents G = Global + # = index number + P = Partition key
+     * Partition key: G#P which represents G = Global + # = index number + P = Partition key.
      */
     G0P: Table.PrimaryKey.PartitionString;
     /**
-     * Sort key: G#S which represents G = Global + # = index number + S = Sort key. The sort key is optional to support the sort key as being option for queryParams and query methods.
+     * Sort key: G#S which represents G = Global + # = index number + S = Sort key. The sort key is optional
+     * to support the sort key as being option for queryParams and query methods.
      */
     G0S?: Table.PrimaryKey.SortString;
   }
@@ -264,49 +265,53 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
    */
   export interface DefaultLocalIndexKey {
     /**
-     * Partition key: P which is the Table partition key since local secondary indexes are stored in the same partition as the main table.
+     * Partition key: P which is the Table partition key since local secondary indexes are stored in the
+     * same partition as the main table.
      */
     P: Table.PrimaryKey.PartitionString;
     /**
-     * Sort key: L#S which represents L = Local + # = index number + S = Sort key.  The sort key is optional to support the sort key as being option for queryParams and query methods.
+     * Sort key: L#S which represents L = Local + # = index number + S = Sort key.  The sort key is optional
+     * to support the sort key as being option for queryParams and query methods.
      */
     L0S?: Table.PrimaryKey.SortString;
   }
 
   /**
-   * Index constructor param for the generic form of {@link IndexParams}
-   * @typeParam KEY The interface of the index's primary key
+   * Index constructor param for the generic form of {@link IndexParams}.
+   * @typeParam KEY The interface of the index's primary key.
    */
   export interface IndexParamsT<KEY> extends IndexParams {
     /**
-     * Generic form of {@link IndexParam.keySchema}
+     * Generic form of {@link IndexParam.keySchema}.
      */
     keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>;
   }
 
   /**
    * Generic form of {@link Index}.
-   * @typeParam KEY The interface of the index's primary key
+   * @typeParam KEY The interface of the index's primary key.
    */
   export interface IndexT<KEY = DefaultGlobalIndexKey> extends Index {
     /**
-     * Generic form of {@link Index.keySchema}
+     * Generic form of {@link Index.keySchema}.
      */
     keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>;
 
     /**
-     * @see Generic form of {@link Index.queryParams}
+     * @see Generic form of {@link Index.queryParams}.
      */
     queryParams(key: Table.PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): DocumentClient.QueryInput;
     /**
-     * @see Generic form of {@link Index.query}
+     * @see Generic form of {@link Index.query}.
      */
     query(key: Table.PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput>;
   }
 
   /**
-   * Creates the generic form of Index used in TypeScript to get strong typing
-   * @param params Index constructor params
+   * Creates the generic form of Index used in TypeScript to get strong typing.
+   *
+   * See {@link Table.createTable} reasoning for having a createTable over support 'new TableT'.
+   * @param params Index constructor params.
    */
   // eslint-disable-next-line no-inner-declarations
   export function createIndex<KEY = DefaultGlobalIndexKey>(params: IndexParamsT<KEY>): IndexT<KEY> {
@@ -479,10 +484,10 @@ export class Table {
 
   // Action Params:
   /**
-   * Creates the params that can be used when calling [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}
+   * Creates the params that can be used when calling [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}.
    * @param key Primary key of item to get.
    * @param options Additional optional options to use for get.
-   * @returns Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}
+   * @returns Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}.
    */
   getParams(key: Table.PrimaryKey.AttributeValuesMap, options: Table.GetOptions = {}): Table.GetInput {
     return {
@@ -493,10 +498,10 @@ export class Table {
   }
 
   /**
-   * Creates the params that can be used when calling [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}
+   * Creates the params that can be used when calling [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}.
    * @param key Primary key of item to delete.
    * @param options Additional optional options to use for delete.
-   * @returns Input params for [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}
+   * @returns Input params for [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}.
    */
   deleteParams(
     key: Table.PrimaryKey.AttributeValuesMap,
@@ -525,11 +530,11 @@ export class Table {
 
   // Consider having writeOptions default to be 'NotExists'
   /**
-   * Creates the params that can be used when calling [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}
+   * Creates the params that can be used when calling [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}.
    * @param key Primary key of item to put.
    * @param item Attributes of the item to put.
    * @param options Additional optional options to use for put.
-   * @returns Input params for [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}
+   * @returns Input params for [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}.
    */
   putParams(
     key: Table.PrimaryKey.AttributeValuesMap,
@@ -551,11 +556,11 @@ export class Table {
   }
 
   /**
-   * Creates the params that can be used when calling [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}
+   * Creates the params that can be used when calling [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}.
    * @param key Primary key of item to update.
    * @param item Attributes of the item to update.
    * @param options Additional optional options to use for update.
-   * @returns Input params for [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}
+   * @returns Input params for [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}.
    */
   updateParams(
     key: Table.PrimaryKey.AttributeValuesMap,
@@ -576,9 +581,9 @@ export class Table {
 
   /**
    * Creates the params that can be used when calling [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property} method.
-   * @param key Primary key with optional KeyCondition to query the table with
-   * @param options Used in building the query params
-   * @returns Input params for [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}
+   * @param key Primary key with optional KeyCondition to query the table with.
+   * @param options Used in building the query params.
+   * @returns Input params for [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}.
    */
   queryParams(key: Table.PrimaryKey.KeyQueryMap, options: Table.QueryOptions = {}): DocumentClient.QueryInput {
     const params: DocumentClient.QueryInput = {
@@ -594,7 +599,7 @@ export class Table {
 
   /**
    * Creates the params that can be used when calling [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
-   * @param options Used in building the scan params
+   * @param options Used in building the scan params.
    * @returns Input params for [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
    */
   scanParams(options: Table.ScanOptions = {}): DocumentClient.ScanInput {
@@ -663,21 +668,21 @@ export class Table {
   }
 
   /**
-   * Wrapper around [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}
+   * Wrapper around [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}.
    * method that uses the index and table properties with the key and options params.
-   * @param key Primary key with optional KeyCondition to query the secondary index with
-   * @param options Used in building the query params
-   * @returns Promise with the query results, including items fetched
+   * @param key Primary key with optional KeyCondition to query the secondary index with.
+   * @param options Used in building the query params.
+   * @returns Promise with the query results, including items fetched.
    */
   query(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput> {
     return this.client.query(this.queryParams(key, options)).promise();
   }
 
   /**
-   * Wrapper around [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property}
+   * Wrapper around [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property}.
    * method that uses the index and table properties with the options param.
-   * @param options Used in building the scan params
-   * @returns Promise with the scan results, including items fetched
+   * @param options Used in building the scan params.
+   * @returns Promise with the scan results, including items fetched.
    */
   scan(options?: Table.ScanOptions): Promise<DocumentClient.ScanOutput> {
     return this.client.scan(this.scanParams(options)).promise();
@@ -699,7 +704,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   // export type PromiseResult<D, E> = D & { $response: Response<D, E> };
   /**
    * TypeScript utility type that constructs a type consisting of all properties of T set to optional.
-   * Does the opposite of [Required]{@link https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredt}
+   * Does the opposite of [Required]{@link https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredt}.
    */
   export type Optional<T> = { [P in keyof T]?: T[P] };
 
@@ -739,12 +744,12 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   export type ListValue = AttributeValues[];
 
   /**
-   * Supported Table set based values
+   * Supported Table set based values.
    */
   export type AttributeSetValues = StringSetValue | NumberSetValue | BinarySetValue;
 
   /**
-   * Supported Table attribute values
+   * Supported Table attribute values.
    */
   export type AttributeValues =
     | null
@@ -812,7 +817,8 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Contains the primary key type and key type values.  Used when definition {@link Table.keyAttributes}, {@link Table.keySchema} and {@link Index.keySchema}
+   * Contains the primary key type and key type values.  Used when definition {@link Table.keyAttributes},
+   * {@link Table.keySchema} and {@link Index.keySchema}
    */
   export class PrimaryKey {
     /**
@@ -901,12 +907,14 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     export type KeyTypesMap = { [key: string]: { keyType: KeyTypes } };
 
     /**
-     * Definition for the key argument used in {@link Table.queryParams}, {@link Table.query}, {@link Index.query} and {@link Index.queryParams}
+     * Definition for the key argument used in {@link Table.queryParams}, {@link Table.query},
+     * {@link Index.query} and {@link Index.queryParams}
      */
     export type KeyQueryMap = { [key: string]: AttributeValues | KeyCondition.AttributeResolver };
 
     /**
-     * Definition for the key argument used in {@link Table.get}, {@link Table.delete}, {@link Table.put}, {@link Table.update} and associated Params methods.
+     * Definition for the key argument used in {@link Table.get}, {@link Table.delete}, {@link Table.put},
+     * {@link Table.update} and associated Params methods.
      */
     export type AttributeValuesMap = { [key: string]: AttributeValues };
 
@@ -1002,12 +1010,14 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
    */
   export interface BaseOptions<T = {}> {
     /**
-     * Expression attributes to use for resolving conditions and updates.  Will be used to generate the ExpressionAttributeNames and ExpressionAttributeValues params in table operations.
+     * Expression attributes to use for resolving conditions and updates.  Will be used to generate the
+     * ExpressionAttributeNames and ExpressionAttributeValues params in table operations.
      */
     attributes?: ExpressionAttributes;
 
     /**
-     * Array of expression condition resolvers that are joined together with AND, then used as ConditionExpression or FilterExpression params in table operations.
+     * Array of expression condition resolvers that are joined together with AND, then used as
+     * ConditionExpression or FilterExpression params in table operations.
      */
     conditions?: Condition.Resolver[];
 
@@ -1025,27 +1035,33 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   *  Options used in following methods:  {@link Table.get}, {@link Table.getParams}, {@link Model.get} and {@link Model.getParams}.
+   * Options used in following methods:  {@link Table.get}, {@link Table.getParams},
+   * {@link Model.get} and {@link Model.getParams}.
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface GetOptions extends BaseOptions<GetInput> {}
 
   /**
-   *  Options used in following methods:  {@link Table.delete}, {@link Table.deleteParams}, {@link Model.delete} and {@link Model.deleteParams}.
+   * Options used in following methods:  {@link Table.delete}, {@link Table.deleteParams}, {@link Model.delete}
+   * and {@link Model.deleteParams}.
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface DeleteOptions extends BaseOptions<DeleteInput> {}
 
   /**
    * Put method write options that determine how put will execute.
-   * 'Always' - Default put behavior, that will always set the item weather it exists or now.
-   * 'Exists' - Only set the item if the item already exists, adds ConditionExpression="attribute_exists(#pk)", where #pk is the partition key name.
-   * 'NotExists' - Only set the item if the item does not exist, add ConditionExpression="attribute_not_exists(#pk)", where #pk is the partition key name.
+   *
+   * - 'Always' - Default put behavior, that will always set the item weather it exists or now.
+   * - 'Exists' - Only set the item if the item already exists, adds
+   * - ConditionExpression="attribute_exists(#pk)", where #pk is the partition key name.
+   * - 'NotExists' - Only set the item if the item does not exist, add
+   * ConditionExpression="attribute_not_exists(#pk)", where #pk is the partition key name.
    */
   export type PutWriteOptions = 'Always' | 'Exists' | 'NotExists';
 
   /**
-   * Options to used for put and putParams methods on {@link Table} and {@link Model}, along with {@link Model.new} and {@link Model.replace}.
+   * Options to used for put and putParams methods on {@link Table} and {@link Model}, along with
+   * {@link Model.new} and {@link Model.replace}.
    */
   export interface PutOptions extends BaseOptions<PutInput> {
     /**
@@ -1055,19 +1071,22 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   *  Options used in following methods:  {@link Table.update}, {@link Table.updateParams}, {@link Model.update} and {@link Model.updateParams}.
+   * Options used in following methods:  {@link Table.update}, {@link Table.updateParams},
+   * {@link Model.update} and {@link Model.updateParams}.
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface UpdateOptions extends BaseOptions<UpdateInput> {}
 
   /**
-   * Options used in following methods: {@link Table.query}, {@link Table.queryParams}, {@link Index.query} and {@link Index.queryParams}.
+   * Options used in following methods: {@link Table.query}, {@link Table.queryParams},
+   * {@link Index.query} and {@link Index.queryParams}.
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface QueryOptions extends BaseOptions<QueryInput> {}
 
   /**
-   * Options used in following methods: {@link Table.scan}, {@link Table.scanParams}, {@link Index.scan} and {@link Index.scanParams}.
+   * Options used in following methods: {@link Table.scan}, {@link Table.scanParams},
+   * {@link Index.scan} and {@link Index.scanParams}.
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ScanOptions extends BaseOptions<ScanInput> {}
@@ -1083,51 +1102,54 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     P: PrimaryKey.PartitionString;
 
     /**
-     * Table sort key. The sort key is optional to support the sort key as being option for queryParams and query methods.
+     * Table sort key. The sort key is optional to support the sort key as being option for queryParams
+     * and query methods.
      */
     S?: PrimaryKey.SortString;
   }
 
   /**
-   * Table constructor param for the generic form of {@link TableParams}
-   * @typeParam KEY interface of the table's primary key
-   * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary key and all defined index projected attributes.
+   * Table constructor param for the generic form of {@link TableParams}.
+   * @typeParam KEY interface of the table's primary key.
+   * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table
+   * and index primary key and all defined index projected attributes.
    */
   export interface TableParamsT<KEY, ATTRIBUTES> extends TableParams {
     /**
-     * Generic form of {@link TableParam.keyAttributes}
+     * Generic form of {@link TableParam.keyAttributes}.
      */
     keyAttributes: PrimaryKey.AttributeTypesMapT<ATTRIBUTES>;
 
     /**
-     * Generic form of {@link TableParam.keySchema}
+     * Generic form of {@link TableParam.keySchema}.
      */
     keySchema: PrimaryKey.KeyTypesMapT<KEY>;
   }
 
   /**
    * Generic form of {@link Table}.
-   * @typeParam KEY The interface of the table's primary key
-   * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary key and all defined index projected attributes.
+   * @typeParam KEY The interface of the table's primary key.
+   * @typeParam ATTRIBUTES The interface or type that has all required attributes, including
+   * table and index primary key and all defined index projected attributes.
    */
   export interface TableT<KEY = DefaultTableKey, ATTRIBUTES = KEY> extends Table {
     /**
-     * Generic form of {@link Table.keyAttributes}
+     * Generic form of {@link Table.keyAttributes}.
      */
     keyAttributes: PrimaryKey.AttributeTypesMapT<ATTRIBUTES>;
 
     /**
-     * Generic form of {@link Table.keySchema}
+     * Generic form of {@link Table.keySchema}.
      */
     keySchema: PrimaryKey.KeyTypesMapT<KEY>;
 
     /**
-     * @see Generic form of {@link Table.getParams}
+     * @see Generic form of {@link Table.getParams}.
      */
     getParams(key: PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.GetOptions): Table.GetInput;
 
     /**
-     * @see Generic form of {@link Table.deleteParams}
+     * @see Generic form of {@link Table.deleteParams}.
      */
     deleteParams(
       key: PrimaryKey.AttributeValuesMapT<KEY>,
@@ -1135,7 +1157,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     ): DocumentClient.DeleteItemInput;
 
     /**
-     * @see Generic form of {@link Table.putParams}
+     * @see Generic form of {@link Table.putParams}.
      */
     putParams(
       key: PrimaryKey.AttributeValuesMapT<KEY>,
@@ -1144,7 +1166,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     ): DocumentClient.PutItemInput;
 
     /**
-     * @see Generic form of {@link Table.updateParams}
+     * @see Generic form of {@link Table.updateParams}.
      */
     updateParams(
       key: PrimaryKey.AttributeValuesMapT<KEY>,
@@ -1153,23 +1175,23 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     ): DocumentClient.UpdateItemInput;
 
     /**
-     * @see Generic form of {@link Table.queryParams}
+     * @see Generic form of {@link Table.queryParams}.
      */
     queryParams(key: PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): DocumentClient.QueryInput;
 
     /**
-     * @see Generic form of {@link Table.scanParams}
+     * @see Generic form of {@link Table.scanParams}.
      */
     scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput;
 
     // actions:
     /**
-     * @see Generic form of {@link Table.get}
+     * @see Generic form of {@link Table.get}.
      */
     get(key: PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.GetOptions): Promise<DocumentClient.GetItemOutput>;
 
     /**
-     * @see Generic form of {@link Table.delete}
+     * @see Generic form of {@link Table.delete}.
      */
     delete(
       key: PrimaryKey.AttributeValuesMapT<KEY>,
@@ -1177,7 +1199,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     ): Promise<DocumentClient.DeleteItemOutput>;
 
     /**
-     * @see Generic form of {@link Table.put}
+     * @see Generic form of {@link Table.put}.
      */
     put(
       key: PrimaryKey.AttributeValuesMapT<KEY>,
@@ -1186,7 +1208,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     ): Promise<DocumentClient.PutItemOutput>;
 
     /**
-     * @see Generic form of {@link Table.update}
+     * @see Generic form of {@link Table.update}.
      */
     update(
       key: PrimaryKey.AttributeValuesMapT<KEY>,
@@ -1195,22 +1217,30 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     ): Promise<DocumentClient.UpdateItemOutput>;
 
     /**
-     * @see Generic form of {@link Table.query}
+     * @see Generic form of {@link Table.query}.
      */
     query(key: PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput>;
 
     /**
-     * @see Generic form of {@link Table.scan}
+     * @see Generic form of {@link Table.scan}.
      */
     scan(options?: ScanOptions): Promise<DocumentClient.ScanOutput>;
   }
 
   /**
    * Creates the generic form of {@link Table} used in TypeScript to get strong typing.
-   * @typeParam KEY The interface of the table's primary key
-   * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary key and all defined index projected attributes.
-   * @param params Table constructor params
-   * @returns A new table as TableT
+   *
+   *
+   * So you may ask, why have createTable over just using new {@link TableT}?  The reason is that since the method
+   * signature is exactly the same (same method names with same params, only typings are more strict) between
+   * TableT and Table there is no need to have TableT class with just a bunch of pass through wrapper methods.
+   * This also makes the {@link Table} TSDocs easier to read without all of the TypeScript Generic types.  Same
+   * approach is taken with {@link Index} and {@link Model}.
+   * @typeParam KEY The interface of the table's primary key.
+   * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index
+   * primary key and all defined index projected attributes.
+   * @param params Table constructor params.
+   * @returns A new table as TableT.
    */
   // eslint-disable-next-line no-inner-declarations
   export function createTable<KEY = Table.DefaultTableKey, ATTRIBUTES = KEY>(

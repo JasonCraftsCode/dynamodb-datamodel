@@ -69,7 +69,65 @@
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
-						<dd><pre><code class="language-typescript"></code></pre>
+						<dd><p>Using Model</p>
+							<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">interface</span> ModelKey {
+  id: <span class="hljs-built_in">string</span>;
+}
+<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
+  name: <span class="hljs-built_in">string</span>;
+  revision: <span class="hljs-built_in">number</span>;
+}
+
+<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    name: Fields.string(),
+    nickName: Fields.string(),
+    revision: Fields.number(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  name: <span class="hljs-string">'new name'</span>,
+  nickName: Update.del(),
+  revision: Update.inc(<span class="hljs-number">2</span>),
+});</code></pre>
+						</dd>
+						<dt>example</dt>
+						<dd><p>Using Table (though in most cases you&#39;ll use Model)</p>
+							<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">interface</span> Key {
+  P: Table.PrimaryKey.PartitionString;
+  S?: Table.PrimaryKey.SortString;
+}
+
+<span class="hljs-keyword">const</span> table = Table.createTable&lt;Key&gt;({
+  name: <span class="hljs-string">'TestTable'</span>,
+  keyAttributes: {
+    P: Table.PrimaryKey.StringType,
+    S: Table.PrimaryKey.StringType,
+  },
+  keySchema: {
+    P: Table.PrimaryKey.PartitionKeyType,
+    S: Table.PrimaryKey.SortKeyType,
+  },
+  <span class="hljs-comment">// ...additional properties like client, globalIndexes and others</span>
+});
+<span class="hljs-comment">// update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.</span>
+table.update(
+  {P: <span class="hljs-string">'P-GUID'</span>, S: <span class="hljs-string">'S-0'</span> },
+  {
+    name: <span class="hljs-string">'new name'</span>,
+    nickName: Update.del(),
+    revision: Update.inc(<span class="hljs-number">2</span>),
+  }
+);</code></pre>
 						</dd>
 					</dl>
 				</div>
@@ -144,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">Resolver&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="updateexpression.html" class="tsd-signature-type">UpdateExpression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L628">Update.ts:628</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L973">Update.ts:973</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -210,7 +268,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Binary<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"B"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L643">Update.ts:643</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L988">Update.ts:988</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -225,7 +283,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Binary<wbr>Set<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"BS"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L668">Update.ts:668</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1013">Update.ts:1013</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -240,7 +298,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Boolean<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"BOOL"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L648">Update.ts:648</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L993">Update.ts:993</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -255,7 +313,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="updateexpression.html" class="tsd-signature-type">UpdateExpression</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L686">Update.ts:686</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1031">Update.ts:1031</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -305,7 +363,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>List<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"L"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L673">Update.ts:673</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1018">Update.ts:1018</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -320,7 +378,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>List<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="update.html#updatelistvaluet" class="tsd-signature-type">UpdateListValueT</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L706">Update.ts:706</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1051">Update.ts:1051</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -335,7 +393,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>List<wbr>ValueT&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L701">Update.ts:701</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1046">Update.ts:1046</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -356,7 +414,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Map<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"M"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L678">Update.ts:678</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1023">Update.ts:1023</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -371,7 +429,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Map<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="update.html#updatemapvaluet" class="tsd-signature-type">UpdateMapValueT</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L719">Update.ts:719</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1064">Update.ts:1064</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -386,23 +444,23 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Map<wbr>ValueT&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L712">Update.ts:712</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1057">Update.ts:1057</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Type used for generic map based update methods.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>paramtype</dt>
-							<dd><p>T</p>
-							</dd>
-						</dl>
 					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
 							<h4>T</h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The model interface.</p>
+								</div>
+							</div>
 						</li>
 					</ul>
 					<div class="tsd-type-declaration">
@@ -420,7 +478,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Null<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"NULL"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L653">Update.ts:653</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L998">Update.ts:998</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -435,7 +493,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Number<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L638">Update.ts:638</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L983">Update.ts:983</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -450,7 +508,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Number<wbr>Set<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"NS"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L663">Update.ts:663</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1008">Update.ts:1008</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -465,7 +523,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Number<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L691">Update.ts:691</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1036">Update.ts:1036</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -480,7 +538,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>Set<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="table.html#attributesetvalues" class="tsd-signature-type">AttributeSetValues</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="update.html#updatefunction" class="tsd-signature-type">UpdateFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L696">Update.ts:696</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1041">Update.ts:1041</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -495,7 +553,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>String<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"S"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L633">Update.ts:633</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L978">Update.ts:978</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -510,7 +568,7 @@
 					<div class="tsd-signature tsd-kind-icon">Update<wbr>String<wbr>Set<span class="tsd-signature-symbol">:</span> <a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"SS"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L658">Update.ts:658</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L1003">Update.ts:1003</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -532,17 +590,34 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L423">Update.ts:423</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L614">Update.ts:614</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets an attribute to the result of adding two values.  Note: The reference attributes must exists for the update to succeed.
-									Support types: number</p>
+									<p>Sets an attribute to the result of adding two values.  Note: The attribute that is being decremented
+										must exist in the table item for this update to succeed.
+									Supported types: number.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    base: Fields.number(),
+    count: Fields.number(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Sets count attribute to the result of adding 3 to the 'base' attribute</span>
+<span class="hljs-comment">// Example: If base = 5, then after this update count will be 8</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  count: Update.add(<span class="hljs-string">'base'</span>, <span class="hljs-number">3</span>),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -557,7 +632,7 @@
 								<li>
 									<h5>right: <a href="update.html#updatenumbervalue" class="tsd-signature-type">UpdateNumberValue</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A value (or reference attribute) to using in add operation..</p>
+										<p>A value (or reference attribute) to using in add operation.</p>
 									</div>
 								</li>
 							</ul>
@@ -576,7 +651,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L603">Update.ts:603</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L948">Update.ts:948</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -630,17 +705,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L536">Update.ts:536</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L842">Update.ts:842</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Adds an array of values to a set based attribute.
-									Supported types: StringSet, NumberSet or BinarySet</p>
+									<p>Adds an array of values to a set based attribute (sets are ordered).
+									Supported types: StringSet, NumberSet or BinarySet.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    color: Fields.stringSet(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Adds 'yellow' and 'red' to the color attribute</span>
+<span class="hljs-comment">// Example: If color = ['blue', 'yellow'], then after this update color will be ['blue', 'red', 'yellow']</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  color: Update.addToSet(model.table.createStringSet([<span class="hljs-string">'yellow'</span>, <span class="hljs-string">'red'</span>]));
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -649,7 +739,7 @@
 								<li>
 									<h5>value: <a href="table.html#attributesetvalues" class="tsd-signature-type">AttributeSetValues</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Array of values to add</p>
+										<p>Array of values to add.</p>
 									</div>
 								</li>
 							</ul>
@@ -668,17 +758,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L454">Update.ts:454</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L679">Update.ts:679</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Appends items to the end of an existing list attribute.
-									Supported types: list</p>
+									Supported types: list.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    groups: Fields.list(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Appends 'soccer' and 'tennis' to the end of the list in groups attribute</span>
+<span class="hljs-comment">// Example: If groups = ['baseball', 'swimming'], then after this update it would be ['baseball', 'swimming', 'soccer', 'tennis']</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  groups: Update.append([<span class="hljs-string">'soccer'</span>, <span class="hljs-string">'tennis'</span>]),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -706,7 +811,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L591">Update.ts:591</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L936">Update.ts:936</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -744,17 +849,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L407">Update.ts:407</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L580">Update.ts:580</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Decrements a number based attribute by a certain amount.  Note: The attribute that is being decremented must exist in the table item for this update to succeed.
-									Support types: number</p>
+									<p>Decrements a number based attribute by a certain amount.  Note: The attribute that is being decremented
+										must exist in the table item for this update to succeed.
+									Supported types: number.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    count: Fields.number(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Decrements the count attribute by 2</span>
+<span class="hljs-comment">// Example: if count = 5, then after this update it would be 3</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  count: Update.dec(<span class="hljs-number">2</span>),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -782,7 +903,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L349">Update.ts:349</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L458">Update.ts:458</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -791,10 +912,21 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
-									</dd>
-									<dt>paramtype</dt>
-									<dd><p>T Type of default value argument.</p>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    name: Fields.string(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Set name attribute to 'Default Name' only if it doesn't exists</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  name: Update.default(<span class="hljs-string">'Default Name'</span>),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -802,6 +934,9 @@
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Type of default value argument.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -828,16 +963,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L362">Update.ts:362</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L486">Update.ts:486</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Delete the attribute from the table item.</p>
+									<p>Delete the attribute from the table item.  Setting an model property to null also deletes the attribute.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    name: Fields.string(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Deletes name attribute from item.  Could also use "name: null" to do the same thing.</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  name: Update.del(),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -856,17 +1005,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L500">Update.ts:500</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L774">Update.ts:774</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Deletes an array of indices from an list based attribute.
-									Supported types: list</p>
+									<p>Deletes an array of indices from an list based attribute (the lists are 0 based).
+									Supported types: list.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    children: Fields.list(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Removes the values at the 1st and 2nd index in the children attribute.</span>
+<span class="hljs-comment">// Example: If children = ['john', 'jill', 'bob', 'betty'], then after this update children will be ['john', 'betty']</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  children: Update.delIndexes([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]);
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -894,17 +1058,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L392">Update.ts:392</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L548">Update.ts:548</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Increments a number based attribute by a certain amount.  Note: The attribute that is being incremented must exist in the table item for this update to succeed.
-									Support types: number</p>
+									<p>Increments a number based attribute by a certain amount.  Note: The attribute that is being incremented
+										must exist in the table item for this update to succeed.
+									Supported types: number.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    count: Fields.number(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Increments the count attribute by 1</span>
+<span class="hljs-comment">// Example: If count = 3, then after this update it would be 4</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  count: Update.inc(<span class="hljs-number">1</span>),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -932,17 +1112,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L485">Update.ts:485</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L743">Update.ts:743</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Sets an attribute to the result of joining two lists.
-									Supported types: list</p>
+									Supported types: list.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    parents: Fields.list(),
+    ancestors: Fields.list(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Sets ancestors attribute to the result of joining the list from the parents attribute with ['grandpa, 'grandma']</span>
+<span class="hljs-comment">// Example: if parents = ['mom', 'dad'], then after this update ancestors will be ['mom', 'dad', 'grandpa', 'grandma']</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  ancestors: Update.join(<span class="hljs-string">'parents'</span>, [<span class="hljs-string">'grandpa'</span>, <span class="hljs-string">'grandma'</span>]),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -976,16 +1172,38 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L565">Update.ts:565</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L910">Update.ts:910</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets the inner attributes of a map based attribute.</p>
+									<p>Updates the inner attributes of a map based attribute.  <a href="update.html#set">set</a> is used to overwrite the entire map attribute, while map updates the attributes
+										inside of table attribute.  Example if an address attribute is set to { street: &#39;One Infinite Loop&#39;, city: &#39;Cupertino&#39;, state: &#39;CA, zip: &#39;95014&#39; } then
+										using Update.map({street: &#39;1 Apple Park Way&#39;}) will result in { street: &#39;1 Apple Park Way&#39;, city: &#39;Cupertino&#39;, state: &#39;CA, zip: &#39;95014&#39; }, while
+										using Update.set({street: &#39;1 Apple Park Way&#39;}) will result in {street: &#39;1 Apple Park Way&#39;}.
+									Supported types: map.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    address: Fields.map(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Update only the street property inside of the address attribute</span>
+<span class="hljs-comment">// Example: If address = { street: 'One Infinite Loop', city: 'Cupertino', state: 'CA, zip: '95014' } then</span>
+<span class="hljs-comment">// after this update address will be { street: '1 Apple Park Way', city: 'Cupertino', state: 'CA, zip: '95014' }</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  address: Update.map({
+    street: <span class="hljs-string">'1 Apple Park Way'</span>
+  });
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1037,7 +1255,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L318">Update.ts:318</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L395">Update.ts:395</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1046,7 +1264,23 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    fullName: Fields.string(),
+    name: Fields.string(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Sets name attribute to the value of the fullName attribute</span>
+<span class="hljs-comment">// Example: If fullName = 'John Smith', then name would be set to 'John Smith'</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  name: Update.path(<span class="hljs-string">'fullName'</span>),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1074,7 +1308,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L334">Update.ts:334</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L428">Update.ts:428</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1083,10 +1317,23 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
-									</dd>
-									<dt>paramtype</dt>
-									<dd><p>T Type of default value argument.</p>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    fullName: Fields.string(),
+    name: Fields.string(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Sets name attribute to the value of the fullName attribute, if fullName attribute doesn't exists then set</span>
+<span class="hljs-comment">// name attribute to 'User Name'.</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  name: Update.pathWithDefault(<span class="hljs-string">'fullName'</span>, <span class="hljs-string">'User Name'</span>),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1094,6 +1341,9 @@
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Type of default value argument.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1126,17 +1376,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L469">Update.ts:469</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L710">Update.ts:710</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Prepends items to the beginning of an existing list attribute.
-									Supported types: list</p>
+									Supported types: list.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    groups: Fields.list(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Prepends 'soccer', 'tennis' to the beginning of the list in groups attribute</span>
+<span class="hljs-comment">// Example: If groups = ['baseball', 'swimming'], then after this update it would be ['soccer', 'tennis', 'baseball', 'swimming']</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  groups: Update.prepend([<span class="hljs-string">'soccer'</span>, <span class="hljs-string">'tennis'</span>]),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1164,17 +1429,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L551">Update.ts:551</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L873">Update.ts:873</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Removes an array of values from a set based attribute.
-									Supported types: StringSet, NumberSet or BinarySet</p>
+									<p>Removes an array of values from a set based attribute (sets are ordered).
+									Supported types: StringSet, NumberSet or BinarySet.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    color: Fields.stringSet(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Remove 'yellow' and 'red' from the color attribute</span>
+<span class="hljs-comment">// Example: If color = ['blue', 'yellow'], then after this update color will be ['blue']</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  color: Update.removeFromSet(model.table.createStringSet([<span class="hljs-string">'yellow'</span>, <span class="hljs-string">'red'</span>]));
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1183,7 +1463,7 @@
 								<li>
 									<h5>value: <a href="table.html#attributesetvalues" class="tsd-signature-type">AttributeSetValues</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Array of values to remove</p>
+										<p>Array of values to remove.</p>
 									</div>
 								</li>
 							</ul>
@@ -1202,19 +1482,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L377">Update.ts:377</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L516">Update.ts:516</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets the attribute to a new value.</p>
+									<p>Sets the attribute to a new value.  Set is the default action for model property not set to a Update.Resolver<string> or null.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
-									</dd>
-									<dt>paramtype</dt>
-									<dd><p>T Type of value argument to set.</p>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    name: Fields.string(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Sets name attribute from item.  Could also use "name: 'new name'" to do the same thing.</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  name: Update.set(<span class="hljs-string">'new name'</span>),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1222,6 +1513,9 @@
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Type of value argument to set.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1248,17 +1542,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L515">Update.ts:515</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L805">Update.ts:805</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Sets the values of select indices for list based attribute.
-									Supported types: list</p>
+									Supported types: list.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    children: Fields.list(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Sets the values at the 1st and 2nd index in the children attribute to be 'margret' and 'mathew' respectively</span>
+<span class="hljs-comment">// Example: If children = ['john', 'jill', 'bob', 'betty'], then after this update children will be ['john', 'margret', 'mathew', 'betty']</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  children: Update.setIndexes({<span class="hljs-number">1</span>: <span class="hljs-string">'margret'</span>, <span class="hljs-number">2</span>: <span class="hljs-string">'mathew'</span>});
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1288,17 +1597,34 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L439">Update.ts:439</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Update.ts#L648">Update.ts:648</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets an attribute to the result of subtracting two values.  Note: The reference attributes must exists for the update to succeed.
-									Supported types: number</p>
+									<p>Sets an attribute to the result of subtracting two values.  Note: The reference attributes must exists
+										for the update to succeed.
+									Supported types: number.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
+  schema: {
+    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    base: Fields.number(),
+    count: Fields.number(),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});
+
+<span class="hljs-comment">// Sets count attribute to the result of subtracting 2 from the 'base' attribute</span>
+<span class="hljs-comment">// Example: If base = 9, then after this update count would be 7</span>
+model.update({
+  id: <span class="hljs-string">'P-GUID.S-0'</span>,
+  count: Update.sub(<span class="hljs-string">'base'</span>, <span class="hljs-number">2</span>),
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -1313,7 +1639,7 @@
 								<li>
 									<h5>right: <a href="update.html#updatenumbervalue" class="tsd-signature-type">UpdateNumberValue</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A value (or reference attribute) to use on the right side of a subtract operation..</p>
+										<p>A value (or reference attribute) to use on the right side of a subtract operation.</p>
 									</div>
 								</li>
 							</ul>

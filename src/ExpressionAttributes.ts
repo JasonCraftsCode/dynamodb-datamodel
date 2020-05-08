@@ -14,7 +14,7 @@ export class ExpressionAttributes {
 
   /**
    * Validates that an attribute name can be used without an alias.
-   * @param name Name of an attribute
+   * @param name Name of an attribute.
    * @returns true if the attribute name is valid.
    */
   static isValidAttributeName(name: string): boolean {
@@ -46,7 +46,7 @@ export class ExpressionAttributes {
   treatNameAsPath = true;
 
   /**
-   * Delimiter to use for paths
+   * Delimiter to use for paths.
    * @default '.' Period is used in javascript for nested objects.
    */
   pathDelimiter = '.';
@@ -58,6 +58,7 @@ export class ExpressionAttributes {
 
   /**
    * Auto incrementing name id used in names mapping.
+   * @default 0
    */
   nextName = 0;
 
@@ -68,6 +69,7 @@ export class ExpressionAttributes {
 
   /**
    * Auto incrementing value id used in values mapping.
+   * @default 0
    */
   nextValue = 0;
 

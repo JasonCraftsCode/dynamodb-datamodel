@@ -13,6 +13,7 @@ To get a more detailed list of task see the [projection tab](https://github.com/
 - Validation should be optional and exceptions rare, assume proper usage
 - Leverage DynamoDb's DocumentClient abilities when ever possible
 - Follow open source best practices
+- Well documented (using TypeDoc) and well tested (100% test coverage)
 
 ## Initial v1.0 version plan
 
@@ -25,7 +26,9 @@ To get a more detailed list of task see the [projection tab](https://github.com/
 - [x] Support an extensible model property schema (called Fields)
 - [x] Support a basic set of model fields and capabilities
 - [x] Provide basic table and index validation
-- [ ] Document and test all of the code
+- [x] Test all of the code (100% test coverage)
+- [ ] Document all of the code
+- [ ] Well written and complete readme.md
 - [ ] Working examples
 
 ## v1.x to v2.0 version plan
@@ -38,6 +41,7 @@ General hope for v1.x is to avoid breaking changes if at all possible, given the
 - [ ] Support transactions
 - [ ] Time to Live (TTL) support
 - [ ] Support more advanced model fields and capabilities, like compression, guid ids...
+- [ ] Support remainder (...) based fields
 - [ ] Support easy to use next/prev pages for query and scan operations
 - [ ] Provide validation for Model and expressions
 

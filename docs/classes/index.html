@@ -365,7 +365,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/table.queryoptions.html" class="tsd-signature-type">QueryOptions</a></h4>
-							<p>Query options with the IndexName set to the <a href="index.html#name">Index.name</a></p>
+							<p>Query options with the IndexName set to the <a href="index.html#name">Index.name</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -384,7 +384,7 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Add the IndexName to scan options</p>
+									<p>Add the IndexName to scan options.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -397,7 +397,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/table.scanoptions.html" class="tsd-signature-type">ScanOptions</a></h4>
-							<p>Scan options with the IndexName set to the <a href="index.html#name">Index.name</a></p>
+							<p>Scan options with the IndexName set to the <a href="index.html#name">Index.name</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -436,7 +436,7 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Used to initialize the Index with the table to support <a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>..</p>
+									<p>Used to initialize the Index with the table to support <a href="index.html#queryparams">queryParams</a>, <a href="index.html#scanparams">scanParams</a>, <a href="index.html#query">query</a>, and <a href="index.html#scan">scan</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -476,18 +476,18 @@
 								<li>
 									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Primary key with optional KeyCondition to query the secondary index with</p>
+										<p>Primary key with optional KeyCondition to query the secondary index with.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/table.queryoptions.html" class="tsd-signature-type">QueryOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Used in building the query params</p>
+										<p>Used in building the query params.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">QueryOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Promise with the query results, including items fetched</p>
+							<p>Promise with the query results, including items fetched.</p>
 						</li>
 					</ul>
 				</section>
@@ -514,13 +514,13 @@
 								<li>
 									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Primary key with optional KeyCondition to query the secondary index with</p>
+										<p>Primary key with optional KeyCondition to query the secondary index with.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/table.queryoptions.html" class="tsd-signature-type">QueryOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Used in building the query params</p>
+										<p>Used in building the query params.</p>
 									</div>
 								</li>
 							</ul>
@@ -553,12 +553,12 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/table.scanoptions.html" class="tsd-signature-type">ScanOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Used in building the scan params</p>
+										<p>Used in building the scan params.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ScanOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Promise with the scan results, including items fetched</p>
+							<p>Promise with the scan results, including items fetched.</p>
 						</li>
 					</ul>
 				</section>
@@ -585,7 +585,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/table.scanoptions.html" class="tsd-signature-type">ScanOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Used in building the scan params</p>
+										<p>Used in building the scan params.</p>
 									</div>
 								</li>
 							</ul>
@@ -604,13 +604,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L312">Table.ts:312</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L317">Table.ts:317</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates the generic form of Index used in TypeScript to get strong typing</p>
+									<p>Creates the generic form of Index used in TypeScript to get strong typing.</p>
 								</div>
+								<p>See <a href="table.html#createtable">Table.createTable</a> reasoning for having a createTable over support &#39;new TableT&#39;.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -623,7 +624,7 @@
 								<li>
 									<h5>params: <a href="../interfaces/index.indexparamst.html" class="tsd-signature-type">IndexParamsT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Index constructor params</p>
+										<p>Index constructor params.</p>
 									</div>
 								</li>
 							</ul>

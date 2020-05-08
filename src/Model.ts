@@ -258,6 +258,11 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     update(data: Model.ModelUpdateT<MODEL>, options?: Table.UpdateOptions): Promise<Model.UpdateOutput<MODEL>>;
   }
 
+  /**
+   *
+   * See {@link Table.createTable} reasoning for having a createTable over support 'new TableT'.
+   * @param params
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-inner-declarations
   export function createModel<KEY extends { [key: string]: any }, MODEL extends KEY = KEY>(
     params: ModelParamsT<KEY, MODEL>,

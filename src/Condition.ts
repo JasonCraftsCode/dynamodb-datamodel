@@ -120,12 +120,16 @@ export abstract class Condition {
 
   /**
    * Inserts the size of the attribute value to compare the data size to a static value or another attribute value.
+   *
+   *
    * Supported Types:
+   *
    *   - String: length of string.
    *   - Binary: number of bytes in value.
    *   - *Set: number of elements in set.
    *   - Map: number of child elements.
    *   - List: number of child elements.
+   *
    * @example
    * ```typescript
    * // Expands to: 'size(#n0) = :v0'
@@ -142,6 +146,11 @@ export abstract class Condition {
 
   /**
    * General compare condition used by eq, ne, lt, le, gt, and ge.
+   *  @example
+   * ```typescript
+   * // Expands to: '#n0 <> :v0'
+   * const condition = Condition.compare('name', '<>', 'value');
+   * ```
    * @param left Path to resolve or add.
    * @param op Compare operation to use.
    * @param right Value to resolve or add.
@@ -375,7 +384,7 @@ export abstract class Condition {
    * // Expands to: '(#n0 = :v0 AND #n0 = :v1 AND #n0 = :v2)'
    * const condition = Condition.and(Condition.eq('name', 1), Condition.eq('name', 2), Condition.eq('name', 3));
    * ```
-   * @param conditions List of conditions to evaluate with AND
+   * @param conditions List of conditions to evaluate with AND.
    * @returns Resolver to use when generate condition expression.
    */
   static and(...conditions: Condition.Resolver[]): Condition.Resolver {
