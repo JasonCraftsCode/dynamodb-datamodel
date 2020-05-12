@@ -165,7 +165,7 @@
 <span class="hljs-comment">// 6. Create each Model and define data schema</span>
 <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     name: Fields.string(),
   },
   table: table <span class="hljs-keyword">as</span> Table, <span class="hljs-comment">// 'as Table' needed for TypeScript</span>

@@ -85,7 +85,7 @@
 
 <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
   schema: {
-    id: Fields.split({aliases:[<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]}),
+    id: Fields.split({ aliases:[<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     name: Fields.string(),
     age: Fields.number(),
     children: Fields.list(),
@@ -748,7 +748,7 @@
 								<div class="lead">
 									<p>Creates a split field object to use in a <a href="model.html#schema">Model.schema</a>. which can be used to split a model property into two or more
 										table attributes.  This is commonly used as an model id property which gets slit into the table&#39;s partition and sort keys.
-										Example: Model schema contains &#39;id: Fields.split([&#39;P&#39;,&#39;S&#39;])&#39; and when id = &#39;guid.date&#39; the field will split the id value
+										Example: Model schema contains &#39;id: Fields.split({ aliases: [&#39;P&#39;,&#39;S&#39;] })&#39; and when id = &#39;guid.date&#39; the field will split the id value
 									in to the table primary key of { P: &#39;guid&#39;, S: &#39;date&#39;}</p>
 								</div>
 								<dl class="tsd-comment-tags">

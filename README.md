@@ -117,7 +117,7 @@ interface ModelItem extends ModelKey {
 // 6. Create each Model and define data schema
 const model = Model.createModel<ModelKey, ModelItem>({
   schema: {
-    id: Fields.split(['P', 'S']),
+    id: Fields.split({ aliases: ['P', 'S'] }),
     name: Fields.string(),
   },
   table: table as Table, // 'as Table' needed for TypeScript

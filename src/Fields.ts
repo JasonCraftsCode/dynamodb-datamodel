@@ -25,7 +25,7 @@ import { Update } from './Update';
  *
  * const model = Model.createModel<ModelKey, ModelItem>({
  *   schema: {
- *     id: Fields.split({aliases:['P', 'S']}),
+ *     id: Fields.split({ aliases:['P', 'S'] }),
  *     name: Fields.string(),
  *     age: Fields.number(),
  *     children: Fields.list(),
@@ -162,7 +162,7 @@ export class Fields {
   /**
    * Creates a split field object to use in a {@link Model.schema}. which can be used to split a model property into two or more
    * table attributes.  This is commonly used as an model id property which gets slit into the table's partition and sort keys.
-   * Example: Model schema contains 'id: Fields.split(['P','S'])' and when id = 'guid.date' the field will split the id value
+   * Example: Model schema contains 'id: Fields.split({ aliases: ['P','S'] })' and when id = 'guid.date' the field will split the id value
    * in to the table primary key of { P: 'guid', S: 'date'}
    * @example
    * ```typescript

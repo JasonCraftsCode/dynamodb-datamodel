@@ -317,7 +317,7 @@ export class UpdateExpression {
  *
  * const model = Model.createModel<ModelKey, ModelItem>({
  *   schema: {
- *     id: Fields.split(['P', 'S']),
+ *     id: Fields.split({ aliases: ['P', 'S'] }),
  *     name: Fields.string(),
  *     nickName: Fields.string(),
  *     revision: Fields.number(),
@@ -375,7 +375,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     fullName: Fields.string(),
    *     name: Fields.string(),
    *   },
@@ -406,7 +406,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     fullName: Fields.string(),
    *     name: Fields.string(),
    *   },
@@ -439,7 +439,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     name: Fields.string(),
    *   },
    *   // ...additional properties like table
@@ -469,7 +469,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     name: Fields.string(),
    *   },
    *   // ...additional properties like table
@@ -497,7 +497,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     name: Fields.string(),
    *   },
    *   // ...additional properties like table
@@ -529,7 +529,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     count: Fields.number(),
    *   },
    *   // ...additional properties like table
@@ -561,7 +561,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     count: Fields.number(),
    *   },
    *   // ...additional properties like table
@@ -593,7 +593,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     base: Fields.number(),
    *     count: Fields.number(),
    *   },
@@ -627,7 +627,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     base: Fields.number(),
    *     count: Fields.number(),
    *   },
@@ -660,7 +660,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     groups: Fields.list(),
    *   },
    *   // ...additional properties like table
@@ -691,7 +691,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     groups: Fields.list(),
    *   },
    *   // ...additional properties like table
@@ -722,7 +722,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     parents: Fields.list(),
    *     ancestors: Fields.list(),
    *   },
@@ -755,7 +755,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     children: Fields.list(),
    *   },
    *   // ...additional properties like table
@@ -786,7 +786,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     children: Fields.list(),
    *   },
    *   // ...additional properties like table
@@ -823,7 +823,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     colors: Fields.stringSet(),
    *   },
    *   // ...additional properties like table
@@ -854,7 +854,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     colors: Fields.stringSet(),
    *   },
    *   // ...additional properties like table
@@ -888,7 +888,7 @@ export class Update {
    *
    * const model = new Model({
    *   schema: {
-   *     id: Fields.split(['P', 'S']),
+   *     id: Fields.split({ aliases: ['P', 'S'] }),
    *     address: Fields.map(),
    *   },
    *   // ...additional properties like table

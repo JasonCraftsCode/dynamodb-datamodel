@@ -82,7 +82,7 @@
 
 <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     name: Fields.string(),
     nickName: Fields.string(),
     revision: Fields.number(),
@@ -605,7 +605,7 @@ table.update(
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     base: Fields.number(),
     count: Fields.number(),
   },
@@ -719,7 +719,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     colors: Fields.stringSet(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -772,7 +772,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     groups: Fields.list(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -864,7 +864,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     count: Fields.number(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -916,7 +916,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     name: Fields.string(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -976,7 +976,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     name: Fields.string(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -1019,7 +1019,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     children: Fields.list(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -1073,7 +1073,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     count: Fields.number(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -1126,7 +1126,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     parents: Fields.list(),
     ancestors: Fields.list(),
   },
@@ -1189,7 +1189,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     address: Fields.map(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -1268,7 +1268,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     fullName: Fields.string(),
     name: Fields.string(),
   },
@@ -1321,7 +1321,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     fullName: Fields.string(),
     name: Fields.string(),
   },
@@ -1390,7 +1390,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     groups: Fields.list(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -1443,7 +1443,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     colors: Fields.stringSet(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -1495,7 +1495,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     name: Fields.string(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -1556,7 +1556,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     children: Fields.list(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
@@ -1612,7 +1612,7 @@ model.update({
 
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
-    id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
     base: Fields.number(),
     count: Fields.number(),
   },
