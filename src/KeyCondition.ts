@@ -162,9 +162,7 @@ export class KeyCondition {
    * @returns Resolver to use when generate key condition expression.
    */
   static compare<T extends Table.AttributeValues>(op: KeyCondition.CompareOperators, value: T): KeyCondition.Resolver {
-    return (name: string, exp: KeyConditionExpression): void => {
-      exp.addSortCondition(name, op, value);
-    };
+    return (name: string, exp: KeyConditionExpression): void => exp.addSortCondition(name, op, value);
   }
 
   /**
@@ -279,9 +277,7 @@ export class KeyCondition {
    * @returns Resolver to use when generate key condition expression.
    */
   static between<T extends Table.AttributeValues>(from: T, to: T): KeyCondition.Resolver {
-    return (name: string, exp: KeyConditionExpression): void => {
-      exp.addSortCondition(name, 'BETWEEN', from, to);
-    };
+    return (name: string, exp: KeyConditionExpression): void => exp.addSortCondition(name, 'BETWEEN', from, to);
   }
 
   /**
@@ -301,9 +297,7 @@ export class KeyCondition {
    * @returns Resolver to use when generate key condition expression.
    */
   static beginsWith(value: string): KeyCondition.Resolver {
-    return (name: string, exp: KeyConditionExpression): void => {
-      exp.addSortCondition(name, 'begins_with', value);
-    };
+    return (name: string, exp: KeyConditionExpression): void => exp.addSortCondition(name, 'begins_with', value);
   }
 
   /**
@@ -314,11 +308,8 @@ export class KeyCondition {
   static buildExpression(key: Table.PrimaryKey.KeyQueryMap, exp: KeyConditionExpression): string {
     Object.keys(key).forEach((name) => {
       const value = key[name];
-      if (typeof value === 'function') {
-        value(name, exp);
-      } else {
-        exp.addEqualCondition(name, value);
-      }
+      if (typeof value === 'function') value(name, exp);
+      else exp.addEqualCondition(name, value);
     });
     return exp.getExpression();
   }

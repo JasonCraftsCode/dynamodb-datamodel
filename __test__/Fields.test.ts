@@ -6,8 +6,6 @@ import { Model } from '../src/Model';
 import { Table } from '../src/Table';
 import { Update } from '../src/Update';
 
-///const client = new DocumentClient({ convertEmptyValues: true });
-
 const model = { name: 'MyModel' } as Model;
 function getTableContext(action: Table.ItemActions): Fields.TableContext {
   return {
@@ -23,25 +21,6 @@ const putTableContext = getTableContext('put');
 const putNewTableContext = getTableContext('put-new');
 const putReplaceTableContext = getTableContext('put-replace');
 const updateTableContext = getTableContext('update');
-
-/*
-interface TableKey {
-  P: Table.PrimaryKey.PartitionString;
-  S?: Table.PrimaryKey.SortString;
-}
-const table = Table.createTable<TableKey, TableKey>({
-  name: 'MainTable',
-  keyAttributes: {
-    P: Table.PrimaryKey.StringType,
-    S: Table.PrimaryKey.StringType,
-  },
-  keySchema: {
-    P: Table.PrimaryKey.PartitionKeyType,
-    S: Table.PrimaryKey.SortKeyType,
-  },
-  client,
-});
-*/
 
 interface ChildModel {
   name: string;

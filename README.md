@@ -26,11 +26,18 @@ This is also not a table management module, since with single table design the t
 
 - **Bidirectional data mapping** - In single table design the primary key attributes for tables and indexes are named in a generic way to allow each item type to use the attributes for different properties, to allow multiple access patterns with limited secondary indexes.
 - **Table item update** - Even simple updates to a table item are not easy, especially in the context of data mappings.
-- **Table condition expression** - DynamodDb supports conditional writes, but building the ConditionExpression can be tricky, especially in the context of data mappings.
-- **Focus on NoSQL capabilities** - Make it easy to use DynanoDb's unique capabilities, and avoid SQL concepts that don't make sense in the NoSQL world (don't be an ORM).
+- **Table condition expression** - DynamoDb supports conditional writes, but building the ConditionExpression can be tricky, especially in the context of data mappings.
+- **Focus on NoSQL capabilities** - Make it easy to use DynamoDb's unique capabilities, and avoid SQL concepts that don't make sense in the NoSQL world (don't be an ORM).
 - **Simple to use and open for extension** - Though this library tries to capture the current capabilities of DynamoDb with a simple API surface, it also exposes ways to extend is capabilities to support more complex use cases or if AWS adds additional update, filter or condition expression features.
 - **Good TypeScript support** - Not all libraries have good up to date and well documented typescript support.
 - **Small and light weight** - The main use case is to run in AWS Lambda so it needs to be small, light weight and have little to no dependencies.
+
+## Non goals
+
+- **Not a validator or coercer** - There are many very good data validators and coercer, like joi, yup, ajv... This library does not attempt to do any validation or coercion, but it is **highly** recommended that you validate (and coerce if desired) the data before writing it to DynamoDb using DynamoDb-DataModel.
+- **Not a table manager** - This library is just for reading and writing data to DynamoDb, for most all single table usage the table will be managed through CloudFormation.
+
+## Best Practices
 
 ## Installation
 
@@ -83,7 +90,7 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { Table, Model, Fields } from 'dynamodb-datamodel';
 
 // 2. Create DynamoDB DocumentClient
-const client = new DocumentClient();
+const client = new DocumentClient({ convertEmptyValues: true });
 
 // 3. (TypeScript) Define Table's primary key
 interface TableKey {
@@ -140,15 +147,20 @@ await model.delete({ id: 'P-GUID.S-0' });
 
 DynamoDB-DataMode is composed of several components that can be used on their own and are used by the higher level components like Fields and Model.
 
+Core:
+
+- [Fields](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html) - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.
+- [Index](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html) - Classes that represents Global or Local Secondary Indexes associated with a table.
+- [Model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) - Class that uses the model schema and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.
+- [Table](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html) - Class the represents the Table and wraps table actions.
+
+Helpers:
+
 - [Condition](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html) - Contains methods to build complex condition expressions.
 - [ConditionExpression](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/conditionexpression.html) - Contains methods to build complex condition expressions.
 - [ExpressionAttributes](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/expressionattributes.html) - Class to hold the condition, key condition and update expressions attribute names and values.
-- [Fields](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html) - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.
-- [Index](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html) - Classes that represents Global or Local Secondary Indexes associated with a table.
 - [KeyCondition](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html) - Contains the method to build sort key conditions for Table.query.
 - [KeyExpressionAttributes](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keyconditionexpression.html) - Help class used to build the key condition expression.
-- [Model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) - Class that uses the model schema and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.
-- [Table](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html) - Class the represents the Table and wraps table actions.
 - [Update](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html) - Contains the methods to build any update expression.
 - [UpdateExpression](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/updateexpression.html) - Help class used to help build update expressions.
 
@@ -156,11 +168,11 @@ DynamoDB-DataMode is composed of several components that can be used on their ow
 
 ## Table
 
-A Table is the first object that you will need to create when working with dynamodb-datamodel. It is the object that contains the configuration data for a provisioned DynamodDb Table and uses the DynamoDb DocumentObject to read and write to the DynamoDb Table.
+A Table is the first object that you will need to create when working with dynamodb-datamodel. It is the object that contains the configuration data for a provisioned DynamoDb Table and uses the DynamoDb DocumentObject to read and write to the DynamoDb Table.
 
 You can either create a simple JavaScript based Table using `new Table()` or if you want to get additional typescript based type checking and code editor autocomplete you can use `Table.createTable<KEY, ATTRIBUTES>` to create a Table that knows about the primary key types and all key attributes.
 
-Creating a table is simple, there are only three things needed: 1) the name of the DynamodDb table, 2) a map of key attribute types, 3) a map of primary key types.
+Creating a table is simple, there are only three things needed: 1) the name of the DynamoDb table, 2) a map of key attribute types, 3) a map of primary key types.
 
 ## Index
 
@@ -182,7 +194,7 @@ Creating a index is simple, there are only three things needed: 1) the name of t
 
 Condition where age > 21 OR ((region = 'US' AND size(interests) > 10) AND interests contain nodejs, dynamodb, or serverless):
 
-```typescript
+```typescript Using Condition helpers
 const { and, or, eq, gt, contains, size } = Condition;
 const filters = or(
   gt('age', 21),
@@ -192,23 +204,29 @@ const filters = or(
     or(contains('interests', 'nodejs'), contains('interests', 'dynamodb'), contains('interests', 'serverless')),
   ),
 );
+```
 
+```typescript Using Field methods to ensure attribute paths are correct
 const schema = {
   age: Field.number(),
   region: Field.string(),
   interests: Field.string(),
 };
 
+// Assigning a schema to a model will initialize the schema fields with model property name
+// which is needed for the field condition methods to work below.
+const testModel = new Model({
+  name: 'TestModel',
+  schema,
+});
+
 const { age, region, interests } = schema;
 const filters = or(
   age.gt(21),
   and(
     region.eq('US'),
-    gt(interests.size(), 10), // better: interests.size().gt(10)
+    gt(interests.size(), 10),
     or(interests.contains('nodejs'), interests.contains('dynamodb'), interests.contains('serverless')),
-    // how about: interests.contains('nodejs').or(interests.contains('dynamodb')).or(interests.contains('serverless')),
   ),
 );
 ```
-
-Would be nice if we could do som

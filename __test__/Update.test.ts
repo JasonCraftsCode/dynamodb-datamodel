@@ -2,7 +2,7 @@ import { DocumentClient, ExpressionAttributeNameMap } from 'aws-sdk/clients/dyna
 import { Table } from '../src/Table';
 import { Update, UpdateExpression } from '../src/Update';
 
-const documentClient = new DocumentClient();
+const documentClient = new DocumentClient({ convertEmptyValues: true });
 
 it('Validate Condition exports', () => {
   expect(typeof Update).toEqual('function');

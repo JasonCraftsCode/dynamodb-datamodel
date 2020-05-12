@@ -19,23 +19,23 @@ export class Model implements Model.ModelBase {
     // TODO: register model with table to support query and scan data mapping
     this.table = params.table;
     this.onError = params.table.onError;
-    this.setSchema(params.schema);
+    Model.initSchema(this.schema, this);
   }
 
-  setSchema(schema: Model.ModelSchema): void {
-    this.schema = schema;
-    Object.keys(schema).forEach((key) => schema[key].init(key, this));
+  static initSchema(schema: Model.ModelSchema, model: Model): void {
+    Object.keys(schema).forEach((key) => schema[key].init(key, model));
+  }
+
+  toModel(data: Table.AttributeValuesMap | undefined, context: Fields.ModelContext): Model.ModelOut | undefined {
+    const tableData = data || {};
+    const modelData: Model.ModelOut = {};
+    Object.keys(this.schema).forEach((key) => this.schema[key].toModel(key, tableData, modelData, context));
+    return Object.keys(modelData).length > 0 ? modelData : undefined;
   }
 
   toTable(data: Model.ModelData, context: Fields.TableContext): Model.TableData {
     const tableData: Table.AttributeValuesMap = {};
-    // enumerate schema so each field gets called
-    // ... handled by table to* if supported (do we need each field to return array of names processed)
-    const keys = Object.keys(this.schema);
-    for (const name of keys) {
-      const schema: Fields.Field = this.schema[name];
-      schema.toTable(name, data, tableData, context);
-    }
+    Object.keys(this.schema).forEach((key) => this.schema[key].toTable(key, data, tableData, context));
     return this.splitTableData(tableData);
   }
 
@@ -45,27 +45,8 @@ export class Model implements Model.ModelBase {
 
   toTableUpdate(data: Model.ModelUpdate, context: Fields.TableContext): Model.TableUpdateData {
     const tableData: Table.AttributeValuesMap = {};
-    // enumerate schema so each field gets called
-    // ... handled by table to* if supported (do we need each field to return array of names processed)
-    const keys = Object.keys(this.schema);
-    for (const name of keys) {
-      const schema: Fields.Field = this.schema[name];
-      if (schema.toTableUpdate === undefined) continue;
-      schema.toTableUpdate(name, data, tableData, context);
-    }
+    Object.keys(this.schema).forEach((key) => this.schema[key].toTableUpdate?.(key, data, tableData, context));
     return this.splitTableData(tableData);
-  }
-
-  toModel(data: Table.AttributeValuesMap | undefined, context: Fields.ModelContext): Model.ModelOut | undefined {
-    data = data || {};
-    const out: Model.ModelOut = {};
-    const keys = Object.keys(this.schema);
-    for (const name of keys) {
-      const schema: Fields.Field = this.schema[name];
-      schema.toModel(name, data, out, context);
-    }
-    if (Object.keys(out).length > 0) return out;
-    return undefined;
   }
 
   getContext(action: Table.ItemActions, options: Table.BaseOptions): Fields.TableContext {

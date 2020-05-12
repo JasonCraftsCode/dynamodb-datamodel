@@ -102,9 +102,7 @@ class FieldFork implements Fields.Field {
     modelData: Model.ModelData,
     context: Fields.ModelContext,
   ): void {
-    for (const field of this.fields) {
-      field.toModel(name, tableData, modelData, context);
-    }
+    this.fields.forEach((field) => field.toModel(name, tableData, modelData, context));
   }
 
   /**
@@ -116,9 +114,7 @@ class FieldFork implements Fields.Field {
     tableData: Table.AttributeValuesMap,
     context: Fields.TableContext,
   ): void {
-    for (const field of this.fields) {
-      field.toTable(name, modelData, tableData, context);
-    }
+    this.fields.forEach((field) => field.toTable(name, modelData, tableData, context));
   }
 
   /**
@@ -130,9 +126,7 @@ class FieldFork implements Fields.Field {
     tableData: Update.UpdateMapValue,
     context: Fields.TableContext,
   ): void {
-    for (const field of this.fields) {
-      if (field.toTableUpdate !== undefined) field.toTableUpdate(name, modelData, tableData, context);
-    }
+    this.fields.forEach((field) => field.toTableUpdate?.(name, modelData, tableData, context));
   }
 }
 
@@ -227,11 +221,10 @@ class FieldRevision implements Fields.Field {
     context: Fields.TableContext,
   ): void {
     const action = context.action;
-    if (Table.isPutAction(action)) {
-      if (this.matchOnWrite && action !== 'put-new')
-        context.conditions.push(Condition.or(Condition.notExists(name), Condition.eq(name, modelData[name] || 0)));
-      tableData[this.alias || name] = this.start;
-    }
+    if (!Table.isPutAction(action)) return;
+    if (this.matchOnWrite && action !== 'put-new')
+      context.conditions.push(Condition.or(Condition.notExists(name), Condition.eq(name, modelData[name] || 0)));
+    tableData[this.alias || name] = this.start;
   }
 
   /**

@@ -133,9 +133,7 @@ export class UpdateExpression {
    * @param indexes Array of indices to delete from the list.
    */
   delIndexes(name: string, indexes: number[]): void {
-    indexes.forEach((index) => {
-      this.removeList.push(`${name}[${index}]`);
-    });
+    indexes.forEach((index) => this.removeList.push(`${name}[${index}]`));
   }
 
   /**
@@ -144,9 +142,7 @@ export class UpdateExpression {
    * @param values Map of indices with aliased values to overwrite in the list.
    */
   setIndexes(name: string, values: { [index: number]: string }): void {
-    Object.keys(values).forEach((key) => {
-      this.setList.push(`${name}[${key}] = ${values[Number(key)]}`);
-    });
+    Object.keys(values).forEach((key) => this.setList.push(`${name}[${key}] = ${values[Number(key)]}`));
   }
 
   // Set
@@ -284,8 +280,7 @@ export class UpdateExpression {
     if (this.removeList.length > 0) updates.push(`REMOVE ${this.removeList.join(', ')}`);
     if (this.addList.length > 0) updates.push(`ADD ${this.addList.join(', ')}`);
     if (this.deleteList.length > 0) updates.push(`DELETE ${this.deleteList.join(', ')}`);
-    if (updates.length > 0) return updates.join(' ');
-    return undefined;
+    return updates.length > 0 ? updates.join(' ') : undefined;
   }
 
   /**
@@ -393,9 +388,7 @@ export class Update {
    * @returns Update function that returns the alias for the path.
    */
   static path(path: string): Update.UpdateFunction {
-    return (name: string, exp: UpdateExpression): string => {
-      return exp.addPath(path);
-    };
+    return (name: string, exp: UpdateExpression): string => exp.addPath(path);
   }
 
   /**
@@ -426,9 +419,7 @@ export class Update {
    * @returns Update function that returns the alias for the path.
    */
   static pathWithDefault<T extends Table.AttributeValues>(path: string, value: T): Update.UpdateFunction {
-    return (name: string, exp: UpdateExpression): string => {
-      return exp.ifNotExist(exp.addPath(path), exp.addValue(value));
-    };
+    return (name: string, exp: UpdateExpression): string => exp.ifNotExist(exp.addPath(path), exp.addValue(value));
   }
 
   /**
@@ -456,9 +447,7 @@ export class Update {
    * @returns Update resolver function to set default value.
    */
   static default<T extends Table.AttributeValues>(value: T): Update.Resolver<string> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.set(name, exp.ifNotExist(name, exp.addValue(value)));
-    };
+    return (name: string, exp: UpdateExpression): void => exp.set(name, exp.ifNotExist(name, exp.addValue(value)));
   }
 
   /**
@@ -484,9 +473,7 @@ export class Update {
    * @returns Update resolver function to delete attribute.
    */
   static del(): Update.Resolver<string> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.del(name);
-    };
+    return (name: string, exp: UpdateExpression): void => exp.del(name);
   }
 
   /**
@@ -514,9 +501,7 @@ export class Update {
    * @returns Update resolver function to set attribute to a value.
    */
   static set<T extends Table.AttributeValues>(value: T | Update.UpdateFunction): Update.Resolver<string> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.set(name, exp.addAnyValue(value, name));
-    };
+    return (name: string, exp: UpdateExpression): void => exp.set(name, exp.addAnyValue(value, name));
   }
 
   /**
@@ -546,9 +531,7 @@ export class Update {
    * @returns Update resolver function to increment the attribute.
    */
   static inc(value: Update.UpdateNumberValue): Update.Resolver<'N'> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.inc(name, exp.addNumberValue(value, name));
-    };
+    return (name: string, exp: UpdateExpression): void => exp.inc(name, exp.addNumberValue(value, name));
   }
 
   /**
@@ -578,9 +561,7 @@ export class Update {
    * @returns Update resolver function to decrement the attribute.
    */
   static dec(value: Update.UpdateNumberValue): Update.Resolver<'N'> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.dec(name, exp.addNumberValue(value, name));
-    };
+    return (name: string, exp: UpdateExpression): void => exp.dec(name, exp.addNumberValue(value, name));
   }
 
   /**
@@ -612,9 +593,8 @@ export class Update {
    * @returns Update resolver function to set a number attribute to the result of adding two values.
    */
   static add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
-    return (name: string, exp: UpdateExpression): void => {
+    return (name: string, exp: UpdateExpression): void =>
       exp.add(name, exp.addNumberValue(left, name), exp.addNumberValue(right, name));
-    };
   }
 
   /**
@@ -646,9 +626,8 @@ export class Update {
    * @returns Update resolver function to set a number attribute to the result of subtracting two values.
    */
   static sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
-    return (name: string, exp: UpdateExpression): void => {
+    return (name: string, exp: UpdateExpression): void =>
       exp.sub(name, exp.addNumberValue(left, name), exp.addNumberValue(right, name));
-    };
   }
 
   /**
@@ -677,9 +656,7 @@ export class Update {
    * @returns Update resolver function to append a list to an attribute.
    */
   static append(value: Update.UpdateListValue): Update.Resolver<'L'> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.append(name, exp.addListValue(value, name));
-    };
+    return (name: string, exp: UpdateExpression): void => exp.append(name, exp.addListValue(value, name));
   }
 
   /**
@@ -708,9 +685,7 @@ export class Update {
    * @returns Update resolver function to prepend a list to an attribute.
    */
   static prepend(value: Update.UpdateListValue): Update.Resolver<'L'> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.prepend(name, exp.addListValue(value, name));
-    };
+    return (name: string, exp: UpdateExpression): void => exp.prepend(name, exp.addListValue(value, name));
   }
 
   /**
@@ -741,9 +716,8 @@ export class Update {
    * @returns Update resolver function to set an attribute to the joining of two lists.
    */
   static join(left: Update.UpdateListValue, right: Update.UpdateListValue): Update.Resolver<'L'> {
-    return (name: string, exp: UpdateExpression): void => {
+    return (name: string, exp: UpdateExpression): void =>
       exp.join(name, exp.addListValue(left, name), exp.addListValue(right, name));
-    };
   }
 
   /**
@@ -772,9 +746,7 @@ export class Update {
    * @returns Update resolver function to delete indices in a list based attribute.
    */
   static delIndexes(indexes: number[]): Update.Resolver<'L'> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.delIndexes(name, indexes);
-    };
+    return (name: string, exp: UpdateExpression): void => exp.delIndexes(name, indexes);
   }
 
   /**
@@ -804,12 +776,8 @@ export class Update {
    */
   static setIndexes(values: { [key: number]: Table.AttributeValues | Update.UpdateFunction }): Update.Resolver<'L'> {
     return (name: string, exp: UpdateExpression): void => {
-      const listValues: {
-        [key: number]: string;
-      } = {};
-      Object.keys(values).forEach((key) => {
-        listValues[Number(key)] = exp.addAnyValue(values[Number(key)], name);
-      });
+      const listValues: { [key: number]: string } = {};
+      Object.keys(values).forEach((key) => (listValues[Number(key)] = exp.addAnyValue(values[Number(key)], name)));
       exp.setIndexes(name, listValues);
     };
   }
@@ -840,9 +808,7 @@ export class Update {
    * @returns Update resolver function to add an array of values to a set based attribute.
    */
   static addToSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.addToSet(name, exp.addSetValue(value, name));
-    };
+    return (name: string, exp: UpdateExpression): void => exp.addToSet(name, exp.addSetValue(value, name));
   }
 
   /**
@@ -871,9 +837,7 @@ export class Update {
    * @returns Update resolver function to remove an array of values from a set based attribute.
    */
   static removeFromSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
-    return (name: string, exp: UpdateExpression): void => {
-      exp.removeFromSet(name, exp.addSetValue(value, name));
-    };
+    return (name: string, exp: UpdateExpression): void => exp.removeFromSet(name, exp.addSetValue(value, name));
   }
 
   /**
@@ -915,14 +879,9 @@ export class Update {
         const path = name ? `${name}.${exp.addPath(key)}` : exp.addPath(key);
         if (typeof value === 'function') {
           const newValue = value(path, exp);
-          if (newValue) {
-            exp.set(path, newValue);
-          }
-        } else if (value === null) {
-          exp.del(path);
-        } else {
-          exp.set(path, exp.addValue(value));
-        }
+          if (newValue) exp.set(path, newValue);
+        } else if (value === null) exp.del(path);
+        else exp.set(path, exp.addValue(value));
       });
     };
   }

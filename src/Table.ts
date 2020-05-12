@@ -10,11 +10,8 @@ import { Update } from './Update';
 
 function getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.PrimaryKey.KeyTypes): string {
   const keys = Object.keys(keySchema);
-  for (const key of keys) {
-    if (keySchema[key].keyType === type) {
-      return key;
-    }
-  }
+  for (const key of keys) if (keySchema[key].keyType === type) return key;
+
   return '';
 }
 
@@ -62,7 +59,7 @@ function getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.Primary
  * // Continued from previous example
  *
  * // Create DynamoDB DocumentClient
- * const client = new DocumentClient();
+ * const client = new DocumentClient({ convertEmptyValues: true });
  *
  * // [TypeScript] Define table primary key type
  * interface Key {
@@ -328,7 +325,7 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
  * import { Table } from 'dynamodb-datamodel';
  *
  * // Create DynamoDB DocumentClient
- * const client = new DocumentClient();
+ * const client = new DocumentClient({ convertEmptyValues: true });
  *
  * // [TypeScript] Define table primary key type
  * interface Key {

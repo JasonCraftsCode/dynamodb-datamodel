@@ -6,7 +6,7 @@ import { Table, Index } from '../src/Table';
 import { validateTable } from '../src/TableValidate';
 import { delay } from './testCommon';
 
-const client = new DocumentClient();
+const client = new DocumentClient({ convertEmptyValues: true });
 const request = {
   promise() {
     return delay(1, { Attributes: {} });

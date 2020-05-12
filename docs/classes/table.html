@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Table | dynamodb-datamodel - v0.1.7</title>
+	<title>Table | dynamodb-datamodel - v0.1.8</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.7</a>
+					<a href="../index.html" class="title">dynamodb-datamodel - v0.1.8</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -73,7 +73,7 @@
 <span class="hljs-keyword">import</span> { Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 
 <span class="hljs-comment">// Create DynamoDB DocumentClient</span>
-<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> DocumentClient();
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> DocumentClient({ convertEmptyValues: <span class="hljs-literal">true</span> });
 
 <span class="hljs-comment">// [TypeScript] Define table primary key type</span>
 <span class="hljs-keyword">interface</span> Key {
@@ -230,7 +230,7 @@
 					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Set<wbr>Values<span class="tsd-signature-symbol">:</span> <a href="table.html#stringsetvalue" class="tsd-signature-type">StringSetValue</a><span class="tsd-signature-symbol"> | </span><a href="table.html#numbersetvalue" class="tsd-signature-type">NumberSetValue</a><span class="tsd-signature-symbol"> | </span><a href="table.html#binarysetvalue" class="tsd-signature-type">BinarySetValue</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L753">Table.ts:753</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L750">Table.ts:750</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -245,7 +245,7 @@
 					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"B"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"S"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BOOL"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"NULL"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"L"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"M"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BS"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"NS"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"SS"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L718">Table.ts:718</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L715">Table.ts:715</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -260,7 +260,7 @@
 					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Values<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><a href="table.html#binaryvalue" class="tsd-signature-type">BinaryValue</a><span class="tsd-signature-symbol"> | </span><a href="table.html#attributesetvalues" class="tsd-signature-type">AttributeSetValues</a><span class="tsd-signature-symbol"> | </span><a href="table.html#mapvalue" class="tsd-signature-type">MapValue</a><span class="tsd-signature-symbol"> | </span><a href="table.html#listvalue" class="tsd-signature-type">ListValue</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L758">Table.ts:758</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L755">Table.ts:755</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -275,7 +275,7 @@
 					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Values<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L771">Table.ts:771</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L768">Table.ts:768</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -298,7 +298,7 @@
 					<div class="tsd-signature tsd-kind-icon">Binary<wbr>Set<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BinarySet</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L738">Table.ts:738</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L735">Table.ts:735</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -313,7 +313,7 @@
 					<div class="tsd-signature tsd-kind-icon">Binary<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DocumentClient.binaryType</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L723">Table.ts:723</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L720">Table.ts:720</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -328,7 +328,7 @@
 					<div class="tsd-signature tsd-kind-icon">Item<wbr>Actions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"get"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete"</span><span class="tsd-signature-symbol"> | </span><a href="table.html#putitemactions" class="tsd-signature-type">PutItemActions</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"update"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L780">Table.ts:780</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L777">Table.ts:777</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -343,7 +343,7 @@
 					<div class="tsd-signature tsd-kind-icon">List<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L748">Table.ts:748</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L745">Table.ts:745</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -358,7 +358,7 @@
 					<div class="tsd-signature tsd-kind-icon">Map<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L743">Table.ts:743</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L740">Table.ts:740</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -381,7 +381,7 @@
 					<div class="tsd-signature tsd-kind-icon">Number<wbr>Set<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NumberSet</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L733">Table.ts:733</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L730">Table.ts:730</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -396,7 +396,7 @@
 					<div class="tsd-signature tsd-kind-icon">Optional&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L713">Table.ts:713</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L710">Table.ts:710</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -423,7 +423,7 @@
 					<div class="tsd-signature tsd-kind-icon">Projection<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"ALL"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"KEYS_ONLY"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"INCLUDE"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L960">Table.ts:960</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L957">Table.ts:957</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -446,7 +446,7 @@
 					<div class="tsd-signature tsd-kind-icon">Put<wbr>Item<wbr>Actions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"put"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"put-new"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"put-replace"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L776">Table.ts:776</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L773">Table.ts:773</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -461,7 +461,7 @@
 					<div class="tsd-signature tsd-kind-icon">Put<wbr>Write<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Always"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Exists"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"NotExists"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1064">Table.ts:1064</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1061">Table.ts:1061</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -483,7 +483,7 @@
 					<div class="tsd-signature tsd-kind-icon">String<wbr>Set<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">StringSet</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L728">Table.ts:728</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L725">Table.ts:725</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -505,7 +505,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L389">Table.ts:389</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L386">Table.ts:386</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -534,7 +534,7 @@
 					<div class="tsd-signature tsd-kind-icon">global<wbr>Indexes<span class="tsd-signature-symbol">:</span> <a href="index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L378">Table.ts:378</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L375">Table.ts:375</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -549,7 +549,7 @@
 					<div class="tsd-signature tsd-kind-icon">key<wbr>Attributes<span class="tsd-signature-symbol">:</span> <a href="table.primarykey.html#attributetypesmap" class="tsd-signature-type">AttributeTypesMap</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L370">Table.ts:370</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L367">Table.ts:367</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -565,7 +565,7 @@
 					<div class="tsd-signature tsd-kind-icon">key<wbr>Schema<span class="tsd-signature-symbol">:</span> <a href="table.primarykey.html#keytypesmap" class="tsd-signature-type">KeyTypesMap</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L374">Table.ts:374</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L371">Table.ts:371</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -580,7 +580,7 @@
 					<div class="tsd-signature tsd-kind-icon">local<wbr>Indexes<span class="tsd-signature-symbol">:</span> <a href="index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L382">Table.ts:382</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L379">Table.ts:379</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -595,7 +595,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L365">Table.ts:365</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L362">Table.ts:362</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -617,7 +617,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L407">Table.ts:407</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L404">Table.ts:404</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -640,7 +640,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L416">Table.ts:416</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L413">Table.ts:413</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -671,7 +671,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L425">Table.ts:425</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L422">Table.ts:422</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -699,7 +699,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L481">Table.ts:481</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L478">Table.ts:478</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -736,7 +736,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L472">Table.ts:472</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L469">Table.ts:469</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -773,7 +773,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L451">Table.ts:451</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L448">Table.ts:448</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -812,7 +812,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L463">Table.ts:463</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L460">Table.ts:460</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -849,7 +849,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L633">Table.ts:633</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L630">Table.ts:630</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -887,7 +887,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L506">Table.ts:506</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L503">Table.ts:503</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -925,7 +925,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L623">Table.ts:623</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L620">Table.ts:620</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -963,7 +963,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L492">Table.ts:492</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L489">Table.ts:489</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1001,7 +1001,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L433">Table.ts:433</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L430">Table.ts:430</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1021,7 +1021,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L526">Table.ts:526</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L523">Table.ts:523</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1053,7 +1053,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L440">Table.ts:440</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L437">Table.ts:437</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1073,7 +1073,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L387">Table.ts:387</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L384">Table.ts:384</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1102,7 +1102,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L647">Table.ts:647</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L644">Table.ts:644</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1143,7 +1143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L539">Table.ts:539</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L536">Table.ts:536</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1187,7 +1187,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L677">Table.ts:677</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L674">Table.ts:674</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1226,7 +1226,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L588">Table.ts:588</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L585">Table.ts:585</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1264,7 +1264,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L687">Table.ts:687</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L684">Table.ts:684</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1297,7 +1297,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L605">Table.ts:605</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L602">Table.ts:602</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1329,7 +1329,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L662">Table.ts:662</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L659">Table.ts:659</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1370,7 +1370,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L565">Table.ts:565</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L562">Table.ts:562</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1414,7 +1414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1250">Table.ts:1250</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1247">Table.ts:1247</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1467,7 +1467,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L695">Table.ts:695</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L692">Table.ts:692</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1498,7 +1498,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L701">Table.ts:701</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L698">Table.ts:698</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

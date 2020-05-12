@@ -439,6 +439,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       return this.alias || this.name!;
     }
 
+    /**
+     *
+     * @param name
+     * @param modelData
+     * @param context
+     */
     getDefault(name: string, modelData: Model.ModelData, context: TableContext): V | undefined {
       const def = this.default;
       return typeof def === 'function' ? (def as FieldBase.DefaultFunction<V>)(name, modelData, context) : def;
@@ -641,7 +647,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     init(name: string, model: Model): void {
       super.init(name, model);
-      Object.keys(this.schema).forEach((key) => this.schema[key].init(key, model));
+      Model.initSchema(this.schema, model);
     }
   }
 
@@ -676,7 +682,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     init(name: string, model: Model): void {
       super.init(name, model);
-      Object.keys(this.schema).forEach((key) => this.schema[key].init(key, model));
+      Model.initSchema(this.schema, model);
     }
   }
 
@@ -701,7 +707,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     init(name: string, model: Model): void {
       super.init(name, model);
-      Object.keys(this.schema).forEach((key) => this.schema[key].init(key, model));
+      Model.initSchema(this.schema, model);
     }
 
     // Condition
@@ -723,12 +729,11 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       tableData: Table.AttributeValuesMap,
       modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: ModelContext,
     ): void {
-      super.toModel(name, tableData, modelData, context);
-      const value = modelData[name];
-      if (value === undefined) return;
-      modelData[name] = new Date((value as number) * 1000);
+      const value = tableData[this.alias || name];
+      if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
     }
 
     /**
@@ -740,10 +745,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       context: TableContext,
     ): void {
-      super.toTable(name, tableData, modelData, context);
-      const value = modelData[this.alias || name];
-      if (value === undefined) return;
-      tableData[this.alias || name] = Math.round((value as Date).valueOf() / 1000);
+      let value = modelData[name] as Date | undefined;
+      if (value === undefined) value = super.getDefault(name, modelData, context);
+      //if (typeof value === 'function') throw new TypeError('Field does not support update resolver functions');
+      if (value !== undefined) tableData[this.alias || name] = Math.round(value.valueOf() / 1000);
     }
 
     /**
@@ -894,19 +899,17 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       //if (options.slots) this.slots = options.slots;
       //else {
       const slots = new Array<CreateCompositeSlot>(this.count);
-      for (let i = 0; i < this.count; i++) {
+      for (let i = 0; i < this.count; i++)
         slots[i] = (composite: FieldComposite, slot: number, slots: FieldCompositeSlot[]): FieldCompositeSlot =>
           new FieldCompositeSlot(composite, slot, slots);
-      }
       this.slots = slots;
       //}
     }
 
     createSlots(): FieldCompositeSlot[] {
       const slots = new Array<FieldCompositeSlot>(this.count);
-      for (let i = 0; i < this.count; i++) {
-        slots[i] = this.slots[i](this, i, slots);
-      }
+      for (let i = 0; i < this.count; i++) slots[i] = this.slots[i](this, i, slots);
+
       return slots;
     }
   }
@@ -991,18 +994,15 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       context: TableContext,
     ): void {
       const value = modelData[name];
-      if (value !== undefined && typeof value === 'string') {
-        // skip any field that is not a string and is split aliased
-        let parts = value.split(this.delimiter);
-        const extraParts = parts.length - this.aliases.length;
-        if (extraParts > 0) {
-          parts[extraParts] = parts.slice(0, extraParts + 1).join(this.delimiter);
-          parts = parts.slice(extraParts);
-        }
-        for (let i = 0; i < parts.length; i++) {
-          tableData[this.aliases[i]] = parts[i];
-        }
+      if (typeof value !== 'string') return;
+      // skip any field that is not a string and is split aliased
+      let parts = value.split(this.delimiter);
+      const extraParts = parts.length - this.aliases.length;
+      if (extraParts > 0) {
+        parts[extraParts] = parts.slice(0, extraParts + 1).join(this.delimiter);
+        parts = parts.slice(extraParts);
       }
+      for (let i = 0; i < parts.length; i++) tableData[this.aliases[i]] = parts[i];
     }
 
     /**
@@ -1076,9 +1076,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       context: Fields.TableContext,
     ): void {
-      if (Table.isPutAction(context.action) && context.model.name) {
-        tableData[this.alias || name] = context.model.name;
-      }
+      if (Table.isPutAction(context.action) && context.model.name) tableData[this.alias || name] = context.model.name;
     }
   }
 
@@ -1151,9 +1149,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       context: Fields.TableContext,
     ): void {
-      if (Table.isPutAction(context.action)) {
-        tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
-      }
+      if (Table.isPutAction(context.action)) tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
     }
   }
 
@@ -1226,9 +1222,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       context: Fields.TableContext,
     ): void {
-      if (Table.isPutAction(context.action)) {
-        tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
-      }
+      if (Table.isPutAction(context.action)) tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
     }
 
     /**
