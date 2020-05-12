@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import * as yup from 'yup';
-import * as joi from '@hapi/joi';
 
 import { Condition } from '../src/Condition';
 import { Fields } from '../src/Fields';
@@ -78,11 +76,15 @@ const table = Table.createTable<TableKey, TableAttributes>({
   client,
 });
 
-const location = Fields.namedComposite('G0S', {
-  city: 0,
-  state: 1,
-  country: 2,
+const location = Fields.namedComposite({
+  alias: 'G0S',
+  map: {
+    city: 0,
+    state: 1,
+    country: 2,
+  },
 });
+const locationSlots = location.createNamedSlots();
 
 interface ChildModel {
   name: string;
@@ -128,6 +130,7 @@ interface UserKey {
 }
 
 interface UserModel extends UserKey {
+  type?: string;
   city?: string;
   state?: string;
   country?: string;
@@ -145,31 +148,28 @@ interface UserModel extends UserKey {
   created?: Date | Update.Resolver<'Date'>;
   hide?: Set<Date>;
   nickname?: string | Update.UpdateString;
-  rangeYup?: number | Update.UpdateNumber;
-  rangeJoi?: number | Update.UpdateNumber;
 }
 
 const userSchema = {
-  id: Fields.split(['P', 'S']),
-  city: location.slots.city(),
-  state: location.slots.state(),
-  country: location.slots.country(),
+  id: Fields.split({ aliases: ['P', 'S'] }),
+  type: Fields.type({ alias: 'T' }),
+  city: locationSlots.city,
+  state: locationSlots.state,
+  country: locationSlots.country,
   name: Fields.string(),
   count: Fields.number(),
-  description: Fields.string('desc'),
-  revision: Fields.number('rev'),
+  description: Fields.string({ alias: 'desc' }),
+  revision: Fields.number({ alias: 'rev' }),
   adult: Fields.boolean(),
   photo: Fields.binary(),
   interests: Fields.stringSet(),
   modified: Fields.numberSet(),
-  children: Fields.listT<ChildModel, 'L'>('Child', childSchema),
-  spouse: Fields.object<SpouseModel, 'M'>('Spouse', spouseSchema),
-  groups: Fields.mapT<GroupModel, 'M'>('Groups', groupSchema),
+  children: Fields.listT<ChildModel, 'L'>({ schema: childSchema }),
+  spouse: Fields.object<SpouseModel, 'M'>({ schema: spouseSchema }),
+  groups: Fields.mapT<GroupModel, 'M'>({ schema: groupSchema }),
   created: Fields.date(),
   hide: Fields.hidden(),
-  nickname: Fields.string().default('none'),
-  rangeYup: Fields.number().yup(yup.number().integer().positive()),
-  rangeJoi: Fields.number().joi(joi.number().integer().positive()),
+  nickname: Fields.string({ default: 'none' }),
 };
 
 const userModel = Model.createModel<UserKey, UserModel>({
@@ -190,9 +190,9 @@ describe('Validate Model with Table and Indexes', () => {
   });
 
   describe('model params', () => {
-    it('Model.getParams with single id', async () => {
+    it('Model.getParams with single id', () => {
       // TODO: should probably throw in SplitField
-      const params = await userModel.getParams({ id: 'id1' });
+      const params = userModel.getParams({ id: 'id1' });
       expect(params).toEqual({
         Key: {
           P: 'id1',
@@ -201,9 +201,9 @@ describe('Validate Model with Table and Indexes', () => {
       });
     });
 
-    it('Model.getParams with multiple id', async () => {
+    it('Model.getParams with multiple id', () => {
       // TODO: should probably throw in SplitField
-      const params = await userModel.getParams({ id: 'id1.id2.id3.id4' });
+      const params = userModel.getParams({ id: 'id1.id2.id3.id4' });
       expect(params).toEqual({
         Key: {
           P: 'id1.id2.id3',
@@ -213,8 +213,8 @@ describe('Validate Model with Table and Indexes', () => {
       });
     });
 
-    it('Model.getParams with two id', async () => {
-      const params = await userModel.getParams({ id: 'id1.id2' });
+    it('Model.getParams with two id', () => {
+      const params = userModel.getParams({ id: 'id1.id2' });
       expect(params).toEqual({
         Key: {
           P: 'id1',
@@ -224,8 +224,8 @@ describe('Validate Model with Table and Indexes', () => {
       });
     });
 
-    it('Model.deleteParams', async () => {
-      const params = await userModel.deleteParams({ id: 'id1.id2' });
+    it('Model.deleteParams', () => {
+      const params = userModel.deleteParams({ id: 'id1.id2' });
       expect(params).toEqual({
         Key: {
           P: 'id1',
@@ -235,8 +235,8 @@ describe('Validate Model with Table and Indexes', () => {
       });
     });
 
-    it('Model.putParams with min fields', async () => {
-      const params = await userModel.putParams({
+    it('Model.putParams with min fields', () => {
+      const params = userModel.putParams({
         id: 'id1.id2',
         name: 'name1',
         revision: 1,
@@ -255,8 +255,8 @@ describe('Validate Model with Table and Indexes', () => {
       });
     });
 
-    it('Model.putParams with all fields', async () => {
-      const params = await userModel.putParams({
+    it('Model.putParams with all fields', () => {
+      const params = userModel.putParams({
         id: 'id1.id2',
         name: 'name1',
         revision: 1,
@@ -285,8 +285,6 @@ describe('Validate Model with Table and Indexes', () => {
         interests: table.createStringSet(['basketball', 'soccer', 'football']),
         groups: { group1: { role: Role.Guest }, group3: { role: Role.Member } },
         hide: new Set([new Date(), new Date()]),
-        rangeYup: 1,
-        rangeJoi: 2,
       });
       expect(params).toEqual({
         Item: {
@@ -328,15 +326,13 @@ describe('Validate Model with Table and Indexes', () => {
             married: true,
             name: 'spouse',
           },
-          rangeJoi: 2,
-          rangeYup: 1,
         },
         TableName: 'MainTable',
       });
     });
 
-    it('Model.updateParams min args', async () => {
-      const params = await userModel.updateParams({
+    it('Model.updateParams min args', () => {
+      const params = userModel.updateParams({
         id: 'id1.id2',
       });
       expect(params).toEqual({
@@ -348,8 +344,8 @@ describe('Validate Model with Table and Indexes', () => {
       });
     });
 
-    it('Model.updateParams with all fields', async () => {
-      const params = await userModel.updateParams({
+    it('Model.updateParams with all fields', () => {
+      const params = userModel.updateParams({
         id: 'id1.id2',
         name: Update.set('new name'),
         revision: Update.inc(1),

@@ -697,6 +697,10 @@ export class Table {
     if (options === 'Exists') return 'put-replace';
     return 'put';
   }
+
+  static isPutAction(action: Table.ItemActions): boolean {
+    return action === 'put' || action === 'put-new' || action === 'put-replace';
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare

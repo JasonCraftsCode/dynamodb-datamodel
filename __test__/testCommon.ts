@@ -1,3 +1,7 @@
+import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
+import { Update, UpdateExpression } from '../src/Update';
+import { Table } from '../src/Table';
+
 // t = milliseconds
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function delay(tms: number, v: any): Promise<unknown> {
@@ -12,3 +16,19 @@ export function delayCallback(tms: number, f: () => void) {
   });
 }
 */
+
+export function buildUpdate(
+  updateMap: Update.UpdateMapValue,
+  exp = new UpdateExpression(),
+): {
+  UpdateExpression: string | undefined;
+  Paths: ExpressionAttributeNameMap;
+  Values: Table.AttributeValuesMap;
+} {
+  const update = Update.buildExpression(updateMap, exp);
+  return {
+    UpdateExpression: update,
+    Paths: exp.getPaths(),
+    Values: exp.getValues(),
+  };
+}

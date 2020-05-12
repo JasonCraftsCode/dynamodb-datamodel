@@ -79,17 +79,18 @@
 				</a>
 				<p>While developing a side project using single table design I found I was frequently writing similar code to map model data to and from table data. Additional writing update and condition expressions was cumbersome. I looked around to see if there was an npm package, including <a href="https://github.com/awslabs/dynamodb-data-mapper-js">@aws/dynamodb-data-mapper</a>, <a href="https://github.com/awspilot/dynamodb-oop">@AwsPilot/dynamodb</a> project, <a href="https://github.com/baseprime/dynamodb">@BasePrime&#39;s dynamodb</a>, <a href="https://github.com/jeremydaly/dynamodb-toolbox">Jeremy Daly&#39;s dynamodb-toolbox</a> and others.</p>
 				<p>This is not a Object-Relational Mapping (ORM) module, so it doesn&#39;t use any SQL concepts. Many SQL concepts don&#39;t directly apply to NoSQL data bases like dynamodb, so this tool focuses on the unique capabilities of dynamodb.</p>
-				<p>This is also not a table management module, since with single table design the table will be created by CloudFormation. This module solely focused on reading and writing table and index data.</p>
-				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
-					<h2>Features</h2>
+				<p>This is also not a table management module, since with single table design the table will be created and managed through CloudFormation. This module solely focused on reading and writing table and index data.</p>
+				<a href="#problems-this-library-focuses-on" id="problems-this-library-focuses-on" style="color: inherit; text-decoration: none;">
+					<h2>Problems this library focuses on</h2>
 				</a>
 				<ul>
-					<li><strong>Typescript support</strong> - Model and table data can be modeled as typescript interfaces to provide compiler checks and code editor autocomplete. Module is also written in typescript so typings are always up to date.</li>
-					<li><strong>Bidirectional data mapping</strong> - Maps model data to and from table data.</li>
-					<li><strong>Extensible data mapping</strong> - Consumers can define new model types (referred to as Field) and the bidirectional data mapping, update and conditions expressions for that type.</li>
-					<li><strong>Easy to use condition expressions</strong> -</li>
-					<li><strong>Easy to use update expressions</strong> -</li>
-					<li><strong>Composable and extensible components</strong> -</li>
+					<li><strong>Bidirectional data mapping</strong> - In single table design the primary key attributes for tables and indexes are named in a generic way to allow each item type to use the attributes for different properties, to allow multiple access patterns with limited secondary indexes.</li>
+					<li><strong>Table item update</strong> - Even simple updates to a table item are not easy, especially in the context of data mappings.</li>
+					<li><strong>Table condition expression</strong> - DynamodDb supports conditional writes, but building the ConditionExpression can be tricky, especially in the context of data mappings.</li>
+					<li><strong>Focus on NoSQL capabilities</strong> - Make it easy to use DynanoDb&#39;s unique capabilities, and avoid SQL concepts that don&#39;t make sense in the NoSQL world (don&#39;t be an ORM).</li>
+					<li><strong>Simple to use and open for extension</strong> - Though this library tries to capture the current capabilities of DynamoDb with a simple API surface, it also exposes ways to extend is capabilities to support more complex use cases or if AWS adds additional update, filter or condition expression features.</li>
+					<li><strong>Good TypeScript support</strong> - Not all libraries have good up to date and well documented typescript support.</li>
+					<li><strong>Small and light weight</strong> - The main use case is to run in AWS Lambda so it needs to be small, light weight and have little to no dependencies.</li>
 				</ul>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
@@ -106,7 +107,13 @@
 				<a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
 					<h2>Basic usage</h2>
 				</a>
-				<p>Import or require <code>Table</code> and <code>Model</code> from <code>dynamodb-datamodel</code>:</p>
+				<p>Dynamodb-datamodel consists of three core components:</p>
+				<ul>
+					<li><code>Table</code> - The Table object is the first component you&#39;ll need to create and has a one-to-one corelation with a provisioned DynamoDb table. Table is essentially a wrapper around the DynamoDb DocumentClient and is used by the Model objects to read and write data to the table. Following a single table design you&#39;ll only need a single table object.</li>
+					<li><code>Model</code> - The Model object is the secondary component you&#39;ll need to create and has a one-to-one corelation with each of the data types you are storing in the DynamoDb table. You will create multiple Models, one for each data type, and they each will reference the same table object. The Model object contains a schema that defines how the model data will be represented in the dynamodb table. Models are the main object you will be using to read and write data to the DynamoDb table.</li>
+					<li><code>Field</code> - The Field objects are created when declaring the Model schema and each data property on the model will be associated with a Field object. There are separate Field classes for each of the native DynamoDb data types (string, number, boolean, binary, null, list, map, string set, number set and binary set), in addition to more advanced fields (like composite, date, created date, type and others). You can also create custom Fields for your own data types. Each Fields main purpose is to map the data between model properties and table attributes (bidirectional), but they can also add update, filter and condition expressions to support more complex behavior. Since there are many types of fields they are all contained within the <code>Fields</code> namespace.</li>
+				</ul>
+				<p>Import or require <code>Table</code>, <code>Model</code> and <code>Fields</code> from <code>dynamodb-datamodel</code>:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Table, Model, Fields } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;</code></pre>
 				<p>General usage flow:</p>
 				<ol>
@@ -126,7 +133,7 @@
 <span class="hljs-comment">// 2. Create DynamoDB DocumentClient</span>
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> DocumentClient();
 
-<span class="hljs-comment">// 3. [TypeScript] Define Table's primary key</span>
+<span class="hljs-comment">// 3. (TypeScript) Define Table's primary key</span>
 <span class="hljs-keyword">interface</span> TableKey {
   P: Table.PrimaryKey.PartitionString;
   S?: Table.PrimaryKey.SortString;
@@ -146,7 +153,7 @@
   },
 });
 
-<span class="hljs-comment">// 5. [TypeScript] Define each Model key and data interface</span>
+<span class="hljs-comment">// 5. (TypeScript) Define each Model key and data interface</span>
 <span class="hljs-keyword">interface</span> ModelKey {
   id: <span class="hljs-built_in">string</span>;
 }
@@ -181,15 +188,16 @@
 				<p>DynamoDB-DataMode is composed of several components that can be used on their own and are used by the higher level components like Fields and Model.</p>
 				<ul>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html">Condition</a> - Contains methods to build complex condition expressions.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/ExpressionAttributes.html">ExpressionAttributes</a> - Class to hold the condition, key condition and update expressions attribute names and values</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/conditionexpression.html">ConditionExpression</a> - Contains methods to build complex condition expressions.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/expressionattributes.html">ExpressionAttributes</a> - Class to hold the condition, key condition and update expressions attribute names and values.</li>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html">Fields</a> - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html">Index</a> - Classes that represents Global or Local Secondary Indexes associated with a table</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html">KeyCondition</a> - Contains the method to build sort key conditions for Table.query</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/KeyExpressionAttributes.html">KeyExpressionAttributes</a> - Help class used to build the key condition expression</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html">Index</a> - Classes that represents Global or Local Secondary Indexes associated with a table.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html">KeyCondition</a> - Contains the method to build sort key conditions for Table.query.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keyconditionexpression.html">KeyExpressionAttributes</a> - Help class used to build the key condition expression.</li>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html">Model</a> - Class that uses the model schema and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html">Table</a> - Class the represents the Table and wraps table actions</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> - Contains the methods to build any update expression</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/UpdateExpression.html">UpdateExpression</a> - Help class used to help build update expressions</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html">Table</a> - Class the represents the Table and wraps table actions.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> - Contains the methods to build any update expression.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/updateexpression.html">UpdateExpression</a> - Help class used to help build update expressions.</li>
 				</ul>
 				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
 					<h2>Table of Contents</h2>
@@ -197,9 +205,15 @@
 				<a href="#table" id="table" style="color: inherit; text-decoration: none;">
 					<h2>Table</h2>
 				</a>
+				<p>A Table is the first object that you will need to create when working with dynamodb-datamodel. It is the object that contains the configuration data for a provisioned DynamodDb Table and uses the DynamoDb DocumentObject to read and write to the DynamoDb Table.</p>
+				<p>You can either create a simple JavaScript based Table using <code>new Table()</code> or if you want to get additional typescript based type checking and code editor autocomplete you can use <code>Table.createTable&lt;KEY, ATTRIBUTES&gt;</code> to create a Table that knows about the primary key types and all key attributes.</p>
+				<p>Creating a table is simple, there are only three things needed: 1) the name of the DynamodDb table, 2) a map of key attribute types, 3) a map of primary key types.</p>
 				<a href="#index" id="index" style="color: inherit; text-decoration: none;">
 					<h2>Index</h2>
 				</a>
+				<p>DynamoDb supports two types of secondary indexes: local secondary index (LSI) and global secondary index (GSI). Just like Table, an Index object has a one-to-one corelation with a provisioned secondary index. Like <code>Model</code>, <code>Index</code> uses <code>Table</code> to query and scan the secondary indexes of the DynamoDb Table.</p>
+				<p>Also like Table you can create either a JavaScript based index using <code>new Index()</code> or if you want additional typescript based type checking and code editor autocomplete you can use <code>Index.createIndex&lt;KEY&gt;</code> to create an Index that knows about its primary key to get some type safety when calling query and queryParam.</p>
+				<p>Creating a index is simple, there are only three things needed: 1) the name of the secondary index, 2) a map of the primary key types, 3) the projection type.</p>
 				<a href="#model" id="model" style="color: inherit; text-decoration: none;">
 					<h2>Model</h2>
 				</a>
@@ -215,6 +229,34 @@
 				<a href="#keycondition-expressions" id="keycondition-expressions" style="color: inherit; text-decoration: none;">
 					<h2>KeyCondition Expressions</h2>
 				</a>
+				<p>Condition where age &gt; 21 OR ((region = &#39;US&#39; AND size(interests) &gt; 10) AND interests contain nodejs, dynamodb, or serverless):</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> { and, or, eq, gt, contains, size } = Condition;
+<span class="hljs-keyword">const</span> filters = or(
+  gt(<span class="hljs-string">'age'</span>, <span class="hljs-number">21</span>),
+  and(
+    eq(<span class="hljs-string">'region'</span>, <span class="hljs-string">'US'</span>),
+    gt(size(<span class="hljs-string">'interests'</span>), <span class="hljs-number">10</span>),
+    or(contains(<span class="hljs-string">'interests'</span>, <span class="hljs-string">'nodejs'</span>), contains(<span class="hljs-string">'interests'</span>, <span class="hljs-string">'dynamodb'</span>), contains(<span class="hljs-string">'interests'</span>, <span class="hljs-string">'serverless'</span>)),
+  ),
+);
+
+<span class="hljs-keyword">const</span> schema = {
+  age: Field.number(),
+  region: Field.string(),
+  interests: Field.string(),
+};
+
+<span class="hljs-keyword">const</span> { age, region, interests } = schema;
+<span class="hljs-keyword">const</span> filters = or(
+  age.gt(<span class="hljs-number">21</span>),
+  and(
+    region.eq(<span class="hljs-string">'US'</span>),
+    gt(interests.size(), <span class="hljs-number">10</span>), <span class="hljs-comment">// better: interests.size().gt(10)</span>
+    or(interests.contains(<span class="hljs-string">'nodejs'</span>), interests.contains(<span class="hljs-string">'dynamodb'</span>), interests.contains(<span class="hljs-string">'serverless'</span>)),
+    <span class="hljs-comment">// how about: interests.contains('nodejs').or(interests.contains('dynamodb')).or(interests.contains('serverless')),</span>
+  ),
+);</code></pre>
+				<p>Would be nice if we could do som</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

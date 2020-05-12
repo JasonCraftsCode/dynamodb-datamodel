@@ -824,16 +824,16 @@ export class Update {
    * const model = new Model({
    *   schema: {
    *     id: Fields.split(['P', 'S']),
-   *     color: Fields.stringSet(),
+   *     colors: Fields.stringSet(),
    *   },
    *   // ...additional properties like table
    * });
    *
-   * // Adds 'yellow' and 'red' to the color attribute
-   * // Example: If color = ['blue', 'yellow'], then after this update color will be ['blue', 'red', 'yellow']
+   * // Adds 'yellow' and 'red' to the colors attribute
+   * // Example: If colors = ['blue', 'yellow'], then after this update colors will be ['blue', 'red', 'yellow']
    * model.update({
    *   id: 'P-GUID.S-0',
-   *   color: Update.addToSet(model.table.createStringSet(['yellow', 'red']));
+   *   colors: Update.addToSet(model.table.createStringSet(['yellow', 'red']));
    * });
    * ```
    * @param value Array of values to add.
@@ -855,16 +855,16 @@ export class Update {
    * const model = new Model({
    *   schema: {
    *     id: Fields.split(['P', 'S']),
-   *     color: Fields.stringSet(),
+   *     colors: Fields.stringSet(),
    *   },
    *   // ...additional properties like table
    * });
    *
-   * // Remove 'yellow' and 'red' from the color attribute
-   * // Example: If color = ['blue', 'yellow'], then after this update color will be ['blue']
+   * // Remove 'yellow' and 'red' from the colors attribute
+   * // Example: If colors = ['blue', 'yellow'], then after this update colors will be ['blue']
    * model.update({
    *   id: 'P-GUID.S-0',
-   *   color: Update.removeFromSet(model.table.createStringSet(['yellow', 'red']));
+   *   colors: Update.removeFromSet(model.table.createStringSet(['yellow', 'red']));
    * });
    * ```
    * @param value Array of values to remove.

@@ -1,24 +1,34 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import * as yup from 'yup';
-import * as joi from '@hapi/joi';
+//import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
 import { ConditionExpression } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table } from '../src/Table';
-import { Update, UpdateExpression } from '../src/Update';
+import { Update } from '../src/Update';
 
-const client = new DocumentClient({ convertEmptyValues: true });
+///const client = new DocumentClient({ convertEmptyValues: true });
 
-const modelContext = {} as Fields.ModelContext;
-const tableContext = {} as Fields.TableContext;
-const model = {} as Model;
+const model = { name: 'MyModel' } as Model;
+function getTableContext(action: Table.ItemActions): Fields.TableContext {
+  return {
+    action: action,
+    conditions: [],
+    model,
+    options: {} as Table.BaseOptions,
+  } as Fields.TableContext;
+}
+const modelContext = ({ model } as unknown) as Fields.ModelContext;
+const tableContext = getTableContext('get');
+const putTableContext = getTableContext('put');
+const putNewTableContext = getTableContext('put-new');
+const putReplaceTableContext = getTableContext('put-replace');
+const updateTableContext = getTableContext('update');
 
+/*
 interface TableKey {
   P: Table.PrimaryKey.PartitionString;
   S?: Table.PrimaryKey.SortString;
 }
-
 const table = Table.createTable<TableKey, TableKey>({
   name: 'MainTable',
   keyAttributes: {
@@ -31,6 +41,7 @@ const table = Table.createTable<TableKey, TableKey>({
   },
   client,
 });
+*/
 
 interface ChildModel {
   name: string;
@@ -73,187 +84,26 @@ const groupSchema = {
 
 describe('When FieldBase', () => {
   it('expect init sets name', () => {
-    const initField = Fields.string();
-    initField.init('initField', model);
-    expect(initField.name).toEqual('initField');
-  });
-
-  it('yup expect validate invalid value to throw', async () => {
-    const field = Fields.number().yup(yup.number().min(1).max(2));
-    await expect(field.validate(0)).rejects.toThrowError(new Error('this must be greater than or equal to 1'));
-  });
-
-  it('yup with coerce expect return value coerce', async () => {
-    const field = Fields.number().coerce().yup(yup.number().min(1).max(10));
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await expect(field.validate('5' as any)).resolves.toEqual(5);
-  });
-
-  it('joi expect validate invalid value to throw', async () => {
-    const field = Fields.number().joi(joi.number().min(1).max(2));
-    await expect(field.validate(0)).rejects.toThrowError(new Error('"value" must be larger than or equal to 1'));
-  });
-
-  it('joi with coerce expect return value coerce', async () => {
-    const field = Fields.number().joi(joi.number().min(1).max(10)).coerce();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await expect(field.validate('5' as any)).resolves.toEqual(5);
-  });
-
-  it('regex expect validate invalid value to throw', async () => {
-    const field = Fields.string().regex(/^[A-Za-z][A-Za-z0-9]*$/);
-    await expect(field.validate('0f')).rejects.toThrowError(
-      new Error("value must match regex: '/^[A-Za-z][A-Za-z0-9]*$/'"),
-    );
-  });
-
-  it('regex expect validate to return value', async () => {
-    const field = Fields.string().regex(/^[A-Za-z][A-Za-z0-9]*$/);
-    await expect(field.validate('ff')).resolves.toEqual('ff');
-  });
-
-  it('validator always throw expect to throw', async () => {
-    const field = Fields.string().validator(() => {
-      return new Promise<string | void>((resolve, reject) => {
-        reject(new Error(`always throw`));
-      });
-    });
-    await expect(field.validate('abc')).rejects.toThrowError(new Error('always throw'));
-  });
-
-  it('updateValidator with does not throw expect success', async () => {
-    const field = Fields.string().updateValidator(() => {
-      return new Promise<string | void>((resolve) => {
-        resolve('abc');
-      });
-    });
-    await expect(field.validateUpdate('abc')).resolves.toEqual('abc');
-  });
-
-  it('updateValidator always throw expect to throw', async () => {
-    const field = Fields.string().updateValidator(() => {
-      return new Promise<void>((resolve, reject) => {
-        reject(new Error(`always throw`));
-      });
-    });
-    await expect(field.validateUpdate('abc')).rejects.toThrowError(new Error('always throw'));
-  });
-
-  it('coerce expects to be set', () => {
-    expect(Fields.string().coerce()._coerce).toEqual(true);
-    expect(Fields.string().coerce(true)._coerce).toEqual(true);
-  });
-
-  it('hidden expects to be set', () => {
-    expect(Fields.string().hidden()._hidden).toEqual(true);
-    expect(Fields.string().hidden(true)._hidden).toEqual(true);
-  });
-
-  it('required expects to be set', () => {
-    expect(Fields.string().required()._required).toEqual(true);
-    expect(Fields.string().required(true)._required).toEqual(true);
-  });
-
-  it('default expects to be set', () => {
-    expect(Fields.string().default('default')._default).toEqual('default');
+    const field = Fields.string();
+    field.init('initField', model);
+    expect(field.name).toEqual('initField');
   });
 
   it('alias expects to be set', () => {
-    expect(Fields.string().alias('alias')._alias).toEqual('alias');
-    expect(Fields.string().alias()._alias).toEqual(undefined);
+    const field = Fields.string({ alias: 'alias' });
+    expect(field.alias).toEqual('alias');
   });
 
-  it('constructor with alias expects alias to be set', () => {
-    const field = Fields.string('alias');
-    expect(field._alias).toEqual('alias');
+  it('default value expects to be set', () => {
+    const field = Fields.string({ default: 'default' });
+    expect(field.default).toEqual('default');
+    expect(field.getDefault('', {} as Model.ModelData, {} as Fields.TableContext)).toEqual('default');
   });
 
-  // toTable
-  it('toTable with hidden field expect not in table data', async () => {
-    const field = Fields.number().hidden();
-    const tableData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: '5' }, tableData, tableContext);
-    expect(tableData).toEqual({});
-  });
-
-  it('toTable with coerce validator expect coerce value', async () => {
-    const field = Fields.number().coerce().yup(yup.number().min(1).max(10));
-    const tableData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: '5' }, tableData, tableContext);
-    expect(tableData).toEqual({ test: 5 });
-  });
-
-  it('toTable with coerce expect coerce value', async () => {
-    const field = Fields.number().coerce();
-    const tableData: Table.AttributeValuesMap = {};
-    await field.toTable('test', { test: 8 }, tableData, tableContext);
-    expect(tableData).toEqual({ test: 8 });
-  });
-
-  // toTableUpdate
-  it('toTableUpdate with hidden field expect not in table data', async () => {
-    const field = Fields.number().hidden();
-    const tableData: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('test', { test: '5' }, tableData, tableContext);
-    expect(tableData).toEqual({});
-  });
-
-  it('toTableUpdate with coerce validator expect coerce value', async () => {
-    const field = Fields.number()
-      .coerce()
-      .updateValidator(() => {
-        return new Promise<number | void>((resolve) => {
-          resolve(15);
-        });
-      });
-    field.init('test', model);
-    const tableData: Update.UpdateMapValue = {};
-    await field.toTableUpdate('test', { test: '5' }, tableData, tableContext);
-    expect(tableData).toEqual({ test: 15 });
-  });
-
-  it('toTableUpdate with coerce validator and undefined keep value', async () => {
-    const field = Fields.number()
-      .coerce()
-      .updateValidator(() => {
-        return new Promise<number | void>((resolve) => {
-          resolve();
-        });
-      });
-    field.init('test', model);
-    const tableData: Update.UpdateMapValue = {};
-    await field.toTableUpdate('test', { test: '5' }, tableData, tableContext);
-    expect(tableData).toEqual({ test: '5' });
-  });
-
-  it('toTableUpdate with coerce expect coerce value', async () => {
-    const field = Fields.number().coerce();
-    const tableData: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('test', { test: 9 }, tableData, tableContext);
-    expect(tableData).toEqual({ test: 9 });
-  });
-
-  // toTable
-  it('required field missing from model expect toTable to throw', async () => {
-    const field = Fields.string().required();
-    field.init('test', model);
-    await expect(field.toTable('test', {}, {}, tableContext)).rejects.toThrowError(new Error('Field test is required'));
-  });
-
-  it('toTable with default expects default return', async () => {
-    const field = Fields.string().default('default');
-    const tableData: Table.AttributeValuesMap = {};
-    await field.toTable('test', {}, tableData, tableContext);
-    expect(tableData).toEqual({ test: 'default' });
-  });
-
-  it('toTable with default function expects default return', async () => {
-    const field = Fields.string().default((name) => {
-      return name + '-default';
-    });
-    const tableData: Table.AttributeValuesMap = {};
-    await field.toTable('test', {}, tableData, tableContext);
-    expect(tableData).toEqual({ test: 'test-default' });
+  it('default function expects to be set', () => {
+    const field = Fields.string({ default: () => 'default' });
+    expect(typeof field.default).toEqual('function');
+    expect(field.getDefault('', {} as Model.ModelData, {} as Fields.TableContext)).toEqual('default');
   });
 });
 
@@ -321,35 +171,6 @@ describe('When FieldExpression', () => {
     const exp = new ConditionExpression();
     expect(field.notExists()(exp)).toEqual('attribute_not_exists(#n0)');
   });
-
-  // Update
-  it('expect getPath returns update expression', () => {
-    const exp = new UpdateExpression();
-    expect(field.getPath('path')('string', exp)).toEqual('#n0');
-  });
-
-  it('expect getPath with default returns update expression', () => {
-    const exp = new UpdateExpression();
-    expect(field.getPath('path', 'default')('string', exp)).toEqual('if_not_exists(#n0, :v0)');
-  });
-
-  it('expect del with default returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.del()('string', exp);
-    expect(exp.buildExpression()).toEqual('REMOVE string');
-  });
-
-  it('expect set returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.set('setString')('string', exp);
-    expect(exp.buildExpression()).toEqual('SET string = :v0');
-  });
-
-  it('expect setDefault returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.setDefault('setString')('string', exp);
-    expect(exp.buildExpression()).toEqual('SET string = if_not_exists(string, :v0)');
-  });
 });
 
 describe('When FieldString', () => {
@@ -375,30 +196,6 @@ describe('When FieldString', () => {
 describe('When FieldNumber', () => {
   const field = Fields.number();
   field.init('number', model);
-
-  it('expect inc returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.inc(1)('number', exp);
-    expect(exp.buildExpression()).toEqual('SET number = number + :v0');
-  });
-
-  it('expect dec returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.dec(1)('number', exp);
-    expect(exp.buildExpression()).toEqual('SET number = number - :v0');
-  });
-
-  it('expect add returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.add('number2', 1)('number', exp);
-    expect(exp.buildExpression()).toEqual('SET number = #n0 + :v0');
-  });
-
-  it('expect sub returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.sub('number2', 1)('number', exp);
-    expect(exp.buildExpression()).toEqual('SET number = #n0 - :v0');
-  });
 });
 
 describe('When FieldBinary', () => {
@@ -416,7 +213,6 @@ describe('When FieldBoolean', () => {
   field.init('boolean', model);
 
   it('expect boolean returns correct type', () => {
-    expect(field.type).toEqual('BOOL');
     expect(field.name).toEqual('boolean');
   });
 });
@@ -425,19 +221,18 @@ describe('When FieldSet', () => {
   const field = Fields.stringSet();
   field.init('set', model);
 
-  it('expect stringSet returns correct type', () => {
-    expect(field.type).toEqual('SS');
-    expect(field.name).toEqual('set');
-  });
-
   it('expect numberSet returns correct type', () => {
     const field1 = Fields.numberSet();
-    expect(field1.type).toEqual('NS');
+    expect(field1.name).toBeUndefined();
   });
 
   it('expect binarySet returns correct type', () => {
     const field1 = Fields.binarySet();
-    expect(field1.type).toEqual('BS');
+    expect(field1.name).toBeUndefined();
+  });
+
+  it('expect stringSet returns correct type', () => {
+    expect(field.name).toEqual('set');
   });
 
   it('expect size returns condition expression', () => {
@@ -449,18 +244,6 @@ describe('When FieldSet', () => {
     const exp = new ConditionExpression();
     expect(field.contains('xyz')(exp)).toEqual('contains(#n0, :v0)');
   });
-
-  it('expect add returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.add(table.createStringSet(['abc', 'dev']))('set', exp);
-    expect(exp.buildExpression()).toEqual('ADD set :v0');
-  });
-
-  it('expect remove returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.remove(table.createStringSet(['abc', 'dev']))('set', exp);
-    expect(exp.buildExpression()).toEqual('DELETE set :v0');
-  });
 });
 
 describe('When FieldList', () => {
@@ -468,8 +251,8 @@ describe('When FieldList', () => {
   field.init('list', model);
 
   it('expect constructor with alias has alias', () => {
-    const field1 = Fields.list('list');
-    expect(field1._alias).toEqual('list');
+    const field1 = Fields.list({ alias: 'list' });
+    expect(field1.alias).toEqual('list');
   });
 
   it('expect size returns condition expression', () => {
@@ -479,49 +262,18 @@ describe('When FieldList', () => {
 });
 
 describe('When FieldListT', () => {
-  const field = Fields.listT<ChildModel, 'L'>('Child', childSchema);
+  const field = Fields.listT<ChildModel, 'L'>({ schema: childSchema });
   field.init('children', model);
 
   it('expect constructor to init correctly', () => {
-    const field1 = Fields.listT<ChildModel, 'L'>('Child', childSchema, 'children');
-    expect(field1._alias).toEqual('children');
-    expect(field1.type).toEqual('Child');
+    const field1 = Fields.listT<ChildModel, 'L'>({ schema: childSchema, alias: 'children' });
+    expect(field1.alias).toEqual('children');
     //expect(field1.schema.adult.name).toEqual('adult');
   });
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
     expect(field.size()(exp)).toEqual('size(#n0)');
-  });
-
-  it('expect append returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.append([{ name: 'child1', adult: false, age: 5 }])('children', exp);
-    expect(exp.buildExpression()).toEqual('SET children = list_append(children, :v0)');
-  });
-
-  it('expect prepend returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.prepend([{ name: 'child1', adult: false, age: 5 }])('children', exp);
-    expect(exp.buildExpression()).toEqual('SET children = list_append(:v0, children)');
-  });
-
-  it('expect join returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.join('stepchildren', [{ name: 'child1', adult: false, age: 5 }])('children', exp);
-    expect(exp.buildExpression()).toEqual('SET children = list_append(#n0, :v0)');
-  });
-
-  it('expect delIndexes returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.delIndexes([0, 1])('children', exp);
-    expect(exp.buildExpression()).toEqual('REMOVE children[0], children[1]');
-  });
-
-  it('expect setIndexes returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.setIndexes({ 0: { name: '0child', adult: false, age: 5 } })('children', exp);
-    expect(exp.buildExpression()).toEqual('SET children[0] = :v0');
   });
 });
 
@@ -530,55 +282,37 @@ describe('When FieldMap', () => {
   field.init('map', model);
 
   it('expect constructed with alias to have alias', () => {
-    const field1 = Fields.map('map');
-    expect(field1._alias).toEqual('map');
+    const field1 = Fields.map({ alias: 'map' });
+    expect(field1.alias).toEqual('map');
   });
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
     expect(field.size()(exp)).toEqual('size(#n0)');
   });
-
-  it('expect map returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.map({ map: { abc: 'yea', xyz: 'boo' } })('map', exp);
-    expect(exp.buildExpression()).toEqual('SET map.#n0 = :v0');
-  });
 });
 
 describe('When FieldMapT', () => {
-  const field = Fields.mapT<GroupModel, 'M'>('Groups', groupSchema);
+  const field = Fields.mapT<GroupModel, 'M'>({ schema: groupSchema });
   field.init('groups', model);
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
     expect(field.size()(exp)).toEqual('size(#n0)');
   });
-
-  it('expect map returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.map({ group1: { role: Role.Admin } })('groups', exp);
-    expect(exp.buildExpression()).toEqual('SET groups.#n0 = :v0');
-  });
 });
 
 describe('When FieldObject', () => {
-  const field = Fields.object<SpouseModel, 'M'>('Spouse', spouseSchema);
+  const field = Fields.object<SpouseModel, 'M'>({ schema: spouseSchema });
   field.init('spouse', model);
 
   it('expect constructed with alias to have alias', () => {
-    const field1 = Fields.object<SpouseModel, 'M'>('Spouse', spouseSchema, 'spouse');
-    expect(field1._alias).toEqual('spouse');
+    const field1 = Fields.object<SpouseModel, 'M'>({ schema: spouseSchema, alias: 'spouse' });
+    expect(field1.alias).toEqual('spouse');
   });
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
     expect(field.size()(exp)).toEqual('size(#n0)');
-  });
-
-  it('expect map returns update expression', () => {
-    const exp = new UpdateExpression();
-    field.map({ name: 'abc' })('spouse', exp);
-    expect(exp.buildExpression()).toEqual('SET spouse.#n0 = :v0');
   });
 });
 
@@ -588,25 +322,24 @@ describe('When FieldDate', () => {
   field.init('date', model);
 
   it('expect date returns correct type', () => {
-    expect(field.type).toEqual('DATE');
     expect(field.name).toEqual('date');
   });
 
-  it('toModel expect date data', async () => {
+  it('toModel expect date data', () => {
     const data: Model.ModelData = {};
-    await field.toModel('date', { date: 1585564302000 }, data, modelContext);
+    field.toModel('date', { date: 1585564302000 }, data, modelContext);
     expect(data).toEqual({ date: new Date(1585564302000000) });
   });
 
-  it('toTable expect date as number', async () => {
+  it('toTable expect date as number', () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTable('date', { date: new Date(1585574302000000) }, data, tableContext);
+    field.toTable('date', { date: new Date(1585574302000000) }, data, tableContext);
     expect(data).toEqual({ date: 1585574302000 });
   });
 
-  it('toTableUpdate expect date as number', async () => {
+  it('toTableUpdate expect date as number', () => {
     const data: Table.AttributeValuesMap = {};
-    await field.toTableUpdate('date', { date: new Date(1585584302000000) }, data, tableContext);
+    field.toTableUpdate('date', { date: new Date(1585584302000000) }, data, tableContext);
     expect(data).toEqual({ date: 1585584302000 });
   });
 });
@@ -614,17 +347,24 @@ describe('When FieldDate', () => {
 describe('When FieldHidden', () => {
   const field = Fields.hidden();
   it('expect hidden returns correct type', () => {
-    expect(field._alias).toBeUndefined();
-    expect(field.type).toEqual('HIDDEN');
-    expect(field._hidden).toEqual(true);
+    expect(field.toModel()).toBeUndefined();
   });
 });
 
 describe('When FieldComposite', () => {
-  const field = Fields.composite('G0S', 3);
+  const field = Fields.composite({ alias: 'G0S', count: 3 });
+  const slots = field.createSlots();
+  slots[0].init('split0', model);
+  slots[1].init('split1', model);
+  slots[2].init('split2', model);
+
+  it('expect composite count with only alias to be 2', () => {
+    const delimiter = Fields.composite({ alias: 'L0S' });
+    expect(delimiter.count).toEqual(2);
+  });
 
   it('expect composite with delimiter returns correct type', () => {
-    const delimiter = Fields.composite('L0S', 2, '#');
+    const delimiter = Fields.composite({ alias: 'L0S', count: 2, delimiter: '#' });
     expect(delimiter.alias).toEqual('L0S');
     expect(delimiter.count).toEqual(2);
     expect(delimiter.delimiter).toEqual('#');
@@ -637,81 +377,72 @@ describe('When FieldComposite', () => {
   });
 
   it('expect slot to return FieldCompositeSlot', () => {
-    const slot = field.slot(1);
-    expect(slot.slot).toEqual(1);
-    expect(slot.name).toBeUndefined();
-    expect(slot.composite).toBe(field);
+    expect(slots[1].slot).toEqual(1);
+    expect(slots[1].name).toEqual('split1');
+    expect(slots[1].composite).toBe(field);
   });
 
-  it('slot.toModel expect existing slot to map', async () => {
-    const slot = field.slot(1);
+  it('slot.toModel expect existing slot to map', () => {
     const data: Model.ModelData = {};
-    await slot.toModel('split', { G0S: 'part1.part2.part3' }, data, modelContext);
+    slots[1].toModel('split', { G0S: 'part1.part2.part3' }, data, modelContext);
     expect(data).toEqual({ split: 'part2' });
   });
 
-  it('slot.toModel expect missing slot to skip', async () => {
-    const slot = field.slot(2);
+  it('slot.toModel expect missing slot to skip', () => {
     const data: Model.ModelData = {};
-    await slot.toModel('split', { G0S: 'part1.part2' }, data, modelContext);
+    slots[1].toModel('split', { G0S: 'part1.part2' }, data, modelContext);
+    expect(data).toEqual({ split: 'part2' });
+  });
+
+  it('slot.toTable expect fields to map to key', () => {
+    const data: Table.AttributeValuesMap = {};
+    slots[2].toTable('split2', { split0: 'part0', split1: 'part1', split2: 'part2' }, data, tableContext);
+    expect(data).toEqual({ G0S: 'part0.part1.part2' });
+  });
+
+  it('slot.toTable missing slot expect empty data', () => {
+    const data: Table.AttributeValuesMap = {};
+    slots[1].toTable('split', { split1: 'part1' }, data, tableContext);
     expect(data).toEqual({});
   });
 
-  it('slot.toTable expect fields to map to key', async () => {
-    const slot2 = field.slot(2);
-    const slot1 = field.slot(1);
+  it('slot.toTable slot is function expect empty data', () => {
     const data: Table.AttributeValuesMap = {};
-    await slot2.toTable('split2', { split2: 'part2' }, data, tableContext);
-    expect(data).toEqual({ G0S: '..part2' });
-    await slot1.toTable('split1', { split1: 'part1' }, data, tableContext);
-    expect(data).toEqual({ G0S: '.part1.part2' });
-  });
-
-  it('slot.toTable missing slot expect empty data', async () => {
-    const slot = field.slot(1);
-    const data: Table.AttributeValuesMap = {};
-    await slot.toTable('split', { split1: 'part1' }, data, tableContext);
+    slots[1].toTable('split', { split: () => 'value' }, data, tableContext);
     expect(data).toEqual({});
   });
 
-  it('slot.toTable slot is function expect empty data', async () => {
-    const slot = field.slot(1);
+  it('slot.toTableUpdate expect fields to map to key', () => {
     const data: Table.AttributeValuesMap = {};
-    await slot.toTable('split', { split: () => 'value' }, data, tableContext);
+    slots[1].toTableUpdate('split', { split: 'part1' }, data, tableContext);
     expect(data).toEqual({});
-  });
-
-  it('slot.toTableUpdate expect fields to map to key', async () => {
-    const slot = field.slot(1);
-    const data: Table.AttributeValuesMap = {};
-    await slot.toTableUpdate('split', { split: 'part1' }, data, tableContext);
-    expect(data).toEqual({ G0S: '.part1.' });
   });
 });
 
 describe('When FieldNamedComposite', () => {
-  const field = Fields.namedComposite('G0S', {
-    city: 0,
-    state: 1,
-    country: 2,
+  const field = Fields.namedComposite({
+    alias: 'G0S',
+    map: {
+      city: 0,
+      state: 1,
+      country: 2,
+    },
   });
 
   it('expect constructed with slots', () => {
-    const field1 = Fields.namedComposite(
-      'L0S',
-      { dollar: 0, cents: 1 },
-      {
-        dollar: () => new Fields.FieldCompositeSlot(field, 0, 'dollar1'),
-        cents: () => new Fields.FieldCompositeSlot(field, 1, 'cents1'),
-      },
-      '#',
-    );
+    const field1 = Fields.namedComposite({
+      alias: 'L0S',
+      map: { dollar: 0, cents: 1 },
+      delimiter: '#',
+    });
+    const slots = field1.createNamedSlots();
+    slots.dollar.init('dollar1', model);
     expect(field1.alias).toEqual('L0S');
     expect(field1.count).toEqual(2);
     expect(field1.delimiter).toEqual('#');
     expect(field1.map).toEqual({ dollar: 0, cents: 1 });
-    expect(Object.keys(field1.slots).length).toEqual(2);
-    expect(field1.slots.dollar().name).toEqual('dollar1');
+    expect(Object.keys(slots).length).toEqual(2);
+    expect(slots.dollar.name).toEqual('dollar1');
   });
 
   it('expect correctly constructed', () => {
@@ -723,30 +454,34 @@ describe('When FieldNamedComposite', () => {
       state: 1,
       country: 2,
     });
-    expect(Object.keys(field.slots).length).toEqual(3);
+    expect(field.slots.length).toEqual(3);
   });
 
   it('expect city slot return correct FieldCompositeSlot', () => {
-    const slot = field.slot('city');
-    expect(slot.name).toEqual('city');
-    expect(slot.slot).toEqual(0);
+    const slots = field.createNamedSlots();
+    slots.city.init('city', model);
+    expect(slots.city.name).toEqual('city');
+    expect(slots.city.slot).toEqual(0);
   });
 
   it('expect 1 slot return state FieldCompositeSlot', () => {
-    const slot = field.slot(1);
-    expect(slot.name).toEqual('state');
-    expect(slot.slot).toEqual(1);
+    const slots = field.createSlots();
+    slots[1].init('state', model);
+    expect(slots[1].name).toEqual('state');
+    expect(slots[1].slot).toEqual(1);
   });
 
   it('expect country slot return correct FieldCompositeSlot', () => {
-    const slot = field.slots.country();
+    const slots = field.createNamedSlots();
+    const slot = slots.country;
+    slot.init('country', model);
     expect(slot.name).toEqual('country');
     expect(slot.slot).toEqual(2);
   });
 });
 
 describe('When FieldSplit', () => {
-  const field = Fields.split(['P', 'S']);
+  const field = Fields.split({ aliases: ['P', 'S'] });
   field.init('split', model);
 
   it('expect init correctly', () => {
@@ -756,7 +491,7 @@ describe('When FieldSplit', () => {
   });
 
   it('expect init with delimiters correctly', () => {
-    const field1 = Fields.split(['P', 'S'], ':');
+    const field1 = Fields.split({ aliases: ['P', 'S'], delimiter: ':' });
     expect(field1.aliases).toEqual(['P', 'S']);
     expect(field1.delimiter).toEqual(':');
   });
@@ -819,5 +554,264 @@ describe('When FieldSplit', () => {
     const data: Table.AttributeValuesMap = {};
     field.toTableUpdate('split', { split: 'id1' }, data, tableContext);
     expect(data).toEqual({ P: 'id1' });
+  });
+
+  // FieldDate inherits from FieldBase
+  describe('When FieldType', () => {
+    const field = Fields.type();
+    field.init('type', model);
+
+    it('expect date returns correct type', () => {
+      expect(field.name).toEqual('type');
+    });
+
+    it('toModel expect date data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('type', { type: 'MyModel' }, data, modelContext);
+      expect(data).toEqual({ type: 'MyModel' });
+    });
+
+    it('toModel attribute not exist, expect no data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('type', {}, data, modelContext);
+      expect(data).toEqual({});
+    });
+
+    it('toTable unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('type', {}, data, tableContext);
+      expect(data).toEqual({});
+    });
+
+    it('toTable with put action, type set to model name', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('type', {}, data, putTableContext);
+      expect(data).toEqual({ type: 'MyModel' });
+    });
+
+    it('toTable with put-new action, type set to model name', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('type', {}, data, putNewTableContext);
+      expect(data).toEqual({ type: 'MyModel' });
+    });
+
+    it('toTable with put-replace action, type set to model name', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('type', {}, data, putReplaceTableContext);
+      expect(data).toEqual({ type: 'MyModel' });
+    });
+
+    it('toTable with date and put action, expect date returned', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('type', { type: 'BadModel' }, data, putTableContext);
+      expect(data).toEqual({ type: 'MyModel' });
+    });
+
+    it('alias with toTable with put action, date set and getNow called', () => {
+      const field = Fields.type({ alias: 'T' });
+      field.init('type', model);
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('type', {}, data, putTableContext);
+      expect(data).toEqual({ T: 'MyModel' });
+    });
+
+    it('alias with toModel expect date data', () => {
+      const field = Fields.type({ alias: 'T' });
+      field.init('type', model);
+      const data: Model.ModelData = {};
+      field.toModel('type', { T: 'MyModel' }, data, modelContext);
+      expect(data).toEqual({ type: 'MyModel' });
+    });
+  });
+
+  describe('When FieldCreatedDate', () => {
+    const getNow = jest.fn(() => new Date(1585564302000000));
+    const field = Fields.createdDate({ now: getNow });
+    field.init('createdOn', model);
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('expect date returns correct type', () => {
+      expect(field.name).toEqual('createdOn');
+    });
+
+    it('toModel expect date data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('createdOn', { createdOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({ createdOn: new Date(1585664302000000) });
+    });
+
+    it('toModel attribute not exist, expect no data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('createdOn', {}, data, modelContext);
+      expect(data).toEqual({});
+    });
+
+    it('toTable unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, tableContext);
+      expect(data).toEqual({});
+      expect(getNow).not.toBeCalled();
+    });
+
+    it('toTable with date and unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, tableContext);
+      expect(data).toEqual({});
+      expect(getNow).not.toBeCalled();
+    });
+
+    it('toTable with put action, createdOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putTableContext);
+      expect(data).toEqual({ createdOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with put-new action, createdOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putNewTableContext);
+      expect(data).toEqual({ createdOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with put-replace action, createdOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putReplaceTableContext);
+      expect(data).toEqual({ createdOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with date and put action, expect date returned', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', { createdOn: new Date(1585584303000000) }, data, putTableContext);
+      expect(data).toEqual({ createdOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with default now returns date', () => {
+      const field = Fields.createdDate();
+      field.init('createdOn', model);
+      const now = Math.round(new Date().valueOf() / 1000);
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putTableContext);
+      expect(data).toEqual({ createdOn: data.createdOn });
+      expect(data.createdOn).toBeGreaterThanOrEqual(now);
+    });
+
+    it('alias with toTable with put action, date set and getNow called', () => {
+      const field = Fields.createdDate({ alias: 'addOn', now: getNow });
+      field.init('createdOn', model);
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putTableContext);
+      expect(data).toEqual({ addOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('alias with toModel expect date data', () => {
+      const field = Fields.createdDate({ alias: 'addOn', now: getNow });
+      field.init('createdOn', model);
+      const data: Model.ModelData = {};
+      field.toModel('createdOn', { addOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({ createdOn: new Date(1585664302000000) });
+    });
+  });
+
+  describe('When FieldUpdatedDate', () => {
+    const getNow = jest.fn(() => new Date(1585564302000000));
+    const field = Fields.updatedDate({ now: getNow });
+    field.init('updatedOn', model);
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('expect date returns correct type', () => {
+      expect(field.name).toEqual('updatedOn');
+    });
+
+    it('toModel expect date data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('updatedOn', { updatedOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({ updatedOn: new Date(1585664302000000) });
+    });
+
+    it('toTable unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, tableContext);
+      expect(data).toEqual({});
+      expect(getNow).not.toBeCalled();
+    });
+
+    it('toTable with date and unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, putTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      //expect(getNow).not.toBeCalled();
+    });
+
+    it('toTable with put action, updatedOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, putTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with put-new action, updatedOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, putNewTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with put-replace action, updatedOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, putReplaceTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTableUpdate with update action, updatedOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTableUpdate('updatedOn', {}, data, updateTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with date and put action, expect date returned', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', { updatedOn: new Date(1585584303000000) }, data, putTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with default now returns date', () => {
+      const field = Fields.updatedDate();
+      field.init('updatedOn', model);
+      const now = Math.round(new Date().valueOf() / 1000);
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, putTableContext);
+      expect(data).toEqual({ updatedOn: data.updatedOn });
+      expect(data.updatedOn).toBeGreaterThanOrEqual(now);
+    });
+
+    it('alias with toTableUpdate with put action, date set and getNow called', () => {
+      const field = Fields.updatedDate({ alias: 'editOn', now: getNow });
+      field.init('updatedOn', model);
+      const data: Table.AttributeValuesMap = {};
+      field.toTableUpdate('updatedOn', {}, data, updateTableContext);
+      expect(data).toEqual({ editOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('alias with toModel expect date data', () => {
+      const field = Fields.updatedDate({ alias: 'editNow', now: getNow });
+      field.init('updatedOn', model);
+      const data: Model.ModelData = {};
+      field.toModel('updatedOn', { editOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({});
+    });
   });
 });

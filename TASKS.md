@@ -218,3 +218,51 @@ Components:
   - tsconfig.json
 - tools:
   - [https://github.com/jvitor83/types-autoinstaller]
+
+Non goals or focus:
+
+- Validate json - there are better tools for that like joi or yup
+- Coerce data - there are better tools for that like joi or yup
+- Does not replace a real model with business logic
+- Required - not much value beyond just throwing if not present (validate could do that)
+- Default - form of coerce (kind of) though in this case it would also handle output, but could handle simple delete.
+
+Goals/Focus:
+
+- Field Mapping data from model data to table data.
+  - Data translation
+  - Default - on put, but also output and on update could remove is update is simple (just = default)
+    - DefaultInput
+    - DefaultOutput
+  - ignore (errorActions, ignore):
+    - Put (allow put) - could be used by UpdatedDate
+    - Update (allow update) - could be used by CreatedData
+    - Output (allow output) - could be used by write only fields
+    - Put + Update - could be used by a deprecated method or method writing by other means
+- Model:
+  - Type (for FieldType)
+  - Disabled actions (like put and put-replace, to only allow new and update)
+  - validator and coerce
+
+Core:
+
+- alias: string - alias is really the most used thing.
+- default: value || function
+- ignore: function
+
+* init()
+* toModel()
+* toTable()
+* toTableUpdate()
+* getTableSchema() - returns map with type, partial, ignore
+
+Field TODO (simplify):
+
+X Make each Field methods and attributes optional
+X Remove async methods.
+X Remove validator, required, coerce, and other non-goal properties
+X Remove function chaining
+X ?? remove update - though it does provide better typing??
+
+name = Fields.string({alias: abc});
+createdOn = Fields.createdDate({alias: NewOn});

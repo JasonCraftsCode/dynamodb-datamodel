@@ -720,16 +720,16 @@ model.update({
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
     id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
-    color: Fields.stringSet(),
+    colors: Fields.stringSet(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
 });
 
-<span class="hljs-comment">// Adds 'yellow' and 'red' to the color attribute</span>
-<span class="hljs-comment">// Example: If color = ['blue', 'yellow'], then after this update color will be ['blue', 'red', 'yellow']</span>
+<span class="hljs-comment">// Adds 'yellow' and 'red' to the colors attribute</span>
+<span class="hljs-comment">// Example: If colors = ['blue', 'yellow'], then after this update colors will be ['blue', 'red', 'yellow']</span>
 model.update({
   id: <span class="hljs-string">'P-GUID.S-0'</span>,
-  color: Update.addToSet(model.table.createStringSet([<span class="hljs-string">'yellow'</span>, <span class="hljs-string">'red'</span>]));
+  colors: Update.addToSet(model.table.createStringSet([<span class="hljs-string">'yellow'</span>, <span class="hljs-string">'red'</span>]));
 });</code></pre>
 									</dd>
 								</dl>
@@ -1444,16 +1444,16 @@ model.update({
 <span class="hljs-keyword">const</span> model = <span class="hljs-keyword">new</span> Model({
   schema: {
     id: Fields.split([<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>]),
-    color: Fields.stringSet(),
+    colors: Fields.stringSet(),
   },
   <span class="hljs-comment">// ...additional properties like table</span>
 });
 
-<span class="hljs-comment">// Remove 'yellow' and 'red' from the color attribute</span>
-<span class="hljs-comment">// Example: If color = ['blue', 'yellow'], then after this update color will be ['blue']</span>
+<span class="hljs-comment">// Remove 'yellow' and 'red' from the colors attribute</span>
+<span class="hljs-comment">// Example: If colors = ['blue', 'yellow'], then after this update colors will be ['blue']</span>
 model.update({
   id: <span class="hljs-string">'P-GUID.S-0'</span>,
-  color: Update.removeFromSet(model.table.createStringSet([<span class="hljs-string">'yellow'</span>, <span class="hljs-string">'red'</span>]));
+  colors: Update.removeFromSet(model.table.createStringSet([<span class="hljs-string">'yellow'</span>, <span class="hljs-string">'red'</span>]));
 });</code></pre>
 									</dd>
 								</dl>

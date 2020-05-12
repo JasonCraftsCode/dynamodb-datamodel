@@ -103,16 +103,14 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#count" class="tsd-kind-icon">count</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#delimiter" class="tsd-kind-icon">delimiter</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldcompositet.html#map" class="tsd-kind-icon">map</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldcompositet.html#slots" class="tsd-kind-icon">slots</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#slots" class="tsd-kind-icon">slots</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="fields.fieldcompositet.html#slot" class="tsd-kind-icon">slot</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#totable" class="tsd-kind-icon">to<wbr>Table</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldcompositet.html#createnamedslots" class="tsd-kind-icon">create<wbr>Named<wbr>Slots</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="fields.fieldcompositet.html#createslots" class="tsd-kind-icon">create<wbr>Slots</a></li>
 							</ul>
 						</section>
 					</div>
@@ -124,29 +122,20 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Field<wbr>CompositeT<span class="tsd-signature-symbol">(</span>alias<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, map<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, slots<span class="tsd-signature-symbol">?: </span><a href="fields.html#compositeslot" class="tsd-signature-type">CompositeSlot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, delimiter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcompositet.html" class="tsd-signature-type">FieldCompositeT</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Field<wbr>CompositeT<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.compositetoptions.html" class="tsd-signature-type">CompositeTOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcompositet.html" class="tsd-signature-type">FieldCompositeT</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L768">Fields.ts:768</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L923">Fields.ts:923</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>alias: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>map: <span class="tsd-signature-type">T</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> slots: <a href="fields.html#compositeslot" class="tsd-signature-type">CompositeSlot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> delimiter: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5>options: <a href="../interfaces/fields.compositetoptions.html" class="tsd-signature-type">CompositeTOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcompositet.html" class="tsd-signature-type">FieldCompositeT</a></h4>
@@ -163,29 +152,29 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#alias">alias</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L705">Fields.ts:705</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L880">Fields.ts:880</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="count" class="tsd-anchor"></a>
 					<h3>count</h3>
-					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 2</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#count">count</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L706">Fields.ts:706</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L882">Fields.ts:882</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="delimiter" class="tsd-anchor"></a>
 					<h3>delimiter</h3>
-					<div class="tsd-signature tsd-kind-icon">delimiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">delimiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;.&quot;</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#delimiter">delimiter</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L707">Fields.ts:707</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L883">Fields.ts:883</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -195,152 +184,56 @@
 					<div class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L768">Fields.ts:768</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L923">Fields.ts:923</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="slots" class="tsd-anchor"></a>
 					<h3>slots</h3>
-					<div class="tsd-signature tsd-kind-icon">slots<span class="tsd-signature-symbol">:</span> <a href="fields.html#compositeslot" class="tsd-signature-type">CompositeSlot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">slots<span class="tsd-signature-symbol">:</span> <a href="fields.html#createcompositeslot" class="tsd-signature-type">CreateCompositeSlot</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#slots">slots</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L767">Fields.ts:767</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L881">Fields.ts:881</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-					<a name="slot" class="tsd-anchor"></a>
-					<h3>slot</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">slot<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcompositeslot.html" class="tsd-signature-type">FieldCompositeSlot</a></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createnamedslots" class="tsd-anchor"></a>
+					<h3>create<wbr>Named<wbr>Slots</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Named<wbr>Slots<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.html#compositeslotmapt" class="tsd-signature-type">CompositeSlotMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#slot">slot</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L786">Fields.ts:786</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L931">Fields.ts:931</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>value: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcompositeslot.html" class="tsd-signature-type">FieldCompositeSlot</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="fields.html#compositeslotmapt" class="tsd-signature-type">CompositeSlotMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="tomodel" class="tsd-anchor"></a>
-					<h3>to<wbr>Model</h3>
+					<a name="createslots" class="tsd-anchor"></a>
+					<h3>create<wbr>Slots</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>slot<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modelcontext.html" class="tsd-signature-type">ModelContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Slots<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcompositeslot.html" class="tsd-signature-type">FieldCompositeSlot</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#tomodel">toModel</a></p>
+								<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#createslots">createSlots</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L719">Fields.ts:719</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L905">Fields.ts:905</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>slot: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>tableData: <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
-								</li>
-								<li>
-									<h5>modelData: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
-								</li>
-								<li>
-									<h5>context: <a href="../interfaces/fields.modelcontext.html" class="tsd-signature-type">ModelContext</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="totable" class="tsd-anchor"></a>
-					<h3>to<wbr>Table</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>slot<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#totable">toTable</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L734">Fields.ts:734</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>slot: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>modelData: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
-								</li>
-								<li>
-									<h5>tableData: <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
-								</li>
-								<li>
-									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="totableupdate" class="tsd-anchor"></a>
-					<h3>to<wbr>Table<wbr>Update</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>slot<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, tableData<span class="tsd-signature-symbol">: </span><a href="update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="fields.fieldcomposite.html">FieldComposite</a>.<a href="fields.fieldcomposite.html#totableupdate">toTableUpdate</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L751">Fields.ts:751</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>slot: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>modelData: <a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a></h5>
-								</li>
-								<li>
-									<h5>tableData: <a href="update.html#updatemapvalue" class="tsd-signature-type">UpdateMapValue</a></h5>
-								</li>
-								<li>
-									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcompositeslot.html" class="tsd-signature-type">FieldCompositeSlot</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -388,20 +281,14 @@
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="fields.fieldcompositet.html#map" class="tsd-kind-icon">map</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-class">
+									<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 										<a href="fields.fieldcompositet.html#slots" class="tsd-kind-icon">slots</a>
 									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-										<a href="fields.fieldcompositet.html#slot" class="tsd-kind-icon">slot</a>
+									<li class=" tsd-kind-method tsd-parent-kind-class">
+										<a href="fields.fieldcompositet.html#createnamedslots" class="tsd-kind-icon">create<wbr>Named<wbr>Slots</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-										<a href="fields.fieldcompositet.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-										<a href="fields.fieldcompositet.html#totable" class="tsd-kind-icon">to<wbr>Table</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-										<a href="fields.fieldcompositet.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a>
+										<a href="fields.fieldcompositet.html#createslots" class="tsd-kind-icon">create<wbr>Slots</a>
 									</li>
 								</ul>
 							</li>

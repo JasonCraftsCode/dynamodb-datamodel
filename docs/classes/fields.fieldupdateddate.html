@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FieldSplit | dynamodb-datamodel - v0.1.7</title>
+	<title>FieldUpdatedDate | dynamodb-datamodel - v0.1.7</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,28 +55,21 @@
 					<a href="fields.html">Fields</a>
 				</li>
 				<li>
-					<a href="fields.fieldsplit.html">FieldSplit</a>
+					<a href="fields.fieldupdateddate.html">FieldUpdatedDate</a>
 				</li>
 			</ul>
-			<h1>Class FieldSplit</h1>
+			<h1>Class FieldUpdatedDate</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Currently only supports string table attributes.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FieldSplit</span>
+						<span class="target">FieldUpdatedDate</span>
 					</li>
 				</ul>
 			</section>
@@ -93,24 +86,24 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="fields.fieldsplit.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="fields.fieldupdateddate.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldsplit.html#aliases" class="tsd-kind-icon">aliases</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldsplit.html#delimiter" class="tsd-kind-icon">delimiter</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldsplit.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldupdateddate.html#alias" class="tsd-kind-icon">alias</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldupdateddate.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldsplit.html#init" class="tsd-kind-icon">init</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldsplit.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldsplit.html#totable" class="tsd-kind-icon">to<wbr>Table</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldsplit.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldupdateddate.html#init" class="tsd-kind-icon">init</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldupdateddate.html#now" class="tsd-kind-icon">now</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldupdateddate.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldupdateddate.html#totable" class="tsd-kind-icon">to<wbr>Table</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldupdateddate.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a></li>
 							</ul>
 						</section>
 					</div>
@@ -122,22 +115,27 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Field<wbr>Split<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.splitoptions.html" class="tsd-signature-type">SplitOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldsplit.html" class="tsd-signature-type">FieldSplit</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Field<wbr>Updated<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.updatedateoptions.html" class="tsd-signature-type">UpdateDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldupdateddate.html" class="tsd-signature-type">FieldUpdatedDate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L950">Fields.ts:950</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1186">Fields.ts:1186</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Initialize the Field.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/fields.splitoptions.html" class="tsd-signature-type">SplitOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/fields.updatedateoptions.html" class="tsd-signature-type">UpdateDateOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldsplit.html" class="tsd-signature-type">FieldSplit</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="fields.fieldupdateddate.html" class="tsd-signature-type">FieldUpdatedDate</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -145,24 +143,19 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="aliases" class="tsd-anchor"></a>
-					<h3>aliases</h3>
-					<div class="tsd-signature tsd-kind-icon">aliases<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="alias" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> alias</h3>
+					<div class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L949">Fields.ts:949</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1181">Fields.ts:1181</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="delimiter" class="tsd-anchor"></a>
-					<h3>delimiter</h3>
-					<div class="tsd-signature tsd-kind-icon">delimiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;.&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L950">Fields.ts:950</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Table attribute to map this Model property to.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="name" class="tsd-anchor"></a>
@@ -170,9 +163,14 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L948">Fields.ts:948</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1176">Fields.ts:1176</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Model name of the field, set by init function in Model or Field constructor.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -188,13 +186,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L961">Fields.ts:961</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1202">Fields.ts:1202</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p>Field.init for more information</p>
+									<dd><p>Fields.Field.init for more information.</p>
 									</dd>
 								</dl>
 							</div>
@@ -212,6 +210,28 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="now" class="tsd-anchor"></a>
+					<h3>now</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">now<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1186">Fields.ts:1186</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Function to get the current date.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Date</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="tomodel" class="tsd-anchor"></a>
 					<h3>to<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -222,13 +242,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#tomodel">toModel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L968">Fields.ts:968</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1209">Fields.ts:1209</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p>Field.toModel for more information</p>
+									<dd><p>Fields.Field.toModel for more information.</p>
 									</dd>
 								</dl>
 							</div>
@@ -262,13 +282,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totable">toTable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L986">Fields.ts:986</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1223">Fields.ts:1223</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p>Field.toTable for more information.</p>
+									<dd><p>Fields.Field.toTable for more information.</p>
 									</dd>
 								</dl>
 							</div>
@@ -302,13 +322,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totableupdate">toTableUpdate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1011">Fields.ts:1011</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1237">Fields.ts:1237</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p>Field.toTableUpdate for more information.</p>
+									<dd><p>Fields.Field.toTableUpdate for more information.</p>
 									</dd>
 								</dl>
 							</div>
@@ -358,31 +378,31 @@
 						<a href="fields.html" class="tsd-kind-icon">Fields</a>
 						<ul>
 							<li class="current tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldsplit.html" class="tsd-kind-icon">Field<wbr>Split</a>
+								<a href="fields.fieldupdateddate.html" class="tsd-kind-icon">Field<wbr>Updated<wbr>Date</a>
 								<ul>
 									<li class=" tsd-kind-constructor tsd-parent-kind-class">
-										<a href="fields.fieldsplit.html#constructor" class="tsd-kind-icon">constructor</a>
+										<a href="fields.fieldupdateddate.html#constructor" class="tsd-kind-icon">constructor</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
-										<a href="fields.fieldsplit.html#aliases" class="tsd-kind-icon">aliases</a>
+										<a href="fields.fieldupdateddate.html#alias" class="tsd-kind-icon">alias</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
-										<a href="fields.fieldsplit.html#delimiter" class="tsd-kind-icon">delimiter</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-class">
-										<a href="fields.fieldsplit.html#name" class="tsd-kind-icon">name</a>
+										<a href="fields.fieldupdateddate.html#name" class="tsd-kind-icon">name</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
-										<a href="fields.fieldsplit.html#init" class="tsd-kind-icon">init</a>
+										<a href="fields.fieldupdateddate.html#init" class="tsd-kind-icon">init</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
-										<a href="fields.fieldsplit.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a>
+										<a href="fields.fieldupdateddate.html#now" class="tsd-kind-icon">now</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
-										<a href="fields.fieldsplit.html#totable" class="tsd-kind-icon">to<wbr>Table</a>
+										<a href="fields.fieldupdateddate.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
-										<a href="fields.fieldsplit.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a>
+										<a href="fields.fieldupdateddate.html#totable" class="tsd-kind-icon">to<wbr>Table</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-class">
+										<a href="fields.fieldupdateddate.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a>
 									</li>
 								</ul>
 							</li>

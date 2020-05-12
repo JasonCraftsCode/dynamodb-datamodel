@@ -107,7 +107,7 @@ export abstract class Condition {
    * @example
    * ```typescript
    * // Expands to: '#n0 = #n1'
-   * const condition = Condition.equal('name', Condition.path('name'));
+   * const condition = Condition.eq('name', Condition.path('name'));
    * ```
    * @param value Path to use for a condition value.
    * @returns Resolver to use when generate condition expression.
@@ -118,6 +118,7 @@ export abstract class Condition {
     };
   }
 
+  // TODO: would be nice if size returned an object that had eq, ne, lt, le, gt and ge.
   /**
    * Inserts the size of the attribute value to compare the data size to a static value or another attribute value.
    *
@@ -133,7 +134,7 @@ export abstract class Condition {
    * @example
    * ```typescript
    * // Expands to: 'size(#n0) = :v0'
-   * const condition = Condition.equal(Condition.size('name'), 4);
+   * const condition = Condition.eq(Condition.size('name'), 4);
    * ```
    * @param path Attribute path to get size of value for.
    * @returns Resolver to use when generate condition expression.
@@ -257,7 +258,7 @@ export abstract class Condition {
   /**
    * 'BETWEEN' - Between condition compares if an attribute value is between two values or other attributes.
    * Condition.between('path', 1, 2) will have the same outcome as
-   * Condition.and(Condition.greaterThenEqual('path', 1), Condition.lessThenEqual('path', 2))
+   * Condition.and(Condition.ge('path', 1), Condition.le('path', 2))
    * @example
    * ```typescript
    * // Expands to: '#n0 BETWEEN :v0 AND :v1'
