@@ -159,7 +159,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     table: Table;
   }
 
-  export type ModelUpdateValue<T> = Extract<T, ModelType> | null | Update.Resolver<string>;
+  export type ModelUpdateValue<T> = Extract<T, ModelType> | null | Update.Resolver<Table.AttributeTypes>;
 
   // *Map used as model data based params in Model
   export type ModelSchema = { [key: string]: Fields.Field };

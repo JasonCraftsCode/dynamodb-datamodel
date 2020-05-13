@@ -9,7 +9,7 @@ import { Table } from './Table';
  * Object passed down to Condition.Resolver functions to support getting path and value aliases and
  * provide context to the resolver function to support advanced condition resolvers.
  */
-export class ConditionExpression {
+export class ConditionExpression implements Condition.Expression {
   /**
    * Object for getting path and value aliases.
    */
@@ -88,7 +88,7 @@ export abstract class Condition {
    * @param exp Object to add path to.
    * @returns Generated name alias to use in condition expression.
    */
-  static addPath(path: Condition.Path, exp: ConditionExpression): string {
+  static addPath(path: Condition.Path, exp: Condition.Expression): string {
     return Condition.isResolver(path) ? path(exp) : exp.addPath(path);
   }
 
@@ -98,7 +98,7 @@ export abstract class Condition {
    * @param exp Object to add values to.
    * @returns Generated value alias to use in condition expression.
    */
-  static addValues(values: Condition.Value[], exp: ConditionExpression): string[] {
+  static addValues(values: Condition.Value[], exp: Condition.Expression): string[] {
     return values.map((value) => (Condition.isResolver(value) ? value(exp) : exp.addValue(value)));
   }
 
@@ -113,7 +113,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static path(value: string): Condition.Resolver {
-    return (exp: ConditionExpression): string => exp.addPath(value);
+    return (exp: Condition.Expression): string => exp.addPath(value);
   }
 
   // TODO: would be nice if size returned an object that had eq, ne, lt, le, gt and ge.
@@ -138,7 +138,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static size(path: string): Condition.Resolver {
-    return (exp: ConditionExpression): string => `size(${exp.addPath(path)})`;
+    return (exp: Condition.Expression): string => `size(${exp.addPath(path)})`;
   }
 
   /**
@@ -153,8 +153,8 @@ export abstract class Condition {
    * @param right Value to resolve or add.
    * @returns Resolver to use when generate condition expression.
    */
-  static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value) {
-    return (exp: ConditionExpression): string =>
+  static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value): Condition.Resolver {
+    return (exp: Condition.Expression): string =>
       `${Condition.addPath(left, exp)} ${op} ${Condition.addValues([right], exp)}`;
   }
 
@@ -263,7 +263,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static between(path: string, from: Condition.Value, to: Condition.Value): Condition.Resolver {
-    return (exp: ConditionExpression): string =>
+    return (exp: Condition.Expression): string =>
       `${exp.addPath(path)} BETWEEN ${Condition.addValues([from, to], exp).join(' AND ')}`;
   }
 
@@ -279,7 +279,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static in(path: string, values: Condition.Value[]): Condition.Resolver {
-    return (exp: ConditionExpression): string =>
+    return (exp: Condition.Expression): string =>
       `${exp.addPath(path)} IN (${Condition.addValues(values, exp).join(', ')})`;
   }
 
@@ -296,7 +296,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static contains(path: string, value: string): Condition.Resolver<'S' | 'SS' | 'NS' | 'BS'> {
-    return (exp: ConditionExpression): string => `contains(${exp.addPath(path)}, ${exp.addValue(value)})`;
+    return (exp: Condition.Expression): string => `contains(${exp.addPath(path)}, ${exp.addValue(value)})`;
   }
 
   /**
@@ -312,7 +312,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static beginsWith(path: string, value: string): Condition.Resolver<'S'> {
-    return (exp: ConditionExpression): string => `begins_with(${exp.addPath(path)}, ${exp.addValue(value)})`;
+    return (exp: Condition.Expression): string => `begins_with(${exp.addPath(path)}, ${exp.addValue(value)})`;
   }
 
   /**
@@ -327,7 +327,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static type(path: string, type: Table.AttributeTypes): Condition.Resolver {
-    return (exp: ConditionExpression): string => `attribute_type(${exp.addPath(path)}, ${exp.addValue(type)})`;
+    return (exp: Condition.Expression): string => `attribute_type(${exp.addPath(path)}, ${exp.addValue(type)})`;
   }
 
   /**
@@ -341,7 +341,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static exists(path: string): Condition.Resolver {
-    return (exp: ConditionExpression): string => `attribute_exists(${exp.addPath(path)})`;
+    return (exp: Condition.Expression): string => `attribute_exists(${exp.addPath(path)})`;
   }
 
   /**
@@ -355,7 +355,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static notExists(path: string): Condition.Resolver {
-    return (exp: ConditionExpression): string => `attribute_not_exists(${exp.addPath(path)})`;
+    return (exp: Condition.Expression): string => `attribute_not_exists(${exp.addPath(path)})`;
   }
 
   /**
@@ -370,7 +370,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static and(...conditions: Condition.Resolver[]): Condition.Resolver {
-    return (exp: ConditionExpression): string => `(${conditions.map((resolver) => resolver(exp)).join(` AND `)})`;
+    return (exp: Condition.Expression): string => `(${conditions.map((resolver) => resolver(exp)).join(` AND `)})`;
   }
 
   /**
@@ -385,7 +385,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static or(...conditions: Condition.Resolver[]): Condition.Resolver {
-    return (exp: ConditionExpression): string => `(${conditions.map((resolver) => resolver(exp)).join(` OR `)})`;
+    return (exp: Condition.Expression): string => `(${conditions.map((resolver) => resolver(exp)).join(` OR `)})`;
   }
 
   /**
@@ -400,7 +400,7 @@ export abstract class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static not(condition: Condition.Resolver): Condition.Resolver {
-    return (exp: ConditionExpression): string => `(NOT ${condition(exp)})`;
+    return (exp: Condition.Expression): string => `(NOT ${condition(exp)})`;
   }
 
   /**
@@ -477,6 +477,21 @@ export namespace Condition {
     | LogicalOperators;
 
   /**
+   * Expression object used in the condition resolver to resolve the condition to an expression.
+   */
+  export interface Expression {
+    /**
+     * @see ExpressionAttributes.addPath.
+     */
+    addPath(path: string): string;
+
+    /**
+     * @see ExpressionAttributes.addValue.
+     */
+    addValue(value: Table.AttributeValues): string;
+  }
+
+  /**
    * Resolver function is return by most of the above Conditions methods.  Returning a function allows conditions
    * to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
    * of the above primitive conditions or support any new primitives that AWS would add in the future.
@@ -484,7 +499,7 @@ export namespace Condition {
    * @param exp Object to get path and value aliases.
    * @param type Argument to enforce type safety for conditions that only work on certain types.
    */
-  export type Resolver<T = Table.AttributeTypes> = (exp: ConditionExpression, type?: T) => string;
+  export type Resolver<T = Table.AttributeTypes> = (exp: Expression, type?: T) => string;
 
   /**
    * The value used in the condition methods.  Can either be a primitive DynamoDB value or a Resolver function,

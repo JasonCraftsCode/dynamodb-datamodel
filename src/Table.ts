@@ -11,7 +11,6 @@ import { Update } from './Update';
 function getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.PrimaryKey.KeyTypes): string {
   const keys = Object.keys(keySchema);
   for (const key of keys) if (keySchema[key].keyType === type) return key;
-
   return '';
 }
 

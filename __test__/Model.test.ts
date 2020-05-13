@@ -76,7 +76,7 @@ const table = Table.createTable<TableKey, TableAttributes>({
   client,
 });
 
-const location = Fields.namedComposite({
+const location = Fields.compositeNamed({
   alias: 'G0S',
   map: {
     city: 0,
@@ -145,7 +145,7 @@ interface UserModel extends UserKey {
   spouse?: SpouseModel | Update.UpdateMap;
   children?: ChildModel[] | Update.UpdateList;
   groups?: { [key: string]: GroupModel } | Update.UpdateMap;
-  created?: Date | Update.Resolver<'Date'>;
+  created?: Date | Update.Resolver<'N'>;
   hide?: Set<Date>;
   nickname?: string | Update.UpdateString;
 }
@@ -164,9 +164,9 @@ const userSchema = {
   photo: Fields.binary(),
   interests: Fields.stringSet(),
   modified: Fields.numberSet(),
-  children: Fields.listT<ChildModel, 'L'>({ schema: childSchema }),
-  spouse: Fields.object<SpouseModel, 'M'>({ schema: spouseSchema }),
-  groups: Fields.mapT<GroupModel, 'M'>({ schema: groupSchema }),
+  children: Fields.listModel<ChildModel>({ schema: childSchema }),
+  spouse: Fields.model<SpouseModel>({ schema: spouseSchema }),
+  groups: Fields.mapModel<GroupModel>({ schema: groupSchema }),
   created: Fields.date(),
   hide: Fields.hidden(),
   nickname: Fields.string({ default: 'none' }),

@@ -72,7 +72,7 @@
 						<span class="target">FieldComposite</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="fields.fieldcompositet.html" class="tsd-signature-type">FieldCompositeT</a>
+								<a href="fields.fieldcompositenamed.html" class="tsd-signature-type">FieldCompositeNamed</a>
 							</li>
 						</ul>
 					</li>
@@ -94,7 +94,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldcomposite.html#alias" class="tsd-kind-icon">alias</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldcomposite.html#count" class="tsd-kind-icon">count</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldcomposite.html#delimiter" class="tsd-kind-icon">delimiter</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fields.fieldcomposite.html#slots" class="tsd-kind-icon">slots</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -118,7 +117,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L888">Fields.ts:888</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L976">Fields.ts:976</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -140,9 +139,14 @@
 					<div class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L885">Fields.ts:885</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L964">Fields.ts:964</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Table attribute name to map this model property to.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="count" class="tsd-anchor"></a>
@@ -150,9 +154,19 @@
 					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L887">Fields.ts:887</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L970">Fields.ts:970</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Number of model fields (slots) to compose together into a table attribute.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>2</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="delimiter" class="tsd-anchor"></a>
@@ -160,19 +174,19 @@
 					<div class="tsd-signature tsd-kind-icon">delimiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;.&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L888">Fields.ts:888</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L976">Fields.ts:976</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="slots" class="tsd-anchor"></a>
-					<h3>slots</h3>
-					<div class="tsd-signature tsd-kind-icon">slots<span class="tsd-signature-symbol">:</span> <a href="fields.html#createcompositeslot" class="tsd-signature-type">CreateCompositeSlot</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L886">Fields.ts:886</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Delimiter to use for when splitting the table attribute in to multiple model fields.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>&#39;.&#39;&#39;</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -187,9 +201,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L909">Fields.ts:909</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1006">Fields.ts:1006</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create the field slots to use when defining the schema for a model.
+									Note: Need to create a new set of field slots for each model that uses this composite definition.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcompositeslot.html" class="tsd-signature-type">FieldCompositeSlot</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
@@ -234,9 +254,6 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="fields.fieldcomposite.html#delimiter" class="tsd-kind-icon">delimiter</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-class">
-										<a href="fields.fieldcomposite.html#slots" class="tsd-kind-icon">slots</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
 										<a href="fields.fieldcomposite.html#createslots" class="tsd-kind-icon">create<wbr>Slots</a>

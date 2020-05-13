@@ -5,6 +5,13 @@ it('Validate Condition exports', () => {
   expect(typeof Condition.ne).toEqual('function');
 });
 
+describe('Validate ConditionExpression', () => {
+  it('when created expect initialized', () => {
+    const exp = new ConditionExpression();
+    expect(exp.attributes).not.toBeUndefined();
+  });
+});
+
 describe('Validate Condition with values', () => {
   const exp = new ConditionExpression();
   beforeEach(() => {

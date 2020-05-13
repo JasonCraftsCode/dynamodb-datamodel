@@ -38,7 +38,8 @@ import { Update } from './Update';
 export class Fields {
   /**
    * Creates a string field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static string(options?: Fields.BaseOptions<string>): Fields.FieldString {
     return new Fields.FieldString(options);
@@ -46,7 +47,8 @@ export class Fields {
 
   /**
    * Creates a number field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static number(options?: Fields.BaseOptions<number>): Fields.FieldNumber {
     return new Fields.FieldNumber(options);
@@ -54,7 +56,8 @@ export class Fields {
 
   /**
    * Creates a binary field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static binary(options?: Fields.BaseOptions<Table.BinaryValue>): Fields.FieldBinary {
     return new Fields.FieldBinary(options);
@@ -62,7 +65,8 @@ export class Fields {
 
   /**
    * Creates a boolean field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static boolean(options?: Fields.BaseOptions<boolean>): Fields.FieldBoolean {
     return new Fields.FieldBoolean(options);
@@ -70,7 +74,8 @@ export class Fields {
 
   /**
    * Creates a string set field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static stringSet(options?: Fields.BaseOptions<Table.StringSetValue>): Fields.FieldStringSet {
     return new Fields.FieldStringSet(options);
@@ -78,7 +83,8 @@ export class Fields {
 
   /**
    * Creates a number set field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static numberSet(options?: Fields.BaseOptions<Table.NumberSetValue>): Fields.FieldNumberSet {
     return new Fields.FieldNumberSet(options);
@@ -86,7 +92,8 @@ export class Fields {
 
   /**
    * Creates a binary set field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static binarySet(options?: Fields.BaseOptions<Table.BinarySetValue>): Fields.FieldBinarySet {
     return new Fields.FieldBinarySet(options);
@@ -94,59 +101,56 @@ export class Fields {
 
   /**
    * Creates a list field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
-  static list(options?: Fields.BaseOptions<Table.ListValue>): Fields.FieldList<Table.AttributeValues, 'L'> {
+  static list(options?: Fields.BaseOptions<Table.ListValue>): Fields.FieldList<Table.AttributeValues> {
     return new Fields.FieldList(options);
   }
 
   /**ß
    * Creates a schema based list field object to use in a {@link Model.schema}.
-   * @typeParam V
-   * @typeParam T
-   * @param type Name of list type.
-   * @param schema Defines the schema for the list type.
-   * @param alias Table attribute name to map this model property to.
+   * @typeParam V Interface of model to use for schema.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
-  static listT<V, T extends Table.AttributeTypes>(options: Fields.ListOptions<V>): Fields.FieldListT<V, T> {
-    return new Fields.FieldListT<V, T>(options);
+  static listModel<V>(options: Fields.ListModelOptions<V>): Fields.FieldListModel<V> {
+    return new Fields.FieldListModel<V>(options);
   }
 
   /**
    * Creates a map field object to use in a {@link Model.schema}.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
-  static map(options?: Fields.BaseOptions<Table.MapValue>): Fields.FieldMap<Table.AttributeValues, 'M'> {
+  static map(options?: Fields.BaseOptions<Table.MapValue>): Fields.FieldMap<Table.AttributeValues> {
     return new Fields.FieldMap(options);
   }
 
   /**
    * Creates a schema based map field object to use in a {@link Model.schema}.
-   * @typeParam V
-   * @typeParam T
-   * @param type Name of map type.
-   * @param schema Defines the schema for the map type.
-   * @param alias Table attribute name to map this model property to.
+   * @typeParam V Interface of model to use for schema.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
-  static mapT<V, T extends Table.AttributeTypes>(options: Fields.MapOptions<V>): Fields.FieldMapT<V, T> {
-    return new Fields.FieldMapT<V, T>(options);
+  static mapModel<V>(options: Fields.MapModelOptions<V>): Fields.FieldMapModel<V> {
+    return new Fields.FieldMapModel<V>(options);
   }
 
   /**
    * Creates a schema based map field object to use in a {@link Model.schema}.
-   * @typeParam V
-   * @typeParam T
-   * @param type Name of map type.
-   * @param schema Defines the schema for the map type.
-   * @param alias Table attribute name to map this model property to.
+   * @typeParam V Interface of model to use for schema.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
-  static object<V, T extends Table.AttributeTypes>(options: Fields.ObjectOptions<V>): Fields.FieldObject<V, T> {
-    return new Fields.FieldObject<V, T>(options);
+  static model<V>(options: Fields.ModelOptions<V>): Fields.FieldModel<V> {
+    return new Fields.FieldModel<V>(options);
   }
 
   /**
    * Creates a date field object to use in a {@link Model.schema}, stored as a number in the table.
-   * @param alias Table attribute name to map this model property to.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static date(options?: Fields.BaseOptions<Date>): Fields.FieldDate {
     return new Fields.FieldDate(options);
@@ -167,8 +171,8 @@ export class Fields {
    * @example
    * ```typescript
    * ```
-   * @param aliases Array of table attribute names to map this model property to.
-   * @param delimiter Delimiter to use for splitting the model property string, default delimiter is '.'.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static split(options: Fields.SplitOptions): Fields.FieldSplit {
     return new Fields.FieldSplit(options);
@@ -179,9 +183,8 @@ export class Fields {
    * @example
    * ```typescript
    * ```
-   * @param alias Table attribute name to map this model property to.
-   * @param count Number of model fields (slots) to compose together into a table attribute.
-   * @param delimiter Delimiter to use for when splitting the table attribute in to multiple model fields.
+   * @param options Options to initialize field with.
+   * @returns New composite object.
    */
   static composite(options: Fields.CompositeOptions): Fields.FieldComposite {
     return new Fields.FieldComposite(options);
@@ -192,30 +195,39 @@ export class Fields {
    * @example
    * ```typescript
    * ```
-   * @typeParam
-   * @param alias Table attribute name to map this model property to.
-   * @param slotMap The mapping between the name and slot index.
-   * @param slots The CompositeSlot field used for each name slot, if undefined then slots is auto generated.
-   * @param delimiter Delimiter to use for when splitting the table attribute in to multiple model fields.
+   * @template T Map of slot names to index
+   * @param options Options to initialize field with.
+   * @returns New composite object with named field slots.
    */
-  static namedComposite<T extends { [key: string]: number }>(
-    options: Fields.CompositeTOptions<T>,
-  ): Fields.FieldCompositeT<T> {
-    return new Fields.FieldCompositeT<T>(options);
+  static compositeNamed<T extends { [key: string]: number }>(
+    options: Fields.CompositeNamedOptions<T>,
+  ): Fields.FieldCompositeNamed<T> {
+    return new Fields.FieldCompositeNamed<T>(options);
   }
 
   /**
-   *
-   * @param alias Table attribute name to map this model property to.
+   * Creates a field that adds the Model name to a table attribute.
+   * @param options Options to initialize field with.
+   * @returns New field object.
    */
   static type(options?: Fields.TypeOptions): Fields.FieldType {
     return new Fields.FieldType(options);
   }
 
+  /**
+   * Creates a field that add a created date to a table attribute.
+   * @param options Options to initialize field with.
+   * @returns New field object.
+   */
   static createdDate(options?: Fields.CreatedDateOptions): Fields.FieldCreatedDate {
     return new Fields.FieldCreatedDate(options);
   }
 
+  /**
+   * Creates a field that adds an updated date to a table attribute.
+   * @param options Options to initialize field with.
+   * @returns New field object.
+   */
   static updatedDate(options?: Fields.UpdateDateOptions): Fields.FieldUpdatedDate {
     return new Fields.FieldUpdatedDate(options);
   }
@@ -440,10 +452,11 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
-     *
-     * @param name
-     * @param modelData
-     * @param context
+     * Get the default value to use in toTable if no value it set.
+     * @param name Model property name associated with field (passed into toTable).
+     * @param modelData Data from the model that to reference for default.
+     * @param context Current context this method is being called in.
+     * @return Default value.
      */
     getDefault(name: string, modelData: Model.ModelData, context: TableContext): V | undefined {
       const def = this.default;
@@ -616,10 +629,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   export class FieldBinarySet extends FieldSet<Table.BinarySetValue, 'BS'> {}
 
-  export class FieldList<V extends Table.AttributeValues, T extends Table.AttributeTypes> extends FieldExpression<
-    V[],
-    T
-  > {
+  export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[], 'L'> {
     // Condition
     /** Helper method that just calls {@link Condition.size} with tableName() as path param.
      * @see Condition.size for more info and example.
@@ -629,15 +639,21 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
-  export interface ListOptions<V> extends BaseOptions<V[]> {
+  /**
+   *
+   */
+  export interface ListModelOptions<V> extends BaseOptions<V[]> {
+    /**
+     * Defines the schema for the list type.
+     */
     schema: Model.ModelSchemaT<V>;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export class FieldListT<V extends { [key: string]: any }, T extends Table.AttributeTypes> extends FieldList<V, T> {
+  export class FieldListModel<V extends { [key: string]: any }> extends FieldList<V> {
     schema: Model.ModelSchemaT<V>;
 
-    constructor(options: ListOptions<V>) {
+    constructor(options: ListModelOptions<V>) {
       super(options) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = options.schema;
     }
@@ -651,10 +667,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
-  export class FieldMap<V extends Table.AttributeValues, T extends Table.AttributeTypes> extends FieldExpression<
-    { [key: string]: V },
-    T
-  > {
+  export class FieldMap<V extends Table.AttributeValues> extends FieldExpression<{ [key: string]: V }, 'M'> {
     // Condition
     /** Helper method that just calls {@link Condition.size} with tableName() as path param.
      * @see Condition.size for more info and example.
@@ -664,15 +677,37 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
-  export interface MapOptions<V> extends BaseOptions<{ [key: string]: V }> {
+  /**
+   * Condition.Expression used for nested conditions
+   */
+  /*
+  class InnerConditionExpression implements Condition.Expression {
+    root: string;
+    exp: Condition.Expression;
+    constructor(root: string, exp: Condition.Expression) {
+      this.root = exp.addPath(root);
+      this.exp = exp;
+    }
+
+    addPath(path: string): string {
+      return `${this.root}.${this.exp.addPath(path)}`;
+    }
+
+    addValue(value: Table.AttributeValues): string {
+      return this.exp.addValue(value);
+    }
+  }
+  */
+
+  export interface MapModelOptions<V> extends BaseOptions<{ [key: string]: V }> {
     schema: Model.ModelSchemaT<V>;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export class FieldMapT<V extends { [key: string]: any }, T extends Table.AttributeTypes> extends FieldMap<V, T> {
+  export class FieldMapModel<V extends { [key: string]: any }> extends FieldMap<V> {
     schema: Model.ModelSchemaT<V>;
 
-    constructor(options: MapOptions<V>) {
+    constructor(options: MapModelOptions<V>) {
       super(options) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = options.schema;
     }
@@ -684,20 +719,40 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       super.init(name, model);
       Model.initSchema(this.schema, model);
     }
+
+    /**
+     * Used to create nested
+     * ```typescript
+     * groups.condition('group1', group.name.eq('teachers'));
+     * // or
+     * Condition.eq('groups.group1.name', 'teachers');
+     * ```
+     * @param key Map key value to scope condition to
+     * @param resolver Resolver to Model used in this FieldMapModel
+     */
+    /*
+    condition(key: string, resolver: Condition.Resolver): Condition.Resolver {
+      const root = this.mapPath(key);
+      return (exp: Condition.Expression, type: Table.AttributeTypes | undefined): string => {
+        return resolver(new InnerConditionExpression(root, exp), type);
+      };
+    }
+
+    mapPath(key: string): string {
+      return `${this.tableName()}.${key}`;
+    }
+    */
   }
 
-  export interface ObjectOptions<V> extends BaseOptions<V> {
+  export interface ModelOptions<V> extends BaseOptions<V> {
     schema: Model.ModelSchemaT<V>;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export class FieldObject<V extends { [key: string]: any }, T extends Table.AttributeTypes> extends FieldExpression<
-    V,
-    T
-  > {
+  export class FieldModel<V extends { [key: string]: any }> extends FieldExpression<V, 'M'> {
     schema: Model.ModelSchemaT<V>;
 
-    constructor(options: ObjectOptions<V>) {
+    constructor(options: ModelOptions<V>) {
       super(options) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = options.schema;
     }
@@ -707,6 +762,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     init(name: string, model: Model): void {
       super.init(name, model);
+      // TODO: since this is just a sub model then we can pass the name down to initSchema and
+      // prepend the name to each schema init call, which would allow the condition methods on this schema to work.
+      // This doesn't work for List or Map since there is a middle index or name.  We would need to have a
+      // method on the list or map to get a scoped schema name.
       Model.initSchema(this.schema, model);
     }
 
@@ -866,81 +925,148 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /*
   export type CreateCompositeSlot = (
     composite: FieldComposite,
     slot: number,
     slots: FieldCompositeSlot[],
   ) => FieldCompositeSlot;
+  */
 
+  /**
+   * Options to construct FieldComposite with.
+   */
   export interface CompositeOptions {
+    /**
+     * Table attribute name to map this model property to.
+     */
     alias: string;
+
+    /**
+     * Number of model fields (slots) to compose together into a table attribute.
+     */
     count?: number;
-    //slots?: CreateCompositeSlot[];
+
+    /**
+     * Delimiter to use for when splitting the table attribute in to multiple model fields.
+     */
     delimiter?: string;
-    //writeOnly?: boolean;
+
     //toLower?: boolean;
+    //slots?: CreateCompositeSlot[];
+    //writeOnly?: boolean;
   }
 
   export class FieldComposite {
+    /**
+     * Table attribute name to map this model property to.
+     */
     alias: string;
-    slots: CreateCompositeSlot[];
+
+    /**
+     * Number of model fields (slots) to compose together into a table attribute.
+     * @default 2
+     */
     count = 2;
+
+    /**
+     * Delimiter to use for when splitting the table attribute in to multiple model fields.
+     * @default '.''
+     */
     delimiter = '.';
+
     //writeOnly = false;
+    //slots: CreateCompositeSlot[];
     //toLower = false;
 
     constructor(options: CompositeOptions) {
       this.alias = options.alias;
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       if (options.count) this.count = options.count; // || options.slots!.length;
       if (options.delimiter) this.delimiter = options.delimiter;
+
       //if (options.writeOnly) this.writeOnly = options.writeOnly;
       //if (options.toLower) this.toLower = options.toLower;
       //if (options.slots) this.slots = options.slots;
       //else {
+      /*
       const slots = new Array<CreateCompositeSlot>(this.count);
       for (let i = 0; i < this.count; i++)
         slots[i] = (composite: FieldComposite, slot: number, slots: FieldCompositeSlot[]): FieldCompositeSlot =>
           new FieldCompositeSlot(composite, slot, slots);
       this.slots = slots;
+      */
       //}
     }
 
+    /**
+     * Create the field slots to use when defining the schema for a model.
+     * Note: Need to create a new set of field slots for each model that uses this composite definition.
+     */
+
     createSlots(): FieldCompositeSlot[] {
       const slots = new Array<FieldCompositeSlot>(this.count);
-      for (let i = 0; i < this.count; i++) slots[i] = this.slots[i](this, i, slots);
-
+      for (let i = 0; i < this.count; i++) slots[i] = new FieldCompositeSlot(this, i, slots);
+      //this.slots[i](this, i, slots);
       return slots;
     }
   }
 
-  export type CompositeSlotMapT<T extends { [index: string]: number }> = {
+  /**
+   * Defines the map for the named slots for a composite named field.
+   */
+  export type CompositeSlotMap<T extends { [index: string]: number }> = {
     [P in keyof T]: FieldCompositeSlot;
   };
 
-  export interface CompositeTOptions<T extends { [index: string]: number }> extends CompositeOptions {
+  /**
+   * Options used when constructing a FieldCompositeNamed
+   */
+  export interface CompositeNamedOptions<T extends { [index: string]: number }> extends CompositeOptions {
+    /**
+     * The mapping between the slot name and its index.
+     */
     map: T;
   }
 
-  export class FieldCompositeT<T extends { [index: string]: number }> extends FieldComposite {
+  /**
+   * Defines the composite key th
+   */
+  export class FieldCompositeNamed<T extends { [index: string]: number }> extends FieldComposite {
+    /**
+     * The mapping between the slot name and its index.
+     */
     map: T;
 
-    constructor(options: CompositeTOptions<T>) {
+    constructor(options: CompositeNamedOptions<T>) {
       options.count = Object.keys(options.map).length;
       super(options);
       this.map = options.map;
     }
 
-    createNamedSlots(): CompositeSlotMapT<T> {
+    /**
+     * Create the named field slots to use when defining the schema for a model.
+     * Note: Need to create a new set of field slots for each model that uses this composite definition.
+     */
+    createNamedSlots(): CompositeSlotMap<T> {
       const slots = super.createSlots();
       const namedSlots: { [index: string]: FieldCompositeSlot } = {};
       Object.keys(this.map).forEach((key) => (namedSlots[key] = slots[this.map[key]]));
-      return namedSlots as CompositeSlotMapT<T>;
+      return namedSlots as CompositeSlotMap<T>;
     }
   }
 
+  /**
+   * Options to construct FieldSplit with.
+   */
   export interface SplitOptions {
+    /**
+     * Array of table attribute names to map this model property to.
+     */
     aliases: string[];
+
+    /**
+     * Delimiter to use for splitting the model property string.
+     */
     delimiter?: string;
   }
 
@@ -949,7 +1075,15 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    */
   export class FieldSplit implements Field {
     name?: string;
+
+    /**
+     * Array of table attribute names to map this model property to.
+     */
     aliases: string[];
+
+    /**
+     * Delimiter to use for splitting the model property string, default delimiter is '.'.
+     */
     delimiter = '.';
 
     constructor(options: SplitOptions) {

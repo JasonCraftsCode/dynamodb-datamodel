@@ -21,8 +21,8 @@ function buildUpdate(
   const update = Update.buildExpression(updateMap, exp);
   return {
     UpdateExpression: update,
-    Paths: exp.getPaths(),
-    Values: exp.getValues(),
+    Paths: exp.attributes.getPaths(),
+    Values: exp.attributes.getValues(),
   };
 }
 
@@ -100,7 +100,7 @@ describe('Validate Update.buildExpression', () => {
         '#n8 = :v8',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testString',
       '#n1': 'testNumber',
       '#n2': 'testBoolean',
@@ -112,7 +112,7 @@ describe('Validate Update.buildExpression', () => {
       '#n8': 'testMap',
       '#n9': 'testNull',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': input.testString,
       ':v1': input.testNumber,
       ':v2': input.testBoolean,
@@ -128,15 +128,15 @@ describe('Validate Update.buildExpression', () => {
   it('set paths', () => {
     const input = { testPath: Update.path('testPath2') };
     expect(Update.buildExpression(input, exp)).toEqual('SET #n0 = #n1');
-    expect(exp.getPaths()).toEqual({ '#n0': 'testPath', '#n1': 'testPath2' });
-    expect(exp.getValues()).toEqual({});
+    expect(exp.attributes.getPaths()).toEqual({ '#n0': 'testPath', '#n1': 'testPath2' });
+    expect(exp.attributes.getValues()).toEqual({});
   });
 
   it('set pathWithDefault', () => {
     const input = { testPath: Update.pathWithDefault('testPath3', 'default') };
     expect(Update.buildExpression(input, exp)).toEqual('SET #n0 = if_not_exists(#n1, :v0)');
-    expect(exp.getPaths()).toEqual({ '#n0': 'testPath', '#n1': 'testPath3' });
-    expect(exp.getValues()).toEqual({ ':v0': 'default' });
+    expect(exp.attributes.getPaths()).toEqual({ '#n0': 'testPath', '#n1': 'testPath3' });
+    expect(exp.attributes.getValues()).toEqual({ ':v0': 'default' });
   });
 
   it('set Update values', () => {
@@ -180,7 +180,7 @@ describe('Validate Update.buildExpression', () => {
         '#n10 = #n11',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testString',
       '#n1': 'testNumber',
       '#n2': 'testBoolean',
@@ -194,7 +194,7 @@ describe('Validate Update.buildExpression', () => {
       '#n10': 'testFunction',
       '#n11': 'testFunc1',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': 'string',
       ':v1': 10,
       ':v2': true,
@@ -250,7 +250,7 @@ describe('Validate Update.buildExpression', () => {
         '#n8 = if_not_exists(#n8, :v8)',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testString',
       '#n1': 'testNumber',
       '#n2': 'testBoolean',
@@ -261,7 +261,7 @@ describe('Validate Update.buildExpression', () => {
       '#n7': 'testList',
       '#n8': 'testMap',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': 'default string',
       ':v1': 10,
       ':v2': true,
@@ -301,7 +301,7 @@ describe('Validate Update.buildExpression', () => {
         '#n7 = #n7 - #n4',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testIncNumber',
       '#n1': 'testIncString',
       '#n2': 'fromString',
@@ -311,7 +311,7 @@ describe('Validate Update.buildExpression', () => {
       '#n6': 'testDecString',
       '#n7': 'testDecPath',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': 1,
       ':v1': 2,
     });
@@ -340,7 +340,7 @@ describe('Validate Update.buildExpression', () => {
         '#n10 = :v5 - #n9',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testAddLeftString',
       '#n1': 'leftString',
       '#n10': 'testSubRightPath',
@@ -353,7 +353,7 @@ describe('Validate Update.buildExpression', () => {
       '#n8': 'testSubLeftPath',
       '#n9': 'fromPath',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': 1,
       ':v1': 2,
       ':v2': 3,
@@ -408,7 +408,7 @@ describe('Validate Update.buildExpression', () => {
         '#n20[21] = :v17',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testNumberAppend',
       '#n1': 'testNumberPrepend',
       '#n10': 'testStringJoin',
@@ -431,7 +431,7 @@ describe('Validate Update.buildExpression', () => {
       '#n8': 'testStringAppend',
       '#n9': 'testStringPrepend',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': new Array([1, 2, 3]),
       ':v1': new Array([4, 5, 6]),
       ':v2': new Array([10, 11, 12]),
@@ -476,7 +476,7 @@ describe('Validate Update.buildExpression', () => {
         '#n11 = list_append(#n12, #n13)',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testAppendString',
       '#n1': 'appendString',
       '#n10': 'join2String',
@@ -492,7 +492,7 @@ describe('Validate Update.buildExpression', () => {
       '#n8': 'testJoinString',
       '#n9': 'join1String',
     });
-    expect(exp.getValues()).toEqual({});
+    expect(exp.attributes.getValues()).toEqual({});
   });
 
   it('Update add List', () => {
@@ -508,12 +508,12 @@ describe('Validate Update.buildExpression', () => {
     expect({ add: exp.addList }).toEqual({
       add: ['#n0 :v0', '#n1 :v1', '#n2 :v2'],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testAddToSetString',
       '#n1': 'testAddToSetNumber',
       '#n2': 'testAddToSetBinary',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': documentClient.createSet(['a', 'b', 'c']),
       ':v1': documentClient.createSet([1, 2, 3]),
       ':v2': documentClient.createSet([Buffer.from('abc'), Buffer.from('def'), Buffer.from('ghi')]),
@@ -533,12 +533,12 @@ describe('Validate Update.buildExpression', () => {
     expect({ del: exp.deleteList }).toEqual({
       del: ['#n0 :v0', '#n1 :v1', '#n2 :v2'],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testRemoveToSetString',
       '#n1': 'testRemoveToSetNumber',
       '#n2': 'testRemoveToSetBinary',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': documentClient.createSet(['a', 'b', 'c']),
       ':v1': documentClient.createSet([1, 2, 3]),
       ':v2': documentClient.createSet([Buffer.from('abc'), Buffer.from('def'), Buffer.from('ghi')]),
@@ -569,7 +569,7 @@ describe('Validate Update.buildExpression', () => {
     expect({ set: exp.setList }).toEqual({
       set: ['#n0.#n1 = :v0', '#n0.#n2 = :v1', '#n0.#n3 = :v2', '#n0.#n4 = :v3', '#n0.#n5 = :v4', '#n0.#n6 = :v5'],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testMap',
       '#n1': 'l1String',
       '#n2': 'l1Number',
@@ -578,7 +578,7 @@ describe('Validate Update.buildExpression', () => {
       '#n5': 'l1List',
       '#n6': 'l1Map',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': 'l1 string',
       ':v1': 14,
       ':v2': Buffer.from('abc'),
@@ -658,7 +658,7 @@ describe('Validate Update.buildExpression', () => {
         '#n0.#n17.#n22 = :v14',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testMap',
       '#n1': 'l1Path',
       '#n10': 'testMap1',
@@ -688,7 +688,7 @@ describe('Validate Update.buildExpression', () => {
       '#n8': 'l1Number',
       '#n9': 'l1SubNumber',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': true,
       ':v1': 2,
       ':v10': true,
@@ -734,7 +734,7 @@ describe('Validate Update.buildExpression', () => {
         '#n0.#n2.#n3[1][2][3] = :v4',
       ],
     });
-    expect(exp.getPaths()).toEqual({
+    expect(exp.attributes.getPaths()).toEqual({
       '#n0': 'testMap',
       '#n1': 'l1List',
       '#n2': 'l1',
@@ -743,7 +743,7 @@ describe('Validate Update.buildExpression', () => {
       '#n5': 'l3Inc',
       '#n6': 'l4Null',
     });
-    expect(exp.getValues()).toEqual({
+    expect(exp.attributes.getValues()).toEqual({
       ':v0': 'l1 string',
       ':v1': 'l3 value',
       ':v2': 'l3 value in list',

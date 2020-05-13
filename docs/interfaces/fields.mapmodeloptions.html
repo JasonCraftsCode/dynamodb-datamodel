@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ObjectOptions | dynamodb-datamodel - v0.1.9</title>
+	<title>MapModelOptions | dynamodb-datamodel - v0.1.9</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,16 +55,23 @@
 					<a href="../classes/fields.html">Fields</a>
 				</li>
 				<li>
-					<a href="fields.objectoptions.html">ObjectOptions</a>
+					<a href="fields.mapmodeloptions.html">MapModelOptions</a>
 				</li>
 			</ul>
-			<h1>Interface ObjectOptions&lt;V&gt;</h1>
+			<h1>Interface MapModelOptions&lt;V&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Condition.Expression used for nested conditions</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
@@ -77,10 +84,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">ObjectOptions</span>
+								<span class="target">MapModelOptions</span>
 							</li>
 						</ul>
 					</li>
@@ -93,9 +100,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.objectoptions.html#alias" class="tsd-kind-icon">alias</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.objectoptions.html#default" class="tsd-kind-icon">default</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.objectoptions.html#schema" class="tsd-kind-icon">schema</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.mapmodeloptions.html#alias" class="tsd-kind-icon">alias</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.mapmodeloptions.html#default" class="tsd-kind-icon">default</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.mapmodeloptions.html#schema" class="tsd-kind-icon">schema</a></li>
 							</ul>
 						</section>
 					</div>
@@ -110,7 +117,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.baseoptions.html">BaseOptions</a>.<a href="fields.baseoptions.html#alias">alias</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L343">Fields.ts:343</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L355">Fields.ts:355</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -122,11 +129,11 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="default" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> default</h3>
-					<div class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol"> | </span><a href="../classes/fields.fieldbase.html#defaultfunction" class="tsd-signature-type">DefaultFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> | </span><a href="../classes/fields.fieldbase.html#defaultfunction" class="tsd-signature-type">DefaultFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fields.baseoptions.html">BaseOptions</a>.<a href="fields.baseoptions.html#default">default</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L348">Fields.ts:348</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L360">Fields.ts:360</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -141,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="../classes/model.html#modelschemat" class="tsd-signature-type">ModelSchemaT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L690">Fields.ts:690</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L703">Fields.ts:703</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,16 +179,16 @@
 						<a href="../classes/fields.html" class="tsd-kind-icon">Fields</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.objectoptions.html" class="tsd-kind-icon">Object<wbr>Options</a>
+								<a href="fields.mapmodeloptions.html" class="tsd-kind-icon">Map<wbr>Model<wbr>Options</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="fields.objectoptions.html#alias" class="tsd-kind-icon">alias</a>
+										<a href="fields.mapmodeloptions.html#alias" class="tsd-kind-icon">alias</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="fields.objectoptions.html#default" class="tsd-kind-icon">default</a>
+										<a href="fields.mapmodeloptions.html#default" class="tsd-kind-icon">default</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="fields.objectoptions.html#schema" class="tsd-kind-icon">schema</a>
+										<a href="fields.mapmodeloptions.html#schema" class="tsd-kind-icon">schema</a>
 									</li>
 								</ul>
 							</li>

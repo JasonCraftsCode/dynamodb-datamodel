@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MapOptions | dynamodb-datamodel - v0.1.9</title>
+	<title>CompositeNamedOptions | dynamodb-datamodel - v0.1.9</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,21 +55,28 @@
 					<a href="../classes/fields.html">Fields</a>
 				</li>
 				<li>
-					<a href="fields.mapoptions.html">MapOptions</a>
+					<a href="fields.compositenamedoptions.html">CompositeNamedOptions</a>
 				</li>
 			</ul>
-			<h1>Interface MapOptions&lt;V&gt;</h1>
+			<h1>Interface CompositeNamedOptions&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Options used when constructing a FieldCompositeNamed</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>V</h4>
+						<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -77,10 +84,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="fields.compositeoptions.html" class="tsd-signature-type">CompositeOptions</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">MapOptions</span>
+								<span class="target">CompositeNamedOptions</span>
 							</li>
 						</ul>
 					</li>
@@ -93,9 +100,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.mapoptions.html#alias" class="tsd-kind-icon">alias</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.mapoptions.html#default" class="tsd-kind-icon">default</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.mapoptions.html#schema" class="tsd-kind-icon">schema</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.compositenamedoptions.html#alias" class="tsd-kind-icon">alias</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.compositenamedoptions.html#count" class="tsd-kind-icon">count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.compositenamedoptions.html#delimiter" class="tsd-kind-icon">delimiter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.compositenamedoptions.html#map" class="tsd-kind-icon">map</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,45 +113,66 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="alias" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> alias</h3>
-					<div class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<h3>alias</h3>
+					<div class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="fields.baseoptions.html">BaseOptions</a>.<a href="fields.baseoptions.html#alias">alias</a></p>
+						<p>Inherited from <a href="fields.compositeoptions.html">CompositeOptions</a>.<a href="fields.compositeoptions.html#alias">alias</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L343">Fields.ts:343</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L943">Fields.ts:943</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Table attribute to map this Model property to.</p>
+							<p>Table attribute name to map this model property to.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="default" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> default</h3>
-					<div class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> | </span><a href="../classes/fields.fieldbase.html#defaultfunction" class="tsd-signature-type">DefaultFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="count" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> count</h3>
+					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="fields.baseoptions.html">BaseOptions</a>.<a href="fields.baseoptions.html#default">default</a></p>
+						<p>Inherited from <a href="fields.compositeoptions.html">CompositeOptions</a>.<a href="fields.compositeoptions.html#count">count</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L348">Fields.ts:348</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L948">Fields.ts:948</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Value or function to get value from to use when the Model property is empty.</p>
+							<p>Number of model fields (slots) to compose together into a table attribute.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="delimiter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> delimiter</h3>
+					<div class="tsd-signature tsd-kind-icon">delimiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="fields.compositeoptions.html">CompositeOptions</a>.<a href="fields.compositeoptions.html#delimiter">delimiter</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L953">Fields.ts:953</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Delimiter to use for when splitting the table attribute in to multiple model fields.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="schema" class="tsd-anchor"></a>
-					<h3>schema</h3>
-					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="../classes/model.html#modelschemat" class="tsd-signature-type">ModelSchemaT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="map" class="tsd-anchor"></a>
+					<h3>map</h3>
+					<div class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L668">Fields.ts:668</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1028">Fields.ts:1028</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The mapping between the slot name and its index.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -172,16 +201,19 @@
 						<a href="../classes/fields.html" class="tsd-kind-icon">Fields</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.mapoptions.html" class="tsd-kind-icon">Map<wbr>Options</a>
+								<a href="fields.compositenamedoptions.html" class="tsd-kind-icon">Composite<wbr>Named<wbr>Options</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="fields.mapoptions.html#alias" class="tsd-kind-icon">alias</a>
+										<a href="fields.compositenamedoptions.html#alias" class="tsd-kind-icon">alias</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="fields.mapoptions.html#default" class="tsd-kind-icon">default</a>
+										<a href="fields.compositenamedoptions.html#count" class="tsd-kind-icon">count</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="fields.compositenamedoptions.html#delimiter" class="tsd-kind-icon">delimiter</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="fields.mapoptions.html#schema" class="tsd-kind-icon">schema</a>
+										<a href="fields.compositenamedoptions.html#map" class="tsd-kind-icon">map</a>
 									</li>
 								</ul>
 							</li>

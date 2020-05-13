@@ -78,6 +78,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -99,11 +105,8 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#addcondition" class="tsd-kind-icon">add<wbr>Condition</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#addequalcondition" class="tsd-kind-icon">add<wbr>Equal<wbr>Condition</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#addpath" class="tsd-kind-icon">add<wbr>Path</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#addsortcondition" class="tsd-kind-icon">add<wbr>Sort<wbr>Condition</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#addvalue" class="tsd-kind-icon">add<wbr>Value</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#createsortcondition" class="tsd-kind-icon">create<wbr>Sort<wbr>Condition</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#getexpression" class="tsd-kind-icon">get<wbr>Expression</a></li>
 							</ul>
 						</section>
@@ -122,7 +125,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L17">KeyCondition.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L18">KeyCondition.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -169,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">conditions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L17">KeyCondition.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L18">KeyCondition.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -191,8 +194,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/keycondition.expression.html">Expression</a>.<a href="../interfaces/keycondition.expression.html#addcondition">addCondition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L93">KeyCondition.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L46">KeyCondition.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -214,43 +218,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addequalcondition" class="tsd-anchor"></a>
-					<h3>add<wbr>Equal<wbr>Condition</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Equal<wbr>Condition<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L85">KeyCondition.ts:85</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Add an equal condition for the partition key.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Name of partition key.</p>
-									</div>
-								</li>
-								<li>
-									<h5>value: <a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Value of the partition key.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="addpath" class="tsd-anchor"></a>
 					<h3>add<wbr>Path</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -259,8 +226,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/keycondition.expression.html">Expression</a>.<a href="../interfaces/keycondition.expression.html#addpath">addPath</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L30">KeyCondition.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L31">KeyCondition.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -281,56 +249,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addsortcondition" class="tsd-anchor"></a>
-					<h3>add<wbr>Sort<wbr>Condition</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Sort<wbr>Condition<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, op<span class="tsd-signature-symbol">: </span><a href="keycondition.html#operators" class="tsd-signature-type">Operators</a>, value<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a>, upper<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L70">KeyCondition.ts:70</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates and adds a sort condition expression.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Name of sort key.</p>
-									</div>
-								</li>
-								<li>
-									<h5>op: <a href="keycondition.html#operators" class="tsd-signature-type">Operators</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Operation to use in key condition expression.</p>
-									</div>
-								</li>
-								<li>
-									<h5>value: <a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Value to compare the sort key against.</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> upper: <a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The upper bound used in BETWEEN operator, added after the &#39;AND&#39; in the condition.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-							<p>Key condition expression.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="addvalue" class="tsd-anchor"></a>
 					<h3>add<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -339,8 +257,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/keycondition.expression.html">Expression</a>.<a href="../interfaces/keycondition.expression.html#addvalue">addValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L37">KeyCondition.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L38">KeyCondition.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -361,56 +280,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="createsortcondition" class="tsd-anchor"></a>
-					<h3>create<wbr>Sort<wbr>Condition</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Sort<wbr>Condition<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, op<span class="tsd-signature-symbol">: </span><a href="keycondition.html#operators" class="tsd-signature-type">Operators</a>, value<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a>, upper<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L49">KeyCondition.ts:49</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Create a sort condition expression.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Name of sort key.</p>
-									</div>
-								</li>
-								<li>
-									<h5>op: <a href="keycondition.html#operators" class="tsd-signature-type">Operators</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Operation to use in key condition expression.</p>
-									</div>
-								</li>
-								<li>
-									<h5>value: <a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Value to compare the sort key against.</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> upper: <a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The upper bound used in BETWEEN operator, added after the &#39;AND&#39; in the condition.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>Key condition expression.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getexpression" class="tsd-anchor"></a>
 					<h3>get<wbr>Expression</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -420,7 +289,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L100">KeyCondition.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L53">KeyCondition.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -480,19 +349,10 @@
 								<a href="keyconditionexpression.html#addcondition" class="tsd-kind-icon">add<wbr>Condition</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="keyconditionexpression.html#addequalcondition" class="tsd-kind-icon">add<wbr>Equal<wbr>Condition</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="keyconditionexpression.html#addpath" class="tsd-kind-icon">add<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="keyconditionexpression.html#addsortcondition" class="tsd-kind-icon">add<wbr>Sort<wbr>Condition</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="keyconditionexpression.html#addvalue" class="tsd-kind-icon">add<wbr>Value</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="keyconditionexpression.html#createsortcondition" class="tsd-kind-icon">create<wbr>Sort<wbr>Condition</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="keyconditionexpression.html#getexpression" class="tsd-kind-icon">get<wbr>Expression</a>

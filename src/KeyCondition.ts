@@ -5,11 +5,12 @@ import { Table } from './Table';
  * Object passed down to KeyCondition.Resolver functions to support getting path and value aliases and
  * provide context to the resolver function to support advanced key condition resolvers.
  */
-export class KeyConditionExpression {
+export class KeyConditionExpression implements KeyCondition.Expression {
   /**
    * Object for getting path and value aliases.
    */
   attributes: ExpressionAttributes;
+
   /**
    * Array of conditions expressions.
    * DynamoDB currently only supports two conditions that with an 'AND' between them.
@@ -36,54 +37,6 @@ export class KeyConditionExpression {
    */
   addValue(value: Table.AttributeValues): string {
     return this.attributes.addValue(value);
-  }
-
-  /**
-   * Create a sort condition expression.
-   * @param name Name of sort key.
-   * @param op Operation to use in key condition expression.
-   * @param value Value to compare the sort key against.
-   * @param upper The upper bound used in BETWEEN operator, added after the 'AND' in the condition.
-   * @returns Key condition expression.
-   */
-  createSortCondition(
-    name: string,
-    op: KeyCondition.Operators,
-    value: Table.AttributeValues,
-    upper?: Table.AttributeValues,
-  ): string {
-    const n = this.addPath(name);
-    const v = this.addValue(value);
-    if (op === 'BETWEEN') return `${n} ${op} ${v} AND ${upper !== undefined ? this.addValue(upper) : v}`;
-    if (op === 'begins_with') return `${op}(${n}, ${v})`;
-    return `${n} ${op} ${v}`;
-  }
-
-  /**
-   * Creates and adds a sort condition expression.
-   * @param name Name of sort key.
-   * @param op Operation to use in key condition expression.
-   * @param value Value to compare the sort key against.
-   * @param upper The upper bound used in BETWEEN operator, added after the 'AND' in the condition.
-   * @returns Key condition expression.
-   */
-  addSortCondition(
-    name: string,
-    op: KeyCondition.Operators,
-    value: Table.AttributeValues,
-    upper?: Table.AttributeValues,
-  ): void {
-    const condition = this.createSortCondition(name, op, value, upper);
-    this.addCondition(condition);
-  }
-
-  /**
-   * Add an equal condition for the partition key.
-   * @param name Name of partition key.
-   * @param value Value of the partition key.
-   */
-  addEqualCondition(name: string, value: Table.AttributeValues): void {
-    this.addSortCondition(name, '=', value);
   }
 
   /**
@@ -162,7 +115,8 @@ export class KeyCondition {
    * @returns Resolver to use when generate key condition expression.
    */
   static compare<T extends Table.AttributeValues>(op: KeyCondition.CompareOperators, value: T): KeyCondition.Resolver {
-    return (name: string, exp: KeyConditionExpression): void => exp.addSortCondition(name, op, value);
+    return (name: string, exp: KeyCondition.Expression): void =>
+      exp.addCondition(`${exp.addPath(name)} ${op} ${exp.addValue(value)}`);
   }
 
   /**
@@ -277,7 +231,8 @@ export class KeyCondition {
    * @returns Resolver to use when generate key condition expression.
    */
   static between<T extends Table.AttributeValues>(from: T, to: T): KeyCondition.Resolver {
-    return (name: string, exp: KeyConditionExpression): void => exp.addSortCondition(name, 'BETWEEN', from, to);
+    return (name: string, exp: KeyCondition.Expression): void =>
+      exp.addCondition(`${exp.addPath(name)} BETWEEN ${exp.addValue(from)} AND ${exp.addValue(to)}`);
   }
 
   /**
@@ -297,7 +252,8 @@ export class KeyCondition {
    * @returns Resolver to use when generate key condition expression.
    */
   static beginsWith(value: string): KeyCondition.Resolver {
-    return (name: string, exp: KeyConditionExpression): void => exp.addSortCondition(name, 'begins_with', value);
+    return (name: string, exp: KeyCondition.Expression): void =>
+      exp.addCondition(`begins_with(${exp.addPath(name)}, ${exp.addValue(value)})`);
   }
 
   /**
@@ -309,7 +265,7 @@ export class KeyCondition {
     Object.keys(key).forEach((name) => {
       const value = key[name];
       if (typeof value === 'function') value(name, exp);
-      else exp.addEqualCondition(name, value);
+      else KeyCondition.eq(value)(name, exp);
     });
     return exp.getExpression();
   }
@@ -348,6 +304,27 @@ export namespace KeyCondition {
   export type Operators = CompareOperators | 'BETWEEN' | 'begins_with';
 
   /**
+   * Expression object used in the key condition resolver to resolve the key condition to an expression.
+   */
+  export interface Expression {
+    /**
+     * @see ExpressionAttributes.addPath.
+     */
+    addPath(path: string): string;
+
+    /**
+     * @see ExpressionAttributes.addValue.
+     */
+    addValue(value: Table.AttributeValues): string;
+
+    /**
+     * Add key condition expression.
+     * @param condition Condition expression to add.
+     */
+    addCondition(condition: string): void;
+  }
+
+  /**
    * Resolver function is return by most of the above KeyConditions methods.  Returning a function allows key conditions
    * to easily be composable and extensible.  This allows consumers to create higher level key conditions that are composed
    * of the above primitive key conditions or support any new primitives that AWS would add in the future.
@@ -356,11 +333,7 @@ export namespace KeyCondition {
    * @param exp Object to get path and value aliases and store conditions array.
    * @param type Param to enforce type safety for conditions that only work on certain types.
    */
-  export type Resolver<T = Table.PrimaryKey.AttributeTypes> = (
-    name: string,
-    exp: KeyConditionExpression,
-    type?: T,
-  ) => void;
+  export type Resolver<T = Table.PrimaryKey.AttributeTypes> = (name: string, exp: Expression, type?: T) => void;
 
   /**
    * String key condition resolver.

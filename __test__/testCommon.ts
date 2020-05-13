@@ -28,7 +28,7 @@ export function buildUpdate(
   const update = Update.buildExpression(updateMap, exp);
   return {
     UpdateExpression: update,
-    Paths: exp.getPaths(),
-    Values: exp.getValues(),
+    Paths: exp.attributes.getPaths(),
+    Values: exp.attributes.getValues(),
   };
 }
