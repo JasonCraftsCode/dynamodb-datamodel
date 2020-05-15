@@ -205,7 +205,7 @@ export class Update {
    * @param path Attribute path to resolve and get alias for.
    * @returns Update function that returns the alias for the path.
    */
-  static path(path: string): Update.UpdateFunction {
+  static path(path: string): Update.OperandFunction {
     return (name: string, exp: Update.Expression): string => exp.addPath(path);
   }
 
@@ -236,7 +236,7 @@ export class Update {
    * @param value The default value to set if the path attribute value does not exist.
    * @returns Update function that returns the alias for the path.
    */
-  static pathWithDefault<T extends Table.AttributeValues>(path: string, value: T): Update.UpdateFunction {
+  static pathWithDefault<T extends Table.AttributeValues>(path: string, value: T): Update.OperandFunction {
     return (name: string, exp: Update.Expression): string =>
       `if_not_exists(${exp.addPath(path)}, ${exp.addValue(value)})`;
   }
@@ -320,7 +320,9 @@ export class Update {
    * @param value The value (or attribute reference) to update the item attribute to, will add attribute if not present.
    * @returns Update resolver function to set attribute to a value.
    */
-  static set<T extends Table.AttributeValues>(value: T | Update.UpdateFunction): Update.Resolver<Table.AttributeTypes> {
+  static set<T extends Table.AttributeValues>(
+    value: T | Update.OperandFunction,
+  ): Update.Resolver<Table.AttributeTypes> {
     return (name: string, exp: Update.Expression): void =>
       exp.addSet(`${name} = ${Update.addAnyValue(exp, value, name)}`);
   }
@@ -334,9 +336,9 @@ export class Update {
    * @returns Update resolver function to set a number attribute to the result of the arithmetic expression.
    */
   static arithmetic(
-    left: Update.UpdateNumberValue | undefined,
+    left: Update.OperandNumber | undefined,
     op: '+' | '-',
-    right: Update.UpdateNumberValue,
+    right: Update.OperandNumber,
   ): Update.Resolver<'N'> {
     return (name: string, exp: Update.Expression): void => {
       const l = left !== undefined ? Update.addNonStringValue(exp, left, name) : name;
@@ -371,7 +373,7 @@ export class Update {
    * @param value A value (or reference attribute) to increment the number attribute by.
    * @returns Update resolver function to increment the attribute.
    */
-  static inc(value: Update.UpdateNumberValue): Update.Resolver<'N'> {
+  static inc(value: Update.OperandNumber): Update.Resolver<'N'> {
     return Update.arithmetic(undefined, '+', value);
   }
 
@@ -401,7 +403,7 @@ export class Update {
    * @param value A value (or reference attribute) to decrement the number attribute by.
    * @returns Update resolver function to decrement the attribute.
    */
-  static dec(value: Update.UpdateNumberValue): Update.Resolver<'N'> {
+  static dec(value: Update.OperandNumber): Update.Resolver<'N'> {
     return Update.arithmetic(undefined, '-', value);
   }
 
@@ -433,7 +435,7 @@ export class Update {
    * @param right A value (or reference attribute) to using in add operation.
    * @returns Update resolver function to set a number attribute to the result of adding two values.
    */
-  static add(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
+  static add(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'> {
     return Update.arithmetic(left, '+', right);
   }
 
@@ -465,10 +467,11 @@ export class Update {
    * @param right A value (or reference attribute) to use on the right side of a subtract operation.
    * @returns Update resolver function to set a number attribute to the result of subtracting two values.
    */
-  static sub(left: Update.UpdateNumberValue, right: Update.UpdateNumberValue): Update.Resolver<'N'> {
+  static sub(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'> {
     return Update.arithmetic(left, '-', right);
   }
 
+  // NOTE: could also provide some generic *T methods for List so
   /**
    * Sets an attribute to the result of joining two lists.
    * Supported types: list.
@@ -496,7 +499,7 @@ export class Update {
    * @param right A list (or reference attribute) to add at the end.
    * @returns Update resolver function to set an attribute to the joining of two lists.
    */
-  static join(left?: Update.UpdateListValue, right?: Update.UpdateListValue): Update.Resolver<'L'> {
+  static join(left?: Update.OperandList, right?: Update.OperandList): Update.Resolver<'L'> {
     return (name: string, exp: Update.Expression): void => {
       const l = left !== undefined ? Update.addNonStringValue(exp, left, name) : name;
       const r = right !== undefined ? Update.addNonStringValue(exp, right, name) : name;
@@ -528,7 +531,7 @@ export class Update {
    * @param value A list (or reference attribute) to append.
    * @returns Update resolver function to append a list to an attribute.
    */
-  static append(value: Update.UpdateListValue): Update.Resolver<'L'> {
+  static append(value: Update.OperandList): Update.Resolver<'L'> {
     return Update.join(undefined, value);
   }
 
@@ -557,7 +560,7 @@ export class Update {
    * @param value A list (or reference attribute) to prepend.
    * @returns Update resolver function to prepend a list to an attribute.
    */
-  static prepend(value: Update.UpdateListValue): Update.Resolver<'L'> {
+  static prepend(value: Update.OperandList): Update.Resolver<'L'> {
     return Update.join(value);
   }
 
@@ -616,7 +619,7 @@ export class Update {
    * @param indexes Map of indices with values to set in the list.
    * @returns Update resolver function to set values for select indices in a list based attribute.
    */
-  static setIndexes(values: { [key: number]: Table.AttributeValues | Update.UpdateFunction }): Update.Resolver<'L'> {
+  static setIndexes(values: { [key: number]: Table.AttributeValues | Update.OperandFunction }): Update.Resolver<'L'> {
     return (name: string, exp: Update.Expression): void =>
       Object.keys(values).forEach((key) =>
         exp.addSet(`${name}[${key}] = ${Update.addAnyValue(exp, values[Number(key)], name)}`),
@@ -652,6 +655,14 @@ export class Update {
     return (name: string, exp: Update.Expression): void =>
       exp.addAdd(`${name} ${Update.addNonStringValue(exp, value, name)}`);
   }
+
+  // Could add each value set since there are only 3.
+  // And removeFromSet
+  /*
+  static addToStringSet(value: Table.StringSetValue): Update.Resolver<'SS'> {
+    return Update.addToSet(value);
+  }
+  */
 
   /**
    * Removes an array of values from a set based attribute (sets are ordered).
@@ -714,19 +725,39 @@ export class Update {
    * @param map Map of update values and resolvers to evaluate.
    * @returns Update resolver function to recursively set the inner attributes of a map based attribute.
    */
-  static map(map: Update.UpdateMapValue): (name: string | null, exp: Update.Expression, type?: 'M') => void {
+  static map(map: Update.ResolverMap): Update.Resolver<'M'> {
     return (name: string | null, exp: Update.Expression): void => {
-      Object.keys(map).forEach((key) => {
-        const value = map[key];
-        if (value === undefined) return;
-        const path = name ? `${name}.${exp.addPath(key)}` : exp.addPath(key);
-        if (typeof value === 'function') {
-          const newValue = value(path, exp);
-          if (newValue !== undefined) exp.addSet(`${path} = ${newValue}`);
-        } else if (value === null) exp.addRemove(path);
-        else exp.addSet(`${path} = ${exp.addValue(value)}`);
-      });
+      Update.resolveMap(name, map, exp);
     };
+  }
+  /*
+  //  export type ModelUpdateValue<T> = Extract<T, ModelType | Update.Resolver<Table.AttributeTypes>> | null;
+  static mapT<T>(map: Update.ResolverMapT<T>): Update.Resolver<'M'> {
+    return Update.map(map as Update.ResolverMap);
+  }
+*/
+
+  static objectT<T>(map: Update.ResolverObject<T>): Update.Resolver<'M'> {
+    return Update.map(map as Update.ResolverMap);
+  }
+
+  /**
+   * Resolves each key of a map to an Update.Expression.
+   * @param name Name alias of the parent attribute, prepends each key name
+   * @param map Map of update values and resolvers to evaluate.
+   * @param exp Object to get path and value aliases and store update array.
+   */
+  static resolveMap(name: string | null, map: Update.ResolverMap, exp: Update.Expression): void {
+    Object.keys(map).forEach((key) => {
+      const value = map[key];
+      if (value === undefined) return;
+      const path = name ? `${name}.${exp.addPath(key)}` : exp.addPath(key);
+      if (typeof value === 'function') {
+        const newValue = value(path, exp);
+        if (newValue !== undefined) exp.addSet(`${path} = ${newValue}`);
+      } else if (value === null) exp.addRemove(path);
+      else exp.addSet(`${path} = ${exp.addValue(value)}`);
+    });
   }
 
   /**
@@ -739,7 +770,7 @@ export class Update {
    */
   static addAnyValue(
     exp: Update.Expression,
-    value: Table.AttributeValues | Update.UpdateFunction,
+    value: Table.AttributeValues | Update.OperandFunction,
     name: string,
   ): string {
     return typeof value === 'function' ? value(name, exp) : exp.addValue(value);
@@ -749,13 +780,13 @@ export class Update {
    * Helper method used in update methods that do not support string attributes, like add or sub.
    * This then allows string values to act as paths, without having to wrap the path in a resolver.
    * @param exp Object to get path and value aliases and store update array.
-   * @param value The value, update resolver or path string to add and get back an alias
+   * @param value The value, update resolver or path string to add and get back an alias.
    * @param name Name used to pass down to the value resolver.
    * @return Alias or expression for value to use in expression.
    */
   static addNonStringValue(
     exp: Update.Expression,
-    value: Table.AttributeValues | Update.UpdateFunction,
+    value: Table.AttributeValues | Update.OperandFunction,
     name: string,
   ): string {
     // For non-string values we allow strings to specify paths, for strings paths need to
@@ -770,8 +801,8 @@ export class Update {
    * @param exp Used when calling update resolver function to store the names and values mappings and update expressions.
    * @returns Update expression to use in UpdateExpression for DocumentClient.update method calls.
    */
-  static buildExpression(updateMap: Update.UpdateMapValue, exp: UpdateExpression): string | undefined {
-    Update.map(updateMap)(null, exp, 'M');
+  static buildExpression(updateMap: Update.ResolverMap, exp: UpdateExpression): string | undefined {
+    Update.resolveMap(null, updateMap, exp);
     return exp.buildExpression();
   }
 
@@ -783,7 +814,7 @@ export class Update {
    * @returns The params argument passed in.
    */
   static addParam(
-    updateMap: Update.UpdateMapValue | undefined,
+    updateMap: Update.ResolverMap | undefined,
     exp: ExpressionAttributes,
     params: { UpdateExpression?: string },
   ): { UpdateExpression?: string } {
@@ -846,57 +877,25 @@ export namespace Update {
    * @param exp Object to get path and value aliases and store update array.
    * @param type Param to enforce type safety for update that only work on certain types.
    */
-  export type Resolver<T extends Table.AttributeTypes> = (name: string, exp: Update.Expression, type?: T) => void;
+  export type Resolver<T> = (name: string, exp: Update.Expression, type?: T) => void;
 
   /**
-   * String specific update resolver.
+   * Type used for generic map based update methods.
+   * @typeParam T The model interface.
    */
-  export type UpdateString = Resolver<'S'>;
+  export type ResolverMapT<T> = {
+    [key: string]: T | Resolver<Table.AttributeTypes> | undefined;
+  };
 
   /**
-   * Number specific update resolver.
+   * Type used for map based update methods.
    */
-  export type UpdateNumber = Resolver<'N'>;
+  export type ResolverMap = ResolverMapT<Table.AttributeValues>;
 
-  /**
-   * Binary specific update resolver.
-   */
-  export type UpdateBinary = Resolver<'B'>;
-
-  /**
-   * Boolean specific update resolver.
-   */
-  export type UpdateBoolean = Resolver<'BOOL'>;
-
-  /**
-   * Null specific update resolver.
-   */
-  export type UpdateNull = Resolver<'NULL'>;
-
-  /**
-   * String Set specific update resolver.
-   */
-  export type UpdateStringSet = Resolver<'SS'>;
-
-  /**
-   * Number Set specific update resolver.
-   */
-  export type UpdateNumberSet = Resolver<'NS'>;
-
-  /**
-   * Binary Set specific update resolver.
-   */
-  export type UpdateBinarySet = Resolver<'BS'>;
-
-  /**
-   * List specific update resolver.
-   */
-  export type UpdateList = Resolver<'L'>;
-
-  /**
-   * Map specific update resolver.
-   */
-  export type UpdateMap = Resolver<'M'>;
+  export type ResolverObjectValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
+  export type ResolverObject<T> = {
+    [P in keyof Table.Optional<T>]: ResolverObjectValue<T[P]>;
+  };
 
   /**
    * Update function return by path and pathWithDefault to support nested resolvers.
@@ -904,38 +903,73 @@ export namespace Update {
    * @param exp Object to get path and value aliases and store update array.
    * @returns The resolved value of the update function.
    */
-  export type UpdateFunction = (name: string, exp: Update.Expression) => string;
+  export type OperandFunction = (name: string, exp: Update.Expression) => string;
 
   /**
    * Type used for number based update methods.
    */
-  export type UpdateNumberValue = number | string | UpdateFunction;
-
-  /**
-   * Type used for set based update methods.
-   */
-  export type UpdateSetValue = Table.AttributeSetValues | string | UpdateFunction;
+  export type OperandNumber = number | string | OperandFunction;
 
   /**
    * Type used for generic list based update methods.
    */
-  export type UpdateListValueT<T> = string | UpdateFunction | T[];
+  export type OperandList<T extends Table.AttributeValues = Table.AttributeValues> = string | OperandFunction | T[];
+
+  // Types to use in
+  /**
+   * String specific update resolver.
+   */
+  export type String = string | Update.Resolver<'S'>;
 
   /**
-   * Type used for list based update methods.
+   * Number specific update resolver.
    */
-  export type UpdateListValue = UpdateListValueT<Table.AttributeValues>;
+  export type Number = number | Update.Resolver<'N'>;
 
   /**
-   * Type used for generic map based update methods.
-   * @typeParam T The model interface.
+   * Binary specific update resolver.
    */
-  export type UpdateMapValueT<T> = {
-    [key: string]: T | Resolver<Table.AttributeTypes> | undefined;
-  };
+  export type Binary = Table.BinaryValue | Update.Resolver<'B'>;
 
   /**
-   * Type used for map based update methods.
+   * Boolean specific update resolver.
    */
-  export type UpdateMapValue = UpdateMapValueT<Table.AttributeValues>;
+  export type Boolean = boolean | Update.Resolver<'BOOL'>;
+
+  /**
+   * Null specific update resolver.
+   */
+  export type Null = number | Update.Resolver<'NULL'>;
+
+  /**
+   * String Set specific update resolver.
+   */
+  export type StringSet = Table.StringSetValue | Update.Resolver<'SS'>;
+
+  /**
+   * Number Set specific update resolver.
+   */
+  export type NumberSet = Table.NumberSetValue | Update.Resolver<'NS'>;
+
+  /**
+   * Binary Set specific update resolver.
+   */
+  export type BinarySet = Table.BinarySetValue | Update.Resolver<'BS'>;
+
+  /**
+   * List specific update resolver.
+   */
+  export type List<T extends Table.AttributeValues = Table.AttributeValues> = T[] | Update.Resolver<'L'>;
+
+  /**
+   * Map specific update resolver.
+   */
+  export type Map<T extends Table.AttributeValues = Table.AttributeValues> =
+    | { [key: string]: T }
+    | Update.Resolver<'M'>;
+
+  /**
+   * Map specific update resolver.
+   */
+  export type Object<T> = T | Update.Resolver<'M'>;
 }

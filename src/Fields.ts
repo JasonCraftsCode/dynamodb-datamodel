@@ -3,9 +3,6 @@ import { Model } from './Model';
 import { Table } from './Table';
 import { Update } from './Update';
 
-// TODO: Consider just using constructors w/ params to create fields and not field chaining
-// since field chaining doesn't provide much value and
-
 /**
  * Collection of functions for constructing a Model schema with Field objects and the Field classes.
  * Fields use function chaining to
@@ -13,6 +10,7 @@ import { Update } from './Update';
  * ```typescript
  * import { Fields, Model, Update } from 'dynamodb-datamodel';
  *
+ * // (TypeScript) Define model key and item interface.
  * interface ModelKey {
  *   id: string;
  * }
@@ -23,6 +21,7 @@ import { Update } from './Update';
  *   sports?: Table.StringSetValue;
  * }
  *
+ * //
  * const model = Model.createModel<ModelKey, ModelItem>({
  *   schema: {
  *     id: Fields.split({ aliases:['P', 'S'] }),
@@ -33,6 +32,8 @@ import { Update } from './Update';
  *   },
  *   // ...additional properties like table
  * });
+ *
+ *
  * ```
  */
 export class Fields {
@@ -108,7 +109,7 @@ export class Fields {
     return new Fields.FieldList(options);
   }
 
-  /**ß
+  /**
    * Creates a schema based list field object to use in a {@link Model.schema}.
    * @typeParam V Interface of model to use for schema.
    * @param options Options to initialize field with.
@@ -195,7 +196,7 @@ export class Fields {
    * @example
    * ```typescript
    * ```
-   * @template T Map of slot names to index
+   * @typeParam T Map of slot names to index
    * @param options Options to initialize field with.
    * @returns New composite object with named field slots.
    */
@@ -337,7 +338,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     toTableUpdate?(
       name: string,
       modelData: Model.ModelUpdate,
-      tableData: Update.UpdateMapValue,
+      tableData: Update.ResolverMap,
       context: TableContext,
     ): void;
 
@@ -363,7 +364,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Base Field implementation used by many of the basic field types.
    * @template V Type for the value of the field.
-   * @template T Type string to enforce method typings.
    */
   export class FieldBase<V> implements Field {
     /**
@@ -383,8 +383,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Initialize the Field.
-     * @param type Name of type.
-     * @param alias Table attribute name to map this model property to.
+     * @param options Options to initialize FieldBase with.
      */
     constructor(options: BaseOptions<V> = {}) {
       this.alias = options.alias;
@@ -435,7 +434,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
-      tableData: Update.UpdateMapValue,
+      tableData: Update.ResolverMap,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: TableContext,
     ): void {
@@ -456,7 +455,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * @param name Model property name associated with field (passed into toTable).
      * @param modelData Data from the model that to reference for default.
      * @param context Current context this method is being called in.
-     * @return Default value.
+     * @return Default value to use.
      */
     getDefault(name: string, modelData: Model.ModelData, context: TableContext): V | undefined {
       const def = this.default;
@@ -546,7 +545,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     /** Helper method that just calls {@link Condition.type} with tableName() as path param.
      * @see Condition.type for more info and example.
      */
-    typeOf(type: Table.AttributeTypes): Condition.Resolver<T> {
+    type(type: Table.AttributeTypes): Condition.Resolver<T> {
       return Condition.type(this.tableName(), type);
     }
 
@@ -651,6 +650,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export class FieldListModel<V extends { [key: string]: any }> extends FieldList<V> {
+    /**
+     * Defines the schema for the list type.
+     */
     schema: Model.ModelSchemaT<V>;
 
     constructor(options: ListModelOptions<V>) {
@@ -659,6 +661,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
+     * Initializes the schema property
      * @see Field.init for more information.
      */
     init(name: string, model: Model): void {
@@ -816,7 +819,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
-      tableData: Update.UpdateMapValue,
+      tableData: Update.ResolverMap,
       context: TableContext,
     ): void {
       this.toTable(name, modelData, tableData as Table.AttributeValuesMap, context);
@@ -918,7 +921,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
-      tableData: Update.UpdateMapValue,
+      tableData: Update.ResolverMap,
       context: TableContext,
     ): void {
       this.toTable(name, modelData, tableData as Table.AttributeValuesMap, context);
@@ -1145,7 +1148,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
-      tableData: Update.UpdateMapValue,
+      tableData: Update.ResolverMap,
       context: TableContext,
     ): void {
       this.toTable(name, modelData, tableData as Table.AttributeValuesMap, context);
@@ -1365,7 +1368,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
-      tableData: Update.UpdateMapValue,
+      tableData: Update.ResolverMap,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: Fields.TableContext,
     ): void {

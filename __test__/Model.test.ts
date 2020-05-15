@@ -99,9 +99,9 @@ const childSchema = {
 };
 
 interface SpouseModel {
-  name: string;
-  age: number;
-  married: boolean;
+  name: Update.String; //string;
+  age: Update.Number;
+  married: Update.Boolean;
 }
 
 const spouseSchema = {
@@ -134,20 +134,20 @@ interface UserModel extends UserKey {
   city?: string;
   state?: string;
   country?: string;
-  name: string | Update.UpdateString;
-  count?: number | Update.UpdateNumber;
-  description?: string | Update.UpdateString;
-  revision: number | Update.UpdateNumber;
-  adult: boolean | Update.UpdateBoolean;
-  photo?: Table.BinaryValue | Update.UpdateBinary;
-  interests?: Table.StringSetValue | Update.UpdateStringSet;
-  modified?: Table.NumberSetValue | Update.UpdateNumberSet;
-  spouse?: SpouseModel | Update.UpdateMap;
-  children?: ChildModel[] | Update.UpdateList;
-  groups?: { [key: string]: GroupModel } | Update.UpdateMap;
-  created?: Date | Update.Resolver<'N'>;
+  name: Update.String;
+  count?: Update.Number;
+  description?: Update.String;
+  revision: Update.Number;
+  adult: Update.Boolean;
+  photo?: Update.Binary;
+  interests?: Update.StringSet;
+  modified?: Update.NumberSet;
+  spouse?: Update.Object<SpouseModel>;
+  children?: Update.List<ChildModel>;
+  groups?: Update.Map<GroupModel>;
+  created?: Date;
   hide?: Set<Date>;
-  nickname?: string | Update.UpdateString;
+  nickname?: Update.String;
 }
 
 const userSchema = {
@@ -356,7 +356,7 @@ describe('Validate Model with Table and Indexes', () => {
         description: null,
         adult: Update.del(),
         count: Update.add('revision', 3),
-        spouse: Update.map({
+        spouse: Update.objectT<SpouseModel>({
           age: Update.dec(1),
           married: Update.del(),
           name: 'new spouse',

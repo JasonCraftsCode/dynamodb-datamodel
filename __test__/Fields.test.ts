@@ -138,7 +138,7 @@ describe('When FieldExpression', () => {
 
   it('expect typeOf returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.typeOf('S')(exp)).toEqual('attribute_type(#n0, :v0)');
+    expect(field.type('S')(exp)).toEqual('attribute_type(#n0, :v0)');
   });
 
   it('expect exists returns condition expression', () => {
@@ -524,7 +524,7 @@ describe('When FieldSplit', () => {
   });
 
   it('toTableUpdate expect join of all aliases', () => {
-    const data: Update.UpdateMapValue = {};
+    const data: Update.ResolverMap = {};
     field.toTableUpdate('split', { split: 'id1.id2' }, data, tableContext);
     expect(data).toEqual({ P: 'id1', S: 'id2' });
   });

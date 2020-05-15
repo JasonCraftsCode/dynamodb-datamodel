@@ -11,7 +11,7 @@ it('Validate Condition exports', () => {
 });
 
 function buildUpdate(
-  updateMap: Update.UpdateMapValue,
+  updateMap: Update.ResolverMap,
   exp = new UpdateExpression(),
 ): {
   UpdateExpression: string | undefined;

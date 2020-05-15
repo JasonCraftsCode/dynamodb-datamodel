@@ -560,7 +560,7 @@ export class Table {
    */
   updateParams(
     key: Table.PrimaryKey.AttributeValuesMap,
-    item?: Update.UpdateMapValue,
+    item?: Update.ResolverMap,
     options: Table.UpdateOptions = {},
   ): DocumentClient.UpdateItemInput {
     const params: DocumentClient.UpdateItemInput = {
@@ -657,7 +657,7 @@ export class Table {
    */
   update(
     key: Table.PrimaryKey.AttributeValuesMap,
-    items?: Update.UpdateMapValue,
+    items?: Update.ResolverMap,
     options?: Table.UpdateOptions,
   ): Promise<DocumentClient.UpdateItemOutput> {
     return this.client.update(this.updateParams(key, items, options)).promise();
@@ -1170,7 +1170,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      */
     updateParams(
       key: PrimaryKey.AttributeValuesMapT<KEY>,
-      item?: Update.UpdateMapValue,
+      item?: Update.ResolverMap,
       options?: Table.UpdateOptions,
     ): DocumentClient.UpdateItemInput;
 
@@ -1212,7 +1212,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      */
     update(
       key: PrimaryKey.AttributeValuesMapT<KEY>,
-      item?: Update.UpdateMapValue,
+      item?: Update.ResolverMap,
       options?: UpdateOptions,
     ): Promise<DocumentClient.UpdateItemOutput>;
 

@@ -18,7 +18,7 @@ export function delayCallback(tms: number, f: () => void) {
 */
 
 export function buildUpdate(
-  updateMap: Update.UpdateMapValue,
+  updateMap: Update.ResolverMap,
   exp = new UpdateExpression(),
 ): {
   UpdateExpression: string | undefined;

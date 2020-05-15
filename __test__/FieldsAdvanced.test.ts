@@ -123,7 +123,7 @@ class FieldFork implements Fields.Field {
   toTableUpdate(
     name: string,
     modelData: Model.ModelUpdate,
-    tableData: Update.UpdateMapValue,
+    tableData: Update.ResolverMap,
     context: Fields.TableContext,
   ): void {
     this.fields.forEach((field) => field.toTableUpdate?.(name, modelData, tableData, context));
@@ -233,7 +233,7 @@ class FieldRevision implements Fields.Field {
   toTableUpdate(
     name: string,
     modelData: Model.ModelUpdate,
-    tableData: Update.UpdateMapValue,
+    tableData: Update.ResolverMap,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     context: Fields.TableContext,
   ): void {
