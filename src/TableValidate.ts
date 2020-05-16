@@ -1,12 +1,5 @@
 import { Table, Index } from './Table';
 
-// Validate:
-// X Table initialize
-// X Index initialize
-// - Params & action args (key and params)
-// - Table and Index name (regex)
-// - Attribute names (regex)
-
 /**
  * Attribute names of the primary key for tables and indexes.
  */

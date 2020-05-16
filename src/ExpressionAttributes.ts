@@ -82,7 +82,6 @@ export class ExpressionAttributes {
    * @returns Alias path to use for the attribute name or the name if not aliasing is needed, delimited by '.'.
    */
   addPath(name: string): string {
-    // split pathDelimiter/'.' and '[]' then add each and append with '.'
     if (this.treatNameAsPath) {
       const pathList = name.split(this.pathDelimiter).reduce((prev, curr) => {
         if (curr.endsWith(']')) {

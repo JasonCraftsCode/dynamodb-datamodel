@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CompositeSlotOptions | dynamodb-datamodel - v0.1.10</title>
+	<title>ModelListOptions | dynamodb-datamodel - v0.1.10</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,21 +55,41 @@
 					<a href="../classes/fields.html">Fields</a>
 				</li>
 				<li>
-					<a href="fields.compositeslotoptions.html">CompositeSlotOptions</a>
+					<a href="fields.modellistoptions.html">ModelListOptions</a>
 				</li>
 			</ul>
-			<h1>Interface CompositeSlotOptions</h1>
+			<h1>Interface ModelListOptions&lt;V&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>FieldModelList constructor options.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>V</h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CompositeSlotOptions</span>
+						<a href="fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">ModelListOptions</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -80,8 +100,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.compositeslotoptions.html#composite" class="tsd-kind-icon">composite</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.compositeslotoptions.html#slot" class="tsd-kind-icon">slot</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.modellistoptions.html#alias" class="tsd-kind-icon">alias</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="fields.modellistoptions.html#default" class="tsd-kind-icon">default</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.modellistoptions.html#schema" class="tsd-kind-icon">schema</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,25 +110,52 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="composite" class="tsd-anchor"></a>
-					<h3>composite</h3>
-					<div class="tsd-signature tsd-kind-icon">composite<span class="tsd-signature-symbol">:</span> <a href="../classes/fields.fieldcomposite.html" class="tsd-signature-type">FieldComposite</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="alias" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> alias</h3>
+					<div class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="fields.baseoptions.html">BaseOptions</a>.<a href="fields.baseoptions.html#alias">alias</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L850">Fields.ts:850</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L362">Fields.ts:362</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Table attribute to map this Model property to.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="default" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> default</h3>
+					<div class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../classes/fields.fieldbase.html#defaultfunction" class="tsd-signature-type">DefaultFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="fields.baseoptions.html">BaseOptions</a>.<a href="fields.baseoptions.html#default">default</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L367">Fields.ts:367</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Value or function to get value from to use when the Model property is empty.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="slot" class="tsd-anchor"></a>
-					<h3>slot</h3>
-					<div class="tsd-signature tsd-kind-icon">slot<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="schema" class="tsd-anchor"></a>
+					<h3>schema</h3>
+					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="../classes/model.html#modelschemat" class="tsd-signature-type">ModelSchemaT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L851">Fields.ts:851</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L679">Fields.ts:679</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines the schema for the list type.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -135,14 +183,17 @@
 					<li class="current tsd-kind-class">
 						<a href="../classes/fields.html" class="tsd-kind-icon">Fields</a>
 						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="fields.compositeslotoptions.html" class="tsd-kind-icon">Composite<wbr>Slot<wbr>Options</a>
+							<li class="current tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="fields.modellistoptions.html" class="tsd-kind-icon">Model<wbr>List<wbr>Options</a>
 								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="fields.compositeslotoptions.html#composite" class="tsd-kind-icon">composite</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="fields.modellistoptions.html#alias" class="tsd-kind-icon">alias</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="fields.modellistoptions.html#default" class="tsd-kind-icon">default</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="fields.compositeslotoptions.html#slot" class="tsd-kind-icon">slot</a>
+										<a href="fields.modellistoptions.html#schema" class="tsd-kind-icon">schema</a>
 									</li>
 								</ul>
 							</li>

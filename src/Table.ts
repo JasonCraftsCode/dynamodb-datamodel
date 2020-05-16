@@ -478,7 +478,6 @@ export class Table {
     return this.createSet(list, options) as Table.BinarySetValue;
   }
 
-  // Action Params:
   /**
    * Creates the params that can be used when calling [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}.
    * @param key Primary key of item to get.
@@ -524,7 +523,6 @@ export class Table {
     if (options === 'NotExists') return Condition.notExists(this.getPartitionKey());
   }
 
-  // Consider having writeOptions default to be 'NotExists'
   /**
    * Creates the params that can be used when calling [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}.
    * @param key Primary key of item to put.
@@ -609,7 +607,6 @@ export class Table {
     return params;
   }
 
-  // actions:
   /**
    * Wrapper method for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property} method.
    * @param key Primary key of item to get.
@@ -701,7 +698,6 @@ export class Table {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
-  // export type PromiseResult<D, E> = D & { $response: Response<D, E> };
   /**
    * TypeScript utility type that constructs a type consisting of all properties of T set to optional.
    * Does the opposite of [Required]{@link https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredt}.
@@ -854,9 +850,8 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      */
     export type AttributeValues = string | number | Table.BinaryValue;
 
-    // ScalarAttributeType
     /**
-     * Supported primary key attribute types.
+     * Supported primary key attribute types (see DocumentClient.ScalarAttributeType)
      */
     export type AttributeTypes = 'B' | 'N' | 'S';
 
@@ -955,8 +950,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
    */
   export type ProjectionType = 'ALL' | 'KEYS_ONLY' | 'INCLUDE';
 
-  // Omit legacy attributes
-  //   * @typedef GetInput DocumentClient.GetItemInput
   /**
    * Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}
    * Removes legacy parameters from the type definition, including AttributesToGet.
@@ -1091,7 +1084,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ScanOptions extends BaseOptions<ScanInput> {}
 
-  // Default Key definitions
   /**
    * Default and Example table primary key with a generalized compact format.
    */
@@ -1184,7 +1176,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      */
     scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput;
 
-    // actions:
     /**
      * @see Generic form of {@link Table.get}.
      */

@@ -40,7 +40,6 @@ export class UpdateExpression implements Update.Expression {
     this.attributes = attributes;
   }
 
-  // implements Update.Expression
   /**
    * @see ExpressionAttributes.addPath
    */
@@ -168,6 +167,7 @@ export class UpdateExpression implements Update.Expression {
  *   },
  *   // ...additional properties like client, globalIndexes and others
  * });
+ *
  * // update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.
  * table.update(
  *   {P: 'P-GUID', S: 'S-0' },
@@ -471,7 +471,6 @@ export class Update {
     return Update.arithmetic(left, '-', right);
   }
 
-  // NOTE: could also provide some generic *T methods for List so
   /**
    * Sets an attribute to the result of joining two lists.
    * Supported types: list.
@@ -590,8 +589,7 @@ export class Update {
    * @returns Update resolver function to delete indices in a list based attribute.
    */
   static delIndexes(indexes: number[]): Update.Resolver<'L'> {
-    return (name: string, exp: Update.Expression): void =>
-      indexes.forEach((index) => exp.addRemove(`${name}[${index}]`));
+    return (name: string, exp: Update.Expression): void => indexes.forEach((key) => exp.addRemove(`${name}[${key}]`));
   }
 
   /**
@@ -621,9 +619,13 @@ export class Update {
    */
   static setIndexes(values: { [key: number]: Table.AttributeValues | Update.OperandFunction }): Update.Resolver<'L'> {
     return (name: string, exp: Update.Expression): void =>
-      Object.keys(values).forEach((key) =>
-        exp.addSet(`${name}[${key}] = ${Update.addAnyValue(exp, values[Number(key)], name)}`),
-      );
+      Object.keys(values).forEach((key) => {
+        const value = values[Number(key)];
+        // if (value === undefined) return;
+        // if (value === null) exp.addRemove(`${name}[${key}]`);
+        //else
+        exp.addSet(`${name}[${key}] = ${Update.addAnyValue(exp, value, name)}`);
+      });
   }
 
   /**
@@ -655,14 +657,6 @@ export class Update {
     return (name: string, exp: Update.Expression): void =>
       exp.addAdd(`${name} ${Update.addNonStringValue(exp, value, name)}`);
   }
-
-  // Could add each value set since there are only 3.
-  // And removeFromSet
-  /*
-  static addToStringSet(value: Table.StringSetValue): Update.Resolver<'SS'> {
-    return Update.addToSet(value);
-  }
-  */
 
   /**
    * Removes an array of values from a set based attribute (sets are ordered).
@@ -726,20 +720,32 @@ export class Update {
    * @returns Update resolver function to recursively set the inner attributes of a map based attribute.
    */
   static map(map: Update.ResolverMap): Update.Resolver<'M'> {
-    return (name: string | null, exp: Update.Expression): void => {
+    return (name: string, exp: Update.Expression): void => {
       Update.resolveMap(name, map, exp);
     };
   }
-  /*
-  //  export type ModelUpdateValue<T> = Extract<T, ModelType | Update.Resolver<Table.AttributeTypes>> | null;
-  static mapT<T>(map: Update.ResolverMapT<T>): Update.Resolver<'M'> {
-    return Update.map(map as Update.ResolverMap);
-  }
-*/
 
-  static objectT<T>(map: Update.ResolverObject<T>): Update.Resolver<'M'> {
-    return Update.map(map as Update.ResolverMap);
+  /**
+   * Typed based version of {@link Update.map}.
+   * @interface T
+   */
+  static model<T>(map: Update.ResolverObject<T>): Update.Resolver<'M'> {
+    return Update.map(map);
   }
+
+  /**
+   *
+   * @param map
+   */
+  static modelMap<T>(map: Update.ResolverObjectMap<T>): Update.Resolver<'M'> {
+    return (name: string, exp: Update.Expression): void => {
+      Object.keys(map).forEach((key) => {
+        Update.resolveMap(`${name}.${exp.addPath(key)}`, map[key], exp);
+      });
+    };
+  }
+
+  // modelList setIndexes
 
   /**
    * Resolves each key of a map to an Update.Expression.
@@ -779,6 +785,7 @@ export class Update {
   /**
    * Helper method used in update methods that do not support string attributes, like add or sub.
    * This then allows string values to act as paths, without having to wrap the path in a resolver.
+   * For strings based attributes, like set, need to use the path() function to wrap the path.
    * @param exp Object to get path and value aliases and store update array.
    * @param value The value, update resolver or path string to add and get back an alias.
    * @param name Name used to pass down to the value resolver.
@@ -789,8 +796,6 @@ export class Update {
     value: Table.AttributeValues | Update.OperandFunction,
     name: string,
   ): string {
-    // For non-string values we allow strings to specify paths, for strings paths need to
-    // use the path() function to wrap the path.
     if (typeof value === 'string') return exp.addPath(value);
     return Update.addAnyValue(exp, value, name);
   }
@@ -892,9 +897,23 @@ export namespace Update {
    */
   export type ResolverMap = ResolverMapT<Table.AttributeValues>;
 
+  /**
+   *
+   */
   export type ResolverObjectValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
+
+  /**
+   *
+   */
   export type ResolverObject<T> = {
     [P in keyof Table.Optional<T>]: ResolverObjectValue<T[P]>;
+  };
+
+  /**
+   *
+   */
+  export type ResolverObjectMap<T> = {
+    [key: string]: Update.ResolverObject<T>;
   };
 
   /**
@@ -915,61 +934,70 @@ export namespace Update {
    */
   export type OperandList<T extends Table.AttributeValues = Table.AttributeValues> = string | OperandFunction | T[];
 
-  // Types to use in
   /**
-   * String specific update resolver.
+   * String specific update resolver, used to define properties in Model interfaces.
    */
   export type String = string | Update.Resolver<'S'>;
 
   /**
-   * Number specific update resolver.
+   * Number specific update resolver, used to define properties in Model interfaces.
    */
   export type Number = number | Update.Resolver<'N'>;
 
   /**
-   * Binary specific update resolver.
+   * Binary specific update resolver, used to define properties in Model interfaces.
    */
   export type Binary = Table.BinaryValue | Update.Resolver<'B'>;
 
   /**
-   * Boolean specific update resolver.
+   * Boolean specific update resolver, used to define properties in Model interfaces.
    */
   export type Boolean = boolean | Update.Resolver<'BOOL'>;
 
   /**
-   * Null specific update resolver.
+   * Null specific update resolver, used to define properties in Model interfaces.
    */
-  export type Null = number | Update.Resolver<'NULL'>;
+  export type Null = null | Update.Resolver<'NULL'>;
 
   /**
-   * String Set specific update resolver.
+   * String Set specific update resolver, used to define properties in Model interfaces.
    */
   export type StringSet = Table.StringSetValue | Update.Resolver<'SS'>;
 
   /**
-   * Number Set specific update resolver.
+   * Number Set specific update resolver, used to define properties in Model interfaces.
    */
   export type NumberSet = Table.NumberSetValue | Update.Resolver<'NS'>;
 
   /**
-   * Binary Set specific update resolver.
+   * Binary Set specific update resolver, used to define properties in Model interfaces.
    */
   export type BinarySet = Table.BinarySetValue | Update.Resolver<'BS'>;
 
   /**
-   * List specific update resolver.
+   * List specific update resolver, used to define properties in Model interfaces.
    */
   export type List<T extends Table.AttributeValues = Table.AttributeValues> = T[] | Update.Resolver<'L'>;
 
   /**
-   * Map specific update resolver.
+   * Map specific update resolver, used to define properties in Model interfaces.
    */
   export type Map<T extends Table.AttributeValues = Table.AttributeValues> =
     | { [key: string]: T }
     | Update.Resolver<'M'>;
 
   /**
-   * Map specific update resolver.
+   * Map specific update resolver, used to define properties in Model interfaces.
    */
-  export type Object<T> = T | Update.Resolver<'M'>;
+  export type Model<T> = T | Update.Resolver<'M'>;
+
+  /**
+   * Map specific update resolver, used to define properties in Model interfaces.
+   */
+  export type ModelMap<T> = { [key: string]: T } | Update.Resolver<'M'>;
+
+  /**
+   * List specific update resolver, used to define properties in Model interfaces.
+   */
+  export type ModelList<T> = T[] | Update.Resolver<'L'>;
 }

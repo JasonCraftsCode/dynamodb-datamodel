@@ -240,12 +240,12 @@ describe('When FieldList', () => {
   });
 });
 
-describe('When FieldListModel', () => {
-  const field = Fields.listModel<ChildModel>({ schema: childSchema });
+describe('When FieldModelList', () => {
+  const field = Fields.modelList<ChildModel>({ schema: childSchema });
   field.init('children', model);
 
   it('expect constructor to init correctly', () => {
-    const field1 = Fields.listModel<ChildModel>({ schema: childSchema, alias: 'children' });
+    const field1 = Fields.modelList<ChildModel>({ schema: childSchema, alias: 'children' });
     expect(field1.alias).toEqual('children');
     //expect(field1.schema.adult.name).toEqual('adult');
   });
@@ -271,8 +271,8 @@ describe('When FieldMap', () => {
   });
 });
 
-describe('When FieldMapModel', () => {
-  const field = Fields.mapModel<GroupModel>({ schema: groupSchema });
+describe('When FieldModelMap', () => {
+  const field = Fields.modelMap<GroupModel>({ schema: groupSchema });
   field.init('groups', model);
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();

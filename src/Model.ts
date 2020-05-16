@@ -50,7 +50,6 @@ export class Model implements Model.ModelBase {
   }
 
   getContext(action: Table.ItemActions, options: Table.BaseOptions): Fields.TableContext {
-    // Note: options.conditions is set on the passed in options even if
     if (!options.conditions) options.conditions = [];
     return { action, conditions: options.conditions, options, model: this };
   }
@@ -170,11 +169,6 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     [key: string]: ModelUpdateValue<ModelType>;
   };
 
-  // Could add hidden property that contains properties not exposed in model schema,
-  // like type, create date, modify date, delete attribute.  Though in most cases I
-  // think they should be exposed to the model in some manor.  Though type may
-  // be the one property that isn't exposed, though then how do we differentiate
-  // a heterogeneous item query?
   export interface GetOutput<T = ModelOut> {
     item?: T;
     result: DocumentClient.GetItemOutput;
@@ -195,8 +189,6 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     result: DocumentClient.UpdateItemOutput;
   }
 
-  // ModelT
-  // *MapT used as model data based params in ModelT
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export type ModelSchemaT<T extends { [key: string]: any }> = {
     [P in keyof Required<T>]: Fields.Field;

@@ -21,7 +21,7 @@ import { Update } from './Update';
  *   sports?: Table.StringSetValue;
  * }
  *
- * //
+ * // Define the schema using Fields
  * const model = Model.createModel<ModelKey, ModelItem>({
  *   schema: {
  *     id: Fields.split({ aliases:['P', 'S'] }),
@@ -33,7 +33,7 @@ import { Update } from './Update';
  *   // ...additional properties like table
  * });
  *
- *
+ * // Use model to read and write to the dynamodb table
  * ```
  */
 export class Fields {
@@ -115,8 +115,8 @@ export class Fields {
    * @param options Options to initialize field with.
    * @returns New field object.
    */
-  static listModel<V>(options: Fields.ListModelOptions<V>): Fields.FieldListModel<V> {
-    return new Fields.FieldListModel<V>(options);
+  static modelList<V>(options: Fields.ModelListOptions<V>): Fields.FieldModelList<V> {
+    return new Fields.FieldModelList<V>(options);
   }
 
   /**
@@ -134,8 +134,8 @@ export class Fields {
    * @param options Options to initialize field with.
    * @returns New field object.
    */
-  static mapModel<V>(options: Fields.MapModelOptions<V>): Fields.FieldMapModel<V> {
-    return new Fields.FieldMapModel<V>(options);
+  static modelMap<V>(options: Fields.ModelMapOptions<V>): Fields.FieldModelMap<V> {
+    return new Fields.FieldModelMap<V>(options);
   }
 
   /**
@@ -283,10 +283,16 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     model: Model.ModelBase;
   }
 
+  /**
+   *
+   */
   export interface AttributeDefinition {
     type: Table.AttributeTypes;
   }
 
+  /**
+   *
+   */
   export type AttributesSchema = { [key: string]: AttributeDefinition };
 
   /**
@@ -409,7 +415,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       context: ModelContext,
     ): void {
       const value = tableData[this.alias || name];
-      // TODO: Should we use default, validate table data or do other things with data coming out of the table?
       if (value !== undefined) modelData[name] = value;
     }
 
@@ -424,7 +429,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       let value = (modelData[name] as unknown) as V | undefined;
       if (value === undefined) value = this.getDefault(name, modelData, context);
-      // TODO: dynamodb attributes can't have empty values like "", empty array, empty sets or null.
       if (value !== undefined) tableData[this.alias || name] = value;
     }
 
@@ -476,8 +480,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     export type DefaultFunction<T> = (name: string, modelData: Model.ModelData, context: TableContext) => T;
   }
 
+  /**
+   * Base class for  property field
+   */
   export class FieldExpression<V, T extends Table.AttributeTypes> extends FieldBase<V> {
-    // Conditions methods for easy discovery.
     /**
      * Helper method that just calls {@link Condition.path} with tableName() as value param.
      * @see Condition.path for more info and example.
@@ -564,8 +570,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * String property field
+   */
   export class FieldString extends FieldExpression<string, 'S'> {
-    // Condition
     /** Helper method that just calls {@link Condition.size} with tableName() as path param.
      * @see Condition.size for more info and example.
      */
@@ -573,7 +581,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       return Condition.size(this.tableName());
     }
 
-    // Condition method for easy discovery
     /** Helper method that wraps {@link Condition.contains}.
      * @see Condition.contains for more info and example.
      */
@@ -589,10 +596,15 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Number property field.
+   */
   export class FieldNumber extends FieldExpression<number, 'N'> {}
 
+  /**
+   * Binary property field.
+   */
   export class FieldBinary extends FieldExpression<Table.BinaryValue, 'B'> {
-    // Condition
     /** Helper method that just calls {@link Condition.size} with tableName() as path param.
      * @see Condition.size for more info and example.
      */
@@ -601,12 +613,20 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Boolean property field.
+   */
   export class FieldBoolean extends FieldExpression<boolean, 'BOOL'> {}
 
+  /**
+   * Null property field.
+   */
   export class FieldNull extends FieldExpression<null, 'NULL'> {}
 
+  /**
+   *  Generic set property field is base class for {@link FieldStringSet}, {@link FieldStringSet}, and {@link FieldStringSet}.
+   */
   export class FieldSet<V, T extends 'BS' | 'NS' | 'SS'> extends FieldExpression<V, T> {
-    // Condition
     /** Helper method that just calls {@link Condition.size} with tableName() as path param.
      * @see Condition.size for more info and example.
      */
@@ -622,14 +642,25 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * String set property field.
+   */
   export class FieldStringSet extends FieldSet<Table.StringSetValue, 'SS'> {}
 
+  /**
+   * Number set property field.
+   */
   export class FieldNumberSet extends FieldSet<Table.NumberSetValue, 'NS'> {}
 
+  /**
+   * Binary set property field.
+   */
   export class FieldBinarySet extends FieldSet<Table.BinarySetValue, 'BS'> {}
 
+  /**
+   * List property field.
+   */
   export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[], 'L'> {
-    // Condition
     /** Helper method that just calls {@link Condition.size} with tableName() as path param.
      * @see Condition.size for more info and example.
      */
@@ -639,23 +670,26 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   *
+   * FieldModelList constructor options.
    */
-  export interface ListModelOptions<V> extends BaseOptions<V[]> {
+  export interface ModelListOptions<V> extends BaseOptions<V[]> {
     /**
      * Defines the schema for the list type.
      */
     schema: Model.ModelSchemaT<V>;
   }
 
+  /**
+   * Model list property field.
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export class FieldListModel<V extends { [key: string]: any }> extends FieldList<V> {
+  export class FieldModelList<V extends { [key: string]: any }> extends FieldList<V> {
     /**
      * Defines the schema for the list type.
      */
     schema: Model.ModelSchemaT<V>;
 
-    constructor(options: ListModelOptions<V>) {
+    constructor(options: ModelListOptions<V>) {
       super(options) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = options.schema;
     }
@@ -670,8 +704,11 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Map property field.
+   * @interface V Type for map values.
+   */
   export class FieldMap<V extends Table.AttributeValues> extends FieldExpression<{ [key: string]: V }, 'M'> {
-    // Condition
     /** Helper method that just calls {@link Condition.size} with tableName() as path param.
      * @see Condition.size for more info and example.
      */
@@ -702,15 +739,27 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
   */
 
-  export interface MapModelOptions<V> extends BaseOptions<{ [key: string]: V }> {
+  /**
+   * FieldModelMap constructor options.
+   * @template V Type of the map value.
+   */
+  export interface ModelMapOptions<V> extends BaseOptions<{ [key: string]: V }> {
     schema: Model.ModelSchemaT<V>;
   }
 
+  /**
+   * Map of model property field.
+   * @template V Type of the map value.
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export class FieldMapModel<V extends { [key: string]: any }> extends FieldMap<V> {
+  export class FieldModelMap<V extends { [key: string]: any }> extends FieldMap<V> {
     schema: Model.ModelSchemaT<V>;
 
-    constructor(options: MapModelOptions<V>) {
+    /**
+     * Constructs a FieldModelMap object with options.
+     * @param options Options to initialize model map with.
+     */
+    constructor(options: ModelMapOptions<V>) {
       super(options) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = options.schema;
     }
@@ -731,7 +780,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Condition.eq('groups.group1.name', 'teachers');
      * ```
      * @param key Map key value to scope condition to
-     * @param resolver Resolver to Model used in this FieldMapModel
+     * @param resolver Resolver to Model used in this FieldModelMap
      */
     /*
     condition(key: string, resolver: Condition.Resolver): Condition.Resolver {
@@ -747,10 +796,17 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     */
   }
 
+  /**
+   * FieldModel constructor options.
+   */
   export interface ModelOptions<V> extends BaseOptions<V> {
     schema: Model.ModelSchemaT<V>;
   }
 
+  /**
+   * Model property field.
+   * @template V Type of the map value.
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export class FieldModel<V extends { [key: string]: any }> extends FieldExpression<V, 'M'> {
     schema: Model.ModelSchemaT<V>;
@@ -765,15 +821,11 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     init(name: string, model: Model): void {
       super.init(name, model);
-      // TODO: since this is just a sub model then we can pass the name down to initSchema and
-      // prepend the name to each schema init call, which would allow the condition methods on this schema to work.
-      // This doesn't work for List or Map since there is a middle index or name.  We would need to have a
-      // method on the list or map to get a scoped schema name.
       Model.initSchema(this.schema, model);
     }
 
-    // Condition
-    /** Helper method that just calls {@link Condition.size} with tableName() as path param.
+    /**
+     * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * @see Condition.size for more info and example.
      */
     size(): Condition.Resolver<'M'> {
@@ -781,9 +833,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Date property field.
+   */
   export class FieldDate extends FieldBase<Date> {
-    // TODO: add Update methods
-
     /**
      * @see Field.toModel for more information.
      */
@@ -809,7 +862,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       let value = modelData[name] as Date | undefined;
       if (value === undefined) value = super.getDefault(name, modelData, context);
-      //if (typeof value === 'function') throw new TypeError('Field does not support update resolver functions');
       if (value !== undefined) tableData[this.alias || name] = Math.round(value.valueOf() / 1000);
     }
 
@@ -826,6 +878,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Hidden property field.  Used to avoid writing a property to the DynamoDb table.
+   */
   export class FieldHidden implements Fields.Field {
     /**
      * @see Field.init
@@ -846,11 +901,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     toTable(): void {}
   }
 
-  export interface CompositeSlotOptions {
-    composite: FieldComposite;
-    slot: number;
-  }
-
+  /**
+   * Composite slot property field, comes from the call to createSlots on FieldCompositeSlot.
+   */
   export class FieldCompositeSlot implements Field {
     name?: string;
     composite: FieldComposite;
@@ -960,6 +1013,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     //writeOnly?: boolean;
   }
 
+  /**
+   *
+   */
   export class FieldComposite {
     /**
      * Table attribute name to map this model property to.
@@ -1005,7 +1061,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Create the field slots to use when defining the schema for a model.
      * Note: Need to create a new set of field slots for each model that uses this composite definition.
      */
-
     createSlots(): FieldCompositeSlot[] {
       const slots = new Array<FieldCompositeSlot>(this.count);
       for (let i = 0; i < this.count; i++) slots[i] = new FieldCompositeSlot(this, i, slots);
@@ -1022,7 +1077,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   };
 
   /**
-   * Options used when constructing a FieldCompositeNamed
+   * Options used when constructing a FieldCompositeNamed.
    */
   export interface CompositeNamedOptions<T extends { [index: string]: number }> extends CompositeOptions {
     /**
@@ -1032,7 +1087,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Defines the composite key th
+   * Composite
    */
   export class FieldCompositeNamed<T extends { [index: string]: number }> extends FieldComposite {
     /**
@@ -1132,7 +1187,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       const value = modelData[name];
       if (typeof value !== 'string') return;
-      // skip any field that is not a string and is split aliased
       let parts = value.split(this.delimiter);
       const extraParts = parts.length - this.aliases.length;
       if (extraParts > 0) {
@@ -1155,6 +1209,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * FieldType constructor options.
+   */
   export interface TypeOptions {
     /**
      * Table attribute to map this Model property to.
@@ -1162,6 +1219,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     alias?: string;
   }
 
+  /**
+   * Type
+   */
   export class FieldType implements Field {
     /**
      * Model name of the field, set by init function in Model or Field constructor.

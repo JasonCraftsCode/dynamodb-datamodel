@@ -1,10 +1,6 @@
 import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
-// Note: Using classes to scope static methods, allow use of reserved words (like 'in') as methods and
-// let TypeDoc produce more consistent documentation (thought it does mean that Condition which acts
-// more as a namespace or module has all static methods).
-
 /**
  * Object passed down to Condition.Resolver functions to support getting path and value aliases and
  * provide context to the resolver function to support advanced condition resolvers.
@@ -55,7 +51,7 @@ export class ConditionExpression implements Condition.Expression {
  * @example
  * ```typescript
  * import { Condition, ConditionExpression } from 'dynamodb-datamodel';
- * // Destructuring methods from Condition to make writing expression very concise
+ * // Destructuring methods from Condition to make writing expression more concise
  * const { eq, ne, and, path } = Condition;
  * const condition = and(eq('first', 'john'), eq('last', 'smith'), ne('first', path('nickname')));
  * const exp = new ConditionExpression();
@@ -116,7 +112,6 @@ export abstract class Condition {
     return (exp: Condition.Expression): string => exp.addPath(value);
   }
 
-  // TODO: would be nice if size returned an object that had eq, ne, lt, le, gt and ge.
   /**
    * Inserts the size of the attribute value to compare the data size to a static value or another attribute value.
    *

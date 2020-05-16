@@ -84,7 +84,7 @@
   sports?: Table.StringSetValue;
 }
 
-<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Define the schema using Fields</span>
 <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
   schema: {
     id: Fields.split({ aliases:[<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
@@ -96,7 +96,7 @@
   <span class="hljs-comment">// ...additional properties like table</span>
 });
 
-</code></pre>
+<span class="hljs-comment">// Use model to read and write to the dynamodb table</span></code></pre>
 						</dd>
 					</dl>
 				</div>
@@ -128,10 +128,10 @@
 								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldexpression.html" class="tsd-kind-icon">Field<wbr>Expression</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldhidden.html" class="tsd-kind-icon">Field<wbr>Hidden</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldlist.html" class="tsd-kind-icon">Field<wbr>List</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldlistmodel.html" class="tsd-kind-icon">Field<wbr>List<wbr>Model</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmap.html" class="tsd-kind-icon">Field<wbr>Map</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmapmodel.html" class="tsd-kind-icon">Field<wbr>Map<wbr>Model</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmodel.html" class="tsd-kind-icon">Field<wbr>Model</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmodellist.html" class="tsd-kind-icon">Field<wbr>Model<wbr>List</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmodelmap.html" class="tsd-kind-icon">Field<wbr>Model<wbr>Map</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnull.html" class="tsd-kind-icon">Field<wbr>Null</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnumber.html" class="tsd-kind-icon">Field<wbr>Number</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnumberset.html" class="tsd-kind-icon">Field<wbr>Number<wbr>Set</a></li>
@@ -150,12 +150,11 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.baseoptions.html" class="tsd-kind-icon">Base<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.compositenamedoptions.html" class="tsd-kind-icon">Composite<wbr>Named<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.compositeoptions.html" class="tsd-kind-icon">Composite<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.compositeslotoptions.html" class="tsd-kind-icon">Composite<wbr>Slot<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.createddateoptions.html" class="tsd-kind-icon">Created<wbr>Date<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.field.html" class="tsd-kind-icon">Field</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.listmodeloptions.html" class="tsd-kind-icon">List<wbr>Model<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.mapmodeloptions.html" class="tsd-kind-icon">Map<wbr>Model<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.modelcontext.html" class="tsd-kind-icon">Model<wbr>Context</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modellistoptions.html" class="tsd-kind-icon">Model<wbr>List<wbr>Options</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modelmapoptions.html" class="tsd-kind-icon">Model<wbr>Map<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modeloptions.html" class="tsd-kind-icon">Model<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.splitoptions.html" class="tsd-kind-icon">Split<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.tablecontext.html" class="tsd-kind-icon">Table<wbr>Context</a></li>
@@ -182,10 +181,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#date" class="tsd-kind-icon">date</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#hidden" class="tsd-kind-icon">hidden</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#list" class="tsd-kind-icon">list</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#listmodel" class="tsd-kind-icon">list<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#map" class="tsd-kind-icon">map</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#mapmodel" class="tsd-kind-icon">map<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#modellist" class="tsd-kind-icon">model<wbr>List</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#modelmap" class="tsd-kind-icon">model<wbr>Map</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#number" class="tsd-kind-icon">number</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#numberset" class="tsd-kind-icon">number<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#split" class="tsd-kind-icon">split</a></li>
@@ -206,7 +205,7 @@
 					<div class="tsd-signature tsd-kind-icon">Attributes<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L290">Fields.ts:290</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L296">Fields.ts:296</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -224,7 +223,7 @@
 					<div class="tsd-signature tsd-kind-icon">Composite<wbr>Slot<wbr>Map&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1020">Fields.ts:1020</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1075">Fields.ts:1075</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -544,47 +543,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="listmodel" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> list<wbr>Model</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Model&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.listmodeloptions.html" class="tsd-signature-type">ListModelOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldlistmodel.html" class="tsd-signature-type">FieldListModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L118">Fields.ts:118</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates a schema based list field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>V</h4>
-									<div class="tsd-comment tsd-typography">
-										<p>Interface of model to use for schema.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>options: <a href="../interfaces/fields.listmodeloptions.html" class="tsd-signature-type">ListModelOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Options to initialize field with.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldlistmodel.html" class="tsd-signature-type">FieldListModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>New field object.</p>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
 					<a name="map" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> map</h3>
@@ -613,47 +571,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmap.html" class="tsd-signature-type">FieldMap</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>New field object.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="mapmodel" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> map<wbr>Model</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">map<wbr>Model&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.mapmodeloptions.html" class="tsd-signature-type">MapModelOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldmapmodel.html" class="tsd-signature-type">FieldMapModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L137">Fields.ts:137</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates a schema based map field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>V</h4>
-									<div class="tsd-comment tsd-typography">
-										<p>Interface of model to use for schema.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>options: <a href="../interfaces/fields.mapmodeloptions.html" class="tsd-signature-type">MapModelOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Options to initialize field with.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmapmodel.html" class="tsd-signature-type">FieldMapModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New field object.</p>
 						</li>
 					</ul>
@@ -695,6 +612,88 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodel.html" class="tsd-signature-type">FieldModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>New field object.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="modellist" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> model<wbr>List</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">model<wbr>List&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modellistoptions.html" class="tsd-signature-type">ModelListOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldmodellist.html" class="tsd-signature-type">FieldModelList</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L118">Fields.ts:118</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a schema based list field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>V</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Interface of model to use for schema.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/fields.modellistoptions.html" class="tsd-signature-type">ModelListOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options to initialize field with.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodellist.html" class="tsd-signature-type">FieldModelList</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>New field object.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="modelmap" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> model<wbr>Map</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">model<wbr>Map&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modelmapoptions.html" class="tsd-signature-type">ModelMapOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldmodelmap.html" class="tsd-signature-type">FieldModelMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L137">Fields.ts:137</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a schema based map field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>V</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Interface of model to use for schema.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/fields.modelmapoptions.html" class="tsd-signature-type">ModelMapOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options to initialize field with.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodelmap.html" class="tsd-signature-type">FieldModelMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New field object.</p>
 						</li>
 					</ul>
@@ -994,16 +993,16 @@
 								<a href="fields.fieldlist.html" class="tsd-kind-icon">Field<wbr>List</a>
 							</li>
 							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldlistmodel.html" class="tsd-kind-icon">Field<wbr>List<wbr>Model</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="fields.fieldmap.html" class="tsd-kind-icon">Field<wbr>Map</a>
 							</li>
 							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldmapmodel.html" class="tsd-kind-icon">Field<wbr>Map<wbr>Model</a>
+								<a href="fields.fieldmodel.html" class="tsd-kind-icon">Field<wbr>Model</a>
 							</li>
 							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldmodel.html" class="tsd-kind-icon">Field<wbr>Model</a>
+								<a href="fields.fieldmodellist.html" class="tsd-kind-icon">Field<wbr>Model<wbr>List</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="fields.fieldmodelmap.html" class="tsd-kind-icon">Field<wbr>Model<wbr>Map</a>
 							</li>
 							<li class=" tsd-kind-class tsd-parent-kind-class">
 								<a href="fields.fieldnull.html" class="tsd-kind-icon">Field<wbr>Null</a>
@@ -1045,22 +1044,19 @@
 								<a href="../interfaces/fields.compositeoptions.html" class="tsd-kind-icon">Composite<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.compositeslotoptions.html" class="tsd-kind-icon">Composite<wbr>Slot<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/fields.createddateoptions.html" class="tsd-kind-icon">Created<wbr>Date<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/fields.field.html" class="tsd-kind-icon">Field</a>
 							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/fields.listmodeloptions.html" class="tsd-kind-icon">List<wbr>Model<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/fields.mapmodeloptions.html" class="tsd-kind-icon">Map<wbr>Model<wbr>Options</a>
-							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/fields.modelcontext.html" class="tsd-kind-icon">Model<wbr>Context</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="../interfaces/fields.modellistoptions.html" class="tsd-kind-icon">Model<wbr>List<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="../interfaces/fields.modelmapoptions.html" class="tsd-kind-icon">Model<wbr>Map<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="../interfaces/fields.modeloptions.html" class="tsd-kind-icon">Model<wbr>Options</a>
@@ -1110,17 +1106,17 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="fields.html#list" class="tsd-kind-icon">list</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="fields.html#listmodel" class="tsd-kind-icon">list<wbr>Model</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="fields.html#map" class="tsd-kind-icon">map</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="fields.html#mapmodel" class="tsd-kind-icon">map<wbr>Model</a>
+								<a href="fields.html#model" class="tsd-kind-icon">model</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="fields.html#model" class="tsd-kind-icon">model</a>
+								<a href="fields.html#modellist" class="tsd-kind-icon">model<wbr>List</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="fields.html#modelmap" class="tsd-kind-icon">model<wbr>Map</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="fields.html#number" class="tsd-kind-icon">number</a>

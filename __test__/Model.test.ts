@@ -142,7 +142,7 @@ interface UserModel extends UserKey {
   photo?: Update.Binary;
   interests?: Update.StringSet;
   modified?: Update.NumberSet;
-  spouse?: Update.Object<SpouseModel>;
+  spouse?: Update.Model<SpouseModel>;
   children?: Update.List<ChildModel>;
   groups?: Update.Map<GroupModel>;
   created?: Date;
@@ -164,9 +164,9 @@ const userSchema = {
   photo: Fields.binary(),
   interests: Fields.stringSet(),
   modified: Fields.numberSet(),
-  children: Fields.listModel<ChildModel>({ schema: childSchema }),
+  children: Fields.modelList<ChildModel>({ schema: childSchema }),
   spouse: Fields.model<SpouseModel>({ schema: spouseSchema }),
-  groups: Fields.mapModel<GroupModel>({ schema: groupSchema }),
+  groups: Fields.modelMap<GroupModel>({ schema: groupSchema }),
   created: Fields.date(),
   hide: Fields.hidden(),
   nickname: Fields.string({ default: 'none' }),
@@ -356,7 +356,7 @@ describe('Validate Model with Table and Indexes', () => {
         description: null,
         adult: Update.del(),
         count: Update.add('revision', 3),
-        spouse: Update.objectT<SpouseModel>({
+        spouse: Update.model<SpouseModel>({
           age: Update.dec(1),
           married: Update.del(),
           name: 'new spouse',

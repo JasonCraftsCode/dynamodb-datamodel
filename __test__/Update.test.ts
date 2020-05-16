@@ -593,6 +593,60 @@ describe('Validate Update.buildExpression', () => {
     });
   });
 
+  interface MapModel {
+    l1String: Update.String;
+    l1Number: Update.Number;
+  }
+
+  it('Update modelMap', () => {
+    const input = {
+      testMap: Update.modelMap<MapModel>({
+        id1: {
+          l1String: 'l1 string',
+          l1Number: Update.inc(3),
+        },
+      }),
+    };
+    const update = Update.buildExpression(input, exp);
+    expect(update).toEqual('SET #n0.#n1.#n2 = :v0, #n0.#n1.#n3 = #n0.#n1.#n3 + :v1');
+    expect({ set: exp.setList }).toEqual({
+      set: ['#n0.#n1.#n2 = :v0', '#n0.#n1.#n3 = #n0.#n1.#n3 + :v1'],
+    });
+    expect(exp.attributes.getPaths()).toEqual({
+      '#n0': 'testMap',
+      '#n1': 'id1',
+      '#n2': 'l1String',
+      '#n3': 'l1Number',
+    });
+    expect(exp.attributes.getValues()).toEqual({
+      ':v0': 'l1 string',
+      ':v1': 3,
+    });
+  });
+
+  it('Update model', () => {
+    const input = {
+      testMap: Update.model<MapModel>({
+        l1String: 'l1 string',
+        l1Number: Update.inc(3),
+      }),
+    };
+    const update = Update.buildExpression(input, exp);
+    expect(update).toEqual('SET #n0.#n1 = :v0, #n0.#n2 = #n0.#n2 + :v1');
+    expect({ set: exp.setList }).toEqual({
+      set: ['#n0.#n1 = :v0', '#n0.#n2 = #n0.#n2 + :v1'],
+    });
+    expect(exp.attributes.getPaths()).toEqual({
+      '#n0': 'testMap',
+      '#n1': 'l1String',
+      '#n2': 'l1Number',
+    });
+    expect(exp.attributes.getValues()).toEqual({
+      ':v0': 'l1 string',
+      ':v1': 3,
+    });
+  });
+
   it('Update Map inner expression', () => {
     const input = {
       testMap: Update.map({
