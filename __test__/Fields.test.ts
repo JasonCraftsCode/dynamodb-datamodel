@@ -326,7 +326,7 @@ describe('When FieldDate', () => {
 describe('When FieldHidden', () => {
   const field = Fields.hidden();
   it('expect hidden returns correct type', () => {
-    expect(field.toModel()).toBeUndefined();
+    expect(field.toTable('hidden', {}, {}, tableContext)).toBeUndefined();
   });
 });
 

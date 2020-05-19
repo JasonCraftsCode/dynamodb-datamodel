@@ -4,6 +4,7 @@ import { Table } from './Table';
 /**
  * Object passed down to Condition.Resolver functions to support getting path and value aliases and
  * provide context to the resolver function to support advanced condition resolvers.
+ * @public
  */
 export class ConditionExpression implements Condition.Expression {
   /**
@@ -13,21 +14,21 @@ export class ConditionExpression implements Condition.Expression {
 
   /**
    * Initialize ConditionExpression with existing or new {@link ExpressionAttributes}.
-   * @param attributes Object used to get path and value aliases.
+   * @param attributes - Object used to get path and value aliases.
    */
   constructor(attributes = new ExpressionAttributes()) {
     this.attributes = attributes;
   }
 
   /**
-   * @see ExpressionAttributes.addPath
+   * See {@link ExpressionAttributes.addPath} for details.
    */
   addPath(path: string): string {
     return this.attributes.addPath(path);
   }
 
   /**
-   * @see ExpressionAttributes.addValue
+   * See {@link ExpressionAttributes.addValue} for details.
    */
   addValue(value: Table.AttributeValues): string {
     return this.attributes.addValue(value);
@@ -67,11 +68,12 @@ export class ConditionExpression implements Condition.Expression {
  *
  * Note: Condition is a class that contains only static methods to support using javascript reserved words as
  * method names, like '{@link in}'.  Condition is also a namespace to scope the Condition specific typings, like Resolver.
+ * @public
  */
-export abstract class Condition {
+export class Condition {
   /**
    * Determines if a value is a resolver function or a basic type.
-   * @param value Path, value or resolver to inspect.
+   * @param value - Path, value or resolver to inspect.
    * @returns True if value is a resolver and false if value is a basic type.
    */
   static isResolver(value: Condition.Path | Condition.Value): value is Condition.Resolver {
@@ -80,8 +82,8 @@ export abstract class Condition {
 
   /**
    * Add a path to the {@link ConditionExpression} either directly or by resolving the path.
-   * @param path Value to add or add via resolving.
-   * @param exp Object to add path to.
+   * @param path - Value to add or add via resolving.
+   * @param exp - Object to add path to.
    * @returns Generated name alias to use in condition expression.
    */
   static addPath(path: Condition.Path, exp: Condition.Expression): string {
@@ -90,8 +92,8 @@ export abstract class Condition {
 
   /**
    * Add a value to the {@link ConditionExpression}  either directly or by resolving the values.
-   * @param values Array of values to add or add via resolving.
-   * @param exp Object to add values to.
+   * @param values - Array of values to add or add via resolving.
+   * @param exp - Object to add values to.
    * @returns Generated value alias to use in condition expression.
    */
   static addValues(values: Condition.Value[], exp: Condition.Expression): string[] {
@@ -105,7 +107,7 @@ export abstract class Condition {
    * // Expands to: '#n0 = #n1'
    * const condition = Condition.eq('name', Condition.path('name'));
    * ```
-   * @param value Path to use for a condition value.
+   * @param value - Path to use for a condition value.
    * @returns Resolver to use when generate condition expression.
    */
   static path(value: string): Condition.Resolver {
@@ -129,7 +131,7 @@ export abstract class Condition {
    * // Expands to: 'size(#n0) = :v0'
    * const condition = Condition.eq(Condition.size('name'), 4);
    * ```
-   * @param path Attribute path to get size of value for.
+   * @param path - Attribute path to get size of value for.
    * @returns Resolver to use when generate condition expression.
    */
   static size(path: string): Condition.Resolver {
@@ -143,9 +145,9 @@ export abstract class Condition {
    * // Expands to: '#n0 <> :v0'
    * const condition = Condition.compare('name', '<>', 'value');
    * ```
-   * @param left Path to resolve or add.
-   * @param op Compare operation to use.
-   * @param right Value to resolve or add.
+   * @param left - Path to resolve or add.
+   * @param op - Compare operation to use.
+   * @param right - Value to resolve or add.
    * @returns Resolver to use when generate condition expression.
    */
   static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value): Condition.Resolver {
@@ -160,8 +162,8 @@ export abstract class Condition {
    * // Expands to: '#n0 = :v0'
    * const condition = Condition.eq('name', 'value');
    * ```
-   * @param left Path to attribute or size of attribute to compare.
-   * @param right Value (or path to attribute) to check if equal to.
+   * @param left - Path to attribute or size of attribute to compare.
+   * @param right - Value (or path to attribute) to check if equal to.
    * @returns Resolver to use when generate condition expression.
    */
   static eq(left: Condition.Path, right: Condition.Value): Condition.Resolver {
@@ -169,14 +171,14 @@ export abstract class Condition {
   }
 
   /**
-   * '<>' - Not equal condition compares if an attribute value is not equal to a value or another attribute.
+   * '\<\>' - Not equal condition compares if an attribute value is not equal to a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 <> :v0'
    * const condition = Condition.ne('name', 'value');
    * ```
-   * @param left Path to attribute or size of attribute to compare.
-   * @param right Value (or path to attribute) to check if not equal to.
+   * @param left - Path to attribute or size of attribute to compare.
+   * @param right - Value (or path to attribute) to check if not equal to.
    * @returns Resolver to use when generate condition expression.
    */
   static ne(left: Condition.Path, right: Condition.Value): Condition.Resolver {
@@ -184,14 +186,14 @@ export abstract class Condition {
   }
 
   /**
-   * '<' - Less then condition compares if an attribute value is less then a value or another attribute.
+   * '\<' - Less then condition compares if an attribute value is less then a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 < :v0'
    * const condition = Condition.lt('name', 'value');
    * ```
-   * @param left Path to attribute or size of attribute to compare.
-   * @param right Value (or path to attribute) to check if less then.
+   * @param left - Path to attribute or size of attribute to compare.
+   * @param right - Value (or path to attribute) to check if less then.
    * @returns Resolver to use when generate condition expression.
    */
   static lt(left: Condition.Path, right: Condition.Value): Condition.Resolver {
@@ -199,14 +201,14 @@ export abstract class Condition {
   }
 
   /**
-   * '<=' - Less then or equal to condition compares if an attribute value is less then or equal to a value or another attribute.
+   * '\<=' - Less then or equal to condition compares if an attribute value is less then or equal to a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 <= :v0'
    * const condition = Condition.le('name', 'value');
    * ```
-   * @param left Path to attribute or size of attribute to compare.
-   * @param right Value (or path to attribute) to check if less then or equal to.
+   * @param left - Path to attribute or size of attribute to compare.
+   * @param right - Value (or path to attribute) to check if less then or equal to.
    * @returns Resolver to use when generate condition expression.
    */
   static le(left: Condition.Path, right: Condition.Value): Condition.Resolver {
@@ -214,14 +216,14 @@ export abstract class Condition {
   }
 
   /**
-   * '>' - Greater then condition compares if an attribute value is greater then a value or another attribute.
+   * '\>' - Greater then condition compares if an attribute value is greater then a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 > :v0'
    * const condition = Condition.gt('name', 'value');
    * ```
-   * @param left Path to attribute or size of attribute to compare.
-   * @param right Value (or path to attribute) to check if greater then.
+   * @param left - Path to attribute or size of attribute to compare.
+   * @param right - Value (or path to attribute) to check if greater then.
    * @returns Resolver to use when generate condition expression.
    */
   static gt(left: Condition.Path, right: Condition.Value): Condition.Resolver {
@@ -229,14 +231,14 @@ export abstract class Condition {
   }
 
   /**
-   * '>=' - Greater then or equal to condition compare sif an attribute value is greater then or equal to a value or another attribute.
+   * '\>=' - Greater then or equal to condition compare sif an attribute value is greater then or equal to a value or another attribute.
    * @example
    * ```typescript
    * // Expands to: '#n0 >= :v0'
    * const condition = Condition.ge('name', 'value');
    * ```
-   * @param left Path to attribute or size of attribute to compare.
-   * @param right Value (or path to attribute) to check if greater then or equal to.
+   * @param left - Path to attribute or size of attribute to compare.
+   * @param right - Value (or path to attribute) to check if greater then or equal to.
    * @returns Resolver to use when generate condition expression.
    */
   static ge(left: Condition.Path, right: Condition.Value): Condition.Resolver {
@@ -252,9 +254,9 @@ export abstract class Condition {
    * // Expands to: '#n0 BETWEEN :v0 AND :v1'
    * const condition = Condition.between('name', 1, 2);
    * ```
-   * @param path Path to attribute or size of attribute to compare.
-   * @param from Value (or path to attribute) to check if greater then and equal to.
-   * @param to Value (or path to attribute) to check if less then and equal to.
+   * @param path - Path to attribute or size of attribute to compare.
+   * @param from - Value (or path to attribute) to check if greater then and equal to.
+   * @param to - Value (or path to attribute) to check if less then and equal to.
    * @returns Resolver to use when generate condition expression.
    */
   static between(path: string, from: Condition.Value, to: Condition.Value): Condition.Resolver {
@@ -269,8 +271,8 @@ export abstract class Condition {
    * // Expands to: '#n0 IN (:v0, :v1, :v2)'
    * const condition = Condition.in('name', [1, 2, 3]);
    * ```
-   * @param path Path to attribute to get the value from.
-   * @param values List of the values to check if equal to path attribute value.
+   * @param path - Path to attribute to get the value from.
+   * @param values - List of the values to check if equal to path attribute value.
    * @returns Resolver to use when generate condition expression.
    */
   static in(path: string, values: Condition.Value[]): Condition.Resolver {
@@ -286,8 +288,8 @@ export abstract class Condition {
    * const condition = Condition.contains('name', 'value');
    * ```
    *  Supported Types: String, *Set
-   * @param path Path to attribute to get the value from.
-   * @param value String to check if the attribute value contains.
+   * @param path - Path to attribute to get the value from.
+   * @param value - String to check if the attribute value contains.
    * @returns Resolver to use when generate condition expression.
    */
   static contains(path: string, value: string): Condition.Resolver<'S' | 'SS' | 'NS' | 'BS'> {
@@ -302,8 +304,8 @@ export abstract class Condition {
    * // Expands to: 'begins_with(#n0, :v0)'
    * const condition = Condition.beginsWith('name', 'value');
    * ```
-   * @param path Path to attribute to get the value from.
-   * @param value String to check if the path attribute value begins with.
+   * @param path - Path to attribute to get the value from.
+   * @param value - String to check if the path attribute value begins with.
    * @returns Resolver to use when generate condition expression.
    */
   static beginsWith(path: string, value: string): Condition.Resolver<'S'> {
@@ -317,8 +319,8 @@ export abstract class Condition {
    * // Expands to: 'attribute_type(#n0, :v0)'
    * const condition = Condition.type('name', 'S');
    * ```
-   * @param path Path to attribute to get the value from.
-   * @param type Type to check that the path attribute value matches.
+   * @param path - Path to attribute to get the value from.
+   * @param type - Type to check that the path attribute value matches.
    * @returns Resolver to use when generate condition expression.
    */
   static type(path: string, type: Table.AttributeTypes): Condition.Resolver {
@@ -332,7 +334,7 @@ export abstract class Condition {
    * // Expands to: 'attribute_exists(#n0)'
    * const condition = Condition.exists('name');
    * ```
-   * @param path Path to attribute to get the value from.
+   * @param path - Path to attribute to get the value from.
    * @returns Resolver to use when generate condition expression.
    */
   static exists(path: string): Condition.Resolver {
@@ -346,7 +348,7 @@ export abstract class Condition {
    * // Expands to: 'attribute_not_exists(#n0)'
    * const condition = Condition.notExists('name');
    * ```
-   * @param path Path to attribute to get the value from.
+   * @param path - Path to attribute to get the value from.
    * @returns Resolver to use when generate condition expression.
    */
   static notExists(path: string): Condition.Resolver {
@@ -361,7 +363,7 @@ export abstract class Condition {
    * // Expands to: '(#n0 = :v0 AND #n0 = :v1 AND #n0 = :v2)'
    * const condition = Condition.and(Condition.eq('name', 1), Condition.eq('name', 2), Condition.eq('name', 3));
    * ```
-   * @param conditions List of conditions to evaluate with AND.
+   * @param conditions - List of conditions to evaluate with AND.
    * @returns Resolver to use when generate condition expression.
    */
   static and(...conditions: Condition.Resolver[]): Condition.Resolver {
@@ -376,7 +378,7 @@ export abstract class Condition {
    * // Expands to: '(#n0 = :v0 OR #n0 = :v1 OR #n0 = :v2)'
    * const condition = Condition.or(Condition.eq('name', 1), Condition.eq('name', 2), Condition.eq('name', 3));
    * ```
-   * @param conditions List of conditions to evaluate with OR
+   * @param conditions - List of conditions to evaluate with OR
    * @returns Resolver to use when generate condition expression.
    */
   static or(...conditions: Condition.Resolver[]): Condition.Resolver {
@@ -391,7 +393,7 @@ export abstract class Condition {
    * // Expands to: '(NOT #n0 = :v0)'
    * const condition = Condition.not(Condition.eq('name', 1));
    * ```
-   * @param condition Condition to invert the value of.
+   * @param condition - Condition to invert the value of.
    * @returns Resolver to use when generate condition expression.
    */
   static not(condition: Condition.Resolver): Condition.Resolver {
@@ -401,8 +403,8 @@ export abstract class Condition {
   /**
    * Expands a list of conditions into an 'AND' expression.
    * This method is different then evaluating the above '{@link and}' method, since it will not surround the condition with '()'.
-   * @param conditions List of conditions to evaluate with AND.
-   * @param exp Used when evaluation conditions and store the names and values mappings.
+   * @param conditions - List of conditions to evaluate with AND.
+   * @param exp - Used when evaluation conditions and store the names and values mappings.
    * @returns The list of conditions expanded as a string with 'AND' between each.
    */
   static resolveTopAnd(conditions: Condition.Resolver[], exp: ConditionExpression): string {
@@ -411,9 +413,9 @@ export abstract class Condition {
 
   /**
    * Helper function to set a 'ConditionExpression' value on the params argument if there are conditions to resolve.
-   * @param conditions  List of conditions to evaluate and join together with AND.
-   * @param exp Used when evaluation conditions and store the names and values mappings.
-   * @param params Params used for DocumentClient put, delete and update methods.
+   * @param conditions - List of conditions to evaluate and join together with AND.
+   * @param exp - Used when evaluation conditions and store the names and values mappings.
+   * @param params - Params used for DocumentClient put, delete and update methods.
    * @returns The params argument passed in.
    */
   static addAndParam(
@@ -428,9 +430,9 @@ export abstract class Condition {
 
   /**
    * Helper function to set a 'FilterExpression' value on the params argument if there are conditions to resolve.
-   * @param conditions  List of conditions to evaluate with AND.
-   * @param exp Used when evaluation conditions and store the names and values mappings.
-   * @param params Params used for DocumentClient query and scan methods.
+   * @param conditions - List of conditions to evaluate with AND.
+   * @param exp - Used when evaluation conditions and store the names and values mappings.
+   * @param params - Params used for DocumentClient query and scan methods.
    * @returns The params argument passed in.
    */
   static addAndFilterParam(
@@ -444,6 +446,7 @@ export abstract class Condition {
   }
 }
 
+/** @public */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Condition {
   /**
@@ -476,12 +479,12 @@ export namespace Condition {
    */
   export interface Expression {
     /**
-     * @see ExpressionAttributes.addPath.
+     * See {@link ExpressionAttributes.addPath} for details.
      */
     addPath(path: string): string;
 
     /**
-     * @see ExpressionAttributes.addValue.
+     * See {@link ExpressionAttributes.addValue} for details.
      */
     addValue(value: Table.AttributeValues): string;
   }
@@ -490,9 +493,9 @@ export namespace Condition {
    * Resolver function is return by most of the above Conditions methods.  Returning a function allows conditions
    * to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
    * of the above primitive conditions or support any new primitives that AWS would add in the future.
-   * @typeParam T The types that this resolver supports.
-   * @param exp Object to get path and value aliases.
-   * @param type Argument to enforce type safety for conditions that only work on certain types.
+   * @param T - The types that this resolver supports.
+   * @param exp - Object to get path and value aliases.
+   * @param type - Argument to enforce type safety for conditions that only work on certain types.
    */
   export type Resolver<T = Table.AttributeTypes> = (exp: Expression, type?: T) => string;
 

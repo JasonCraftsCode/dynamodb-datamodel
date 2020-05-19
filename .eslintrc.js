@@ -33,8 +33,10 @@ module.exports = {
     projectFolderIgnoreList: ['/node_modules/', '/docs/', '/dist/'],
     ecmaVersion: 6,
   },
-  plugins: ['@typescript-eslint', 'jest'],
+  plugins: ['@typescript-eslint', 'jest', 'tsdoc'],
   rules: {
+    'jest/no-standalone-expect': 'off', // Disable no-standalone-expect so that examples are self contained
+    'tsdoc/syntax': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-require-imports': 'error',
     'no-console': 'error',

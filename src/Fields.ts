@@ -1,3 +1,4 @@
+/* eslint-disable tsdoc/syntax */
 import { Condition } from './Condition';
 import { Model } from './Model';
 import { Table } from './Table';
@@ -15,10 +16,10 @@ import { Update } from './Update';
  *   id: string;
  * }
  * interface ModelItem extends ModelKey {
- *   name: string;
- *   age?: number;
- *   children?: { name: string, age: number}[];
- *   sports?: Table.StringSetValue;
+ *   name: Update.String;
+ *   age?: Update.Number;
+ *   children?: Update.List<{ name: string, age: number}>;
+ *   sports?: Update.StringSet;
  * }
  *
  * // Define the schema using Fields
@@ -35,11 +36,12 @@ import { Update } from './Update';
  *
  * // Use model to read and write to the dynamodb table
  * ```
+ * @public
  */
 export class Fields {
   /**
    * Creates a string field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static string(options?: Fields.BaseOptions<string>): Fields.FieldString {
@@ -48,7 +50,7 @@ export class Fields {
 
   /**
    * Creates a number field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static number(options?: Fields.BaseOptions<number>): Fields.FieldNumber {
@@ -57,7 +59,7 @@ export class Fields {
 
   /**
    * Creates a binary field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static binary(options?: Fields.BaseOptions<Table.BinaryValue>): Fields.FieldBinary {
@@ -66,7 +68,7 @@ export class Fields {
 
   /**
    * Creates a boolean field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static boolean(options?: Fields.BaseOptions<boolean>): Fields.FieldBoolean {
@@ -75,7 +77,7 @@ export class Fields {
 
   /**
    * Creates a string set field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static stringSet(options?: Fields.BaseOptions<Table.StringSetValue>): Fields.FieldStringSet {
@@ -84,7 +86,7 @@ export class Fields {
 
   /**
    * Creates a number set field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static numberSet(options?: Fields.BaseOptions<Table.NumberSetValue>): Fields.FieldNumberSet {
@@ -93,7 +95,7 @@ export class Fields {
 
   /**
    * Creates a binary set field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static binarySet(options?: Fields.BaseOptions<Table.BinarySetValue>): Fields.FieldBinarySet {
@@ -102,7 +104,7 @@ export class Fields {
 
   /**
    * Creates a list field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static list(options?: Fields.BaseOptions<Table.ListValue>): Fields.FieldList<Table.AttributeValues> {
@@ -111,8 +113,8 @@ export class Fields {
 
   /**
    * Creates a schema based list field object to use in a {@link Model.schema}.
-   * @typeParam V Interface of model to use for schema.
-   * @param options Options to initialize field with.
+   * @param V - Interface of model to use for schema.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static modelList<V>(options: Fields.ModelListOptions<V>): Fields.FieldModelList<V> {
@@ -121,7 +123,7 @@ export class Fields {
 
   /**
    * Creates a map field object to use in a {@link Model.schema}.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static map(options?: Fields.BaseOptions<Table.MapValue>): Fields.FieldMap<Table.AttributeValues> {
@@ -130,8 +132,8 @@ export class Fields {
 
   /**
    * Creates a schema based map field object to use in a {@link Model.schema}.
-   * @typeParam V Interface of model to use for schema.
-   * @param options Options to initialize field with.
+   * @param V - Interface of model to use for schema.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static modelMap<V>(options: Fields.ModelMapOptions<V>): Fields.FieldModelMap<V> {
@@ -140,8 +142,8 @@ export class Fields {
 
   /**
    * Creates a schema based map field object to use in a {@link Model.schema}.
-   * @typeParam V Interface of model to use for schema.
-   * @param options Options to initialize field with.
+   * @param V - Interface of model to use for schema.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static model<V>(options: Fields.ModelOptions<V>): Fields.FieldModel<V> {
@@ -150,7 +152,7 @@ export class Fields {
 
   /**
    * Creates a date field object to use in a {@link Model.schema}, stored as a number in the table.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static date(options?: Fields.BaseOptions<Date>): Fields.FieldDate {
@@ -167,12 +169,26 @@ export class Fields {
   /**
    * Creates a split field object to use in a {@link Model.schema}. which can be used to split a model property into two or more
    * table attributes.  This is commonly used as an model id property which gets slit into the table's partition and sort keys.
-   * Example: Model schema contains 'id: Fields.split({ aliases: ['P','S'] })' and when id = 'guid.date' the field will split the id value
-   * in to the table primary key of { P: 'guid', S: 'date'}
+   * Example: Model schema contains 'id: Fields.split(\{ aliases: ['P','S'] \})' and when id = 'guid.date' the field will split the id value
+   * in to the table primary key of \{ P: 'guid', S: 'date' \}
    * @example
    * ```typescript
+   * import { Fields, Model } from 'dynamodb-datamodel';
+   *
+   * // (TypeScript) Define model key and item interface.
+   * interface ModelKey {
+   *   id: string;
+   * }
+   *
+   * // Define the schema using Fields
+   * const model = Model.createModel<ModelKey, ModelKey>({
+   *   schema: {
+   *     id: Fields.split({ aliases:['P', 'S'] }),
+   *   },
+   *   // ...additional properties like table
+   * });
    * ```
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static split(options: Fields.SplitOptions): Fields.FieldSplit {
@@ -183,8 +199,38 @@ export class Fields {
    * Creates an indices based slots composite field object which can then return FieldCompositeSlot by index to use in a {@link Model.schema}.
    * @example
    * ```typescript
+   * import { Fields, Model } from 'dynamodb-datamodel';
+   *
+   * // (TypeScript) Define model key and item interface.
+   * interface ModelKey {
+   *   id: string;
+   * }
+   * // street, city, state and country only support simple set updates since
+   * // they are part of a composite key
+   * interface ModelItem extends ModelKey {
+   *   street: string;
+   *   city: string;
+   *   state: string;
+   *   country: string;
+   * }
+   *
+   * // Create composite slots to use in model schema below.
+   * const location = Fields.composite({alias: 'G0S', count: 4});
+   * const locSlots = location.createSlots();
+   *
+   * // Define the schema using Fields
+   * const model = Model.createModel<ModelKey, ModelKey>({
+   *   schema: {
+   *     id: Fields.split({ aliases:['P', 'S'] }),
+   *     street: locSlots[0],
+   *     city: locSlots[1],
+   *     state: locSlots[2],
+   *     country: locSlots[3],
+   *   },
+   *   // ...additional properties like table
+   * });
    * ```
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New composite object.
    */
   static composite(options: Fields.CompositeOptions): Fields.FieldComposite {
@@ -193,11 +239,47 @@ export class Fields {
 
   /**
    * Creates an name based slots composite field object which can then return FieldCompositeSlot by name to use in a {@link Model.schema}.
+   * @example [Fields.compositeNamed.test.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/Fields.compositeNamed.test.ts}, (imports: [./ExampleIndex]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleIndex.ts}, [./ExampleTable]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleTable.ts})
+   * ```typescript
+   * [[include:Fields.compositeNamed.test.ts]]
+   * ```
+   *
    * @example
    * ```typescript
+   * import { Fields, Model } from 'dynamodb-datamodel';
+   *
+   * // (TypeScript) Define model key and item interface.
+   * interface ModelKey {
+   *   id: string;
+   * }
+   * // street, city, state and country only support simple set updates since
+   * // they are part of a composite key
+   * interface ModelItem extends ModelKey {
+   *   street: string;
+   *   city: string;
+   *   state: string;
+   *   country: string;
+   * }
+   *
+   * // Create composite slots to use in model schema below.
+   * const locMap = { street: 0, city: 1, state: 2, country: 3 };
+   * const location = Fields.compositeNamed({alias: 'G0S', map: locMap});
+   * const locSlots = location.createNamedSlots();
+   *
+   * // Define the schema using Fields
+   * const model = Model.createModel<ModelKey, ModelItem>({
+   *   schema: {
+   *     id: Fields.split({ aliases:['P', 'S'] }),
+   *     street: locSlots.street,
+   *     city: locSlots.city,
+   *     state: locSlots.state,
+   *     country: locSlots.country,
+   *   },
+   *   // ...additional properties like table
+   * });
    * ```
-   * @typeParam T Map of slot names to index
-   * @param options Options to initialize field with.
+   * @param T - Map of slot names to index
+   * @param options - Options to initialize field with.
    * @returns New composite object with named field slots.
    */
   static compositeNamed<T extends { [key: string]: number }>(
@@ -208,7 +290,26 @@ export class Fields {
 
   /**
    * Creates a field that adds the Model name to a table attribute.
-   * @param options Options to initialize field with.
+   * ```typescript
+   * import { Fields, Model } from 'dynamodb-datamodel';
+   *
+   * // (TypeScript) Define model key and item interface.
+   * interface ModelKey {
+   *   id: string;
+   * }
+   * interface ModelItem extends Key {
+   *
+   * }
+   *
+   * // Define the schema using Fields
+   * const model = Model.createModel<ModelKey, ModelItem>({
+   *   schema: {
+   *     id: Fields.split({ aliases:['P', 'S'] }),
+   *   },
+   *   // ...additional properties like table
+   * });
+   * ```
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static type(options?: Fields.TypeOptions): Fields.FieldType {
@@ -217,7 +318,7 @@ export class Fields {
 
   /**
    * Creates a field that add a created date to a table attribute.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static createdDate(options?: Fields.CreatedDateOptions): Fields.FieldCreatedDate {
@@ -226,7 +327,7 @@ export class Fields {
 
   /**
    * Creates a field that adds an updated date to a table attribute.
-   * @param options Options to initialize field with.
+   * @param options - Options to initialize field with.
    * @returns New field object.
    */
   static updatedDate(options?: Fields.UpdateDateOptions): Fields.FieldUpdatedDate {
@@ -234,6 +335,7 @@ export class Fields {
   }
 }
 
+/** @public */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
@@ -300,33 +402,35 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * table data.
    * @example Custom Field
    * ```typescript
+   * class CustomField extends Field {
+   * }
    * ```
    */
   export interface Field {
     /**
      * Initialize the field with the field name from the Model's schema and the model.
-     * @param name Name of the model attribute this field is set on.
-     * @param model Model this field is associated with.
+     * @param name - Name of the model attribute this field is set on.
+     * @param model - Model this field is associated with.
      */
     init(name: string, model: Model): void;
 
     /**
      * Method called **after** calling into the table object to read and write to the table.  This method will convert the
      * table data into model data.
-     * @param name Name of the model attribute this field is associated with (generally same as {@link init} name argument)
-     * @param tableData Data from the table that needs to be mapped to the model data.
-     * @param modelData Data object for the model that this method will append to.
-     * @param context Current context this method is being called in.
+     * @param name - Name of the model attribute this field is associated with (generally same as {@link init} name argument)
+     * @param tableData - Data from the table that needs to be mapped to the model data.
+     * @param modelData - Data object for the model that this method will append to.
+     * @param context - Current context this method is being called in.
      */
     toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
 
     /**
      * Method called **before** calling into the table object to read and write to the table.  This method will convert the model data
      * into table data and append read or write conditions.
-     * @param name Name of the model attribute this field is associated with (generally same as {@link init} name argument)
-     * @param modelData Data from the model that needs to be mapped to the table data.
-     * @param tableData Data object for the table that this method will append to.
-     * @param context Current context this method is being called in.
+     * @param name - Name of the model attribute this field is associated with (generally same as {@link init} name argument)
+     * @param modelData - Data from the model that needs to be mapped to the table data.
+     * @param tableData - Data object for the table that this method will append to.
+     * @param context - Current context this method is being called in.
      */
     toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
 
@@ -336,10 +440,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      *
      *
      * Note: Several Fields will just call toTable from toTableUpdate if they don't support any special update syntax.
-     * @param name Name of the model attribute this field is associated with (generally same as {@link init} name argument)
-     * @param modelData Data from the model that needs to be mapped to the table data.
-     * @param tableData Data object for the table that this method will append to.
-     * @param context Current context this method is being called in.
+     * @param name - Name of the model attribute this field is associated with (generally same as {@link init} name argument)
+     * @param modelData - Data from the model that needs to be mapped to the table data.
+     * @param tableData - Data object for the table that this method will append to.
+     * @param context - Current context this method is being called in.
      */
     toTableUpdate?(
       name: string,
@@ -369,7 +473,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   /**
    * Base Field implementation used by many of the basic field types.
-   * @template V Type for the value of the field.
+   * @param V - Type for the value of the field.
+   * @public
    */
   export class FieldBase<V> implements Field {
     /**
@@ -389,24 +494,20 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Initialize the Field.
-     * @param options Options to initialize FieldBase with.
+     * @param options - Options to initialize FieldBase with.
      */
     constructor(options: BaseOptions<V> = {}) {
       this.alias = options.alias;
       this.default = options.default;
     }
 
-    /**
-     * @see Field.init
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
-    /**
-     * @see Field.toModel for more information
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
@@ -418,9 +519,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = value;
     }
 
-    /**
-     * @see Field.toTable for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
       modelData: Model.ModelData,
@@ -432,9 +531,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) tableData[this.alias || name] = value;
     }
 
-    /**
-     * @see Field.toTableUpdate for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
@@ -456,10 +553,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Get the default value to use in toTable if no value it set.
-     * @param name Model property name associated with field (passed into toTable).
-     * @param modelData Data from the model that to reference for default.
-     * @param context Current context this method is being called in.
-     * @return Default value to use.
+     * @param name - Model property name associated with field (passed into toTable).
+     * @param modelData - Data from the model that to reference for default.
+     * @param context - Current context this method is being called in.
+     * @returns Default value to use.
      */
     getDefault(name: string, modelData: Model.ModelData, context: TableContext): V | undefined {
       const def = this.default;
@@ -467,103 +564,117 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /** @public */
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace FieldBase {
     /**
      * Function to get the default value when the model property is missing.
-     * @template T Value to return from default function.
-     * @param name Name of the model attribute this field is associated with (generally same as {@link init} name argument).
-     * @param modelData Data from the model that needs to be mapped to the table data.
-     * @param context Current context this method is being called in.
-     * @return default value for the model property if it is missing.
+     * @param T - Value to return from default function.
+     * @param name - Name of the model attribute this field is associated with (generally same as {@link init} name argument).
+     * @param modelData - Data from the model that needs to be mapped to the table data.
+     * @param context - Current context this method is being called in.
+     * @returns default value for the model property if it is missing.
      */
     export type DefaultFunction<T> = (name: string, modelData: Model.ModelData, context: TableContext) => T;
   }
 
   /**
-   * Base class for  property field
+   * Base class for model property fields.
+   * @param V - Type this field represents used in Condition methods.
+   * @param T - Type name for the Condition.Resolver for automatic type checking.
    */
   export class FieldExpression<V, T extends Table.AttributeTypes> extends FieldBase<V> {
     /**
      * Helper method that just calls {@link Condition.path} with tableName() as value param.
-     * @see Condition.path for more info and example.
+     * See {@link Condition.path} for more info and examples.
      */
     path(): Condition.Resolver<T> {
       return Condition.path(this.tableName());
     }
 
-    /** Helper method that just calls {@link Condition.eq} with tableName() as left param.
-     * @see Condition.eq for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.eq} with tableName() as left param.
+     * See {@link Condition.eq} for more info and examples.
      */
     eq(v: V): Condition.Resolver<T> {
       return Condition.eq(this.tableName(), v);
     }
 
-    /** Helper method that just calls {@link Condition.ne} with tableName() as left param.
-     * @see Condition.ne for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.ne} with tableName() as left param.
+     * See {@link Condition.ne} for more info and examples.
      */
     ne(v: V): Condition.Resolver<T> {
       return Condition.ne(this.tableName(), v);
     }
 
-    /** Helper method that just calls {@link Condition.lt} with tableName() as left param.
-     * @see Condition.lt for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.lt} with tableName() as left param.
+     * See {@link Condition.lt} for more info and examples.
      */
     lt(v: V): Condition.Resolver<T> {
       return Condition.lt(this.tableName(), v);
     }
 
-    /** Helper method that just calls {@link Condition.le} with tableName() as left param.
-     * @see Condition.le for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.le} with tableName() as left param.
+     * See {@link Condition.le} for more info and examples.
      */
     le(v: V): Condition.Resolver<T> {
       return Condition.le(this.tableName(), v);
     }
 
-    /** Helper method that just calls {@link Condition.gt} with tableName() as left param.
-     * @see Condition.gt for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.gt} with tableName() as left param.
+     * See {@link Condition.gt} for more info and examples.
      */
     gt(v: V): Condition.Resolver<T> {
       return Condition.gt(this.tableName(), v);
     }
 
-    /** Helper method that just calls {@link Condition.ge} with tableName() as left param.
-     * @see Condition.ge for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.ge} with tableName() as left param.
+     * See {@link Condition.ge} for more info and examples.
      */
     ge(v: V): Condition.Resolver<T> {
       return Condition.ge(this.tableName(), v);
     }
 
-    /** Helper method that just calls {@link Condition.between} with tableName() as path param.
-     * @see Condition.between for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.between} with tableName() as path param.
+     * See {@link Condition.between} for more info and examples.
      */
     between(from: V, to: V): Condition.Resolver<T> {
       return Condition.between(this.tableName(), from, to);
     }
 
-    /** Helper method that just calls {@link Condition.in} with tableName() as path param.
-     * @see Condition.in for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.in} with tableName() as path param.
+     * See {@link Condition.in} for more info and examples.
      */
     in(v: V[]): Condition.Resolver<T> {
       return Condition.in(this.tableName(), v);
     }
 
-    /** Helper method that just calls {@link Condition.type} with tableName() as path param.
-     * @see Condition.type for more info and example.
+    /**
+     * Helper method that just calls {@link Condition."type"} with tableName() as path param.
+     * See {@link Condition."type"} for more info and examples.
      */
     type(type: Table.AttributeTypes): Condition.Resolver<T> {
       return Condition.type(this.tableName(), type);
     }
 
-    /** Helper method that just calls {@link Condition.exists} with tableName() as path param.
-     * @see Condition.exists for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.exists} with tableName() as path param.
+     * See {@link Condition.exists} for more info and examples.
      */
     exists(): Condition.Resolver<T> {
       return Condition.exists(this.tableName());
     }
 
-    /** Helper method that just calls {@link Condition.notExists} with tableName() as path param.
-     * @see Condition.notExists for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.notExists} with tableName() as path param.
+     * See {@link Condition.notExists} for more info and examples.
      */
     notExists(): Condition.Resolver<T> {
       return Condition.notExists(this.tableName());
@@ -574,22 +685,25 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * String property field
    */
   export class FieldString extends FieldExpression<string, 'S'> {
-    /** Helper method that just calls {@link Condition.size} with tableName() as path param.
-     * @see Condition.size for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.size} with tableName() as path param.
+     * See {@link Condition.size} for more info and examples.
      */
     size(): Condition.Resolver<'S'> {
       return Condition.size(this.tableName());
     }
 
-    /** Helper method that wraps {@link Condition.contains}.
-     * @see Condition.contains for more info and example.
+    /**
+     * Helper method that wraps {@link Condition.contains}.
+     * See {@link Condition.contains} for more info and examples.
      */
     contains(value: string): Condition.Resolver<'S'> {
       return Condition.contains(this.tableName(), value);
     }
 
-    /** Helper method that wraps {@link Condition.beginsWith}.
-     * @see Condition.beginsWith for more info and example.
+    /**
+     *  Helper method that wraps {@link Condition.beginsWith}.
+     * See {@link Condition.beginsWith} for more info and examples.
      */
     beginsWith(value: string): Condition.Resolver<'S'> {
       return Condition.beginsWith(this.tableName(), value);
@@ -605,8 +719,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * Binary property field.
    */
   export class FieldBinary extends FieldExpression<Table.BinaryValue, 'B'> {
-    /** Helper method that just calls {@link Condition.size} with tableName() as path param.
-     * @see Condition.size for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.size} with tableName() as path param.
+     * See {@link Condition.size} for more info and examples.
      */
     size(): Condition.Resolver<'B'> {
       return Condition.size(this.tableName());
@@ -627,15 +742,17 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    *  Generic set property field is base class for {@link FieldStringSet}, {@link FieldStringSet}, and {@link FieldStringSet}.
    */
   export class FieldSet<V, T extends 'BS' | 'NS' | 'SS'> extends FieldExpression<V, T> {
-    /** Helper method that just calls {@link Condition.size} with tableName() as path param.
-     * @see Condition.size for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.size} with tableName() as path param.
+     * See {@link Condition.size} for more info and examples.
      */
     size(): Condition.Resolver<T> {
       return Condition.size(this.tableName());
     }
 
-    /** Helper method that just calls {@link Condition.contains} with tableName() as path param.
-     * @see Condition.contains for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.contains} with tableName() as path param.
+     * See {@link Condition.contains} for more info and examples.
      */
     contains(value: string): Condition.Resolver<T> {
       return Condition.contains(this.tableName(), value);
@@ -661,8 +778,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * List property field.
    */
   export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[], 'L'> {
-    /** Helper method that just calls {@link Condition.size} with tableName() as path param.
-     * @see Condition.size for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.size} with tableName() as path param.
+     * See {@link Condition.size} for more info and examples.
      */
     size(): Condition.Resolver<'L'> {
       return Condition.size(this.tableName());
@@ -696,7 +814,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Initializes the schema property
-     * @see Field.init for more information.
+     * See {@link Field.init} for more information.
      */
     init(name: string, model: Model): void {
       super.init(name, model);
@@ -706,11 +824,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   /**
    * Map property field.
-   * @interface V Type for map values.
+   * @param V - Type for map values.
    */
   export class FieldMap<V extends Table.AttributeValues> extends FieldExpression<{ [key: string]: V }, 'M'> {
-    /** Helper method that just calls {@link Condition.size} with tableName() as path param.
-     * @see Condition.size for more info and example.
+    /**
+     * Helper method that just calls {@link Condition.size} with tableName() as path param.
+     * See {@link Condition.size} for more info and examples.
      */
     size(): Condition.Resolver<'M'> {
       return Condition.size(this.tableName());
@@ -741,7 +860,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   /**
    * FieldModelMap constructor options.
-   * @template V Type of the map value.
+   * @param V - Type of the map value.
    */
   export interface ModelMapOptions<V> extends BaseOptions<{ [key: string]: V }> {
     schema: Model.ModelSchemaT<V>;
@@ -749,7 +868,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   /**
    * Map of model property field.
-   * @template V Type of the map value.
+   * @param V - Type of the map value.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export class FieldModelMap<V extends { [key: string]: any }> extends FieldMap<V> {
@@ -757,7 +876,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Constructs a FieldModelMap object with options.
-     * @param options Options to initialize model map with.
+     * @param options - Options to initialize model map with.
      */
     constructor(options: ModelMapOptions<V>) {
       super(options) /* istanbul ignore next: needed for ts with es5 */;
@@ -765,7 +884,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
-     * @see Field.init for more information.
+     * See {@link Field.init} for more information.
      */
     init(name: string, model: Model): void {
       super.init(name, model);
@@ -779,8 +898,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * // or
      * Condition.eq('groups.group1.name', 'teachers');
      * ```
-     * @param key Map key value to scope condition to
-     * @param resolver Resolver to Model used in this FieldModelMap
+     * @param key - Map key value to scope condition to
+     * @param resolver - Resolver to Model used in this FieldModelMap
      */
     /*
     condition(key: string, resolver: Condition.Resolver): Condition.Resolver {
@@ -805,7 +924,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
   /**
    * Model property field.
-   * @template V Type of the map value.
+   * @param V - Type of the map value.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export class FieldModel<V extends { [key: string]: any }> extends FieldExpression<V, 'M'> {
@@ -817,7 +936,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
-     * @see Field.init for more information.
+     * See {@link Field.init} for more information.
      */
     init(name: string, model: Model): void {
       super.init(name, model);
@@ -826,7 +945,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
-     * @see Condition.size for more info and example.
+     * See {@link Condition.size} for more info and examples.
      */
     size(): Condition.Resolver<'M'> {
       return Condition.size(this.tableName());
@@ -837,9 +956,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * Date property field.
    */
   export class FieldDate extends FieldBase<Date> {
-    /**
-     * @see Field.toModel for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
@@ -851,9 +968,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
     }
 
-    /**
-     * @see Field.toTable for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
       modelData: Model.ModelData,
@@ -865,9 +980,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) tableData[this.alias || name] = Math.round(value.valueOf() / 1000);
     }
 
-    /**
-     * @see Field.toTableUpdate for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
@@ -882,23 +995,35 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * Hidden property field.  Used to avoid writing a property to the DynamoDb table.
    */
   export class FieldHidden implements Fields.Field {
-    /**
-     * @see Field.init
-     */
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    init(): void {}
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+    init(name: string, model: Model): void {}
 
-    /**
-     * @see Field.toModel for more information
-     */
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    toModel(): void {}
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
+    toModel(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      name: string,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      tableData: Table.AttributeValuesMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: ModelContext,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ): void {}
 
-    /**
-     * @see Field.toTable for more information.
-     */
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    toTable(): void {}
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
+    toTable(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      name: string,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      tableData: Table.AttributeValuesMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: TableContext,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ): void {}
   }
 
   /**
@@ -915,17 +1040,13 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.slots = slots;
     }
 
-    /**
-     * @see Field.init for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
-    /**
-     * @see Field.toModel for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
@@ -941,9 +1062,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       modelData[name] = parts[this.slot];
     }
 
-    /**
-     * @see Field.toTable for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
       modelData: Model.ModelData,
@@ -968,9 +1087,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData[alias] = dataSlots.join(this.composite.delimiter);
     }
 
-    /**
-     * @see Field.toTableUpdate for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
@@ -1024,13 +1141,13 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Number of model fields (slots) to compose together into a table attribute.
-     * @default 2
+     * @defaultValue 2
      */
     count = 2;
 
     /**
      * Delimiter to use for when splitting the table attribute in to multiple model fields.
-     * @default '.''
+     * @defaultValue '.'
      */
     delimiter = '.';
 
@@ -1072,9 +1189,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Defines the map for the named slots for a composite named field.
    */
-  export type CompositeSlotMap<T extends { [index: string]: number }> = {
-    [P in keyof T]: FieldCompositeSlot;
-  };
+  export type CompositeSlotMap<T extends { [index: string]: number }, V extends { [index: string]: Field } = {}> = V &
+    {
+      [P in keyof T]: FieldCompositeSlot;
+    };
 
   /**
    * Options used when constructing a FieldCompositeNamed.
@@ -1149,17 +1267,13 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (options.delimiter) this.delimiter = options.delimiter;
     }
 
-    /**
-     * @see Field.init for more information
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
-    /**
-     * @see Field.toModel for more information
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
@@ -1175,9 +1289,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (parts.length > 0) modelData[name] = parts.join(this.delimiter);
     }
 
-    /**
-     * @see Field.toTable for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
       modelData: Model.ModelData,
@@ -1196,9 +1308,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       for (let i = 0; i < parts.length; i++) tableData[this.aliases[i]] = parts[i];
     }
 
-    /**
-     * @see Field.toTableUpdate for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
@@ -1235,24 +1345,20 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Initialize the Field.
-     * @param type Name of type.
-     * @param alias Table attribute name to map this model property to.
+     * @param type - Name of type.
+     * @param alias - Table attribute name to map this model property to.
      */
     constructor(options: TypeOptions = {}) {
       this.alias = options.alias;
     }
 
-    /**
-     * @see Fields.Field.init for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
-    /**
-     * @see Fields.Field.toModel for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
@@ -1264,9 +1370,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = value;
     }
 
-    /**
-     * @see Fields.Field.toTable for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
       modelData: Model.ModelData,
@@ -1307,25 +1411,21 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Initialize the Field.
-     * @param type Name of type.
-     * @param alias Table attribute name to map this model property to.
+     * @param type - Name of type.
+     * @param alias - Table attribute name to map this model property to.
      */
     constructor(options: CreatedDateOptions = {}) {
       this.alias = options.alias;
       if (options.now) this.now = options.now;
     }
 
-    /**
-     * @see Fields.Field.init for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
-    /**
-     * @see Fields.Field.toModel for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
@@ -1337,9 +1437,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
     }
 
-    /**
-     * @see Fields.Field.toTable for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
       modelData: Model.ModelData,
@@ -1380,25 +1478,21 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Initialize the Field.
-     * @param type Name of type.
-     * @param alias Table attribute name to map this model property to.
+     * @param type - Name of type.
+     * @param alias - Table attribute name to map this model property to.
      */
     constructor(options: UpdateDateOptions = {}) {
       this.alias = options.alias;
       if (options.now) this.now = options.now;
     }
 
-    /**
-     * @see Fields.Field.init for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
-    /**
-     * @see Fields.Field.toModel for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
       tableData: Table.AttributeValuesMap,
@@ -1410,9 +1504,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
     }
 
-    /**
-     * @see Fields.Field.toTable for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
       modelData: Model.ModelData,
@@ -1422,9 +1514,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (Table.isPutAction(context.action)) tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
     }
 
-    /**
-     * @see Fields.Field.toTableUpdate for more information.
-     */
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,

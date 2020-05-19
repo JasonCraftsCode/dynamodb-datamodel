@@ -5,10 +5,12 @@
     "moduleResolution": "node",
     "lib": ["es6"], // same as es2015
     "outDir": "dist",
+    "baseUrl": "./__test__/baseUrl/", // baseUrl used for examples so "import {Table} from 'dynamodb-datamodel'" can be used
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     // "sourceMap": true,
+    "declarationMap": true,
     "noErrorTruncation": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -32,7 +34,8 @@
     "mode": "library", // requires: npm add -D typedoc@0.17.0-3 --save-exact
     "out": "docs",
     "theme": "default",
-    "gitRevision": "master"
+    "gitRevision": "master",
+    "includes": "./__test__/examples/"
     // "toc": ["Table", "Model"]
   }
 }

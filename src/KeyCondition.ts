@@ -4,6 +4,7 @@ import { Table } from './Table';
 /**
  * Object passed down to KeyCondition.Resolver functions to support getting path and value aliases and
  * provide context to the resolver function to support advanced key condition resolvers.
+ * @public
  */
 export class KeyConditionExpression implements KeyCondition.Expression {
   /**
@@ -19,21 +20,21 @@ export class KeyConditionExpression implements KeyCondition.Expression {
 
   /**
    * Initialize KeyConditionExpression with existing or new {@link ExpressionAttributes}.
-   * @param attributes Object used to get path and value aliases.
+   * @param attributes - Object used to get path and value aliases.
    */
   constructor(attributes: ExpressionAttributes = new ExpressionAttributes()) {
     this.attributes = attributes;
   }
 
   /**
-   * @see ExpressionAttributes.addPath.
+   * See {@link ExpressionAttributes.addPath} for details.
    */
   addPath(path: string): string {
     return this.attributes.addPath(path);
   }
 
   /**
-   * @see ExpressionAttributes.addValue.
+   * See {@link ExpressionAttributes.addValue} for details.
    */
   addValue(value: Table.AttributeValues): string {
     return this.attributes.addValue(value);
@@ -41,7 +42,7 @@ export class KeyConditionExpression implements KeyCondition.Expression {
 
   /**
    * Add key condition expression.
-   * @param condition Condition expression to add.
+   * @param condition - Condition expression to add.
    */
   addCondition(condition: string): void {
     if (this.conditions.length < 2) this.conditions.push(condition);
@@ -96,6 +97,7 @@ export class KeyConditionExpression implements KeyCondition.Expression {
  * };
  * const results = await table.query(key);
  * ```
+ * @public
  */
 export class KeyCondition {
   /**
@@ -109,9 +111,9 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
-   * @typeParam T The type used for the value param.
-   * @param op Compare operation to use: =, <, <=. > or >=.
-   * @param value Value to compare the sort key value against.
+   * @param T - The type used for the value param.
+   * @param op - Compare operation to use: =, \<, \<=. \> or \>=.
+   * @param value - Value to compare the sort key value against.
    * @returns Resolver to use when generate key condition expression.
    */
   static compare<T extends Table.AttributeValues>(op: KeyCondition.CompareOperators, value: T): KeyCondition.Resolver {
@@ -130,8 +132,8 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
-   * @typeParam T The type used for the value param.
-   * @param value Value to check if equal to.
+   * @param T - The type used for the value param.
+   * @param value - Value to check if equal to.
    * @returns Resolver to use when generate key condition expression.
    */
   static eq<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
@@ -139,7 +141,7 @@ export class KeyCondition {
   }
 
   /**
-   * '<' - Less then condition compares if the sort key value is less then a value.
+   * '\<' - Less then condition compares if the sort key value is less then a value.
    * @example
    * ```typescript
    * // Expands to: '#n0 = :v0 AND #n1 < :v1'
@@ -149,8 +151,8 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
-   * @typeParam T The type used for the value param.
-   * @param value Value to check if less then.
+   * @param T - The type used for the value param.
+   * @param value - Value to check if less then.
    * @returns Resolver to use when generate key condition expression.
    */
   static lt<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
@@ -158,7 +160,7 @@ export class KeyCondition {
   }
 
   /**
-   * '<=' - Less then or equal to condition compares if the sort key value is less then or equal to a value.
+   * '\<=' - Less then or equal to condition compares if the sort key value is less then or equal to a value.
    * @example
    * ```typescript
    * // Expands to: '#n0 = :v0 AND #n1 <= :v1'
@@ -168,8 +170,8 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
-   * @typeParam T The type used for the value param.
-   * @param value Value to check if less then or equal to.
+   * @param T - The type used for the value param.
+   * @param value - Value to check if less then or equal to.
    * @returns Resolver to use when generate key condition expression.
    */
   static le<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
@@ -177,7 +179,7 @@ export class KeyCondition {
   }
 
   /**
-   * '>' - Greater then condition compares if the sort key value is greater then a value.
+   * '\>' - Greater then condition compares if the sort key value is greater then a value.
    * @example
    * ```typescript
    * // Expands to: '#n0 = :v0 AND #n1 > :v1'
@@ -187,8 +189,8 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
-   * @typeParam T The type used for the value param.
-   * @param value Value to check if greater then.
+   * @param T - The type used for the value param.
+   * @param value - Value to check if greater then.
    * @returns Resolver to use when generate key condition expression.
    */
   static gt<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
@@ -196,7 +198,7 @@ export class KeyCondition {
   }
 
   /**
-   * '>=' - Greater then or equal to condition compares if the sort key value is greater then or equal to a value.
+   * '\>=' - Greater then or equal to condition compares if the sort key value is greater then or equal to a value.
    * @example
    * ```typescript
    * // Expands to: '#n0 = :v0 AND #n1 >= :v1'
@@ -206,8 +208,8 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
-   * @typeParam T The type used for the value param.
-   * @param value Value to check if greater then or equal to.
+   * @param T - The type used for the value param.
+   * @param value - Value to check if greater then or equal to.
    * @returns Resolver to use when generate key condition expression.
    */
   static ge<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver {
@@ -225,9 +227,9 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
-   * @typeParam T The type used for the from and to param.
-   * @param from Value to check if sort key is greater then and equal to.
-   * @param to Value to check if sort key  is less then and equal to.
+   * @param T - The type used for the from and to param.
+   * @param from - Value to check if sort key is greater then and equal to.
+   * @param to - Value to check if sort key  is less then and equal to.
    * @returns Resolver to use when generate key condition expression.
    */
   static between<T extends Table.AttributeValues>(from: T, to: T): KeyCondition.Resolver {
@@ -247,8 +249,8 @@ export class KeyCondition {
    * }
    * const results = await table.query(key);
    * ```
-   * @typeParam T The type used for the value param.
-   * @param value String to check if the sort key value begins with.
+   * @param T - The type used for the value param.
+   * @param value - String to check if the sort key value begins with.
    * @returns Resolver to use when generate key condition expression.
    */
   static beginsWith(value: string): KeyCondition.Resolver {
@@ -258,8 +260,8 @@ export class KeyCondition {
 
   /**
    * Create a key condition expression from a primary key.
-   * @param key Primary key value to build the expression from.
-   * @param exp Object used to get path and value aliases and store the key conditions array.
+   * @param key - Primary key value to build the expression from.
+   * @param exp - Object used to get path and value aliases and store the key conditions array.
    */
   static buildExpression(key: Table.PrimaryKey.KeyQueryMap, exp: KeyConditionExpression): string {
     Object.keys(key).forEach((name) => {
@@ -272,9 +274,9 @@ export class KeyCondition {
 
   /**
    * Helper function to set a 'KeyConditionExpression' value on the params argument if there are conditions to resolve.
-   * @param key  List of conditions to evaluate with AND.
-   * @param exp Used when evaluation conditions and store the names and values mappings.
-   * @param params Params used for DocumentClient query methods.
+   * @param key - List of conditions to evaluate with AND.
+   * @param exp - Used when evaluation conditions and store the names and values mappings.
+   * @param params - Params used for DocumentClient query methods.
    * @returns The params argument passed in.
    */
   static addParam(
@@ -291,6 +293,7 @@ export class KeyCondition {
   }
 }
 
+/** @public */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace KeyCondition {
   /**
@@ -308,18 +311,18 @@ export namespace KeyCondition {
    */
   export interface Expression {
     /**
-     * @see ExpressionAttributes.addPath.
+     * See {@link ExpressionAttributes.addPath} for details.
      */
     addPath(path: string): string;
 
     /**
-     * @see ExpressionAttributes.addValue.
+     * See {@link ExpressionAttributes.addValue} for details.
      */
     addValue(value: Table.AttributeValues): string;
 
     /**
      * Add key condition expression.
-     * @param condition Condition expression to add.
+     * @param condition - Condition expression to add.
      */
     addCondition(condition: string): void;
   }
@@ -328,10 +331,10 @@ export namespace KeyCondition {
    * Resolver function is return by most of the above KeyConditions methods.  Returning a function allows key conditions
    * to easily be composable and extensible.  This allows consumers to create higher level key conditions that are composed
    * of the above primitive key conditions or support any new primitives that AWS would add in the future.
-   * @typeParam T The type used for the value param.
-   * @param name Name of the primary key attribute to resolve.
-   * @param exp Object to get path and value aliases and store conditions array.
-   * @param type Param to enforce type safety for conditions that only work on certain types.
+   * @param T - The type used for the value param.
+   * @param name - Name of the primary key attribute to resolve.
+   * @param exp - Object to get path and value aliases and store conditions array.
+   * @param type - Param to enforce type safety for conditions that only work on certain types.
    */
   export type Resolver<T = Table.PrimaryKey.AttributeTypes> = (name: string, exp: Expression, type?: T) => void;
 

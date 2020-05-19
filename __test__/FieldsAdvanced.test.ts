@@ -1,9 +1,35 @@
+/* eslint-disable tsdoc/syntax */
 import { Condition } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table } from '../src/Table';
 import { Update } from '../src/Update';
 import { buildUpdate } from './testCommon';
+
+// Other field:
+// TableId = Fields.split({ aliases: [table.getPartitionKey(), table.getSortKey()] });
+//   options: delimiter, sortKeyDefault, generate
+// Duplicate - Set same value on two aliases, or field name + alias.
+//   Maybe part of FieldBase like copyTo: {alias: x, toLower: true }.  Though when duplicated the dup may also have a different field logic, like convert to lower case
+//   Though having the BaseField support this allows
+// Composite field - both partition and sort key should be used.
+//   - slots could also have configs like: { street: {alias: 1}, neighborhood: 0, city: 1, state,: 2, country: 3, region: {alias:}}
+//   - actually could just support
+//   - sport writing value to field or even slot name.
+//   - partition key for indexes should have a "scope prefix" to ensure different access patterns don't overlap
+//   -
+
+//
+// Model array:
+//   - group Id -
+//   - sort key -
+//   - sort type -
+//   -
+//
+// Access Pattern:
+//   - secondary index
+//   - map of models w/ type attribute
+//   -
 
 const model = { name: 'MyModel' } as Model;
 function getTableContext(action: Table.ItemActions): Fields.TableContext {
@@ -73,29 +99,29 @@ const updateTableContext = getTableContext('update');
 
 // FieldDate inherits from FieldBase
 
+// TODO:
+//  Add some type safety.
+//  Need to determine who handles toModel
+//  Fork is mainly used to put values into a index attribute (normalized like toLower) and item attribute
 class FieldFork implements Fields.Field {
   fields: Fields.Field[] = [];
 
   /**
    * Initialize the Field.
-   * @param type Name of type.
-   * @param alias Table attribute name to map this model property to.
+   * @param type - Name of type.
+   * @param alias - Table attribute name to map this model property to.
    */
   constructor(...fields: Fields.Field[]) {
     if (fields) this.fields = fields;
   }
 
-  /**
-   * @see Fields.Field.init for more information.
-   */
+  //** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   init(name: string, model: Model): void {
     this.fields.forEach((field) => field.init(name, model));
   }
 
-  /**
-   * @see Fields.Field.toModel for more information.
-   */
+  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
   toModel(
     name: string,
     tableData: Table.AttributeValuesMap,
@@ -105,9 +131,7 @@ class FieldFork implements Fields.Field {
     this.fields.forEach((field) => field.toModel(name, tableData, modelData, context));
   }
 
-  /**
-   * @see Fields.Field.toTable for more information.
-   */
+  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
   toTable(
     name: string,
     modelData: Model.ModelData,
@@ -117,9 +141,7 @@ class FieldFork implements Fields.Field {
     this.fields.forEach((field) => field.toTable(name, modelData, tableData, context));
   }
 
-  /**
-   * @see Fields.Field.toTableUpdate for more information.
-   */
+  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
   toTableUpdate(
     name: string,
     modelData: Model.ModelUpdate,
@@ -180,8 +202,8 @@ class FieldRevision implements Fields.Field {
 
   /**
    * Initialize the Field.
-   * @param type Name of type.
-   * @param alias Table attribute name to map this model property to.
+   * @param type - Name of type.
+   * @param alias - Table attribute name to map this model property to.
    */
   constructor(options: RevisionOptions = {}) {
     this.alias = options.alias;
@@ -189,17 +211,13 @@ class FieldRevision implements Fields.Field {
     this.matchOnWrite = options.matchOnWrite;
   }
 
-  /**
-   * @see Fields.Field.init for more information.
-   */
+  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   init(name: string, model: Model): void {
     this.name = name;
   }
 
-  /**
-   * @see Fields.Field.toModel for more information.
-   */
+  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
   toModel(
     name: string,
     tableData: Table.AttributeValuesMap,
@@ -211,9 +229,7 @@ class FieldRevision implements Fields.Field {
     if (value !== undefined) modelData[name] = value;
   }
 
-  /**
-   * @see Fields.Field.toTable for more information.
-   */
+  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
   toTable(
     name: string,
     modelData: Model.ModelData,
@@ -227,9 +243,7 @@ class FieldRevision implements Fields.Field {
     tableData[this.alias || name] = this.start;
   }
 
-  /**
-   * @see Fields.Field.toTableUpdate for more information.
-   */
+  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
   toTableUpdate(
     name: string,
     modelData: Model.ModelUpdate,

@@ -78,10 +78,10 @@
   id: <span class="hljs-built_in">string</span>;
 }
 <span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
-  name: <span class="hljs-built_in">string</span>;
-  age?: <span class="hljs-built_in">number</span>;
-  children?: { name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span>}[];
-  sports?: Table.StringSetValue;
+  name: Update.String;
+  age?: Update.Number;
+  children?: Update.List&lt;{ name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span>}&gt;;
+  sports?: Update.StringSet;
 }
 
 <span class="hljs-comment">// Define the schema using Fields</span>
@@ -205,7 +205,7 @@
 					<div class="tsd-signature tsd-kind-icon">Attributes<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L296">Fields.ts:296</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L398">Fields.ts:398</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -220,10 +220,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 					<a name="compositeslotmap" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Composite<wbr>Slot<wbr>Map</h3>
-					<div class="tsd-signature tsd-kind-icon">Composite<wbr>Slot<wbr>Map&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<div class="tsd-signature tsd-kind-icon">Composite<wbr>Slot<wbr>Map&lt;T, V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1075">Fields.ts:1075</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1192">Fields.ts:1192</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -236,12 +236,10 @@
 						<li>
 							<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
 						</li>
+						<li>
+							<h4>V<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
+						</li>
 					</ul>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-						</ul>
-					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -256,7 +254,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L63">Fields.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L65">Fields.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -288,7 +286,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L99">Fields.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L101">Fields.ts:101</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -320,7 +318,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L72">Fields.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L74">Fields.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -352,7 +350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L190">Fields.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L236">Fields.ts:236</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -361,7 +359,36 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
+<span class="hljs-keyword">interface</span> ModelKey {
+  id: <span class="hljs-built_in">string</span>;
+}
+<span class="hljs-comment">// street, city, state and country only support simple set updates since</span>
+<span class="hljs-comment">// they are part of a composite key</span>
+<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
+  street: <span class="hljs-built_in">string</span>;
+  city: <span class="hljs-built_in">string</span>;
+  state: <span class="hljs-built_in">string</span>;
+  country: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-comment">// Create composite slots to use in model schema below.</span>
+<span class="hljs-keyword">const</span> location = Fields.composite({alias: <span class="hljs-string">'G0S'</span>, count: <span class="hljs-number">4</span>});
+<span class="hljs-keyword">const</span> locSlots = location.createSlots();
+
+<span class="hljs-comment">// Define the schema using Fields</span>
+<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelKey&gt;({
+  schema: {
+    id: Fields.split({ aliases:[<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
+    street: locSlots[<span class="hljs-number">0</span>],
+    city: locSlots[<span class="hljs-number">1</span>],
+    state: locSlots[<span class="hljs-number">2</span>],
+    country: locSlots[<span class="hljs-number">3</span>],
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -389,7 +416,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L203">Fields.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L285">Fields.ts:285</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -398,7 +425,41 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><p><a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/Fields.compositeNamed.test.ts" class="external">Fields.compositeNamed.test.ts</a>, (imports: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleIndex.ts" class="external">./ExampleIndex</a>, <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleTable.ts" class="external">./ExampleTable</a>)</p>
+										<pre><code class="language-typescript"></code></pre>
+									</dd>
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
+<span class="hljs-keyword">interface</span> ModelKey {
+  id: <span class="hljs-built_in">string</span>;
+}
+<span class="hljs-comment">// street, city, state and country only support simple set updates since</span>
+<span class="hljs-comment">// they are part of a composite key</span>
+<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
+  street: <span class="hljs-built_in">string</span>;
+  city: <span class="hljs-built_in">string</span>;
+  state: <span class="hljs-built_in">string</span>;
+  country: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-comment">// Create composite slots to use in model schema below.</span>
+<span class="hljs-keyword">const</span> locMap = { street: <span class="hljs-number">0</span>, city: <span class="hljs-number">1</span>, state: <span class="hljs-number">2</span>, country: <span class="hljs-number">3</span> };
+<span class="hljs-keyword">const</span> location = Fields.compositeNamed({alias: <span class="hljs-string">'G0S'</span>, map: locMap});
+<span class="hljs-keyword">const</span> locSlots = location.createNamedSlots();
+
+<span class="hljs-comment">// Define the schema using Fields</span>
+<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
+  schema: {
+    id: Fields.split({ aliases:[<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
+    street: locSlots.street,
+    city: locSlots.city,
+    state: locSlots.state,
+    country: locSlots.country,
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -435,7 +496,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L223">Fields.ts:223</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L324">Fields.ts:324</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -467,7 +528,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L156">Fields.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L158">Fields.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -499,7 +560,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L163">Fields.ts:163</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L165">Fields.ts:165</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -521,7 +582,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L108">Fields.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L110">Fields.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -553,7 +614,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L127">Fields.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L129">Fields.ts:129</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -585,7 +646,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L147">Fields.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L149">Fields.ts:149</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -626,7 +687,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L118">Fields.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L120">Fields.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -667,7 +728,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L137">Fields.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L139">Fields.ts:139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -708,7 +769,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L54">Fields.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L56">Fields.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -740,7 +801,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L90">Fields.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L92">Fields.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -772,7 +833,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L178">Fields.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L194">Fields.ts:194</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -780,11 +841,24 @@
 									<p>Creates a split field object to use in a <a href="model.html#schema">Model.schema</a>. which can be used to split a model property into two or more
 										table attributes.  This is commonly used as an model id property which gets slit into the table&#39;s partition and sort keys.
 										Example: Model schema contains &#39;id: Fields.split({ aliases: [&#39;P&#39;,&#39;S&#39;] })&#39; and when id = &#39;guid.date&#39; the field will split the id value
-									in to the table primary key of { P: &#39;guid&#39;, S: &#39;date&#39;}</p>
+									in to the table primary key of { P: &#39;guid&#39;, S: &#39;date&#39; }</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"></code></pre>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
+<span class="hljs-keyword">interface</span> ModelKey {
+  id: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-comment">// Define the schema using Fields</span>
+<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelKey&gt;({
+  schema: {
+    id: Fields.split({ aliases:[<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
+  },
+  <span class="hljs-comment">// ...additional properties like table</span>
+});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -812,7 +886,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L45">Fields.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L47">Fields.ts:47</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -844,7 +918,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L81">Fields.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L83">Fields.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -876,13 +950,29 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L214">Fields.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L315">Fields.ts:315</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates a field that adds the Model name to a table attribute.</p>
+									<p>```typescript
+									import { Fields, Model } from &#39;dynamodb-datamodel&#39;;</p>
 								</div>
+								<p>// (TypeScript) Define model key and item interface.
+									interface ModelKey {
+									id: string;
+									}
+								interface ModelItem extends Key {</p>
+								<p>}</p>
+								<p>// Define the schema using Fields
+									const model = Model.createModel&lt;ModelKey, ModelItem&gt;({
+									schema: {
+									id: Fields.split({ aliases:[&#39;P&#39;, &#39;S&#39;] }),
+									},
+									// ...additional properties like table
+									});
+								```</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -908,7 +998,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L232">Fields.ts:232</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L333">Fields.ts:333</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

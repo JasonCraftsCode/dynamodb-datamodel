@@ -128,7 +128,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1145">Fields.ts:1145</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1263">Fields.ts:1263</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -150,7 +150,7 @@
 					<div class="tsd-signature tsd-kind-icon">aliases<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1140">Fields.ts:1140</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1258">Fields.ts:1258</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -165,7 +165,7 @@
 					<div class="tsd-signature tsd-kind-icon">delimiter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;.&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1145">Fields.ts:1145</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1263">Fields.ts:1263</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1135">Fields.ts:1135</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1253">Fields.ts:1253</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -198,15 +198,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1156">Fields.ts:1156</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1272">Fields.ts:1272</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>Field.init for more information</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Initialize the field with the field name from the Model&#39;s schema and the model.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -232,15 +230,14 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#tomodel">toModel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1163">Fields.ts:1163</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1277">Fields.ts:1277</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>Field.toModel for more information</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Method called <strong>after</strong> calling into the table object to read and write to the table.  This method will convert the
+									table data into model data.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -272,15 +269,14 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totable">toTable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1181">Fields.ts:1181</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1293">Fields.ts:1293</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>Field.toTable for more information.</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Method called <strong>before</strong> calling into the table object to read and write to the table.  This method will convert the model data
+									into table data and append read or write conditions.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -312,15 +308,15 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totableupdate">toTableUpdate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1202">Fields.ts:1202</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1312">Fields.ts:1312</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>Field.toTableUpdate for more information.</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Method called <strong>before</strong> calling into the table object to update the table.  This method will convert the model data
+									into table data and append read or write conditions.</p>
+								</div>
+								<p>Note: Several Fields will just call toTable from toTableUpdate if they don&#39;t support any special update syntax.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">

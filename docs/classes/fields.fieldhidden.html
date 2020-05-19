@@ -107,22 +107,30 @@
 					<a name="init" class="tsd-anchor"></a>
 					<h3>init</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">init<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">init<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, model<span class="tsd-signature-symbol">: </span><a href="model.html" class="tsd-signature-type">Model</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L889">Fields.ts:889</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1000">Fields.ts:1000</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>Field.init</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Initialize the field with the field name from the Model&#39;s schema and the model.</p>
+								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>model: <a href="model.html" class="tsd-signature-type">Model</a></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -131,22 +139,37 @@
 					<a name="tomodel" class="tsd-anchor"></a>
 					<h3>to<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modelcontext.html" class="tsd-signature-type">ModelContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#tomodel">toModel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L895">Fields.ts:895</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1003">Fields.ts:1003</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>Field.toModel for more information</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Method called <strong>after</strong> calling into the table object to read and write to the table.  This method will convert the
+									table data into model data.</p>
+								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>tableData: <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
+								</li>
+								<li>
+									<h5>modelData: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
+								</li>
+								<li>
+									<h5>context: <a href="../interfaces/fields.modelcontext.html" class="tsd-signature-type">ModelContext</a></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -155,22 +178,37 @@
 					<a name="totable" class="tsd-anchor"></a>
 					<h3>to<wbr>Table</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, tableData<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totable">toTable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L901">Fields.ts:901</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1016">Fields.ts:1016</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>Field.toTable for more information.</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Method called <strong>before</strong> calling into the table object to read and write to the table.  This method will convert the model data
+									into table data and append read or write conditions.</p>
+								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>modelData: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
+								</li>
+								<li>
+									<h5>tableData: <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
+								</li>
+								<li>
+									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>

@@ -5,6 +5,7 @@ import { Table } from './Table';
  * Object passed into all Update.Resolver functions to support getting path and value aliases, appending
  * update conditions to SET, REMOVE, ADD and DELETE update arrays and provide context to the resolver function to
  * support advanced update resolvers.
+ * @public
  */
 export class UpdateExpression implements Update.Expression {
   /**
@@ -34,21 +35,21 @@ export class UpdateExpression implements Update.Expression {
 
   /**
    * Initialize UpdateExpression with existing or new {@link ExpressionAttributes}.
-   * @param attributes Object used to get path and value aliases.
+   * @param attributes - Object used to get path and value aliases.
    */
   constructor(attributes = new ExpressionAttributes()) {
     this.attributes = attributes;
   }
 
   /**
-   * @see ExpressionAttributes.addPath
+   * See {@link ExpressionAttributes.addPath} for details.
    */
   addPath(name: string): string {
     return this.attributes.addPath(name);
   }
 
   /**
-   * @see ExpressionAttributes.addValue
+   * See {@link ExpressionAttributes.addValue} for details.
    */
   addValue(value: Table.AttributeValues): string {
     return this.attributes.addValue(value);
@@ -56,7 +57,7 @@ export class UpdateExpression implements Update.Expression {
 
   /**
    * Append a `SET` update expression.
-   * @param value Expression to add to the `SET` array.
+   * @param value - Expression to add to the `SET` array.
    */
   addSet(value: string): void {
     this.setList.push(value);
@@ -64,7 +65,7 @@ export class UpdateExpression implements Update.Expression {
 
   /**
    * Append a `REMOVE` update expression.
-   * @param value Expression to add to the `REMOVE` array.
+   * @param value - Expression to add to the `REMOVE` array.
    */
   addRemove(value: string): void {
     this.removeList.push(value);
@@ -72,7 +73,7 @@ export class UpdateExpression implements Update.Expression {
 
   /**
    * Append an `ADD` update expression.
-   * @param value Expression to add to the `ADD` array.
+   * @param value - Expression to add to the `ADD` array.
    */
   addAdd(value: string): void {
     this.addList.push(value);
@@ -80,7 +81,7 @@ export class UpdateExpression implements Update.Expression {
 
   /**
    * Append an `DELETE` update expression.
-   * @param value Expression to add to the `DELETE` array.
+   * @param value - Expression to add to the `DELETE` array.
    */
   addDelete(value: string): void {
     this.deleteList.push(value);
@@ -89,7 +90,7 @@ export class UpdateExpression implements Update.Expression {
   /**
    * Helper method to build an UpdateExpression string appending all of the expressions from the
    * lists that are not empty.
-   * @return UpdateExpression based string.
+   * @returns UpdateExpression based string.
    */
   buildExpression(): string | undefined {
     const updates = new Array<string>();
@@ -178,6 +179,7 @@ export class UpdateExpression implements Update.Expression {
  *   }
  * );
  * ```
+ * @public
  */
 export class Update {
   /**
@@ -202,7 +204,7 @@ export class Update {
    *   name: Update.path('fullName'),
    * });
    * ```
-   * @param path Attribute path to resolve and get alias for.
+   * @param path - Attribute path to resolve and get alias for.
    * @returns Update function that returns the alias for the path.
    */
   static path(path: string): Update.OperandFunction {
@@ -231,9 +233,9 @@ export class Update {
    *   name: Update.pathWithDefault('fullName', 'User Name'),
    * });
    * ```
-   * @typeParam T Type of default value argument.
-   * @param path Attribute path to resolve and get alias for.
-   * @param value The default value to set if the path attribute value does not exist.
+   * @param T - Type of default value argument.
+   * @param path - Attribute path to resolve and get alias for.
+   * @param value - The default value to set if the path attribute value does not exist.
    * @returns Update function that returns the alias for the path.
    */
   static pathWithDefault<T extends Table.AttributeValues>(path: string, value: T): Update.OperandFunction {
@@ -261,8 +263,8 @@ export class Update {
    *   name: Update.default('Default Name'),
    * });
    * ```
-   * @typeParam T Type of default value argument.
-   * @param value Default value to set if attribute value does not exist.
+   * @param T - Type of default value argument.
+   * @param value - Default value to set if attribute value does not exist.
    * @returns Update resolver function to set default value.
    */
   static default<T extends Table.AttributeValues>(value: T): Update.Resolver<Table.AttributeTypes> {
@@ -316,8 +318,8 @@ export class Update {
    *   name: Update.set('new name'),
    * });
    * ```
-   * @typeParam T Type of value argument to set.
-   * @param value The value (or attribute reference) to update the item attribute to, will add attribute if not present.
+   * @param T - Type of value argument to set.
+   * @param value - The value (or attribute reference) to update the item attribute to, will add attribute if not present.
    * @returns Update resolver function to set attribute to a value.
    */
   static set<T extends Table.AttributeValues>(
@@ -330,9 +332,9 @@ export class Update {
   /**
    * Sets an attribute to the result of an arithmetic expression.  Note: The reference attributes must exists
    * for the update to succeed.  Helper method used by {@link inc}, {@link dec}, {@link add} and {@link sub}.
-   * @param left A value (or reference attribute) used on the left side of the arithmetic expression.
-   * @param op Operation to use in arithmetic.
-   * @param right A value (or reference attribute) used on the left side of the arithmetic expression.
+   * @param left - A value (or reference attribute) used on the left side of the arithmetic expression.
+   * @param op - Operation to use for expression.
+   * @param right - A value (or reference attribute) used on the left side of the arithmetic expression.
    * @returns Update resolver function to set a number attribute to the result of the arithmetic expression.
    */
   static arithmetic(
@@ -370,7 +372,7 @@ export class Update {
    *   count: Update.inc(1),
    * });
    * ```
-   * @param value A value (or reference attribute) to increment the number attribute by.
+   * @param value - A value (or reference attribute) to increment the number attribute by.
    * @returns Update resolver function to increment the attribute.
    */
   static inc(value: Update.OperandNumber): Update.Resolver<'N'> {
@@ -400,7 +402,7 @@ export class Update {
    *   count: Update.dec(2),
    * });
    * ```
-   * @param value A value (or reference attribute) to decrement the number attribute by.
+   * @param value - A value (or reference attribute) to decrement the number attribute by.
    * @returns Update resolver function to decrement the attribute.
    */
   static dec(value: Update.OperandNumber): Update.Resolver<'N'> {
@@ -431,8 +433,8 @@ export class Update {
    *   count: Update.add('base', 3),
    * });
    * ```
-   * @param left A value (or reference attribute) to using in add operation.
-   * @param right A value (or reference attribute) to using in add operation.
+   * @param left - A value (or reference attribute) to using in add operation.
+   * @param right - A value (or reference attribute) to using in add operation.
    * @returns Update resolver function to set a number attribute to the result of adding two values.
    */
   static add(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'> {
@@ -463,8 +465,8 @@ export class Update {
    *   count: Update.sub('base', 2),
    * });
    * ```
-   * @param left A value (or reference attribute) to use on the left side of a subtract operation.
-   * @param right A value (or reference attribute) to use on the right side of a subtract operation.
+   * @param left - A value (or reference attribute) to use on the left side of a subtract operation.
+   * @param right - A value (or reference attribute) to use on the right side of a subtract operation.
    * @returns Update resolver function to set a number attribute to the result of subtracting two values.
    */
   static sub(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'> {
@@ -494,8 +496,8 @@ export class Update {
    *   ancestors: Update.join('parents', ['grandpa', 'grandma']),
    * });
    * ```
-   * @param left A list (or reference attribute) to add to the start.
-   * @param right A list (or reference attribute) to add at the end.
+   * @param left - A list (or reference attribute) to add to the start.
+   * @param right - A list (or reference attribute) to add at the end.
    * @returns Update resolver function to set an attribute to the joining of two lists.
    */
   static join(left?: Update.OperandList, right?: Update.OperandList): Update.Resolver<'L'> {
@@ -527,7 +529,7 @@ export class Update {
    *   groups: Update.append(['soccer', 'tennis']),
    * });
    * ```
-   * @param value A list (or reference attribute) to append.
+   * @param value - A list (or reference attribute) to append.
    * @returns Update resolver function to append a list to an attribute.
    */
   static append(value: Update.OperandList): Update.Resolver<'L'> {
@@ -556,7 +558,7 @@ export class Update {
    *   groups: Update.prepend(['soccer', 'tennis']),
    * });
    * ```
-   * @param value A list (or reference attribute) to prepend.
+   * @param value - A list (or reference attribute) to prepend.
    * @returns Update resolver function to prepend a list to an attribute.
    */
   static prepend(value: Update.OperandList): Update.Resolver<'L'> {
@@ -585,7 +587,7 @@ export class Update {
    *   children: Update.delIndexes([1, 2]);
    * });
    * ```
-   * @param indexes Array of indices (numbered indexes into the list) to delete from the list.
+   * @param indexes - Array of indices (numbered indexes into the list) to delete from the list.
    * @returns Update resolver function to delete indices in a list based attribute.
    */
   static delIndexes(indexes: number[]): Update.Resolver<'L'> {
@@ -614,7 +616,7 @@ export class Update {
    *   children: Update.setIndexes({1: 'margret', 2: 'mathew'});
    * });
    * ```
-   * @param indexes Map of indices with values to set in the list.
+   * @param indexes - Map of indices with values to set in the list.
    * @returns Update resolver function to set values for select indices in a list based attribute.
    */
   static setIndexes(values: { [key: number]: Table.AttributeValues | Update.OperandFunction }): Update.Resolver<'L'> {
@@ -650,7 +652,7 @@ export class Update {
    *   colors: Update.addToSet(model.table.createStringSet(['yellow', 'red']));
    * });
    * ```
-   * @param value Array of values to add.
+   * @param value - Array of values to add.
    * @returns Update resolver function to add an array of values to a set based attribute.
    */
   static addToSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
@@ -680,7 +682,7 @@ export class Update {
    *   colors: Update.removeFromSet(model.table.createStringSet(['yellow', 'red']));
    * });
    * ```
-   * @param value Array of values to remove.
+   * @param value - Array of values to remove.
    * @returns Update resolver function to remove an array of values from a set based attribute.
    */
   static removeFromSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
@@ -690,9 +692,9 @@ export class Update {
 
   /**
    * Updates the inner attributes of a map based attribute.  {@link set} is used to overwrite the entire map attribute, while map updates the attributes
-   * inside of table attribute.  Example if an address attribute is set to { street: 'One Infinite Loop', city: 'Cupertino', state: 'CA, zip: '95014' } then
-   * using Update.map({street: '1 Apple Park Way'}) will result in { street: '1 Apple Park Way', city: 'Cupertino', state: 'CA, zip: '95014' }, while
-   * using Update.set({street: '1 Apple Park Way'}) will result in {street: '1 Apple Park Way'}.
+   * inside of table attribute.  Example if an address attribute is set to \{ street: 'One Infinite Loop', city: 'Cupertino', state: 'CA, zip: '95014' \} then
+   * using Update.map(\{street: '1 Apple Park Way'\}) will result in \{ street: '1 Apple Park Way', city: 'Cupertino', state: 'CA, zip: '95014' \}, while
+   * using Update.set(\{street: '1 Apple Park Way'\}) will result in \{ street: '1 Apple Park Way' \}.
    * Supported types: map.
    * @example
    * ```typescript
@@ -716,7 +718,7 @@ export class Update {
    *   });
    * });
    * ```
-   * @param map Map of update values and resolvers to evaluate.
+   * @param map - Map of update values and resolvers to evaluate.
    * @returns Update resolver function to recursively set the inner attributes of a map based attribute.
    */
   static map(map: Update.ResolverMap): Update.Resolver<'M'> {
@@ -727,7 +729,9 @@ export class Update {
 
   /**
    * Typed based version of {@link Update.map}.
-   * @interface T
+   * @param T - Interface for model.
+   * @param map -
+   * @returns Update resolver function to remove an array of values from a set based attribute.
    */
   static model<T>(map: Update.ResolverObject<T>): Update.Resolver<'M'> {
     return Update.map(map);
@@ -735,7 +739,9 @@ export class Update {
 
   /**
    *
-   * @param map
+   * @param T - Interface for Model
+   * @param map -
+   * @returns Update resolver function to remove an array of values from a set based attribute.
    */
   static modelMap<T>(map: Update.ResolverObjectMap<T>): Update.Resolver<'M'> {
     return (name: string, exp: Update.Expression): void => {
@@ -749,9 +755,9 @@ export class Update {
 
   /**
    * Resolves each key of a map to an Update.Expression.
-   * @param name Name alias of the parent attribute, prepends each key name
-   * @param map Map of update values and resolvers to evaluate.
-   * @param exp Object to get path and value aliases and store update array.
+   * @param name - Name alias of the parent attribute, prepends each key name
+   * @param map - Map of update values and resolvers to evaluate.
+   * @param exp - Object to get path and value aliases and store update array.
    */
   static resolveMap(name: string | null, map: Update.ResolverMap, exp: Update.Expression): void {
     Object.keys(map).forEach((key) => {
@@ -769,10 +775,10 @@ export class Update {
   /**
    * Helper method to add value or resolve value function to get back alias or resolved string.
    * To allow the value to reference a path, the value needs to be a resolver.
-   * @param exp Object to get path and value aliases and store update array.
-   * @param value Value to add or resolve.
-   * @param name Name used to pass down to the value resolver.
-   * @return Alias or expression for value to use in expression.
+   * @param exp - Object to get path and value aliases and store update array.
+   * @param value - Value to add or resolve.
+   * @param name - Name used to pass down to the value resolver.
+   * @returns Alias or expression for value to use in expression.
    */
   static addAnyValue(
     exp: Update.Expression,
@@ -786,10 +792,10 @@ export class Update {
    * Helper method used in update methods that do not support string attributes, like add or sub.
    * This then allows string values to act as paths, without having to wrap the path in a resolver.
    * For strings based attributes, like set, need to use the path() function to wrap the path.
-   * @param exp Object to get path and value aliases and store update array.
-   * @param value The value, update resolver or path string to add and get back an alias.
-   * @param name Name used to pass down to the value resolver.
-   * @return Alias or expression for value to use in expression.
+   * @param exp - Object to get path and value aliases and store update array.
+   * @param value - The value, update resolver or path string to add and get back an alias.
+   * @param name - Name used to pass down to the value resolver.
+   * @returns Alias or expression for value to use in expression.
    */
   static addNonStringValue(
     exp: Update.Expression,
@@ -802,8 +808,8 @@ export class Update {
 
   /**
    * Helper function that resolves the updateMap and returns an UpdateExpression to use in DocumentClient.update method calls.
-   * @param updateMap Map of update values and resolvers to evaluate.
-   * @param exp Used when calling update resolver function to store the names and values mappings and update expressions.
+   * @param updateMap - Map of update values and resolvers to evaluate.
+   * @param exp - Used when calling update resolver function to store the names and values mappings and update expressions.
    * @returns Update expression to use in UpdateExpression for DocumentClient.update method calls.
    */
   static buildExpression(updateMap: Update.ResolverMap, exp: UpdateExpression): string | undefined {
@@ -813,9 +819,9 @@ export class Update {
 
   /**
    * Helper function to set a 'UpdateExpression' value on the params argument if there are update expressions to resolve.
-   * @param updateMap Map of update values and resolvers to evaluate.
-   * @param exp Used when calling update resolver function to store the names and values mappings and update expressions.
-   * @param params Params used for DocumentClient update method.
+   * @param updateMap - Map of update values and resolvers to evaluate.
+   * @param exp - Used when calling update resolver function to store the names and values mappings and update expressions.
+   * @param params - Params used for DocumentClient update method.
    * @returns The params argument passed in.
    */
   static addParam(
@@ -832,6 +838,7 @@ export class Update {
   }
 }
 
+/** @public */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Update {
   /**
@@ -839,36 +846,36 @@ export namespace Update {
    */
   export interface Expression {
     /**
-     * @see ExpressionAttributes.addPath.
+     * See {@link ExpressionAttributes.addPath} for details.
      */
     addPath(path: string): string;
 
     /**
-     * @see ExpressionAttributes.addValue.
+     * See {@link ExpressionAttributes.addValue} for details.
      */
     addValue(value: Table.AttributeValues): string;
 
     /**
      * Append a `SET` update expression.
-     * @param value Expression to add to the `SET` array.
+     * @param value - Expression to add to the `SET` array.
      */
     addSet(value: string): void;
 
     /**
      * Append a `REMOVE` update expression.
-     * @param value Expression to add to the `REMOVE` array.
+     * @param value - Expression to add to the `REMOVE` array.
      */
     addRemove(value: string): void;
 
     /**
      * Append an `ADD` update expression.
-     * @param value Expression to add to the `ADD` array.
+     * @param value - Expression to add to the `ADD` array.
      */
     addAdd(value: string): void;
 
     /**
      * Append an `DELETE` update expression.
-     * @param value Expression to add to the `DELETE` array.
+     * @param value - Expression to add to the `DELETE` array.
      */
     addDelete(value: string): void;
   }
@@ -877,16 +884,16 @@ export namespace Update {
    * Resolver function is return by most of the above key Update methods.  Returning a function allows table item updates
    * to easily be composable and extensible.  This allows consumers to create higher level table item update that are composed
    * of the primitive update expressions or support any new primitives that AWS would add in the future.
-   * @typeParam T The type used for the value param.
-   * @param name Name of the item attribute to resolve.
-   * @param exp Object to get path and value aliases and store update array.
-   * @param type Param to enforce type safety for update that only work on certain types.
+   * @param T - The type used for the value param.
+   * @param name - Name of the item attribute to resolve.
+   * @param exp - Object to get path and value aliases and store update array.
+   * @param type - Param to enforce type safety for update that only work on certain types.
    */
   export type Resolver<T> = (name: string, exp: Update.Expression, type?: T) => void;
 
   /**
    * Type used for generic map based update methods.
-   * @typeParam T The model interface.
+   * @param T - The model interface.
    */
   export type ResolverMapT<T> = {
     [key: string]: T | Resolver<Table.AttributeTypes> | undefined;
@@ -918,8 +925,8 @@ export namespace Update {
 
   /**
    * Update function return by path and pathWithDefault to support nested resolvers.
-   * @param name Name of the item attribute to resolve.
-   * @param exp Object to get path and value aliases and store update array.
+   * @param name - Name of the item attribute to resolve.
+   * @param exp - Object to get path and value aliases and store update array.
    * @returns The resolved value of the update function.
    */
   export type OperandFunction = (name: string, exp: Update.Expression) => string;

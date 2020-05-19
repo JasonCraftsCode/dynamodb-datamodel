@@ -5,5 +5,10 @@
   "eslint.workingDirectories": ["src/**/*.ts", "__test__/**/*.ts"],
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
-  "eslint.options": {}
+  "eslint.options": {},
+  "cSpell.words": [
+    "Birdland",
+    "tsdoc",
+    "unscoped"
+  ]
 }

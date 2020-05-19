@@ -5,7 +5,7 @@ import { Table } from './Table';
 import { Update } from './Update';
 
 /**
- *
+ * @public
  */
 export class Model implements Model.ModelBase {
   name?: string;
@@ -128,6 +128,7 @@ export class Model implements Model.ModelBase {
   }
 }
 
+/** @public */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   export interface ModelBase {
@@ -233,7 +234,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   /**
    *
    * See {@link Table.createTable} reasoning for having a createTable over support 'new TableT'.
-   * @param params
+   * @param params - Options to used when creating Model
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-inner-declarations
   export function createModel<KEY extends { [key: string]: any }, MODEL extends KEY = KEY>(

@@ -17,11 +17,11 @@ export interface KeyName {
 
 /**
  * Validate the key attributes for a {@link Table}.
- * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index
+ * @param ATTRIBUTES - The interface or type that has all required attributes, including table and index
  * primary key and all defined index projected attributes.
- * @param keyAttributes Key attributes of the Table.
- * @param name Name of Table.
- * @param onError Method to call when there is a validation error.
+ * @param keyAttributes - Key attributes of the Table.
+ * @param name - Name of Table.
+ * @param onError - Method to call when there is a validation error.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function validateKeyAttributes<ATTRIBUTES extends { [index: string]: any }>(
@@ -39,13 +39,13 @@ export function validateKeyAttributes<ATTRIBUTES extends { [index: string]: any 
 
 /**
  * Validate the key schema for a {@link Table}.
- * @typeParam KEY The interface of the table's primary key
- * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index
+ * @param KEY - The interface of the table's primary key
+ * @param ATTRIBUTES - The interface or type that has all required attributes, including table and index
  * primary key and all defined index projected attributes.
- * @param keySchema Key schema of the Table.
- * @param keyAttributes Key attributes of the Table.
- * @param name Name of the Table.
- * @param onError Method to call when there is a validation error.
+ * @param keySchema - Key schema of the Table.
+ * @param keyAttributes - Key attributes of the Table.
+ * @param name - Name of the Table.
+ * @param onError - Method to call when there is a validation error.
  */
 export function validateKeySchema<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,9 +81,9 @@ export function validateKeySchema<
 
 /**
  * Validates an {@link Index} for a {@link Table}.
- * @param index An index for a Table.
- * @param names Name of the Table.
- * @param onError Method to call when there is a validation error.
+ * @param index - An index for a Table.
+ * @param names - Name of the Table.
+ * @param onError - Method to call when there is a validation error.
  */
 export function validateIndexes(index: Index, names: Set<string>, onError: (msg: string) => void): void {
   if (!index.name) onError(`Global index must have a name`);
@@ -104,10 +104,11 @@ export function validateIndexes(index: Index, names: Set<string>, onError: (msg:
 /**
  * Validates that a {@link Table} is configured correctly.  The Table's onError methods is called for any
  * validation errors.   This method should primarily be used in tests to validate the table.
- * @typeParam KEY The interface of the table's primary key.
- * @typeParam ATTRIBUTES The interface or type that has all required attributes, including table and index primary
+ * @param KEY - The interface of the table's primary key.
+ * @param ATTRIBUTES - The interface or type that has all required attributes, including table and index primary
  * key and all defined index projected attributes.
- * @param table Table to be validated.
+ * @param table - Table to be validated.
+ * @public
  */
 export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>): void {
   if (!table.name) table.onError(`Table must have a name`);
