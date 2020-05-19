@@ -135,6 +135,7 @@
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnull.html" class="tsd-kind-icon">Field<wbr>Null</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnumber.html" class="tsd-kind-icon">Field<wbr>Number</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnumberset.html" class="tsd-kind-icon">Field<wbr>Number<wbr>Set</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldrevision.html" class="tsd-kind-icon">Field<wbr>Revision</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldset.html" class="tsd-kind-icon">Field<wbr>Set</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldsplit.html" class="tsd-kind-icon">Field<wbr>Split</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldstring.html" class="tsd-kind-icon">Field<wbr>String</a></li>
@@ -156,6 +157,7 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modellistoptions.html" class="tsd-kind-icon">Model<wbr>List<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modelmapoptions.html" class="tsd-kind-icon">Model<wbr>Map<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modeloptions.html" class="tsd-kind-icon">Model<wbr>Options</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.revisionoptions.html" class="tsd-kind-icon">Revision<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.splitoptions.html" class="tsd-kind-icon">Split<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.tablecontext.html" class="tsd-kind-icon">Table<wbr>Context</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.typeoptions.html" class="tsd-kind-icon">Type<wbr>Options</a></li>
@@ -187,6 +189,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#modelmap" class="tsd-kind-icon">model<wbr>Map</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#number" class="tsd-kind-icon">number</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#numberset" class="tsd-kind-icon">number<wbr>Set</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#revision" class="tsd-kind-icon">revision</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#split" class="tsd-kind-icon">split</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#string" class="tsd-kind-icon">string</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#stringset" class="tsd-kind-icon">string<wbr>Set</a></li>
@@ -205,7 +208,7 @@
 					<div class="tsd-signature tsd-kind-icon">Attributes<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L398">Fields.ts:398</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L372">Fields.ts:372</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -223,7 +226,7 @@
 					<div class="tsd-signature tsd-kind-icon">Composite<wbr>Slot<wbr>Map&lt;T, V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1192">Fields.ts:1192</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1166">Fields.ts:1166</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -416,7 +419,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L285">Fields.ts:285</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L250">Fields.ts:250</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -427,39 +430,6 @@
 									<dt>example</dt>
 									<dd><p><a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/Fields.compositeNamed.test.ts" class="external">Fields.compositeNamed.test.ts</a>, (imports: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleIndex.ts" class="external">./ExampleIndex</a>, <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleTable.ts" class="external">./ExampleTable</a>)</p>
 										<pre><code class="language-typescript"></code></pre>
-									</dd>
-									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
-
-<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
-<span class="hljs-keyword">interface</span> ModelKey {
-  id: <span class="hljs-built_in">string</span>;
-}
-<span class="hljs-comment">// street, city, state and country only support simple set updates since</span>
-<span class="hljs-comment">// they are part of a composite key</span>
-<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
-  street: <span class="hljs-built_in">string</span>;
-  city: <span class="hljs-built_in">string</span>;
-  state: <span class="hljs-built_in">string</span>;
-  country: <span class="hljs-built_in">string</span>;
-}
-
-<span class="hljs-comment">// Create composite slots to use in model schema below.</span>
-<span class="hljs-keyword">const</span> locMap = { street: <span class="hljs-number">0</span>, city: <span class="hljs-number">1</span>, state: <span class="hljs-number">2</span>, country: <span class="hljs-number">3</span> };
-<span class="hljs-keyword">const</span> location = Fields.compositeNamed({alias: <span class="hljs-string">'G0S'</span>, map: locMap});
-<span class="hljs-keyword">const</span> locSlots = location.createNamedSlots();
-
-<span class="hljs-comment">// Define the schema using Fields</span>
-<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
-  schema: {
-    id: Fields.split({ aliases:[<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
-    street: locSlots.street,
-    city: locSlots.city,
-    state: locSlots.state,
-    country: locSlots.country,
-  },
-  <span class="hljs-comment">// ...additional properties like table</span>
-});</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -496,7 +466,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L324">Fields.ts:324</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L289">Fields.ts:289</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -824,6 +794,35 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="revision" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> revision</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">revision<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.revisionoptions.html" class="tsd-signature-type">RevisionOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldrevision.html" class="tsd-signature-type">FieldRevision</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L307">Fields.ts:307</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.revisionoptions.html" class="tsd-signature-type">RevisionOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options to initialize field with.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="fields.fieldrevision.html" class="tsd-signature-type">FieldRevision</a></h4>
+							<p>New FieldRevision object.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
 					<a name="split" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> split</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
@@ -950,7 +949,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L315">Fields.ts:315</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L280">Fields.ts:280</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -998,7 +997,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L333">Fields.ts:333</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L298">Fields.ts:298</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1103,6 +1102,9 @@
 							<li class=" tsd-kind-class tsd-parent-kind-class">
 								<a href="fields.fieldnumberset.html" class="tsd-kind-icon">Field<wbr>Number<wbr>Set</a>
 							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-class">
+								<a href="fields.fieldrevision.html" class="tsd-kind-icon">Field<wbr>Revision</a>
+							</li>
 							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="fields.fieldset.html" class="tsd-kind-icon">Field<wbr>Set</a>
 							</li>
@@ -1150,6 +1152,9 @@
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="../interfaces/fields.modeloptions.html" class="tsd-kind-icon">Model<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/fields.revisionoptions.html" class="tsd-kind-icon">Revision<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/fields.splitoptions.html" class="tsd-kind-icon">Split<wbr>Options</a>
@@ -1213,6 +1218,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="fields.html#numberset" class="tsd-kind-icon">number<wbr>Set</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="fields.html#revision" class="tsd-kind-icon">revision</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="fields.html#split" class="tsd-kind-icon">split</a>
