@@ -243,41 +243,6 @@ export class Fields {
    * ```typescript
    * [[include:Fields.compositeNamed.test.ts]]
    * ```
-   *
-   * @example
-   * ```typescript
-   * import { Fields, Model } from 'dynamodb-datamodel';
-   *
-   * // (TypeScript) Define model key and item interface.
-   * interface ModelKey {
-   *   id: string;
-   * }
-   * // street, city, state and country only support simple set updates since
-   * // they are part of a composite key
-   * interface ModelItem extends ModelKey {
-   *   street: string;
-   *   city: string;
-   *   state: string;
-   *   country: string;
-   * }
-   *
-   * // Create composite slots to use in model schema below.
-   * const locMap = { street: 0, city: 1, state: 2, country: 3 };
-   * const location = Fields.compositeNamed({alias: 'G0S', map: locMap});
-   * const locSlots = location.createNamedSlots();
-   *
-   * // Define the schema using Fields
-   * const model = Model.createModel<ModelKey, ModelItem>({
-   *   schema: {
-   *     id: Fields.split({ aliases:['P', 'S'] }),
-   *     street: locSlots.street,
-   *     city: locSlots.city,
-   *     state: locSlots.state,
-   *     country: locSlots.country,
-   *   },
-   *   // ...additional properties like table
-   * });
-   * ```
    * @param T - Map of slot names to index
    * @param options - Options to initialize field with.
    * @returns New composite object with named field slots.
@@ -332,6 +297,15 @@ export class Fields {
    */
   static updatedDate(options?: Fields.UpdateDateOptions): Fields.FieldUpdatedDate {
     return new Fields.FieldUpdatedDate(options);
+  }
+
+  /**
+   *
+   * @param options - Options to initialize field with.
+   * @returns New FieldRevision object.
+   */
+  static revision(options?: Fields.RevisionOptions): Fields.FieldRevision {
+    return new Fields.FieldRevision(options);
   }
 }
 
@@ -1523,6 +1497,100 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       context: Fields.TableContext,
     ): void {
       tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
+    }
+  }
+
+  export interface RevisionOptions {
+    /**
+     * Table attribute to map this Model property to.
+     */
+    alias?: string;
+
+    /**
+     * Start value for revision.
+     */
+    start?: number;
+
+    /**
+     * Require that the revision matches when written to
+     */
+    matchOnWrite?: boolean;
+  }
+
+  export class FieldRevision implements Fields.Field {
+    /**
+     * Model name of the field, set by init function in Model or Field constructor.
+     */
+    name?: string;
+
+    /**
+     * Table attribute to map this Model property to.
+     */
+    alias?: string;
+
+    /**
+     * Start value for revision.
+     */
+    start = 0;
+
+    /**
+     * Require that the revision matches when written to
+     */
+    matchOnWrite?: boolean;
+
+    /**
+     * Initialize the Field.
+     * @param type - Name of type.
+     * @param alias - Table attribute name to map this model property to.
+     */
+    constructor(options: RevisionOptions = {}) {
+      this.alias = options.alias;
+      if (options.start) this.start = options.start;
+      this.matchOnWrite = options.matchOnWrite;
+    }
+
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    init(name: string, model: Model): void {
+      this.name = name;
+    }
+
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
+    toModel(
+      name: string,
+      tableData: Table.AttributeValuesMap,
+      modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: Fields.ModelContext,
+    ): void {
+      const value = tableData[this.alias || name];
+      if (value !== undefined) modelData[name] = value;
+    }
+
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
+    toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: Fields.TableContext,
+    ): void {
+      const action = context.action;
+      if (!Table.isPutAction(action)) return;
+      if (this.matchOnWrite && action !== 'put-new')
+        context.conditions.push(Condition.or(Condition.notExists(name), Condition.eq(name, modelData[name] || 0)));
+      tableData[this.alias || name] = this.start;
+    }
+
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.ResolverMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: Fields.TableContext,
+    ): void {
+      if (this.matchOnWrite) context.conditions.push(Condition.eq(name, modelData[name]));
+      tableData[this.alias || name] = Update.inc(1);
     }
   }
 }

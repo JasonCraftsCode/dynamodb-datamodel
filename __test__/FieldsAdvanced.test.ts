@@ -1,10 +1,10 @@
 /* eslint-disable tsdoc/syntax */
-import { Condition } from '../src/Condition';
+// import { Condition } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table } from '../src/Table';
 import { Update } from '../src/Update';
-import { buildUpdate } from './testCommon';
+// import { buildUpdate } from './testCommon';
 
 // Other field:
 // TableId = Fields.split({ aliases: [table.getPartitionKey(), table.getSortKey()] });
@@ -32,6 +32,7 @@ import { buildUpdate } from './testCommon';
 //   -
 
 const model = { name: 'MyModel' } as Model;
+/*
 function getTableContext(action: Table.ItemActions): Fields.TableContext {
   return {
     action: action,
@@ -46,6 +47,7 @@ const putTableContext = getTableContext('put');
 const putNewTableContext = getTableContext('put-new');
 const putReplaceTableContext = getTableContext('put-replace');
 const updateTableContext = getTableContext('update');
+*/
 
 // Advanced fields:
 // x Model type - add model name on Model.Put (could also validate same or set when Model.Update)
@@ -162,182 +164,4 @@ describe('When FieldFork', () => {
   });
 });
 
-interface RevisionOptions {
-  /**
-   * Table attribute to map this Model property to.
-   */
-  alias?: string;
-
-  /**
-   * Start value for revision.
-   */
-  start?: number;
-
-  /**
-   * Require that the revision matches when written to
-   */
-  matchOnWrite?: boolean;
-}
-
-class FieldRevision implements Fields.Field {
-  /**
-   * Model name of the field, set by init function in Model or Field constructor.
-   */
-  name?: string;
-
-  /**
-   * Table attribute to map this Model property to.
-   */
-  alias?: string;
-
-  /**
-   * Start value for revision.
-   */
-  start = 0;
-
-  /**
-   * Require that the revision matches when written to
-   */
-  matchOnWrite?: boolean;
-
-  /**
-   * Initialize the Field.
-   * @param type - Name of type.
-   * @param alias - Table attribute name to map this model property to.
-   */
-  constructor(options: RevisionOptions = {}) {
-    this.alias = options.alias;
-    if (options.start) this.start = options.start;
-    this.matchOnWrite = options.matchOnWrite;
-  }
-
-  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  init(name: string, model: Model): void {
-    this.name = name;
-  }
-
-  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
-  toModel(
-    name: string,
-    tableData: Table.AttributeValuesMap,
-    modelData: Model.ModelData,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    context: Fields.ModelContext,
-  ): void {
-    const value = tableData[this.alias || name];
-    if (value !== undefined) modelData[name] = value;
-  }
-
-  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
-  toTable(
-    name: string,
-    modelData: Model.ModelData,
-    tableData: Table.AttributeValuesMap,
-    context: Fields.TableContext,
-  ): void {
-    const action = context.action;
-    if (!Table.isPutAction(action)) return;
-    if (this.matchOnWrite && action !== 'put-new')
-      context.conditions.push(Condition.or(Condition.notExists(name), Condition.eq(name, modelData[name] || 0)));
-    tableData[this.alias || name] = this.start;
-  }
-
-  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
-  toTableUpdate(
-    name: string,
-    modelData: Model.ModelUpdate,
-    tableData: Update.ResolverMap,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    context: Fields.TableContext,
-  ): void {
-    if (this.matchOnWrite) context.conditions.push(Condition.eq(name, modelData[name]));
-    tableData[this.alias || name] = Update.inc(1);
-  }
-}
-
-// FieldDate inherits from FieldBase
-describe('When FieldRevision', () => {
-  const field = new FieldRevision();
-  field.init('revision', model);
-
-  it('expect revision returns correct type', () => {
-    expect(field.name).toEqual('revision');
-  });
-
-  it('toModel expect date data', () => {
-    const data: Model.ModelData = {};
-    field.toModel('revision', { revision: 3 }, data, modelContext);
-    expect(data).toEqual({ revision: 3 });
-  });
-
-  it('toTable unsupported action, skip revision', () => {
-    const data: Table.AttributeValuesMap = {};
-    field.toTable('revision', {}, data, tableContext);
-    expect(data).toEqual({});
-  });
-
-  it('toTable with put action, revision set', () => {
-    const data: Table.AttributeValuesMap = {};
-    field.toTable('revision', {}, data, putTableContext);
-    expect(data).toEqual({ revision: 0 });
-  });
-
-  it('toTable with put-new action, revision set', () => {
-    const data: Table.AttributeValuesMap = {};
-    field.toTable('revision', {}, data, putNewTableContext);
-    expect(data).toEqual({ revision: 0 });
-  });
-
-  it('toTable with put-replace action, revision set', () => {
-    const data: Table.AttributeValuesMap = {};
-    field.toTable('revision', {}, data, putReplaceTableContext);
-    expect(data).toEqual({ revision: 0 });
-  });
-
-  it('toTableUpdate, revision set to Update.inc(1)', () => {
-    const data: Table.AttributeValuesMap = {};
-    field.toTableUpdate('revision', {}, data, updateTableContext);
-    expect(typeof data.revision).toEqual('function');
-    expect(buildUpdate(data)).toEqual({
-      Paths: { '#n0': 'revision' },
-      UpdateExpression: 'SET #n0 = #n0 + :v0',
-      Values: { ':v0': 1 },
-    });
-  });
-
-  it('toTable with date and put action, revision set', () => {
-    const data: Table.AttributeValuesMap = {};
-    field.toTable('revision', { revision: 3 }, data, putTableContext);
-    expect(data).toEqual({ revision: 0 });
-  });
-
-  it('alias with toTable with put action, revision set', () => {
-    const field = new FieldRevision({ alias: 'R' });
-    field.init('revision', model);
-    const data: Table.AttributeValuesMap = {};
-    field.toTable('revision', {}, data, putTableContext);
-    expect(data).toEqual({ R: 0 });
-  });
-
-  it('alias with toTableUpdate, date set and getNow called', () => {
-    const field = new FieldRevision({ alias: 'R' });
-    field.init('revision', model);
-    const data: Table.AttributeValuesMap = {};
-    field.toTableUpdate('revision', {}, data, updateTableContext);
-    expect(typeof data.R).toEqual('function');
-    expect(buildUpdate(data)).toEqual({
-      Paths: { '#n0': 'R' },
-      UpdateExpression: 'SET #n0 = #n0 + :v0',
-      Values: { ':v0': 1 },
-    });
-  });
-
-  it('alias with toModel expect date data', () => {
-    const field = new FieldRevision({ alias: 'R' });
-    field.init('revision', model);
-    const data: Model.ModelData = {};
-    field.toModel('revision', { R: 3 }, data, modelContext);
-    expect(data).toEqual({ revision: 3 });
-  });
-});
+// FieldRevision inherits from FieldBase

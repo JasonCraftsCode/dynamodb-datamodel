@@ -1,10 +1,11 @@
 //import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-import { ConditionExpression } from '../src/Condition';
+import { Condition, ConditionExpression } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table } from '../src/Table';
 import { Update } from '../src/Update';
+import { buildUpdate } from './testCommon';
 
 const model = { name: 'MyModel' } as Model;
 function getTableContext(action: Table.ItemActions): Fields.TableContext {
@@ -791,6 +792,128 @@ describe('When FieldSplit', () => {
       const data: Model.ModelData = {};
       field.toModel('updatedOn', { editOn: 1585664302000 }, data, modelContext);
       expect(data).toEqual({});
+    });
+  });
+
+  describe('When FieldRevision', () => {
+    const field = Fields.revision();
+    field.init('revision', model);
+
+    it('expect revision returns correct type', () => {
+      expect(field.name).toEqual('revision');
+    });
+
+    it('toModel expect revision data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('revision', { revision: 3 }, data, modelContext);
+      expect(data).toEqual({ revision: 3 });
+    });
+
+    it('toModel no revision data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('revision', { rev: 3 }, data, modelContext);
+      expect(data).toEqual({});
+    });
+
+    it('toTable unsupported action, skip revision', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('revision', {}, data, tableContext);
+      expect(data).toEqual({});
+    });
+
+    it('toTable with put action, revision set', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('revision', {}, data, putTableContext);
+      expect(data).toEqual({ revision: 0 });
+    });
+
+    it('toTable with put-new action, revision set', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('revision', {}, data, putNewTableContext);
+      expect(data).toEqual({ revision: 0 });
+    });
+
+    it('toTable with put-replace action, revision set', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('revision', {}, data, putReplaceTableContext);
+      expect(data).toEqual({ revision: 0 });
+    });
+
+    it('toTableUpdate, revision set to Update.inc(1)', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTableUpdate('revision', {}, data, updateTableContext);
+      expect(typeof data.revision).toEqual('function');
+      expect(buildUpdate(data)).toEqual({
+        Paths: { '#n0': 'revision' },
+        UpdateExpression: 'SET #n0 = #n0 + :v0',
+        Values: { ':v0': 1 },
+      });
+    });
+
+    it('toTable with date and put action, revision set', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('revision', { revision: 3 }, data, putTableContext);
+      expect(data).toEqual({ revision: 0 });
+    });
+
+    it('alias with toTable with put action, revision set', () => {
+      const field = Fields.revision({ alias: 'R', start: 1 });
+      field.init('revision', model);
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('revision', {}, data, putTableContext);
+      expect(data).toEqual({ R: 1 });
+    });
+
+    it('alias with toTableUpdate, date set and getNow called', () => {
+      const field = Fields.revision({ alias: 'R', start: 1 });
+      field.init('revision', model);
+      const data: Table.AttributeValuesMap = {};
+      field.toTableUpdate('revision', {}, data, updateTableContext);
+      expect(typeof data.R).toEqual('function');
+      expect(buildUpdate(data)).toEqual({
+        Paths: { '#n0': 'R' },
+        UpdateExpression: 'SET #n0 = #n0 + :v0',
+        Values: { ':v0': 1 },
+      });
+    });
+
+    it('alias with toModel expect date data', () => {
+      const field = Fields.revision({ alias: 'R', start: 1 });
+      field.init('revision', model);
+      const data: Model.ModelData = {};
+      field.toModel('revision', { R: 3 }, data, modelContext);
+      expect(data).toEqual({ revision: 3 });
+    });
+
+    it('matchOnWrite with toTable with put action, revision set', () => {
+      const field = Fields.revision({ matchOnWrite: true });
+      field.init('revision', model);
+      const data: Table.AttributeValuesMap = {};
+      putTableContext.conditions = [];
+      field.toTable('revision', {}, data, putTableContext);
+      expect(buildUpdate(data)).toEqual({
+        Paths: { '#n0': 'revision' },
+        UpdateExpression: 'SET #n0 = :v0',
+        Values: { ':v0': 0 },
+      });
+      expect(Condition.resolveTopAnd(putTableContext.conditions, new ConditionExpression())).toEqual(
+        '(attribute_not_exists(#n0) OR #n0 = :v0)',
+      );
+    });
+
+    it('matchOnWrite with toTableUpdate, date set and getNow called', () => {
+      const field = Fields.revision({ matchOnWrite: true });
+      field.init('revision', model);
+      const data: Table.AttributeValuesMap = {};
+      updateTableContext.conditions = [];
+      field.toTableUpdate('revision', {}, data, updateTableContext);
+      expect(typeof data.revision).toEqual('function');
+      expect(buildUpdate(data)).toEqual({
+        Paths: { '#n0': 'revision' },
+        UpdateExpression: 'SET #n0 = #n0 + :v0',
+        Values: { ':v0': 1 },
+      });
+      expect(Condition.resolveTopAnd(updateTableContext.conditions, new ConditionExpression())).toEqual('#n0 = :v0');
     });
   });
 });

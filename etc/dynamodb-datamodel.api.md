@@ -111,6 +111,8 @@ export class Fields {
     static modelMap<V>(options: Fields.ModelMapOptions<V>): Fields.FieldModelMap<V>;
     static number(options?: Fields.BaseOptions<number>): Fields.FieldNumber;
     static numberSet(options?: Fields.BaseOptions<Table.NumberSetValue>): Fields.FieldNumberSet;
+    // (undocumented)
+    static revision(options?: Fields.RevisionOptions): Fields.FieldRevision;
     static split(options: Fields.SplitOptions): Fields.FieldSplit;
     static string(options?: Fields.BaseOptions<string>): Fields.FieldString;
     static stringSet(options?: Fields.BaseOptions<Table.StringSetValue>): Fields.FieldStringSet;
@@ -288,6 +290,18 @@ export namespace Fields {
     }
     export class FieldNumberSet extends FieldSet<Table.NumberSetValue, 'NS'> {
     }
+    // (undocumented)
+    export class FieldRevision implements Fields.Field {
+        constructor(options?: RevisionOptions);
+        alias?: string;
+        init(name: string, model: Model): void;
+        matchOnWrite?: boolean;
+        name?: string;
+        start: number;
+        toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
+        toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
+    }
     export class FieldSet<V, T extends 'BS' | 'NS' | 'SS'> extends FieldExpression<V, T> {
         contains(value: string): Condition.Resolver<T>;
         size(): Condition.Resolver<T>;
@@ -346,6 +360,12 @@ export namespace Fields {
     export interface ModelOptions<V> extends BaseOptions<V> {
         // (undocumented)
         schema: Model.ModelSchemaT<V>;
+    }
+    // (undocumented)
+    export interface RevisionOptions {
+        alias?: string;
+        matchOnWrite?: boolean;
+        start?: number;
     }
     export interface SplitOptions {
         aliases: string[];
