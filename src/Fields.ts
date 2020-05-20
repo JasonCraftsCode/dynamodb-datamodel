@@ -588,7 +588,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver<'S'> {
+    size(): Condition.Resolver {
       return Condition.size(this.tableName());
     }
 
@@ -622,7 +622,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver<'B'> {
+    size(): Condition.Resolver {
       return Condition.size(this.tableName());
     }
   }
@@ -645,7 +645,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver<T> {
+    size(): Condition.Resolver {
       return Condition.size(this.tableName());
     }
 
@@ -681,7 +681,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver<'L'> {
+    size(): Condition.Resolver {
       return Condition.size(this.tableName());
     }
   }
@@ -730,7 +730,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver<'M'> {
+    size(): Condition.Resolver {
       return Condition.size(this.tableName());
     }
   }
@@ -846,7 +846,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver<'M'> {
+    size(): Condition.Resolver {
       return Condition.size(this.tableName());
     }
   }

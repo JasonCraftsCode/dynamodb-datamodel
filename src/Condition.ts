@@ -366,7 +366,8 @@ export class Condition {
    * @param conditions - List of conditions to evaluate with AND.
    * @returns Resolver to use when generate condition expression.
    */
-  static and(...conditions: Condition.Resolver[]): Condition.Resolver {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static and(...conditions: Condition.Resolver<any>[]): Condition.Resolver {
     return (exp: Condition.Expression): string => `(${conditions.map((resolver) => resolver(exp)).join(` AND `)})`;
   }
 
@@ -381,7 +382,8 @@ export class Condition {
    * @param conditions - List of conditions to evaluate with OR
    * @returns Resolver to use when generate condition expression.
    */
-  static or(...conditions: Condition.Resolver[]): Condition.Resolver {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static or(...conditions: Condition.Resolver<any>[]): Condition.Resolver {
     return (exp: Condition.Expression): string => `(${conditions.map((resolver) => resolver(exp)).join(` OR `)})`;
   }
 
@@ -489,6 +491,8 @@ export namespace Condition {
     addValue(value: Table.AttributeValues): string;
   }
 
+  // TODO: T in Resolver is more about how they are composed together.  With size and path returning 'N' or 'S'
+  // The other conditions return 'BOOL' and have or, and, not only take 'bool' and return 'bool'
   /**
    * Resolver function is return by most of the above Conditions methods.  Returning a function allows conditions
    * to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed

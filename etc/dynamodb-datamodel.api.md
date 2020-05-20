@@ -21,7 +21,7 @@ export class Condition {
     };
     static addPath(path: Condition.Path, exp: Condition.Expression): string;
     static addValues(values: Condition.Value[], exp: Condition.Expression): string[];
-    static and(...conditions: Condition.Resolver[]): Condition.Resolver;
+    static and(...conditions: Condition.Resolver<any>[]): Condition.Resolver;
     static beginsWith(path: string, value: string): Condition.Resolver<'S'>;
     static between(path: string, from: Condition.Value, to: Condition.Value): Condition.Resolver;
     static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value): Condition.Resolver;
@@ -37,7 +37,7 @@ export class Condition {
     static ne(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static not(condition: Condition.Resolver): Condition.Resolver;
     static notExists(path: string): Condition.Resolver;
-    static or(...conditions: Condition.Resolver[]): Condition.Resolver;
+    static or(...conditions: Condition.Resolver<any>[]): Condition.Resolver;
     static path(value: string): Condition.Resolver;
     static resolveTopAnd(conditions: Condition.Resolver[], exp: ConditionExpression): string;
     static size(path: string): Condition.Resolver;
@@ -182,7 +182,7 @@ export namespace Fields {
         export type DefaultFunction<T> = (name: string, modelData: Model.ModelData, context: TableContext) => T;
     }
     export class FieldBinary extends FieldExpression<Table.BinaryValue, 'B'> {
-        size(): Condition.Resolver<'B'>;
+        size(): Condition.Resolver;
     }
     export class FieldBinarySet extends FieldSet<Table.BinarySetValue, 'BS'> {
     }
@@ -253,12 +253,12 @@ export namespace Fields {
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
     }
     export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[], 'L'> {
-        size(): Condition.Resolver<'L'>;
+        size(): Condition.Resolver;
     }
     export class FieldMap<V extends Table.AttributeValues> extends FieldExpression<{
         [key: string]: V;
     }, 'M'> {
-        size(): Condition.Resolver<'M'>;
+        size(): Condition.Resolver;
     }
     export class FieldModel<V extends {
         [key: string]: any;
@@ -267,7 +267,7 @@ export namespace Fields {
         init(name: string, model: Model): void;
         // (undocumented)
         schema: Model.ModelSchemaT<V>;
-        size(): Condition.Resolver<'M'>;
+        size(): Condition.Resolver;
     }
     export class FieldModelList<V extends {
         [key: string]: any;
@@ -304,7 +304,7 @@ export namespace Fields {
     }
     export class FieldSet<V, T extends 'BS' | 'NS' | 'SS'> extends FieldExpression<V, T> {
         contains(value: string): Condition.Resolver<T>;
-        size(): Condition.Resolver<T>;
+        size(): Condition.Resolver;
     }
     export class FieldSplit implements Field {
         constructor(options: SplitOptions);
@@ -320,7 +320,7 @@ export namespace Fields {
     export class FieldString extends FieldExpression<string, 'S'> {
         beginsWith(value: string): Condition.Resolver<'S'>;
         contains(value: string): Condition.Resolver<'S'>;
-        size(): Condition.Resolver<'S'>;
+        size(): Condition.Resolver;
     }
     export class FieldStringSet extends FieldSet<Table.StringSetValue, 'SS'> {
     }
