@@ -678,20 +678,20 @@ export class Update {
   /**
    * Typed based version of {@link Update.map}.
    * @param T - Interface for model.
-   * @param map -
+   * @param map - The model or resolver to create resolver for.
    * @returns Update resolver function to remove an array of values from a set based attribute.
    */
-  static model<T>(map: Update.ResolverObject<T>): Update.Resolver<'M'> {
+  static model<T>(map: Update.ResolverModel<T>): Update.Resolver<'M'> {
     return Update.map(map);
   }
 
   /**
-   *
-   * @param T - Interface for Model
-   * @param map -
+   * Map that contains string keys with a Model T for each value.
+   * @param T - Interface for Model interface.
+   * @param map - Map containing the models to change for each key.
    * @returns Update resolver function to remove an array of values from a set based attribute.
    */
-  static modelMap<T>(map: Update.ResolverObjectMap<T>): Update.Resolver<'M'> {
+  static modelMap<T>(map: Update.ResolverModelMap<T>): Update.Resolver<'M'> {
     return (name: string, exp: Update.Expression): void => {
       Object.keys(map).forEach((key) => {
         Update.resolveMap(`${name}.${exp.addPath(key)}`, map[key], exp);
@@ -786,7 +786,10 @@ export class Update {
   }
 }
 
-/** @public */
+/**
+ * Namespace for scoping Update based interfaces and types.
+ * @public
+ */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Update {
   /**
@@ -853,22 +856,25 @@ export namespace Update {
   export type ResolverMap = ResolverMapT<Table.AttributeValues>;
 
   /**
-   *
+   * Resolver for each property of the model
+   * @param T - The model interface.
    */
-  export type ResolverObjectValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
+  export type ResolverModelValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
 
   /**
-   *
+   * Resolver for the overall Model.
+   * @param T - The model interface.
    */
-  export type ResolverObject<T> = {
-    [P in keyof Table.Optional<T>]: ResolverObjectValue<T[P]>;
+  export type ResolverModel<T> = {
+    [P in keyof Table.Optional<T>]: ResolverModelValue<T[P]>;
   };
 
   /**
-   *
+   * Resolver for the map with string keys and Model values.
+   * @param T - The model interface.
    */
-  export type ResolverObjectMap<T> = {
-    [key: string]: Update.ResolverObject<T>;
+  export type ResolverModelMap<T> = {
+    [key: string]: Update.ResolverModel<T>;
   };
 
   /**
@@ -931,11 +937,13 @@ export namespace Update {
 
   /**
    * List specific update resolver, used to define properties in Model interfaces.
+   * @param T - The model interface.
    */
   export type List<T extends Table.AttributeValues = Table.AttributeValues> = T[] | Update.Resolver<'L'>;
 
   /**
    * Map specific update resolver, used to define properties in Model interfaces.
+   * @param T - The model interface.
    */
   export type Map<T extends Table.AttributeValues = Table.AttributeValues> =
     | { [key: string]: T }
@@ -943,16 +951,19 @@ export namespace Update {
 
   /**
    * Map specific update resolver, used to define properties in Model interfaces.
+   * @param T - The model interface.
    */
   export type Model<T> = T | Update.Resolver<'M'>;
 
   /**
    * Map specific update resolver, used to define properties in Model interfaces.
+   * @param T - The model interface.
    */
   export type ModelMap<T> = { [key: string]: T } | Update.Resolver<'M'>;
 
   /**
    * List specific update resolver, used to define properties in Model interfaces.
+   * @param T - The model interface.
    */
   export type ModelList<T> = T[] | Update.Resolver<'L'>;
 }

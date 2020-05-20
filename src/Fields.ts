@@ -234,7 +234,10 @@ export class Fields {
   }
 }
 
-/** @public */
+/**
+ * Namespace for scoping Condition based interfaces and types.
+ * @public
+ * */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
@@ -463,7 +466,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
-  /** @public */
+  /**
+   * Namespace for scoping FieldBase based interfaces and types.
+   * @public
+   */
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace FieldBase {
     /**
@@ -487,7 +493,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.path} with tableName() as value param.
      * See {@link Condition.path} for more info and examples.
      */
-    path(): Condition.Resolver<T> {
+    path(): Condition.ValueResolver {
       return Condition.path(this.tableName());
     }
 
@@ -495,7 +501,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.eq} with tableName() as left param.
      * See {@link Condition.eq} for more info and examples.
      */
-    eq(v: V): Condition.Resolver<T> {
+    eq(v: Condition.Value<V>): Condition.Resolver {
       return Condition.eq(this.tableName(), v);
     }
 
@@ -503,7 +509,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.ne} with tableName() as left param.
      * See {@link Condition.ne} for more info and examples.
      */
-    ne(v: V): Condition.Resolver<T> {
+    ne(v: Condition.Value<V>): Condition.Resolver {
       return Condition.ne(this.tableName(), v);
     }
 
@@ -511,7 +517,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.lt} with tableName() as left param.
      * See {@link Condition.lt} for more info and examples.
      */
-    lt(v: V): Condition.Resolver<T> {
+    lt(v: Condition.Value<V>): Condition.Resolver {
       return Condition.lt(this.tableName(), v);
     }
 
@@ -519,7 +525,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.le} with tableName() as left param.
      * See {@link Condition.le} for more info and examples.
      */
-    le(v: V): Condition.Resolver<T> {
+    le(v: Condition.Value<V>): Condition.Resolver {
       return Condition.le(this.tableName(), v);
     }
 
@@ -527,7 +533,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.gt} with tableName() as left param.
      * See {@link Condition.gt} for more info and examples.
      */
-    gt(v: V): Condition.Resolver<T> {
+    gt(v: Condition.Value<V>): Condition.Resolver {
       return Condition.gt(this.tableName(), v);
     }
 
@@ -535,7 +541,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.ge} with tableName() as left param.
      * See {@link Condition.ge} for more info and examples.
      */
-    ge(v: V): Condition.Resolver<T> {
+    ge(v: Condition.Value<V>): Condition.Resolver {
       return Condition.ge(this.tableName(), v);
     }
 
@@ -543,7 +549,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.between} with tableName() as path param.
      * See {@link Condition.between} for more info and examples.
      */
-    between(from: V, to: V): Condition.Resolver<T> {
+    between(from: Condition.Value<V>, to: Condition.Value<V>): Condition.Resolver {
       return Condition.between(this.tableName(), from, to);
     }
 
@@ -551,7 +557,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.in} with tableName() as path param.
      * See {@link Condition.in} for more info and examples.
      */
-    in(v: V[]): Condition.Resolver<T> {
+    in(v: Condition.Value<V>[]): Condition.Resolver {
       return Condition.in(this.tableName(), v);
     }
 
@@ -559,7 +565,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition."type"} with tableName() as path param.
      * See {@link Condition."type"} for more info and examples.
      */
-    type(type: Table.AttributeTypes): Condition.Resolver<T> {
+    type(type: Table.AttributeTypes): Condition.Resolver {
       return Condition.type(this.tableName(), type);
     }
 
@@ -567,7 +573,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.exists} with tableName() as path param.
      * See {@link Condition.exists} for more info and examples.
      */
-    exists(): Condition.Resolver<T> {
+    exists(): Condition.Resolver {
       return Condition.exists(this.tableName());
     }
 
@@ -575,7 +581,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.notExists} with tableName() as path param.
      * See {@link Condition.notExists} for more info and examples.
      */
-    notExists(): Condition.Resolver<T> {
+    notExists(): Condition.Resolver {
       return Condition.notExists(this.tableName());
     }
   }
@@ -588,7 +594,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver {
+    size(): Condition.ValueResolver {
       return Condition.size(this.tableName());
     }
 
@@ -596,7 +602,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that wraps {@link Condition.contains}.
      * See {@link Condition.contains} for more info and examples.
      */
-    contains(value: string): Condition.Resolver<'S'> {
+    contains(value: string): Condition.Resolver {
       return Condition.contains(this.tableName(), value);
     }
 
@@ -604,7 +610,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      *  Helper method that wraps {@link Condition.beginsWith}.
      * See {@link Condition.beginsWith} for more info and examples.
      */
-    beginsWith(value: string): Condition.Resolver<'S'> {
+    beginsWith(value: string): Condition.Resolver {
       return Condition.beginsWith(this.tableName(), value);
     }
   }
@@ -622,7 +628,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver {
+    size(): Condition.ValueResolver {
       return Condition.size(this.tableName());
     }
   }
@@ -645,7 +651,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver {
+    size(): Condition.ValueResolver {
       return Condition.size(this.tableName());
     }
 
@@ -653,7 +659,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.contains} with tableName() as path param.
      * See {@link Condition.contains} for more info and examples.
      */
-    contains(value: string): Condition.Resolver<T> {
+    contains(value: string): Condition.Resolver {
       return Condition.contains(this.tableName(), value);
     }
   }
@@ -681,7 +687,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver {
+    size(): Condition.ValueResolver {
       return Condition.size(this.tableName());
     }
   }
@@ -730,7 +736,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver {
+    size(): Condition.ValueResolver {
       return Condition.size(this.tableName());
     }
   }
@@ -846,7 +852,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
      */
-    size(): Condition.Resolver {
+    size(): Condition.ValueResolver {
       return Condition.size(this.tableName());
     }
   }

@@ -82,6 +82,7 @@ export class Index {
   }
 
   /**
+   * Gets the partition key name for the Index.
    * @returns The name of the primary (or HASH) key.
    */
   getPartitionKey(): string {
@@ -89,7 +90,8 @@ export class Index {
   }
 
   /**
-   * @returns The name of the sort (or RANGE) key.
+   * Gets the sort key name for the Index.
+   * @returns The name of the sort (or RANGE) key, or an empty string if one doesn't exists.
    */
   getSortKey(): string {
     return getKeyName(this.keySchema, 'RANGE');
@@ -157,7 +159,10 @@ export class Index {
   }
 }
 
-/** @public */
+/**
+ * Namespace for scoping Index based interfaces and types.
+ * @public
+ */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
   // NOTE: if you update the docs for the properties of IndexParams also update the docs for Index properties.
@@ -330,6 +335,7 @@ export class Table {
   }
 
   /**
+   * Gets the DocumentClient associated with this Table, which may mean creating one.
    * @returns The DocumentClient used for all Table operations.
    */
   get client(): DocumentClient {
@@ -356,6 +362,7 @@ export class Table {
   }
 
   /**
+   * Gets the partition key name for the Table.
    * @returns The name of the primary (or HASH) key attribute.
    */
   getPartitionKey(): string {
@@ -363,6 +370,7 @@ export class Table {
   }
 
   /**
+   * Gets the sort key name for the Table.
    * @returns The name of the sort (or RANGE) key attribute.
    */
   getSortKey(): string {
@@ -633,7 +641,10 @@ export class Table {
   }
 }
 
-/** @public */
+/**
+ * Namespace for scoping Table based interfaces and types.
+ * @public
+ */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   /**
@@ -781,7 +792,10 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     static readonly SortKeyType: { keyType: 'RANGE' } = { keyType: 'RANGE' };
   }
 
-  /** @public */
+  /**
+   * Namespace for scoping PrimaryKey based interfaces and types.
+   * @public
+   * */
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace PrimaryKey {
     /**

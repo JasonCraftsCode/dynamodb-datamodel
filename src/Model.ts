@@ -134,7 +134,10 @@ export class Model implements Model.ModelBase {
   }
 }
 
-/** @public */
+/**
+ * Namespace for scoping Model based interfaces and types.
+ * @public
+ * */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   export interface ModelBase {

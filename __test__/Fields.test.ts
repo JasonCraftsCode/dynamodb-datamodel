@@ -94,62 +94,62 @@ describe('When FieldExpression', () => {
   // Condition
   it('expect path returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.path()(exp)).toEqual('#n0');
+    expect(field.path()(exp, 'S')).toEqual('#n0');
   });
 
   it('expect eq returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.eq('xyz')(exp)).toEqual('#n0 = :v0');
+    expect(field.eq('xyz')(exp, 'BOOL')).toEqual('#n0 = :v0');
   });
 
   it('expect ne returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.ne('xyz')(exp)).toEqual('#n0 <> :v0');
+    expect(field.ne('xyz')(exp, 'BOOL')).toEqual('#n0 <> :v0');
   });
 
   it('expect lt returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.lt('xyz')(exp)).toEqual('#n0 < :v0');
+    expect(field.lt('xyz')(exp, 'BOOL')).toEqual('#n0 < :v0');
   });
 
   it('expect le returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.le('xyz')(exp)).toEqual('#n0 <= :v0');
+    expect(field.le('xyz')(exp, 'BOOL')).toEqual('#n0 <= :v0');
   });
 
   it('expect gt returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.gt('xyz')(exp)).toEqual('#n0 > :v0');
+    expect(field.gt('xyz')(exp, 'BOOL')).toEqual('#n0 > :v0');
   });
 
   it('expect ge returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.ge('xyz')(exp)).toEqual('#n0 >= :v0');
+    expect(field.ge('xyz')(exp, 'BOOL')).toEqual('#n0 >= :v0');
   });
 
   it('expect between returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.between('a', 'z')(exp)).toEqual('#n0 BETWEEN :v0 AND :v1');
+    expect(field.between('a', 'z')(exp, 'BOOL')).toEqual('#n0 BETWEEN :v0 AND :v1');
   });
 
   it('expect in returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.in(['a', 'z'])(exp)).toEqual('#n0 IN (:v0, :v1)');
+    expect(field.in(['a', 'z'])(exp, 'BOOL')).toEqual('#n0 IN (:v0, :v1)');
   });
 
   it('expect typeOf returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.type('S')(exp)).toEqual('attribute_type(#n0, :v0)');
+    expect(field.type('S')(exp, 'BOOL')).toEqual('attribute_type(#n0, :v0)');
   });
 
   it('expect exists returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.exists()(exp)).toEqual('attribute_exists(#n0)');
+    expect(field.exists()(exp, 'BOOL')).toEqual('attribute_exists(#n0)');
   });
 
   it('expect notExists returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.notExists()(exp)).toEqual('attribute_not_exists(#n0)');
+    expect(field.notExists()(exp, 'BOOL')).toEqual('attribute_not_exists(#n0)');
   });
 });
 
@@ -159,17 +159,17 @@ describe('When FieldString', () => {
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.size()(exp)).toEqual('size(#n0)');
+    expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 
   it('expect contains returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.contains('xyz')(exp)).toEqual('contains(#n0, :v0)');
+    expect(field.contains('xyz')(exp, 'BOOL')).toEqual('contains(#n0, :v0)');
   });
 
   it('expect beginsWith returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.beginsWith('xyz')(exp)).toEqual('begins_with(#n0, :v0)');
+    expect(field.beginsWith('xyz')(exp, 'BOOL')).toEqual('begins_with(#n0, :v0)');
   });
 });
 
@@ -184,7 +184,7 @@ describe('When FieldBinary', () => {
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.size()(exp)).toEqual('size(#n0)');
+    expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
 
@@ -217,12 +217,12 @@ describe('When FieldSet', () => {
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.size()(exp)).toEqual('size(#n0)');
+    expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 
   it('expect contains returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.contains('xyz')(exp)).toEqual('contains(#n0, :v0)');
+    expect(field.contains('xyz')(exp, 'BOOL')).toEqual('contains(#n0, :v0)');
   });
 });
 
@@ -237,7 +237,7 @@ describe('When FieldList', () => {
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.size()(exp)).toEqual('size(#n0)');
+    expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
 
@@ -253,7 +253,7 @@ describe('When FieldModelList', () => {
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.size()(exp)).toEqual('size(#n0)');
+    expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
 
@@ -268,7 +268,7 @@ describe('When FieldMap', () => {
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.size()(exp)).toEqual('size(#n0)');
+    expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
 
@@ -277,7 +277,7 @@ describe('When FieldModelMap', () => {
   field.init('groups', model);
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.size()(exp)).toEqual('size(#n0)');
+    expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
 
@@ -292,7 +292,7 @@ describe('When FieldObject', () => {
 
   it('expect size returns condition expression', () => {
     const exp = new ConditionExpression();
-    expect(field.size()(exp)).toEqual('size(#n0)');
+    expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
 

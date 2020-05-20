@@ -21,30 +21,30 @@ export class Condition {
     };
     static addPath(path: Condition.Path, exp: Condition.Expression): string;
     static addValues(values: Condition.Value[], exp: Condition.Expression): string[];
-    static and(...conditions: Condition.Resolver<any>[]): Condition.Resolver;
-    static beginsWith(path: string, value: string): Condition.Resolver<'S'>;
+    static and(...conditions: Condition.Resolver[]): Condition.Resolver;
+    static beginsWith(path: string, value: string): Condition.Resolver;
     static between(path: string, from: Condition.Value, to: Condition.Value): Condition.Resolver;
     static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value): Condition.Resolver;
-    static contains(path: string, value: string): Condition.Resolver<'S' | 'SS' | 'NS' | 'BS'>;
+    static contains(path: string, value: string): Condition.Resolver;
     static eq(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static exists(path: string): Condition.Resolver;
     static ge(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static gt(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static in(path: string, values: Condition.Value[]): Condition.Resolver;
-    static isResolver(value: Condition.Path | Condition.Value): value is Condition.Resolver;
+    static isResolver(value: Condition.Path | Condition.Value): value is Condition.ValueResolver;
     static le(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static lt(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static ne(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static not(condition: Condition.Resolver): Condition.Resolver;
     static notExists(path: string): Condition.Resolver;
-    static or(...conditions: Condition.Resolver<any>[]): Condition.Resolver;
-    static path(value: string): Condition.Resolver;
+    static or(...conditions: Condition.Resolver[]): Condition.Resolver;
+    static path(value: string): Condition.ValueResolver;
     static resolveTopAnd(conditions: Condition.Resolver[], exp: ConditionExpression): string;
-    static size(path: string): Condition.Resolver;
+    static size(path: string): Condition.ValueResolver;
     static type(path: string, type: Table.AttributeTypes): Condition.Resolver;
 }
 
-// @public (undocumented)
+// @public
 export namespace Condition {
     export type CompareOperators = '=' | '<>' | '<' | '<=' | '>' | '>=';
     export interface Expression {
@@ -53,9 +53,10 @@ export namespace Condition {
     }
     export type LogicalOperators = 'AND' | 'OR' | 'NOT';
     export type Operators = CompareOperators | 'BETWEEN' | 'IN' | 'begins_with' | 'contains' | 'attribute_type' | 'attribute_exists' | 'attribute_not_exists' | 'size' | LogicalOperators;
-    export type Path = string | Resolver;
-    export type Resolver<T = Table.AttributeTypes> = (exp: Expression, type?: T) => string;
-    export type Value = Table.AttributeValues | Resolver;
+    export type Path = string | ValueResolver;
+    export type Resolver = (exp: Expression, type: 'BOOL') => string;
+    export type Value<T extends Table.AttributeValues = Table.AttributeValues> = T | ValueResolver;
+    export type ValueResolver = (exp: Expression, type: 'S') => string;
 }
 
 // @public
@@ -120,7 +121,7 @@ export class Fields {
     static updatedDate(options?: Fields.UpdateDateOptions): Fields.FieldUpdatedDate;
 }
 
-// @public (undocumented)
+// @public
 export namespace Fields {
     // (undocumented)
     export interface AttributeDefinition {
@@ -177,12 +178,11 @@ export namespace Fields {
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
-    // (undocumented)
     export namespace FieldBase {
         export type DefaultFunction<T> = (name: string, modelData: Model.ModelData, context: TableContext) => T;
     }
     export class FieldBinary extends FieldExpression<Table.BinaryValue, 'B'> {
-        size(): Condition.Resolver;
+        size(): Condition.ValueResolver;
     }
     export class FieldBinarySet extends FieldSet<Table.BinarySetValue, 'BS'> {
     }
@@ -234,18 +234,18 @@ export namespace Fields {
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldExpression<V, T extends Table.AttributeTypes> extends FieldBase<V> {
-        between(from: V, to: V): Condition.Resolver<T>;
-        eq(v: V): Condition.Resolver<T>;
-        exists(): Condition.Resolver<T>;
-        ge(v: V): Condition.Resolver<T>;
-        gt(v: V): Condition.Resolver<T>;
-        in(v: V[]): Condition.Resolver<T>;
-        le(v: V): Condition.Resolver<T>;
-        lt(v: V): Condition.Resolver<T>;
-        ne(v: V): Condition.Resolver<T>;
-        notExists(): Condition.Resolver<T>;
-        path(): Condition.Resolver<T>;
-        type(type: Table.AttributeTypes): Condition.Resolver<T>;
+        between(from: Condition.Value<V>, to: Condition.Value<V>): Condition.Resolver;
+        eq(v: Condition.Value<V>): Condition.Resolver;
+        exists(): Condition.Resolver;
+        ge(v: Condition.Value<V>): Condition.Resolver;
+        gt(v: Condition.Value<V>): Condition.Resolver;
+        in(v: Condition.Value<V>[]): Condition.Resolver;
+        le(v: Condition.Value<V>): Condition.Resolver;
+        lt(v: Condition.Value<V>): Condition.Resolver;
+        ne(v: Condition.Value<V>): Condition.Resolver;
+        notExists(): Condition.Resolver;
+        path(): Condition.ValueResolver;
+        type(type: Table.AttributeTypes): Condition.Resolver;
     }
     export class FieldHidden implements Fields.Field {
         init(name: string, model: Model): void;
@@ -253,12 +253,12 @@ export namespace Fields {
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
     }
     export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[], 'L'> {
-        size(): Condition.Resolver;
+        size(): Condition.ValueResolver;
     }
     export class FieldMap<V extends Table.AttributeValues> extends FieldExpression<{
         [key: string]: V;
     }, 'M'> {
-        size(): Condition.Resolver;
+        size(): Condition.ValueResolver;
     }
     export class FieldModel<V extends {
         [key: string]: any;
@@ -267,7 +267,7 @@ export namespace Fields {
         init(name: string, model: Model): void;
         // (undocumented)
         schema: Model.ModelSchemaT<V>;
-        size(): Condition.Resolver;
+        size(): Condition.ValueResolver;
     }
     export class FieldModelList<V extends {
         [key: string]: any;
@@ -303,8 +303,8 @@ export namespace Fields {
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldSet<V, T extends 'BS' | 'NS' | 'SS'> extends FieldExpression<V, T> {
-        contains(value: string): Condition.Resolver<T>;
-        size(): Condition.Resolver;
+        contains(value: string): Condition.Resolver;
+        size(): Condition.ValueResolver;
     }
     export class FieldSplit implements Field {
         constructor(options: SplitOptions);
@@ -318,9 +318,9 @@ export namespace Fields {
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldString extends FieldExpression<string, 'S'> {
-        beginsWith(value: string): Condition.Resolver<'S'>;
-        contains(value: string): Condition.Resolver<'S'>;
-        size(): Condition.Resolver;
+        beginsWith(value: string): Condition.Resolver;
+        contains(value: string): Condition.Resolver;
+        size(): Condition.ValueResolver;
     }
     export class FieldStringSet extends FieldSet<Table.StringSetValue, 'SS'> {
     }
@@ -390,11 +390,9 @@ export namespace Fields {
 // @public
 export class Index {
     constructor(params: Index.IndexParams);
-    // (undocumented)
     getPartitionKey(): string;
     getQueryOptions(options?: Table.QueryOptions): Table.QueryOptions;
     getScanOptions(options?: Table.ScanOptions): Table.ScanOptions;
-    // (undocumented)
     getSortKey(): string;
     init(table: Table): void;
     keySchema: Table.PrimaryKey.KeyTypesMap;
@@ -410,7 +408,7 @@ export class Index {
     table?: Table;
 }
 
-// @public (undocumented)
+// @public
 export namespace Index {
     export function createIndex<KEY = DefaultGlobalIndexKey>(params: IndexParamsT<KEY>): IndexT<KEY>;
     export interface DefaultGlobalIndexKey {
@@ -457,7 +455,7 @@ export class KeyCondition {
     static lt<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver;
 }
 
-// @public (undocumented)
+// @public
 export namespace KeyCondition {
     export type AttributeResolver = StringResolver | NumberResolver | BinaryResolver;
     export type BinaryResolver = KeyCondition.Resolver<'B'>;
@@ -529,7 +527,7 @@ export class Model implements Model.ModelBase {
     updateParams(item: Model.ModelUpdate, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
 }
 
-// @public (undocumented)
+// @public
 export namespace Model {
     export function createModel<KEY extends {
         [key: string]: any;
@@ -685,7 +683,6 @@ export class Table {
     constructor(params: Table.TableParams);
     addGlobalIndexes(gsi: Index[]): void;
     addLocalIndexes(lsi: Index[]): void;
-    // (undocumented)
     get client(): DocumentClient;
     createBinarySet(list: Table.BinaryValue[], options?: DocumentClient.CreateSetOptions): Table.BinarySetValue;
     createNumberSet(list: number[], options?: DocumentClient.CreateSetOptions): Table.NumberSetValue;
@@ -695,11 +692,9 @@ export class Table {
     deleteParams(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
     get(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.GetOptions): Promise<DocumentClient.GetItemOutput>;
     getParams(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.GetOptions): Table.GetInput;
-    // (undocumented)
     getPartitionKey(): string;
     static getPutAction(options?: Table.PutWriteOptions): Table.PutItemActions;
     getPutCondition(options: Table.PutWriteOptions): Condition.Resolver | void;
-    // (undocumented)
     getSortKey(): string;
     globalIndexes: Index[];
     static isPutAction(action: Table.ItemActions): boolean;
@@ -718,7 +713,7 @@ export class Table {
     updateParams(key: Table.PrimaryKey.AttributeValuesMap, item?: Update.ResolverMap, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
 }
 
-// @public (undocumented)
+// @public
 export namespace Table {
     export type AttributeSetValues = StringSetValue | NumberSetValue | BinarySetValue;
     export type AttributeTypes = 'B' | 'N' | 'S' | 'BOOL' | 'NULL' | 'L' | 'M' | 'BS' | 'NS' | 'SS';
@@ -773,7 +768,6 @@ export namespace Table {
             type: 'S';
         };
     }
-    // (undocumented)
     export namespace PrimaryKey {
         export type AttributeTypes = 'B' | 'N' | 'S';
         export type AttributeTypesMap = {
@@ -914,9 +908,8 @@ export class Update {
     static inc(value: Update.OperandNumber): Update.Resolver<'N'>;
     static join(left?: Update.OperandList, right?: Update.OperandList): Update.Resolver<'L'>;
     static map(map: Update.ResolverMap): Update.Resolver<'M'>;
-    static model<T>(map: Update.ResolverObject<T>): Update.Resolver<'M'>;
-    // (undocumented)
-    static modelMap<T>(map: Update.ResolverObjectMap<T>): Update.Resolver<'M'>;
+    static model<T>(map: Update.ResolverModel<T>): Update.Resolver<'M'>;
+    static modelMap<T>(map: Update.ResolverModelMap<T>): Update.Resolver<'M'>;
     static path(path: string): Update.OperandFunction;
     static pathWithDefault<T extends Table.AttributeValues>(path: string, value: T): Update.OperandFunction;
     static prepend(value: Update.OperandList): Update.Resolver<'L'>;
@@ -929,7 +922,7 @@ export class Update {
     static sub(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'>;
 }
 
-// @public (undocumented)
+// @public
 export namespace Update {
     export type Binary = Table.BinaryValue | Update.Resolver<'B'>;
     export type BinarySet = Table.BinarySetValue | Update.Resolver<'BS'>;
@@ -962,16 +955,13 @@ export namespace Update {
     export type ResolverMapT<T> = {
         [key: string]: T | Resolver<Table.AttributeTypes> | undefined;
     };
-    // (undocumented)
-    export type ResolverObject<T> = {
-        [P in keyof Table.Optional<T>]: ResolverObjectValue<T[P]>;
+    export type ResolverModel<T> = {
+        [P in keyof Table.Optional<T>]: ResolverModelValue<T[P]>;
     };
-    // (undocumented)
-    export type ResolverObjectMap<T> = {
-        [key: string]: Update.ResolverObject<T>;
+    export type ResolverModelMap<T> = {
+        [key: string]: Update.ResolverModel<T>;
     };
-    // (undocumented)
-    export type ResolverObjectValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
+    export type ResolverModelValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
     export type String = string | Update.Resolver<'S'>;
     export type StringSet = Table.StringSetValue | Update.Resolver<'SS'>;
 }

@@ -68,7 +68,8 @@
 						<p>Set of helper methods to build KeyConditionExpressions used in DynamoDB query and scan operations.
 							All of the condition based methods return a <a href="keycondition.html#resolver">KeyCondition.Resolver</a> function in the form of
 							&#39;( name: string, exp: KeyConditionExpression, type?: T,): string&#39; this allow key conditions to be
-						composed together and even extended in a very simple way.</p>
+							composed together and even extended in a very simple way.
+						Namespace for scoping KeyCondition based interfaces and types.</p>
 					</div>
 					<p>See <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.KeyConditionExpressions" class="external">Key Condition Expression</a>
 					for details on how each of the below key comparison operations and functions work.</p>
@@ -161,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#stringresolver" class="tsd-signature-type">StringResolver</a><span class="tsd-signature-symbol"> | </span><a href="keycondition.html#numberresolver" class="tsd-signature-type">NumberResolver</a><span class="tsd-signature-symbol"> | </span><a href="keycondition.html#binaryresolver" class="tsd-signature-type">BinaryResolver</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L359">KeyCondition.ts:359</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L362">KeyCondition.ts:362</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -176,7 +177,7 @@
 					<div class="tsd-signature tsd-kind-icon">Binary<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"B"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L354">KeyCondition.ts:354</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L357">KeyCondition.ts:357</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -191,7 +192,7 @@
 					<div class="tsd-signature tsd-kind-icon">Compare<wbr>Operators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;&#x3D;"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L302">KeyCondition.ts:302</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L305">KeyCondition.ts:305</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -206,7 +207,7 @@
 					<div class="tsd-signature tsd-kind-icon">Number<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L349">KeyCondition.ts:349</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L352">KeyCondition.ts:352</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -221,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">Operators<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#compareoperators" class="tsd-signature-type">CompareOperators</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BETWEEN"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"begins_with"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L307">KeyCondition.ts:307</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L310">KeyCondition.ts:310</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -236,7 +237,7 @@
 					<div class="tsd-signature tsd-kind-icon">Resolver&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L339">KeyCondition.ts:339</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L342">KeyCondition.ts:342</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -302,7 +303,7 @@
 					<div class="tsd-signature tsd-kind-icon">String<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"S"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L344">KeyCondition.ts:344</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L347">KeyCondition.ts:347</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">

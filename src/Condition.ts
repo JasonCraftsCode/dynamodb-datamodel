@@ -76,7 +76,7 @@ export class Condition {
    * @param value - Path, value or resolver to inspect.
    * @returns True if value is a resolver and false if value is a basic type.
    */
-  static isResolver(value: Condition.Path | Condition.Value): value is Condition.Resolver {
+  static isResolver(value: Condition.Path | Condition.Value): value is Condition.ValueResolver {
     return typeof value === 'function';
   }
 
@@ -87,7 +87,7 @@ export class Condition {
    * @returns Generated name alias to use in condition expression.
    */
   static addPath(path: Condition.Path, exp: Condition.Expression): string {
-    return Condition.isResolver(path) ? path(exp) : exp.addPath(path);
+    return Condition.isResolver(path) ? path(exp, 'S') : exp.addPath(path);
   }
 
   /**
@@ -97,7 +97,7 @@ export class Condition {
    * @returns Generated value alias to use in condition expression.
    */
   static addValues(values: Condition.Value[], exp: Condition.Expression): string[] {
-    return values.map((value) => (Condition.isResolver(value) ? value(exp) : exp.addValue(value)));
+    return values.map((value) => (Condition.isResolver(value) ? value(exp, 'S') : exp.addValue(value)));
   }
 
   /**
@@ -110,7 +110,7 @@ export class Condition {
    * @param value - Path to use for a condition value.
    * @returns Resolver to use when generate condition expression.
    */
-  static path(value: string): Condition.Resolver {
+  static path(value: string): Condition.ValueResolver {
     return (exp: Condition.Expression): string => exp.addPath(value);
   }
 
@@ -134,7 +134,7 @@ export class Condition {
    * @param path - Attribute path to get size of value for.
    * @returns Resolver to use when generate condition expression.
    */
-  static size(path: string): Condition.Resolver {
+  static size(path: string): Condition.ValueResolver {
     return (exp: Condition.Expression): string => `size(${exp.addPath(path)})`;
   }
 
@@ -292,7 +292,7 @@ export class Condition {
    * @param value - String to check if the attribute value contains.
    * @returns Resolver to use when generate condition expression.
    */
-  static contains(path: string, value: string): Condition.Resolver<'S' | 'SS' | 'NS' | 'BS'> {
+  static contains(path: string, value: string): Condition.Resolver {
     return (exp: Condition.Expression): string => `contains(${exp.addPath(path)}, ${exp.addValue(value)})`;
   }
 
@@ -308,7 +308,7 @@ export class Condition {
    * @param value - String to check if the path attribute value begins with.
    * @returns Resolver to use when generate condition expression.
    */
-  static beginsWith(path: string, value: string): Condition.Resolver<'S'> {
+  static beginsWith(path: string, value: string): Condition.Resolver {
     return (exp: Condition.Expression): string => `begins_with(${exp.addPath(path)}, ${exp.addValue(value)})`;
   }
 
@@ -367,8 +367,9 @@ export class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static and(...conditions: Condition.Resolver<any>[]): Condition.Resolver {
-    return (exp: Condition.Expression): string => `(${conditions.map((resolver) => resolver(exp)).join(` AND `)})`;
+  static and(...conditions: Condition.Resolver[]): Condition.Resolver {
+    return (exp: Condition.Expression): string =>
+      `(${conditions.map((resolver) => resolver(exp, 'BOOL')).join(` AND `)})`;
   }
 
   /**
@@ -383,8 +384,9 @@ export class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static or(...conditions: Condition.Resolver<any>[]): Condition.Resolver {
-    return (exp: Condition.Expression): string => `(${conditions.map((resolver) => resolver(exp)).join(` OR `)})`;
+  static or(...conditions: Condition.Resolver[]): Condition.Resolver {
+    return (exp: Condition.Expression): string =>
+      `(${conditions.map((resolver) => resolver(exp, 'BOOL')).join(` OR `)})`;
   }
 
   /**
@@ -399,7 +401,7 @@ export class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static not(condition: Condition.Resolver): Condition.Resolver {
-    return (exp: Condition.Expression): string => `(NOT ${condition(exp)})`;
+    return (exp: Condition.Expression): string => `(NOT ${condition(exp, 'BOOL')})`;
   }
 
   /**
@@ -410,7 +412,7 @@ export class Condition {
    * @returns The list of conditions expanded as a string with 'AND' between each.
    */
   static resolveTopAnd(conditions: Condition.Resolver[], exp: ConditionExpression): string {
-    return conditions.map((resolver) => resolver(exp)).join(` AND `);
+    return conditions.map((resolver) => resolver(exp, 'BOOL')).join(` AND `);
   }
 
   /**
@@ -448,7 +450,10 @@ export class Condition {
   }
 }
 
-/** @public */
+/**
+ * Namespace for scoping Condition based interfaces and types.
+ * @public
+ * */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Condition {
   /**
@@ -492,26 +497,37 @@ export namespace Condition {
   }
 
   // TODO: T in Resolver is more about how they are composed together.  With size and path returning 'N' or 'S'
-  // The other conditions return 'BOOL' and have or, and, not only take 'bool' and return 'bool'
+  // The other conditions return 'BOOL' and have or, and, not only take 'bool' and return 'bool'. This is kind
+  // of opposite of Update
+  // Though if we knew the attribute type could do some verification, but would need to pass a name lookup.
+  // It is really better to have the field provide the supported conditions.
   /**
    * Resolver function is return by most of the above Conditions methods.  Returning a function allows conditions
    * to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
    * of the above primitive conditions or support any new primitives that AWS would add in the future.
-   * @param T - The types that this resolver supports.
    * @param exp - Object to get path and value aliases.
    * @param type - Argument to enforce type safety for conditions that only work on certain types.
    */
-  export type Resolver<T = Table.AttributeTypes> = (exp: Expression, type?: T) => string;
+  export type Resolver = (exp: Expression, type: 'BOOL') => string;
+
+  /**
+   * Value Resolver function is return by the path and size Condition methods.  Returning a function allows conditions
+   * to easily be composable and extensible.  This allows consumers to create higher level conditions that are composed
+   * of the above primitive conditions or support any new primitives that AWS would add in the future.
+   * @param exp - Object to get path and value aliases.
+   * @param type - Argument to enforce type safety for conditions that only work on certain types.
+   */
+  export type ValueResolver = (exp: Expression, type: 'S') => string;
 
   /**
    * The value used in the condition methods.  Can either be a primitive DynamoDB value or a Resolver function,
    * which allows for the use of functions like '{@link size}' or reference other attributes.
    */
-  export type Value = Table.AttributeValues | Resolver;
+  export type Value<T extends Table.AttributeValues = Table.AttributeValues> = T | ValueResolver;
 
   /**
    * The path or name used in the conditions methods.  Can either be a string or a Resolver function, which allows
    * for the use of functions like '{@link size}'.
    */
-  export type Path = string | Resolver;
+  export type Path = string | ValueResolver;
 }
