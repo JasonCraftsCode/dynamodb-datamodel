@@ -5,7 +5,7 @@
     "moduleResolution": "node",
     "lib": ["es6"], // same as es2015
     "outDir": "dist",
-    "baseUrl": "./__test__/baseUrl/", // baseUrl used for examples so "import {Table} from 'dynamodb-datamodel'" can be used
+    "baseUrl": "examples/baseUrl", // baseUrl used for examples so "import {Table} from 'dynamodb-datamodel'" can be used
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -35,7 +35,7 @@
     "out": "docs",
     "theme": "default",
     "gitRevision": "master",
-    "includes": "./__test__/examples/"
+    "includes": "./examples/"
     // "toc": ["Table", "Model"]
   }
 }

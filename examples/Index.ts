@@ -9,6 +9,7 @@ export interface GSI0Key {
 // Create an Index object for GSI0 based on GSI0Key, and project all attributes.
 export const gsi0 = Index.createIndex<GSI0Key>({
   name: 'GSI0',
+  // Defines the key type ('HASH' or 'RANGE') for the GSI primary keys.
   keySchema: {
     G0P: Table.PrimaryKey.PartitionKeyType,
     G0S: Table.PrimaryKey.SortKeyType,
@@ -25,6 +26,7 @@ export interface LSI0Key {
 // Create an Index object for LSI0 based on LSI0Key, and project all attributes.
 export const lsi0 = Index.createIndex<LSI0Key>({
   name: 'LSI0',
+  // Defines the key type ('HASH' or 'RANGE') for the LSI primary keys.
   keySchema: {
     P: Table.PrimaryKey.PartitionKeyType,
     L0S: Table.PrimaryKey.SortKeyType,

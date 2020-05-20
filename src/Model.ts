@@ -5,6 +5,12 @@ import { Table } from './Table';
 import { Update } from './Update';
 
 /**
+ *
+ *  * @example [examples/Model.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts} (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+ * ```typescript
+ * [[include:Model.ts]]
+ * ```
+ *
  * @public
  */
 export class Model implements Model.ModelBase {

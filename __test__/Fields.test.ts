@@ -353,7 +353,7 @@ describe('When FieldComposite', () => {
   it('expect composite returns correct type', () => {
     expect(field.alias).toEqual('G0S');
     expect(field.count).toEqual(3);
-    expect(field.delimiter).toEqual('.');
+    expect(field.delimiter).toEqual(';');
   });
 
   it('expect slot to return FieldCompositeSlot', () => {
@@ -364,20 +364,20 @@ describe('When FieldComposite', () => {
 
   it('slot.toModel expect existing slot to map', () => {
     const data: Model.ModelData = {};
-    slots[1].toModel('split', { G0S: 'part1.part2.part3' }, data, modelContext);
+    slots[1].toModel('split', { G0S: 'part1;part2;part3' }, data, modelContext);
     expect(data).toEqual({ split: 'part2' });
   });
 
   it('slot.toModel expect missing slot to skip', () => {
     const data: Model.ModelData = {};
-    slots[1].toModel('split', { G0S: 'part1.part2' }, data, modelContext);
+    slots[1].toModel('split', { G0S: 'part1;part2' }, data, modelContext);
     expect(data).toEqual({ split: 'part2' });
   });
 
   it('slot.toTable expect fields to map to key', () => {
     const data: Table.AttributeValuesMap = {};
     slots[2].toTable('split2', { split0: 'part0', split1: 'part1', split2: 'part2' }, data, tableContext);
-    expect(data).toEqual({ G0S: 'part0.part1.part2' });
+    expect(data).toEqual({ G0S: 'part0;part1;part2' });
   });
 
   it('slot.toTable missing slot expect empty data', () => {
@@ -428,7 +428,7 @@ describe('When FieldCompositeNamed', () => {
   it('expect correctly constructed', () => {
     expect(field.alias).toEqual('G0S');
     expect(field.count).toEqual(3);
-    expect(field.delimiter).toEqual('.');
+    expect(field.delimiter).toEqual(';');
     expect(field.map).toEqual({
       city: 0,
       state: 1,

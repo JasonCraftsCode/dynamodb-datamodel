@@ -1,7 +1,7 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { Table } from 'dynamodb-datamodel';
 
-const client = new DocumentClient({ convertEmptyValues: true });
+export const client = new DocumentClient({ convertEmptyValues: true });
 
 // Define the table primary key interface.
 export interface TableKey {
@@ -23,7 +23,8 @@ export const table = Table.createTable<TableKey>({
   },
 });
 
-//
+// Generate params to pass to DocumentClient or call the action method
 const params = table.getParams({ P: 'p1', S: 's1' });
 
+// (jest) output of getParams
 expect(params).toEqual({ Key: { P: 'p1', S: 's1' }, TableName: 'SimpleTable' });

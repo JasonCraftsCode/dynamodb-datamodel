@@ -45,4 +45,15 @@ module.exports = {
     'no-constructor-return': 'error',
     eqeqeq: 'error',
   },
+  overrides: [
+    {
+      // add limited set of rules here to avoid having to add eslint-disable comments to examples
+      files: ['examples/**/*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-require-imports': 'off',
+        '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+  ],
 };

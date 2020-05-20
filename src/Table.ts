@@ -28,72 +28,12 @@ function getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.Primary
  * If you are using TypeScript you can use {@link Index.createIndex} to create an Index with strong typing for the primary key.
  * This provides strong types for the {@link Index.keySchema} property, {@link Index.queryParams} and {@link Index.scan} methods.
  *
- * @example [ExampleIndex.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleIndex.ts}
+ * @example [examples/Index.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts}
  * ```typescript
- * [[include:ExampleIndex.ts]]
+ * [[include:Index.ts]]
  * ```
  *
- * @example Creating global secondary index object
- * ```typescript
- * import { DocumentClient } from 'aws-sdk/clients/dynamodb';
- * import { Index, Table } from 'dynamodb-datamodel';
- *
- * // [TypeScript] Define index primary key type
- * interface GSI0Key {
- *   G0P: Table.PrimaryKey.PartitionString;
- *   G0S?: Table.PrimaryKey.SortString;
- * }
- *
- * // Create index object.  Use 'new Index()' if your not using TypeScript.
- * const gsi0 = Index.createIndex<GSI0Key>({
- *   name: 'GSI0',
- *   keySchema: {
- *     G0P: Table.PrimaryKey.PartitionKeyType,
- *     G0S: Table.PrimaryKey.SortKeyType,
- *   },
- *   projection: { type: 'ALL' },
- * });
- *
- * // gsi0 can then be added to the tables globalIndexes property.
- * ```
- *
- *
- * @example Adding global secondary index to table
- * ```typescript
- * // Continued from previous example
- *
- * // Create DynamoDB DocumentClient
- * const client = new DocumentClient({ convertEmptyValues: true });
- *
- * // [TypeScript] Define table primary key type
- * interface Key {
- *   P: Table.PrimaryKey.PartitionString;
- *   S?: Table.PrimaryKey.SortString;
- * }
- *
- * interface TableAttributes extends Key, GSI0Key {}
- *
- * // Create table object.  Use 'new Table()' if your not using TypeScript.
- * const table = Table.createTable<Key, TableAttributes>({
- *   client,
- *   name: 'TestTable',
- *   keyAttributes: {
- *     P: Table.PrimaryKey.StringType,
- *     S: Table.PrimaryKey.StringType,
- *     G0P: Table.PrimaryKey.StringType,
- *     G0S: Table.PrimaryKey.StringType,
- *   },
- *   keySchema: {
- *     P: Table.PrimaryKey.PartitionKeyType,
- *     S: Table.PrimaryKey.SortKeyType,
- *   },
- *   globalIndexes: [gsi0] as Index[],
- * });
- *
- * // Can call Table methods to directly add items to the table, example:
- * const results = await gsi0.query({ G0P: 'P-guid', G0S: KeyCondition.between('a', 'z') });
- *
- * ```
+ * See {@link Table} for how to include Indexes into a Table.
  * @public
  */
 export class Index {
@@ -330,43 +270,12 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
 /**
  * Object that represents the DynamoDB table.
  *
- * @example [ExampleTable.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleTable.ts} (imports: [./ExampleIndex]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleIndex.ts})
+ * In most single table designs secondary indexes will be used like in the following example:
+ * @example [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts} (imports: [examples/Index.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts})
  * ```typescript
- * [[include:ExampleTable.ts]]
+ * [[include:Table.ts]]
  * ```
  *
- * @example
- * ```typescript
- * import { DocumentClient } from 'aws-sdk/clients/dynamodb';
- * import { Table } from 'dynamodb-datamodel';
- *
- * // Create DynamoDB DocumentClient
- * const client = new DocumentClient({ convertEmptyValues: true });
- *
- * // [TypeScript] Define table primary key type
- * interface Key {
- *   P: Table.PrimaryKey.PartitionString;
- *   S?: Table.PrimaryKey.SortString;
- * }
- *
- * // Create table object.  Use 'new Table()' if your not using TypeScript.
- * const table = Table.createTable<Key>({
- *   client,
- *   name: 'TestTable',
- *   keyAttributes: {
- *     P: Table.PrimaryKey.StringType,
- *     S: Table.PrimaryKey.StringType,
- *   },
- *   keySchema: {
- *     P: Table.PrimaryKey.PartitionKeyType,
- *     S: Table.PrimaryKey.SortKeyType,
- *   },
- *   // Global and local secondary indexes can be added to globalIndexes and localIndexes respectively.
- * });
- *
- * // Can call Table methods to directly add items to the table, example:
- * const results = await table.get({ P: 'P-guid', S: 'S-value' });
- * ```
  * @public
  */
 export class Table {

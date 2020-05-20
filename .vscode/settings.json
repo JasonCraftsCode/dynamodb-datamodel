@@ -2,13 +2,12 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "jestrunner.runOptions": ["--no-cache"],
   "jest.enableInlineErrorMessages": true,
-  "eslint.workingDirectories": ["src/**/*.ts", "__test__/**/*.ts"],
+  "eslint.workingDirectories": ["src/**/*.ts", "examples/**/*.ts", "__test__/**/*.ts"],
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.options": {},
-  "cSpell.words": [
-    "Birdland",
-    "tsdoc",
-    "unscoped"
-  ]
+  "cSpell.words": ["Birdland", "tsdoc", "unscoped"],
+  "files.associations": {
+    "api-extractor.json": "jsonc"
+  }
 }

@@ -1,6 +1,5 @@
-import { Fields, Model, Table, Update } from 'dynamodb-datamodel';
-import { gsi0 } from './ExampleIndex';
-import { table } from './ExampleTable';
+const { Fields, Model } = require('dynamodb-datamodel');
+const { table, gsi0 } = require('./Table');
 
 // Create composite slots to use in model schema below.
 const locMap = { neighborhood: 3, city: 2, state: 1, country: 0 };
@@ -10,23 +9,10 @@ const location = Fields.compositeNamed({
   delimiter: ';',
 });
 
-export interface ModelIdKey {
-  id: string;
-}
-
-// neighborhood, city, state and country only support simple set updates since they are part of a composite key
-interface ModelItem extends ModelIdKey {
-  neighborhood: string;
-  city: string;
-  state: string;
-  country: string;
-  region: Update.String;
-}
-
 const locSlots = location.createNamedSlots();
 
 // Define the schema using Fields
-const model = Model.createModel<ModelIdKey, ModelItem>({
+const model = new Model({
   schema: {
     id: Fields.split({ aliases: [table.getPartitionKey(), table.getSortKey()] }),
     neighborhood: locSlots.neighborhood,
@@ -35,7 +21,7 @@ const model = Model.createModel<ModelIdKey, ModelItem>({
     country: locSlots.country,
     region: Fields.string({ alias: gsi0.getPartitionKey() }),
   },
-  table: table as Table,
+  table: table,
 });
 
 const params = model.putParams({

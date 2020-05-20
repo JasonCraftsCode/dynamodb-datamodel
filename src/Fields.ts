@@ -6,35 +6,9 @@ import { Update } from './Update';
 
 /**
  * Collection of functions for constructing a Model schema with Field objects and the Field classes.
- * Fields use function chaining to
- * @example Using Model
+ * @example [examples/Fields.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
  * ```typescript
- * import { Fields, Model, Update } from 'dynamodb-datamodel';
- *
- * // (TypeScript) Define model key and item interface.
- * interface ModelKey {
- *   id: string;
- * }
- * interface ModelItem extends ModelKey {
- *   name: Update.String;
- *   age?: Update.Number;
- *   children?: Update.List<{ name: string, age: number}>;
- *   sports?: Update.StringSet;
- * }
- *
- * // Define the schema using Fields
- * const model = Model.createModel<ModelKey, ModelItem>({
- *   schema: {
- *     id: Fields.split({ aliases:['P', 'S'] }),
- *     name: Fields.string(),
- *     age: Fields.number(),
- *     children: Fields.list(),
- *     sports: Fields.stringSet(),
- *   },
- *   // ...additional properties like table
- * });
- *
- * // Use model to read and write to the dynamodb table
+ * [[include:Fields.ts]]
  * ```
  * @public
  */
@@ -171,23 +145,12 @@ export class Fields {
    * table attributes.  This is commonly used as an model id property which gets slit into the table's partition and sort keys.
    * Example: Model schema contains 'id: Fields.split(\{ aliases: ['P','S'] \})' and when id = 'guid.date' the field will split the id value
    * in to the table primary key of \{ P: 'guid', S: 'date' \}
-   * @example
+   *
+   * @example [examples/Fields.split.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.split.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
    * ```typescript
-   * import { Fields, Model } from 'dynamodb-datamodel';
-   *
-   * // (TypeScript) Define model key and item interface.
-   * interface ModelKey {
-   *   id: string;
-   * }
-   *
-   * // Define the schema using Fields
-   * const model = Model.createModel<ModelKey, ModelKey>({
-   *   schema: {
-   *     id: Fields.split({ aliases:['P', 'S'] }),
-   *   },
-   *   // ...additional properties like table
-   * });
+   * [[include:Fields.split.ts]]
    * ```
+   *
    * @param options - Options to initialize field with.
    * @returns New field object.
    */
@@ -197,39 +160,12 @@ export class Fields {
 
   /**
    * Creates an indices based slots composite field object which can then return FieldCompositeSlot by index to use in a {@link Model.schema}.
-   * @example
+   *
+   * @example [examples/Fields.composite.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.composite.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
    * ```typescript
-   * import { Fields, Model } from 'dynamodb-datamodel';
-   *
-   * // (TypeScript) Define model key and item interface.
-   * interface ModelKey {
-   *   id: string;
-   * }
-   * // street, city, state and country only support simple set updates since
-   * // they are part of a composite key
-   * interface ModelItem extends ModelKey {
-   *   street: string;
-   *   city: string;
-   *   state: string;
-   *   country: string;
-   * }
-   *
-   * // Create composite slots to use in model schema below.
-   * const location = Fields.composite({alias: 'G0S', count: 4});
-   * const locSlots = location.createSlots();
-   *
-   * // Define the schema using Fields
-   * const model = Model.createModel<ModelKey, ModelKey>({
-   *   schema: {
-   *     id: Fields.split({ aliases:['P', 'S'] }),
-   *     street: locSlots[0],
-   *     city: locSlots[1],
-   *     state: locSlots[2],
-   *     country: locSlots[3],
-   *   },
-   *   // ...additional properties like table
-   * });
+   * [[include:Fields.composite.ts]]
    * ```
+   *
    * @param options - Options to initialize field with.
    * @returns New composite object.
    */
@@ -239,10 +175,12 @@ export class Fields {
 
   /**
    * Creates an name based slots composite field object which can then return FieldCompositeSlot by name to use in a {@link Model.schema}.
-   * @example [Fields.compositeNamed.test.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/Fields.compositeNamed.test.ts}, (imports: [./ExampleIndex]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleIndex.ts}, [./ExampleTable]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/__test__/examples/ExampleTable.ts})
+   *
+   * @example [examples/Fields.compositeNamed.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.compositeNamed.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
    * ```typescript
-   * [[include:Fields.compositeNamed.test.ts]]
+   * [[include:Fields.compositeNamed.ts]]
    * ```
+   *
    * @param T - Map of slot names to index
    * @param options - Options to initialize field with.
    * @returns New composite object with named field slots.
@@ -255,25 +193,12 @@ export class Fields {
 
   /**
    * Creates a field that adds the Model name to a table attribute.
+   *
+   * @example [examples/Fields.type.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.type.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
    * ```typescript
-   * import { Fields, Model } from 'dynamodb-datamodel';
-   *
-   * // (TypeScript) Define model key and item interface.
-   * interface ModelKey {
-   *   id: string;
-   * }
-   * interface ModelItem extends Key {
-   *
-   * }
-   *
-   * // Define the schema using Fields
-   * const model = Model.createModel<ModelKey, ModelItem>({
-   *   schema: {
-   *     id: Fields.split({ aliases:['P', 'S'] }),
-   *   },
-   *   // ...additional properties like table
-   * });
+   * [[include:Fields.type.ts]]
    * ```
+   *
    * @param options - Options to initialize field with.
    * @returns New field object.
    */
@@ -1121,9 +1046,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Delimiter to use for when splitting the table attribute in to multiple model fields.
-     * @defaultValue '.'
+     * @defaultValue ';'
      */
-    delimiter = '.';
+    delimiter = ';';
 
     //writeOnly = false;
     //slots: CreateCompositeSlot[];

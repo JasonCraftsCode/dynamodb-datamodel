@@ -116,69 +116,17 @@ export class UpdateExpression implements Update.Expression {
 /**
  * Set of helper methods used to build UpdateExpression for use in DynamoDB update method.
  *
- * @example Using Model
+ * @example [examples/Update.Model.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Model.ts} (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
  * ```typescript
- * import { Fields, Model, Update } from 'dynamodb-datamodel';
- *
- * interface ModelKey {
- *   id: string;
- * }
- * interface ModelItem extends ModelKey {
- *   name: string;
- *   revision: number;
- * }
- *
- * const model = Model.createModel<ModelKey, ModelItem>({
- *   schema: {
- *     id: Fields.split({ aliases: ['P', 'S'] }),
- *     name: Fields.string(),
- *     nickName: Fields.string(),
- *     revision: Fields.number(),
- *   },
- *   // ...additional properties like table
- * });
- *
- * // update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.
- * model.update({
- *   id: 'P-GUID.S-0',
- *   name: 'new name',
- *   nickName: Update.del(),
- *   revision: Update.inc(2),
- * });
+ * [[include:Update.Model.ts]]
  * ```
  *
- * @example Using Table (though in most cases you'll use Model)
+ * Using Table (though in most cases you'll use Model):
+ * @example [examples/Update.Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Table.ts} (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
  * ```typescript
- * import { Table, Update } from 'dynamodb-datamodel';
- *
- * interface Key {
- *   P: Table.PrimaryKey.PartitionString;
- *   S?: Table.PrimaryKey.SortString;
- * }
- *
- * const table = Table.createTable<Key>({
- *   name: 'TestTable',
- *   keyAttributes: {
- *     P: Table.PrimaryKey.StringType,
- *     S: Table.PrimaryKey.StringType,
- *   },
- *   keySchema: {
- *     P: Table.PrimaryKey.PartitionKeyType,
- *     S: Table.PrimaryKey.SortKeyType,
- *   },
- *   // ...additional properties like client, globalIndexes and others
- * });
- *
- * // update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.
- * table.update(
- *   {P: 'P-GUID', S: 'S-0' },
- *   {
- *     name: 'new name',
- *     nickName: Update.del(),
- *     revision: Update.inc(2),
- *   }
- * );
+ * [[include:Update.Table.ts]]
  * ```
+ *
  * @public
  */
 export class Update {

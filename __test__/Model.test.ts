@@ -288,7 +288,7 @@ describe('Validate Model with Table and Indexes', () => {
       });
       expect(params).toEqual({
         Item: {
-          G0S: 'new york.new york.usa',
+          G0S: 'new york;new york;usa',
           P: 'id1',
           S: 'id2',
           adult: true,
@@ -395,7 +395,7 @@ describe('Validate Model with Table and Indexes', () => {
           '#n9': 'modified',
         },
         ExpressionAttributeValues: {
-          ':v0': 'kirkland.wa.usa',
+          ':v0': 'kirkland;wa;usa',
           ':v1': 'new name',
           ':v10': {
             role: 3,
@@ -479,7 +479,7 @@ describe('Validate Model with Table and Indexes', () => {
       client.get = jest.fn(() =>
         request({
           Item: {
-            G0S: 'new york.new york.usa',
+            G0S: 'new york;new york;usa',
             P: 'id1',
             S: 'id2',
             adult: true,
@@ -675,7 +675,7 @@ describe('Validate Model with Table and Indexes', () => {
             P: 'id1',
             S: 'id2',
             rev: 2,
-            G0S: 'hudson.wi.usa',
+            G0S: 'hudson;wi;usa',
             created: 1585553202,
           },
         }),
@@ -705,7 +705,7 @@ describe('Validate Model with Table and Indexes', () => {
           '#n3': 'created',
         },
         ExpressionAttributeValues: {
-          ':v0': 'kirkland.wa.usa',
+          ':v0': 'kirkland;wa;usa',
           ':v1': 'new name',
           ':v2': 1,
           ':v3': 1585553302,
