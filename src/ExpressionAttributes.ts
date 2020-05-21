@@ -6,7 +6,7 @@ import { Table } from './Table';
  * aliases and store the mappings for use in ExpressionAttributeNames and ExpressionAttributeValues params.
  * @public
  */
-export class ExpressionAttributes {
+export class ExpressionAttributes implements Table.ExpressionAttributes {
   /**
    * RegEx that validates an attribute name would not need to use an alias.
    */
@@ -112,15 +112,15 @@ export class ExpressionAttributes {
   /**
    * Gets the names map to assign to ExpressionAttributeNames.
    */
-  getPaths(): ExpressionAttributeNameMap {
-    return this.names;
+  getPaths(): ExpressionAttributeNameMap | void {
+    if (Object.keys(this.names).length > 0) return this.names;
   }
 
   /**
    * Gets the values map to assign to ExpressionAttributeValues.
    */
-  getValues(): Table.AttributeValuesMap {
-    return this.values;
+  getValues(): Table.AttributeValuesMap | void {
+    if (Object.keys(this.values).length > 0) return this.values;
   }
 
   /**
@@ -138,17 +138,24 @@ export class ExpressionAttributes {
    * @param params - Input params used for DocumentClient put, delete, update, query and scan methods.
    * @returns The input params argument passed in.
    */
-  addParams(params: {
-    ExpressionAttributeNames?: ExpressionAttributeNameMap;
-    ExpressionAttributeValues?: Table.AttributeValuesMap;
-  }): {
+  static addParams(
+    attributes: Table.ExpressionAttributes,
+    params: {
+      ExpressionAttributeNames?: ExpressionAttributeNameMap;
+      ExpressionAttributeValues?: Table.AttributeValuesMap;
+    },
+  ): {
     ExpressionAttributeNames?: ExpressionAttributeNameMap;
     ExpressionAttributeValues?: Table.AttributeValuesMap;
   } {
-    if (Object.keys(this.names).length > 0) params.ExpressionAttributeNames = this.names;
+    const paths = attributes.getPaths();
+    if (paths) params.ExpressionAttributeNames = paths;
     else delete params.ExpressionAttributeNames;
-    if (Object.keys(this.values).length > 0) params.ExpressionAttributeValues = this.values;
+
+    const values = attributes.getValues();
+    if (values) params.ExpressionAttributeValues = values;
     else delete params.ExpressionAttributeValues;
+
     return params;
   }
 

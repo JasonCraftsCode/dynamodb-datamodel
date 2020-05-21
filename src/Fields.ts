@@ -1,4 +1,3 @@
-/* eslint-disable tsdoc/syntax */
 import { Condition } from './Condition';
 import { Model } from './Model';
 import { Table } from './Table';
@@ -403,12 +402,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.default = options.default;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
@@ -421,6 +422,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = value;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
@@ -433,6 +435,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) tableData[this.alias || name] = value;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
@@ -861,6 +864,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * Date property field.
    */
   export class FieldDate extends FieldBase<Date> {
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
@@ -873,6 +877,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
@@ -885,6 +890,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) tableData[this.alias || name] = Math.round(value.valueOf() / 1000);
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
@@ -900,10 +906,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * Hidden property field.  Used to avoid writing a property to the DynamoDb table.
    */
   export class FieldHidden implements Fields.Field {
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
     init(name: string, model: Model): void {}
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -917,6 +925,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
     ): void {}
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -945,12 +954,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.slots = slots;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
@@ -967,6 +978,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       modelData[name] = parts[this.slot];
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
@@ -992,6 +1004,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData[alias] = dataSlots.join(this.composite.delimiter);
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
@@ -1172,12 +1185,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (options.delimiter) this.delimiter = options.delimiter;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
@@ -1194,6 +1209,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (parts.length > 0) modelData[name] = parts.join(this.delimiter);
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
@@ -1213,6 +1229,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       for (let i = 0; i < parts.length; i++) tableData[this.aliases[i]] = parts[i];
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
@@ -1257,12 +1274,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.alias = options.alias;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
@@ -1275,6 +1294,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = value;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
@@ -1324,12 +1344,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (options.now) this.now = options.now;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
@@ -1342,6 +1364,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
@@ -1391,12 +1414,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (options.now) this.now = options.now;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
@@ -1409,6 +1434,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
@@ -1419,6 +1445,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (Table.isPutAction(context.action)) tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,
@@ -1480,12 +1507,14 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       this.matchOnWrite = options.matchOnWrite;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(name: string, model: Model): void {
       this.name = name;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
     toModel(
       name: string,
@@ -1498,6 +1527,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (value !== undefined) modelData[name] = value;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
     toTable(
       name: string,
@@ -1512,6 +1542,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData[this.alias || name] = this.start;
     }
 
+    // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
     toTableUpdate(
       name: string,

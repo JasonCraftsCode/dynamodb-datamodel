@@ -96,6 +96,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="keycondition.expression.html#addcondition" class="tsd-kind-icon">add<wbr>Condition</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="keycondition.expression.html#addpath" class="tsd-kind-icon">add<wbr>Path</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="keycondition.expression.html#addvalue" class="tsd-kind-icon">add<wbr>Value</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="keycondition.expression.html#getexpression" class="tsd-kind-icon">get<wbr>Expression</a></li>
 							</ul>
 						</section>
 					</div>
@@ -113,7 +114,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L330">KeyCondition.ts:330</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L241">KeyCondition.ts:241</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -144,7 +145,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L319">KeyCondition.ts:319</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L230">KeyCondition.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -172,7 +173,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L324">KeyCondition.ts:324</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L235">KeyCondition.ts:235</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -187,6 +188,29 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getexpression" class="tsd-anchor"></a>
+					<h3>get<wbr>Expression</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Expression<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L247">KeyCondition.ts:247</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the expression from paths, values and conditions added.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
+							<p>key condition expression to use KeyConditionExpression param.</p>
 						</li>
 					</ul>
 				</section>
@@ -234,6 +258,9 @@
 									<li class=" tsd-kind-method tsd-parent-kind-interface">
 										<a href="keycondition.expression.html#addvalue" class="tsd-kind-icon">add<wbr>Value</a>
 									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-interface">
+										<a href="keycondition.expression.html#getexpression" class="tsd-kind-icon">get<wbr>Expression</a>
+									</li>
 								</ul>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
@@ -258,16 +285,10 @@
 								<a href="../classes/keycondition.html#stringresolver" class="tsd-kind-icon">String<wbr>Resolver</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/keycondition.html#addparam" class="tsd-kind-icon">add<wbr>Param</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="../classes/keycondition.html#beginswith" class="tsd-kind-icon">begins<wbr>With</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="../classes/keycondition.html#between" class="tsd-kind-icon">between</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/keycondition.html#buildexpression" class="tsd-kind-icon">build<wbr>Expression</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="../classes/keycondition.html#compare" class="tsd-kind-icon">compare</a>

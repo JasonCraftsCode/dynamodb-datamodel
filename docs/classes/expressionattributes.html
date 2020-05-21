@@ -78,6 +78,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -97,7 +103,6 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expressionattributes.html#addparams" class="tsd-kind-icon">add<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expressionattributes.html#addpath" class="tsd-kind-icon">add<wbr>Path</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expressionattributes.html#addvalue" class="tsd-kind-icon">add<wbr>Value</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expressionattributes.html#getpaths" class="tsd-kind-icon">get<wbr>Paths</a></li>
@@ -105,6 +110,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expressionattributes.html#isreservedname" class="tsd-kind-icon">is<wbr>Reserved<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expressionattributes.html#isvalidname" class="tsd-kind-icon">is<wbr>Valid<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expressionattributes.html#reset" class="tsd-kind-icon">reset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="expressionattributes.html#addparams" class="tsd-kind-icon">add<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="expressionattributes.html#isvalidattributename" class="tsd-kind-icon">is<wbr>Valid<wbr>Attribute<wbr>Name</a></li>
 							</ul>
 						</section>
@@ -242,54 +248,6 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addparams" class="tsd-anchor"></a>
-					<h3>add<wbr>Params</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Params<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> }</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L141">ExpressionAttributes.ts:141</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Helper method to set ExpressionAttributeNames and ExpressionAttributeValues values on the input argument.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>params: <span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> }</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Input params used for DocumentClient put, delete, update, query and scan methods.</p>
-									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> Expression<wbr>Attribute<wbr>Names<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> Expression<wbr>Attribute<wbr>Values<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> }</span></h4>
-							<p>The input params argument passed in.</p>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter">
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> Expression<wbr>Attribute<wbr>Names<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> Expression<wbr>Attribute<wbr>Values<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="addpath" class="tsd-anchor"></a>
 					<h3>add<wbr>Path</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -298,6 +256,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/table.expressionattributes.html">ExpressionAttributes</a>.<a href="../interfaces/table.expressionattributes.html#addpath">addPath</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L84">ExpressionAttributes.ts:84</a></li>
 								</ul>
@@ -333,6 +292,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/table.expressionattributes.html">ExpressionAttributes</a>.<a href="../interfaces/table.expressionattributes.html#addvalue">addValue</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L106">ExpressionAttributes.ts:106</a></li>
 								</ul>
@@ -361,11 +321,12 @@
 					<a name="getpaths" class="tsd-anchor"></a>
 					<h3>get<wbr>Paths</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Paths<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Paths<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/table.expressionattributes.html">ExpressionAttributes</a>.<a href="../interfaces/table.expressionattributes.html#getpaths">getPaths</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L115">ExpressionAttributes.ts:115</a></li>
 								</ul>
@@ -375,7 +336,7 @@
 									<p>Gets the names map to assign to ExpressionAttributeNames.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ExpressionAttributeNameMap</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -383,11 +344,12 @@
 					<a name="getvalues" class="tsd-anchor"></a>
 					<h3>get<wbr>Values</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Values<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Values<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/table.expressionattributes.html">ExpressionAttributes</a>.<a href="../interfaces/table.expressionattributes.html#getvalues">getValues</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L122">ExpressionAttributes.ts:122</a></li>
 								</ul>
@@ -397,7 +359,7 @@
 									<p>Gets the values map to assign to ExpressionAttributeValues.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -460,6 +422,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/table.expressionattributes.html">ExpressionAttributes</a>.<a href="../interfaces/table.expressionattributes.html#reset">reset</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L129">ExpressionAttributes.ts:129</a></li>
 								</ul>
@@ -470,6 +433,57 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="addparams" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> add<wbr>Params</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Params<span class="tsd-signature-symbol">(</span>attributes<span class="tsd-signature-symbol">: </span><a href="../interfaces/table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/ExpressionAttributes.ts#L141">ExpressionAttributes.ts:141</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Helper method to set ExpressionAttributeNames and ExpressionAttributeValues values on the input argument.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>attributes: <a href="../interfaces/table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a></h5>
+								</li>
+								<li>
+									<h5>params: <span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> }</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Input params used for DocumentClient put, delete, update, query and scan methods.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> Expression<wbr>Attribute<wbr>Names<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> Expression<wbr>Attribute<wbr>Values<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>ExpressionAttributeNames<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span><span class="tsd-signature-symbol">; </span>ExpressionAttributeValues<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> }</span></h4>
+							<p>The input params argument passed in.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> Expression<wbr>Attribute<wbr>Names<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ExpressionAttributeNameMap</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> Expression<wbr>Attribute<wbr>Values<span class="tsd-signature-symbol">?: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
@@ -550,9 +564,6 @@
 								<a href="expressionattributes.html#validattributenameregex" class="tsd-kind-icon">valid<wbr>Attribute<wbr>Name<wbr>Reg<wbr>Ex</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="expressionattributes.html#addparams" class="tsd-kind-icon">add<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="expressionattributes.html#addpath" class="tsd-kind-icon">add<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -572,6 +583,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="expressionattributes.html#reset" class="tsd-kind-icon">reset</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="expressionattributes.html#addparams" class="tsd-kind-icon">add<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="expressionattributes.html#isvalidattributename" class="tsd-kind-icon">is<wbr>Valid<wbr>Attribute<wbr>Name</a>

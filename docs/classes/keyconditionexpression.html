@@ -108,6 +108,8 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#addpath" class="tsd-kind-icon">add<wbr>Path</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#addvalue" class="tsd-kind-icon">add<wbr>Value</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="keyconditionexpression.html#getexpression" class="tsd-kind-icon">get<wbr>Expression</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="keyconditionexpression.html#addparam" class="tsd-kind-icon">add<wbr>Param</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="keyconditionexpression.html#buildexpression" class="tsd-kind-icon">build<wbr>Expression</a></li>
 							</ul>
 						</section>
 					</div>
@@ -119,13 +121,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Key<wbr>Condition<wbr>Expression<span class="tsd-signature-symbol">(</span>attributes<span class="tsd-signature-symbol">?: </span><a href="expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Key<wbr>Condition<wbr>Expression<span class="tsd-signature-symbol">(</span>attributes<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keyconditionexpression.html" class="tsd-signature-type">KeyConditionExpression</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L19">KeyCondition.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L297">KeyCondition.ts:297</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -136,7 +138,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> attributes: <a href="expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a><span class="tsd-signature-symbol"> = new ExpressionAttributes()</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> attributes: <a href="../interfaces/table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a><span class="tsd-signature-symbol"> = new ExpressionAttributes()</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>Object used to get path and value aliases.</p>
@@ -154,10 +156,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="attributes" class="tsd-anchor"></a>
 					<h3>attributes</h3>
-					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <a href="expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a></div>
+					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <a href="../interfaces/table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L13">KeyCondition.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L291">KeyCondition.ts:291</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -172,7 +174,7 @@
 					<div class="tsd-signature tsd-kind-icon">conditions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L19">KeyCondition.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L297">KeyCondition.ts:297</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -196,7 +198,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keycondition.expression.html">Expression</a>.<a href="../interfaces/keycondition.expression.html#addcondition">addCondition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L47">KeyCondition.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L323">KeyCondition.ts:323</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -208,9 +210,6 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>condition: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Condition expression to add.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -228,7 +227,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keycondition.expression.html">Expression</a>.<a href="../interfaces/keycondition.expression.html#addpath">addPath</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L32">KeyCondition.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L310">KeyCondition.ts:310</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -257,7 +256,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/keycondition.expression.html">Expression</a>.<a href="../interfaces/keycondition.expression.html#addvalue">addValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L39">KeyCondition.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L317">KeyCondition.ts:317</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -279,21 +278,115 @@
 					<a name="getexpression" class="tsd-anchor"></a>
 					<h3>get<wbr>Expression</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Expression<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Expression<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/keycondition.expression.html">Expression</a>.<a href="../interfaces/keycondition.expression.html#getexpression">getExpression</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L329">KeyCondition.ts:329</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the expression from paths, values and conditions added.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
+							<p>key condition expression to use KeyConditionExpression param.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="addparam" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> add<wbr>Param</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Param<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, exp<span class="tsd-signature-symbol">: </span><a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>KeyConditionExpression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>KeyConditionExpression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L54">KeyCondition.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L355">KeyCondition.ts:355</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get key condition expression to use KeyConditionExpression param.</p>
+									<p>Helper function to set a &#39;KeyConditionExpression&#39; value on the params argument if there are conditions to resolve.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>List of conditions to evaluate with AND.</p>
+									</div>
+								</li>
+								<li>
+									<h5>exp: <a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Used when evaluation conditions and store the names and values mappings.</p>
+									</div>
+								</li>
+								<li>
+									<h5>params: <span class="tsd-signature-symbol">{ </span>KeyConditionExpression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Params used for DocumentClient query methods.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> Key<wbr>Condition<wbr>Expression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>KeyConditionExpression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h4>
+							<p>The params argument passed in.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> Key<wbr>Condition<wbr>Expression<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="buildexpression" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> build<wbr>Expression</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Expression<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a>, exp<span class="tsd-signature-symbol">: </span><a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/KeyCondition.ts#L339">KeyCondition.ts:339</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a key condition expression from a primary key.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <a href="table.primarykey.html#keyquerymap" class="tsd-signature-type">KeyQueryMap</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Primary key value to build the expression from.</p>
+									</div>
+								</li>
+								<li>
+									<h5>exp: <a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object used to get path and value aliases and store the key conditions array.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
+							<p>A key condition expression to use for the KeyConditionExpression param.</p>
 						</li>
 					</ul>
 				</section>
@@ -352,6 +445,12 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="keyconditionexpression.html#getexpression" class="tsd-kind-icon">get<wbr>Expression</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="keyconditionexpression.html#addparam" class="tsd-kind-icon">add<wbr>Param</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="keyconditionexpression.html#buildexpression" class="tsd-kind-icon">build<wbr>Expression</a>
 							</li>
 						</ul>
 					</li>

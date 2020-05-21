@@ -2,40 +2,6 @@ import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 /**
- * Object passed down to Condition.Resolver functions to support getting path and value aliases and
- * provide context to the resolver function to support advanced condition resolvers.
- * @public
- */
-export class ConditionExpression implements Condition.Expression {
-  /**
-   * Object for getting path and value aliases.
-   */
-  attributes: ExpressionAttributes;
-
-  /**
-   * Initialize ConditionExpression with existing or new {@link ExpressionAttributes}.
-   * @param attributes - Object used to get path and value aliases.
-   */
-  constructor(attributes = new ExpressionAttributes()) {
-    this.attributes = attributes;
-  }
-
-  /**
-   * See {@link ExpressionAttributes.addPath} for details.
-   */
-  addPath(path: string): string {
-    return this.attributes.addPath(path);
-  }
-
-  /**
-   * See {@link ExpressionAttributes.addValue} for details.
-   */
-  addValue(value: Table.AttributeValues): string {
-    return this.attributes.addValue(value);
-  }
-}
-
-/**
  * Set of helper methods to build ConditionExpressions used in DynamoDB delete, put and update operations, and
  * FilterExpression used in DynamoDB query and scan operations.  All of the condition based methods return a
  * {@link Condition.Resolver}  function in the form of '(exp: ConditionExpression): string' this allow conditions
@@ -71,35 +37,6 @@ export class ConditionExpression implements Condition.Expression {
  * @public
  */
 export class Condition {
-  /**
-   * Determines if a value is a resolver function or a basic type.
-   * @param value - Path, value or resolver to inspect.
-   * @returns True if value is a resolver and false if value is a basic type.
-   */
-  static isResolver(value: Condition.Path | Condition.Value): value is Condition.ValueResolver {
-    return typeof value === 'function';
-  }
-
-  /**
-   * Add a path to the {@link ConditionExpression} either directly or by resolving the path.
-   * @param path - Value to add or add via resolving.
-   * @param exp - Object to add path to.
-   * @returns Generated name alias to use in condition expression.
-   */
-  static addPath(path: Condition.Path, exp: Condition.Expression): string {
-    return Condition.isResolver(path) ? path(exp, 'S') : exp.addPath(path);
-  }
-
-  /**
-   * Add a value to the {@link ConditionExpression}  either directly or by resolving the values.
-   * @param values - Array of values to add or add via resolving.
-   * @param exp - Object to add values to.
-   * @returns Generated value alias to use in condition expression.
-   */
-  static addValues(values: Condition.Value[], exp: Condition.Expression): string[] {
-    return values.map((value) => (Condition.isResolver(value) ? value(exp, 'S') : exp.addValue(value)));
-  }
-
   /**
    * Inserts a path for a value in below conditions methods to allow conditions to compare two fields against each other.
    * @example
@@ -151,8 +88,7 @@ export class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value): Condition.Resolver {
-    return (exp: Condition.Expression): string =>
-      `${Condition.addPath(left, exp)} ${op} ${Condition.addValues([right], exp)}`;
+    return (exp: Condition.Expression): string => `${exp.resolvePath(left)} ${op} ${exp.resolveValues([right])}`;
   }
 
   /**
@@ -261,7 +197,7 @@ export class Condition {
    */
   static between(path: string, from: Condition.Value, to: Condition.Value): Condition.Resolver {
     return (exp: Condition.Expression): string =>
-      `${exp.addPath(path)} BETWEEN ${Condition.addValues([from, to], exp).join(' AND ')}`;
+      `${exp.addPath(path)} BETWEEN ${exp.resolveValues([from, to]).join(' AND ')}`;
   }
 
   /**
@@ -276,8 +212,7 @@ export class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static in(path: string, values: Condition.Value[]): Condition.Resolver {
-    return (exp: Condition.Expression): string =>
-      `${exp.addPath(path)} IN (${Condition.addValues(values, exp).join(', ')})`;
+    return (exp: Condition.Expression): string => `${exp.addPath(path)} IN (${exp.resolveValues(values).join(', ')})`;
   }
 
   /**
@@ -403,51 +338,6 @@ export class Condition {
   static not(condition: Condition.Resolver): Condition.Resolver {
     return (exp: Condition.Expression): string => `(NOT ${condition(exp, 'BOOL')})`;
   }
-
-  /**
-   * Expands a list of conditions into an 'AND' expression.
-   * This method is different then evaluating the above '{@link and}' method, since it will not surround the condition with '()'.
-   * @param conditions - List of conditions to evaluate with AND.
-   * @param exp - Used when evaluation conditions and store the names and values mappings.
-   * @returns The list of conditions expanded as a string with 'AND' between each.
-   */
-  static resolveTopAnd(conditions: Condition.Resolver[], exp: ConditionExpression): string {
-    return conditions.map((resolver) => resolver(exp, 'BOOL')).join(` AND `);
-  }
-
-  /**
-   * Helper function to set a 'ConditionExpression' value on the params argument if there are conditions to resolve.
-   * @param conditions - List of conditions to evaluate and join together with AND.
-   * @param exp - Used when evaluation conditions and store the names and values mappings.
-   * @param params - Params used for DocumentClient put, delete and update methods.
-   * @returns The params argument passed in.
-   */
-  static addAndParam(
-    conditions: Condition.Resolver[] | undefined,
-    exp: ConditionExpression,
-    params: { ConditionExpression?: string },
-  ): { ConditionExpression?: string } {
-    if (conditions && conditions.length > 0) params.ConditionExpression = Condition.resolveTopAnd(conditions, exp);
-    else delete params.ConditionExpression;
-    return params;
-  }
-
-  /**
-   * Helper function to set a 'FilterExpression' value on the params argument if there are conditions to resolve.
-   * @param conditions - List of conditions to evaluate with AND.
-   * @param exp - Used when evaluation conditions and store the names and values mappings.
-   * @param params - Params used for DocumentClient query and scan methods.
-   * @returns The params argument passed in.
-   */
-  static addAndFilterParam(
-    conditions: Condition.Resolver[] | undefined,
-    exp: ConditionExpression,
-    params: { FilterExpression?: string },
-  ): { FilterExpression?: string } {
-    if (conditions && conditions.length > 0) params.FilterExpression = Condition.resolveTopAnd(conditions, exp);
-    else delete params.FilterExpression;
-    return params;
-  }
 }
 
 /**
@@ -494,6 +384,20 @@ export namespace Condition {
      * See {@link ExpressionAttributes.addValue} for details.
      */
     addValue(value: Table.AttributeValues): string;
+
+    /**
+     * Add a condition path either directly or by resolving the path.
+     * @param path - Value to add or add via resolving.
+     * @returns Generated name alias to use in condition expression.
+     */
+    resolvePath(path: Condition.Path): string;
+
+    /**
+     * Add a condition value either directly or by resolving the values.
+     * @param values - Array of values to add or add via resolving.
+     * @returns Generated value alias to use in condition expression.
+     */
+    resolveValues(values: Condition.Value[]): string[];
   }
 
   // TODO: T in Resolver is more about how they are composed together.  With size and path returning 'N' or 'S'
@@ -530,4 +434,106 @@ export namespace Condition {
    * for the use of functions like '{@link size}'.
    */
   export type Path = string | ValueResolver;
+}
+
+/**
+ * Object passed down to Condition.Resolver functions to support getting path and value aliases and
+ * provide context to the resolver function to support advanced condition resolvers.
+ * @public
+ */
+export class ConditionExpression implements Condition.Expression {
+  /**
+   * Object for getting path and value aliases.
+   */
+  attributes: Table.ExpressionAttributes;
+
+  /**
+   * Initialize ConditionExpression with existing or new {@link ExpressionAttributes}.
+   * @param attributes - Object used to get path and value aliases.
+   */
+  constructor(attributes: Table.ExpressionAttributes = new ExpressionAttributes()) {
+    this.attributes = attributes;
+  }
+
+  /**
+   * See {@link ExpressionAttributes.addPath} for details.
+   */
+  addPath(path: string): string {
+    return this.attributes.addPath(path);
+  }
+
+  /**
+   * See {@link ExpressionAttributes.addValue} for details.
+   */
+  addValue(value: Table.AttributeValues): string {
+    return this.attributes.addValue(value);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Condition:namespace).Expression.resolvePath} */
+  resolvePath(path: Condition.Path): string {
+    return ConditionExpression.isResolver(path) ? path(this, 'S') : this.addPath(path);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Condition:namespace).Expression.resolveValues} */
+  resolveValues(values: Condition.Value[]): string[] {
+    return values.map((value) => (ConditionExpression.isResolver(value) ? value(this, 'S') : this.addValue(value)));
+  }
+
+  /**
+   * Expands a list of conditions into an 'AND' expression.
+   * This method is different then evaluating the above '{@link and}' method, since it will not surround the condition with '()'.
+   * @param conditions - List of conditions to evaluate with AND.
+   * @param exp - Used when evaluation conditions and store the names and values mappings.
+   * @returns The list of conditions expanded as a string with 'AND' between each.
+   */
+  static buildExpression(conditions: Condition.Resolver[], exp: Condition.Expression): string {
+    return conditions.map((resolver) => resolver(exp, 'BOOL')).join(` AND `);
+  }
+
+  /**
+   * Helper function to set a 'ConditionExpression' value on the params argument if there are conditions to resolve.
+   * @param conditions - List of conditions to evaluate and join together with AND.
+   * @param exp - Used when evaluation conditions and store the names and values mappings.
+   * @param params - Params used for DocumentClient put, delete and update methods.
+   * @returns The params argument passed in.
+   */
+  static addAndParam(
+    conditions: Condition.Resolver[] | undefined,
+    exp: Condition.Expression,
+    params: { ConditionExpression?: string },
+  ): { ConditionExpression?: string } {
+    if (conditions && conditions.length > 0)
+      params.ConditionExpression = ConditionExpression.buildExpression(conditions, exp);
+    else delete params.ConditionExpression;
+    return params;
+  }
+
+  /**
+   * Helper function to set a 'FilterExpression' value on the params argument if there are conditions to resolve.
+   * @param conditions - List of conditions to evaluate with AND.
+   * @param exp - Used when evaluation conditions and store the names and values mappings.
+   * @param params - Params used for DocumentClient query and scan methods.
+   * @returns The params argument passed in.
+   */
+  static addAndFilterParam(
+    conditions: Condition.Resolver[] | undefined,
+    exp: Condition.Expression,
+    params: { FilterExpression?: string },
+  ): { FilterExpression?: string } {
+    if (conditions && conditions.length > 0)
+      params.FilterExpression = ConditionExpression.buildExpression(conditions, exp);
+    else delete params.FilterExpression;
+    return params;
+  }
+
+  /**
+   * Determines if a value is a resolver function or a basic type.
+   * @param value - Path, value or resolver to inspect.
+   * @returns True if value is a resolver and false if value is a basic type.
+   */
+  static isResolver(value: Condition.Path | Condition.Value): value is Condition.ValueResolver {
+    return typeof value === 'function';
+  }
 }

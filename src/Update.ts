@@ -2,118 +2,6 @@ import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 /**
- * Object passed into all Update.Resolver functions to support getting path and value aliases, appending
- * update conditions to SET, REMOVE, ADD and DELETE update arrays and provide context to the resolver function to
- * support advanced update resolvers.
- * @public
- */
-export class UpdateExpression implements Update.Expression {
-  /**
-   * Array of SET expressions.
-   */
-  setList: string[] = [];
-
-  /**
-   * Array of REMOVE expressions.
-   */
-  removeList: string[] = [];
-
-  /**
-   * Array of ADD expressions.
-   */
-  addList: string[] = [];
-
-  /**
-   * Array of DELETE expressions.
-   */
-  deleteList: string[] = [];
-
-  /**
-   * Object to support getting path and value aliases.
-   */
-  attributes: ExpressionAttributes;
-
-  /**
-   * Initialize UpdateExpression with existing or new {@link ExpressionAttributes}.
-   * @param attributes - Object used to get path and value aliases.
-   */
-  constructor(attributes = new ExpressionAttributes()) {
-    this.attributes = attributes;
-  }
-
-  /**
-   * See {@link ExpressionAttributes.addPath} for details.
-   */
-  addPath(name: string): string {
-    return this.attributes.addPath(name);
-  }
-
-  /**
-   * See {@link ExpressionAttributes.addValue} for details.
-   */
-  addValue(value: Table.AttributeValues): string {
-    return this.attributes.addValue(value);
-  }
-
-  /**
-   * Append a `SET` update expression.
-   * @param value - Expression to add to the `SET` array.
-   */
-  addSet(value: string): void {
-    this.setList.push(value);
-  }
-
-  /**
-   * Append a `REMOVE` update expression.
-   * @param value - Expression to add to the `REMOVE` array.
-   */
-  addRemove(value: string): void {
-    this.removeList.push(value);
-  }
-
-  /**
-   * Append an `ADD` update expression.
-   * @param value - Expression to add to the `ADD` array.
-   */
-  addAdd(value: string): void {
-    this.addList.push(value);
-  }
-
-  /**
-   * Append an `DELETE` update expression.
-   * @param value - Expression to add to the `DELETE` array.
-   */
-  addDelete(value: string): void {
-    this.deleteList.push(value);
-  }
-
-  /**
-   * Helper method to build an UpdateExpression string appending all of the expressions from the
-   * lists that are not empty.
-   * @returns UpdateExpression based string.
-   */
-  buildExpression(): string | undefined {
-    const updates = new Array<string>();
-    if (this.setList.length > 0) updates.push(`SET ${this.setList.join(', ')}`);
-    if (this.removeList.length > 0) updates.push(`REMOVE ${this.removeList.join(', ')}`);
-    if (this.addList.length > 0) updates.push(`ADD ${this.addList.join(', ')}`);
-    if (this.deleteList.length > 0) updates.push(`DELETE ${this.deleteList.join(', ')}`);
-    return updates.length > 0 ? updates.join(' ') : undefined;
-  }
-
-  /**
-   * Resets the update expression lists and attributes, used for building a new update expression.
-   */
-  reset(): void {
-    this.setList = [];
-    this.removeList = [];
-    this.addList = [];
-    this.deleteList = [];
-    this.attributes.reset();
-  }
-}
-
-/**
  * Set of helper methods used to build UpdateExpression for use in DynamoDB update method.
  *
  * @example [examples/Update.Model.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Model.ts} (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
@@ -270,11 +158,8 @@ export class Update {
    * @param value - The value (or attribute reference) to update the item attribute to, will add attribute if not present.
    * @returns Update resolver function to set attribute to a value.
    */
-  static set<T extends Table.AttributeValues>(
-    value: T | Update.OperandFunction,
-  ): Update.Resolver<Table.AttributeTypes> {
-    return (name: string, exp: Update.Expression): void =>
-      exp.addSet(`${name} = ${Update.addAnyValue(exp, value, name)}`);
+  static set<T extends Table.AttributeValues>(value: Update.OperandValue<T>): Update.Resolver<Table.AttributeTypes> {
+    return (name: string, exp: Update.Expression): void => exp.addSet(`${name} = ${exp.resolveValue(value, name)}`);
   }
 
   /**
@@ -291,8 +176,8 @@ export class Update {
     right: Update.OperandNumber,
   ): Update.Resolver<'N'> {
     return (name: string, exp: Update.Expression): void => {
-      const l = left !== undefined ? Update.addNonStringValue(exp, left, name) : name;
-      const r = Update.addNonStringValue(exp, right, name);
+      const l = left !== undefined ? exp.resolvePathValue(left, name) : name;
+      const r = exp.resolvePathValue(right, name);
       exp.addSet(`${name} = ${l} ${op} ${r}`);
     };
   }
@@ -450,8 +335,8 @@ export class Update {
    */
   static join(left?: Update.OperandList, right?: Update.OperandList): Update.Resolver<'L'> {
     return (name: string, exp: Update.Expression): void => {
-      const l = left !== undefined ? Update.addNonStringValue(exp, left, name) : name;
-      const r = right !== undefined ? Update.addNonStringValue(exp, right, name) : name;
+      const l = left !== undefined ? exp.resolvePathValue(left, name) : name;
+      const r = right !== undefined ? exp.resolvePathValue(right, name) : name;
       exp.addSet(`${name} = list_append(${l}, ${r})`);
     };
   }
@@ -567,14 +452,14 @@ export class Update {
    * @param indexes - Map of indices with values to set in the list.
    * @returns Update resolver function to set values for select indices in a list based attribute.
    */
-  static setIndexes(values: { [key: number]: Table.AttributeValues | Update.OperandFunction }): Update.Resolver<'L'> {
+  static setIndexes(values: { [key: number]: Update.OperandValue }): Update.Resolver<'L'> {
     return (name: string, exp: Update.Expression): void =>
       Object.keys(values).forEach((key) => {
         const value = values[Number(key)];
         // if (value === undefined) return;
         // if (value === null) exp.addRemove(`${name}[${key}]`);
         //else
-        exp.addSet(`${name}[${key}] = ${Update.addAnyValue(exp, value, name)}`);
+        exp.addSet(`${name}[${key}] = ${exp.resolveValue(value, name)}`);
       });
   }
 
@@ -604,8 +489,7 @@ export class Update {
    * @returns Update resolver function to add an array of values to a set based attribute.
    */
   static addToSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
-    return (name: string, exp: Update.Expression): void =>
-      exp.addAdd(`${name} ${Update.addNonStringValue(exp, value, name)}`);
+    return (name: string, exp: Update.Expression): void => exp.addAdd(`${name} ${exp.resolvePathValue(value, name)}`);
   }
 
   /**
@@ -635,7 +519,7 @@ export class Update {
    */
   static removeFromSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'> {
     return (name: string, exp: Update.Expression): void =>
-      exp.addDelete(`${name} ${Update.addNonStringValue(exp, value, name)}`);
+      exp.addDelete(`${name} ${exp.resolvePathValue(value, name)}`);
   }
 
   /**
@@ -671,7 +555,7 @@ export class Update {
    */
   static map(map: Update.ResolverMap): Update.Resolver<'M'> {
     return (name: string, exp: Update.Expression): void => {
-      Update.resolveMap(name, map, exp);
+      exp.resolveMap(map, name);
     };
   }
 
@@ -694,95 +578,9 @@ export class Update {
   static modelMap<T>(map: Update.ResolverModelMap<T>): Update.Resolver<'M'> {
     return (name: string, exp: Update.Expression): void => {
       Object.keys(map).forEach((key) => {
-        Update.resolveMap(`${name}.${exp.addPath(key)}`, map[key], exp);
+        exp.resolveMap(map[key], `${name}.${exp.addPath(key)}`);
       });
     };
-  }
-
-  // modelList setIndexes
-
-  /**
-   * Resolves each key of a map to an Update.Expression.
-   * @param name - Name alias of the parent attribute, prepends each key name
-   * @param map - Map of update values and resolvers to evaluate.
-   * @param exp - Object to get path and value aliases and store update array.
-   */
-  static resolveMap(name: string | null, map: Update.ResolverMap, exp: Update.Expression): void {
-    Object.keys(map).forEach((key) => {
-      const value = map[key];
-      if (value === undefined) return;
-      const path = name ? `${name}.${exp.addPath(key)}` : exp.addPath(key);
-      if (typeof value === 'function') {
-        const newValue = value(path, exp);
-        if (newValue !== undefined) exp.addSet(`${path} = ${newValue}`);
-      } else if (value === null) exp.addRemove(path);
-      else exp.addSet(`${path} = ${exp.addValue(value)}`);
-    });
-  }
-
-  /**
-   * Helper method to add value or resolve value function to get back alias or resolved string.
-   * To allow the value to reference a path, the value needs to be a resolver.
-   * @param exp - Object to get path and value aliases and store update array.
-   * @param value - Value to add or resolve.
-   * @param name - Name used to pass down to the value resolver.
-   * @returns Alias or expression for value to use in expression.
-   */
-  static addAnyValue(
-    exp: Update.Expression,
-    value: Table.AttributeValues | Update.OperandFunction,
-    name: string,
-  ): string {
-    return typeof value === 'function' ? value(name, exp) : exp.addValue(value);
-  }
-
-  /**
-   * Helper method used in update methods that do not support string attributes, like add or sub.
-   * This then allows string values to act as paths, without having to wrap the path in a resolver.
-   * For strings based attributes, like set, need to use the path() function to wrap the path.
-   * @param exp - Object to get path and value aliases and store update array.
-   * @param value - The value, update resolver or path string to add and get back an alias.
-   * @param name - Name used to pass down to the value resolver.
-   * @returns Alias or expression for value to use in expression.
-   */
-  static addNonStringValue(
-    exp: Update.Expression,
-    value: Table.AttributeValues | Update.OperandFunction,
-    name: string,
-  ): string {
-    if (typeof value === 'string') return exp.addPath(value);
-    return Update.addAnyValue(exp, value, name);
-  }
-
-  /**
-   * Helper function that resolves the updateMap and returns an UpdateExpression to use in DocumentClient.update method calls.
-   * @param updateMap - Map of update values and resolvers to evaluate.
-   * @param exp - Used when calling update resolver function to store the names and values mappings and update expressions.
-   * @returns Update expression to use in UpdateExpression for DocumentClient.update method calls.
-   */
-  static buildExpression(updateMap: Update.ResolverMap, exp: UpdateExpression): string | undefined {
-    Update.resolveMap(null, updateMap, exp);
-    return exp.buildExpression();
-  }
-
-  /**
-   * Helper function to set a 'UpdateExpression' value on the params argument if there are update expressions to resolve.
-   * @param updateMap - Map of update values and resolvers to evaluate.
-   * @param exp - Used when calling update resolver function to store the names and values mappings and update expressions.
-   * @param params - Params used for DocumentClient update method.
-   * @returns The params argument passed in.
-   */
-  static addParam(
-    updateMap: Update.ResolverMap | undefined,
-    exp: ExpressionAttributes,
-    params: { UpdateExpression?: string },
-  ): { UpdateExpression?: string } {
-    if (updateMap) {
-      const expression = Update.buildExpression(updateMap, new UpdateExpression(exp));
-      if (expression) params.UpdateExpression = expression;
-      else delete params.UpdateExpression;
-    }
-    return params;
   }
 }
 
@@ -807,6 +605,32 @@ export namespace Update {
     addValue(value: Table.AttributeValues): string;
 
     /**
+     * Add value or resolve value function to get back alias or resolved string.
+     * To allow the value to reference a path, the value needs to be a resolver.
+     * @param value - Value to add or resolve.
+     * @param name - Name used to pass down to the value resolver.
+     * @returns Alias or expression for value to use in expression.
+     */
+    resolveValue(value: Update.OperandValue, name: string): string;
+
+    /**
+     * Helper method used in update methods that do not support string attributes, like add or sub.
+     * This then allows string values to act as paths, without having to wrap the path in a resolver.
+     * For strings based attributes, like set, need to use the path() function to wrap the path.
+     * @param value - The value, update resolver or path string to add and get back an alias.
+     * @param name - Name used to pass down to the value resolver.
+     * @returns Alias or expression for value to use in expression.
+     */
+    resolvePathValue(value: Update.OperandValue, name: string): string;
+
+    /**
+     * Resolves each key of a map to an Update.Expression.
+     * @param name - Name alias of the parent attribute, prepends each key name
+     * @param map - Map of update values and resolvers to evaluate.
+     */
+    resolveMap(map: Update.ResolverMap, name?: string): void;
+
+    /**
      * Append a `SET` update expression.
      * @param value - Expression to add to the `SET` array.
      */
@@ -829,6 +653,13 @@ export namespace Update {
      * @param value - Expression to add to the `DELETE` array.
      */
     addDelete(value: string): void;
+
+    /**
+     * Helper method to build an UpdateExpression string appending all of the expressions from the
+     * lists that are not empty.
+     * @returns UpdateExpression based string.
+     */
+    getExpression(): string | void;
   }
 
   /**
@@ -886,14 +717,21 @@ export namespace Update {
   export type OperandFunction = (name: string, exp: Update.Expression) => string;
 
   /**
+   * Type used for general update methods
+   */
+  export type OperandValue<T extends Table.AttributeValues = Table.AttributeValues> =
+    | Table.AttributeValues
+    | OperandFunction;
+
+  /**
    * Type used for number based update methods.
    */
-  export type OperandNumber = number | string | OperandFunction;
+  export type OperandNumber = OperandValue<string | number>;
 
   /**
    * Type used for generic list based update methods.
    */
-  export type OperandList<T extends Table.AttributeValues = Table.AttributeValues> = string | OperandFunction | T[];
+  export type OperandList<T extends Table.AttributeValues = Table.AttributeValues> = OperandValue<string | T[]>;
 
   /**
    * String specific update resolver, used to define properties in Model interfaces.
@@ -966,4 +804,164 @@ export namespace Update {
    * @param T - The model interface.
    */
   export type ModelList<T> = T[] | Update.Resolver<'L'>;
+}
+
+/**
+ * Object passed into all Update.Resolver functions to support getting path and value aliases, appending
+ * update conditions to SET, REMOVE, ADD and DELETE update arrays and provide context to the resolver function to
+ * support advanced update resolvers.
+ * @public
+ */
+export class UpdateExpression implements Update.Expression {
+  /**
+   * Array of SET expressions.
+   */
+  setList: string[] = [];
+
+  /**
+   * Array of REMOVE expressions.
+   */
+  removeList: string[] = [];
+
+  /**
+   * Array of ADD expressions.
+   */
+  addList: string[] = [];
+
+  /**
+   * Array of DELETE expressions.
+   */
+  deleteList: string[] = [];
+
+  /**
+   * Object to support getting path and value aliases.
+   */
+  attributes: Table.ExpressionAttributes;
+
+  /**
+   * Initialize UpdateExpression with existing or new {@link ExpressionAttributes}.
+   * @param attributes - Object used to get path and value aliases.
+   */
+  constructor(attributes: Table.ExpressionAttributes = new ExpressionAttributes()) {
+    this.attributes = attributes;
+  }
+
+  /**
+   * See {@link ExpressionAttributes.addPath} for details.
+   */
+  addPath(name: string): string {
+    return this.attributes.addPath(name);
+  }
+
+  /**
+   * See {@link ExpressionAttributes.addValue} for details.
+   */
+  addValue(value: Table.AttributeValues): string {
+    return this.attributes.addValue(value);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.resolveValue} */
+  resolveValue(value: Update.OperandValue, name: string): string {
+    return typeof value === 'function' ? value(name, this) : this.addValue(value);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.resolvePathValue} */
+  resolvePathValue(value: Update.OperandValue, name: string): string {
+    if (typeof value === 'string') return this.addPath(value);
+    return this.resolveValue(value, name);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.resolveMap} */
+  resolveMap(map: Update.ResolverMap, name?: string): void {
+    Object.keys(map).forEach((key) => {
+      const value = map[key];
+      if (value === undefined) return;
+      const path = name ? `${name}.${this.addPath(key)}` : this.addPath(key);
+      if (typeof value === 'function') {
+        const newValue = value(path, this);
+        if (newValue !== undefined) this.addSet(`${path} = ${newValue}`);
+      } else if (value === null) this.addRemove(path);
+      else this.addSet(`${path} = ${this.addValue(value)}`);
+    });
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.addSet} */
+  addSet(value: string): void {
+    this.setList.push(value);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.addRemove} */
+  addRemove(value: string): void {
+    this.removeList.push(value);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.addAdd} */
+  addAdd(value: string): void {
+    this.addList.push(value);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.addDelete} */
+  addDelete(value: string): void {
+    this.deleteList.push(value);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.getExpression} */
+  getExpression(): string | void {
+    const updates = new Array<string>();
+    if (this.setList.length > 0) updates.push(`SET ${this.setList.join(', ')}`);
+    if (this.removeList.length > 0) updates.push(`REMOVE ${this.removeList.join(', ')}`);
+    if (this.addList.length > 0) updates.push(`ADD ${this.addList.join(', ')}`);
+    if (this.deleteList.length > 0) updates.push(`DELETE ${this.deleteList.join(', ')}`);
+    if (updates.length > 0) return updates.join(' ');
+  }
+
+  /**
+   * Resets the update expression lists and attributes, used for building a new update expression.
+   */
+  reset(): void {
+    this.setList = [];
+    this.removeList = [];
+    this.addList = [];
+    this.deleteList = [];
+    this.attributes.reset();
+  }
+
+  /**
+   * Helper function that resolves the updateMap and returns an UpdateExpression to use in DocumentClient.update method calls.
+   * @param updateMap - Map of update values and resolvers to evaluate.
+   * @param exp - Used when calling update resolver function to store the names and values mappings and update expressions.
+   * @returns Update expression to use in UpdateExpression for DocumentClient.update method calls.
+   */
+  static buildExpression(updateMap: Update.ResolverMap, exp: Update.Expression): string | void {
+    exp.resolveMap(updateMap);
+    return exp.getExpression();
+  }
+
+  /**
+   * Helper function to set a 'UpdateExpression' value on the params argument if there are update expressions to resolve.
+   * @param updateMap - Map of update values and resolvers to evaluate.
+   * @param exp - Used when calling update resolver function to store the names and values mappings and update expressions.
+   * @param params - Params used for DocumentClient update method.
+   * @returns The params argument passed in.
+   */
+  static addParam(
+    updateMap: Update.ResolverMap | undefined,
+    exp: Update.Expression,
+    params: { UpdateExpression?: string },
+  ): { UpdateExpression?: string } {
+    if (updateMap) {
+      const expression = UpdateExpression.buildExpression(updateMap, exp);
+      if (expression) params.UpdateExpression = expression;
+      else delete params.UpdateExpression;
+    }
+    return params;
+  }
 }

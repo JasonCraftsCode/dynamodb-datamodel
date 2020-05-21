@@ -1,6 +1,7 @@
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
-import { Update, UpdateExpression } from '../src/Update';
+import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Table } from '../src/Table';
+import { Update, UpdateExpression } from '../src/Update';
 
 // t = milliseconds
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,14 +22,12 @@ export function buildUpdate(
   updateMap: Update.ResolverMap,
   exp = new UpdateExpression(),
 ): {
-  UpdateExpression: string | undefined;
-  Paths: ExpressionAttributeNameMap;
-  Values: Table.AttributeValuesMap;
+  UpdateExpression?: string | undefined;
+  ExpressionAttributeNames?: ExpressionAttributeNameMap;
+  ExpressionAttributeValues?: Table.AttributeValuesMap;
 } {
-  const update = Update.buildExpression(updateMap, exp);
-  return {
-    UpdateExpression: update,
-    Paths: exp.attributes.getPaths(),
-    Values: exp.attributes.getValues(),
-  };
+  const params = {};
+  UpdateExpression.addParam(updateMap, exp, params);
+  ExpressionAttributes.addParams(exp.attributes, params);
+  return params;
 }

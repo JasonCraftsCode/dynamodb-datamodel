@@ -2,11 +2,11 @@
  * Table.ts contains the classes used to model a single DynamoDB table with both local and global secondary indexes.
  * @packageDocumentation
  */
-import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { DocumentClient, ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 import { Condition, ConditionExpression } from './Condition';
 import { ExpressionAttributes } from './ExpressionAttributes';
 import { KeyCondition, KeyConditionExpression } from './KeyCondition';
-import { Update } from './Update';
+import { Update, UpdateExpression } from './Update';
 
 function getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.PrimaryKey.KeyTypes): string {
   const keys = Object.keys(keySchema);
@@ -448,8 +448,8 @@ export class Table {
       Key: key,
     };
     const attributes = options.attributes || new ExpressionAttributes();
-    Condition.addAndParam(options.conditions, new ConditionExpression(attributes), params);
-    attributes.addParams(params);
+    ConditionExpression.addAndParam(options.conditions, new ConditionExpression(attributes), params);
+    ExpressionAttributes.addParams(attributes, params);
     return params;
   }
 
@@ -484,8 +484,8 @@ export class Table {
     const condition = this.getPutCondition(options.writeOptions || 'Always');
     if (condition) conditions.push(condition);
     const attributes = options.attributes || new ExpressionAttributes();
-    Condition.addAndParam(conditions, new ConditionExpression(attributes), params);
-    attributes.addParams(params);
+    ConditionExpression.addAndParam(conditions, new ConditionExpression(attributes), params);
+    ExpressionAttributes.addParams(attributes, params);
     return params;
   }
 
@@ -507,9 +507,9 @@ export class Table {
       Key: key,
     };
     const attributes = options.attributes || new ExpressionAttributes();
-    Update.addParam(item, attributes, params);
-    Condition.addAndParam(options.conditions, new ConditionExpression(attributes), params);
-    attributes.addParams(params);
+    UpdateExpression.addParam(item, new UpdateExpression(attributes), params);
+    ConditionExpression.addAndParam(options.conditions, new ConditionExpression(attributes), params);
+    ExpressionAttributes.addParams(attributes, params);
     return params;
   }
 
@@ -525,9 +525,9 @@ export class Table {
       TableName: this.name,
     };
     const attributes = options.attributes || new ExpressionAttributes();
-    KeyCondition.addParam(key, new KeyConditionExpression(attributes), params);
-    Condition.addAndFilterParam(options.conditions, new ConditionExpression(attributes), params);
-    attributes.addParams(params);
+    KeyConditionExpression.addParam(key, new KeyConditionExpression(attributes), params);
+    ConditionExpression.addAndFilterParam(options.conditions, new ConditionExpression(attributes), params);
+    ExpressionAttributes.addParams(attributes, params);
     return params;
   }
 
@@ -542,8 +542,8 @@ export class Table {
       TableName: this.name,
     };
     const attributes = options.attributes || new ExpressionAttributes();
-    Condition.addAndFilterParam(options.conditions, new ConditionExpression(attributes), params);
-    attributes.addParams(params);
+    ConditionExpression.addAndFilterParam(options.conditions, new ConditionExpression(attributes), params);
+    ExpressionAttributes.addParams(attributes, params);
     return params;
   }
 
@@ -896,6 +896,39 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     };
   }
 
+  export interface ExpressionAttributes {
+    /**
+     * Parse an attribute path and adds the names to the expression attribute names and hands back an alias
+     * to use in condition, update, filter, and other expressions.
+     * @param name - Attribute path to get an alias for.
+     * @returns Alias path to use in place of the attribute name.
+     */
+    addPath(name: string): string;
+
+    /**
+     * Adds the value to the expression attribute values and hands back an alias
+     * to use in condition, update, filter, and other expressions.
+     * @param value - Value to add to the values map.
+     * @returns Alias to use in place of the attribute value.
+     */
+    addValue(value: Table.AttributeValues): string;
+
+    /**
+     * Gets the names map to assign to ExpressionAttributeNames.
+     */
+    getPaths(): ExpressionAttributeNameMap | void;
+
+    /**
+     * Gets the values map to assign to ExpressionAttributeValues.
+     */
+    getValues(): Table.AttributeValuesMap | void;
+
+    /**
+     * Resets the names and values map to use for a new expression.
+     */
+    reset(): void;
+  }
+
   /**
    * Defines what general set of attributes are projected into the secondary index.
    * @param ALL - All of the attributes of an item are projected into the secondary index.
@@ -959,7 +992,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      * Expression attributes to use for resolving conditions and updates.  Will be used to generate the
      * ExpressionAttributeNames and ExpressionAttributeValues params in table operations.
      */
-    attributes?: ExpressionAttributes;
+    attributes?: Table.ExpressionAttributes;
 
     /**
      * Array of expression condition resolvers that are joined together with AND, then used as

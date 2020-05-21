@@ -9,18 +9,6 @@ import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 
 // @public
 export class Condition {
-    static addAndFilterParam(conditions: Condition.Resolver[] | undefined, exp: ConditionExpression, params: {
-        FilterExpression?: string;
-    }): {
-        FilterExpression?: string;
-    };
-    static addAndParam(conditions: Condition.Resolver[] | undefined, exp: ConditionExpression, params: {
-        ConditionExpression?: string;
-    }): {
-        ConditionExpression?: string;
-    };
-    static addPath(path: Condition.Path, exp: Condition.Expression): string;
-    static addValues(values: Condition.Value[], exp: Condition.Expression): string[];
     static and(...conditions: Condition.Resolver[]): Condition.Resolver;
     static beginsWith(path: string, value: string): Condition.Resolver;
     static between(path: string, from: Condition.Value, to: Condition.Value): Condition.Resolver;
@@ -31,7 +19,6 @@ export class Condition {
     static ge(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static gt(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static in(path: string, values: Condition.Value[]): Condition.Resolver;
-    static isResolver(value: Condition.Path | Condition.Value): value is Condition.ValueResolver;
     static le(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static lt(left: Condition.Path, right: Condition.Value): Condition.Resolver;
     static ne(left: Condition.Path, right: Condition.Value): Condition.Resolver;
@@ -39,7 +26,6 @@ export class Condition {
     static notExists(path: string): Condition.Resolver;
     static or(...conditions: Condition.Resolver[]): Condition.Resolver;
     static path(value: string): Condition.ValueResolver;
-    static resolveTopAnd(conditions: Condition.Resolver[], exp: ConditionExpression): string;
     static size(path: string): Condition.ValueResolver;
     static type(path: string, type: Table.AttributeTypes): Condition.Resolver;
 }
@@ -50,6 +36,8 @@ export namespace Condition {
     export interface Expression {
         addPath(path: string): string;
         addValue(value: Table.AttributeValues): string;
+        resolvePath(path: Condition.Path): string;
+        resolveValues(values: Condition.Value[]): string[];
     }
     export type LogicalOperators = 'AND' | 'OR' | 'NOT';
     export type Operators = CompareOperators | 'BETWEEN' | 'IN' | 'begins_with' | 'contains' | 'attribute_type' | 'attribute_exists' | 'attribute_not_exists' | 'size' | LogicalOperators;
@@ -61,15 +49,29 @@ export namespace Condition {
 
 // @public
 export class ConditionExpression implements Condition.Expression {
-    constructor(attributes?: ExpressionAttributes);
+    constructor(attributes?: Table.ExpressionAttributes);
+    static addAndFilterParam(conditions: Condition.Resolver[] | undefined, exp: Condition.Expression, params: {
+        FilterExpression?: string;
+    }): {
+        FilterExpression?: string;
+    };
+    static addAndParam(conditions: Condition.Resolver[] | undefined, exp: Condition.Expression, params: {
+        ConditionExpression?: string;
+    }): {
+        ConditionExpression?: string;
+    };
     addPath(path: string): string;
     addValue(value: Table.AttributeValues): string;
-    attributes: ExpressionAttributes;
+    attributes: Table.ExpressionAttributes;
+    static buildExpression(conditions: Condition.Resolver[], exp: Condition.Expression): string;
+    static isResolver(value: Condition.Path | Condition.Value): value is Condition.ValueResolver;
+    resolvePath(path: Condition.Path): string;
+    resolveValues(values: Condition.Value[]): string[];
 }
 
 // @public
-export class ExpressionAttributes {
-    addParams(params: {
+export class ExpressionAttributes implements Table.ExpressionAttributes {
+    static addParams(attributes: Table.ExpressionAttributes, params: {
         ExpressionAttributeNames?: ExpressionAttributeNameMap;
         ExpressionAttributeValues?: Table.AttributeValuesMap;
     }): {
@@ -78,8 +80,8 @@ export class ExpressionAttributes {
     };
     addPath(name: string): string;
     addValue(value: Table.AttributeValues): string;
-    getPaths(): ExpressionAttributeNameMap;
-    getValues(): Table.AttributeValuesMap;
+    getPaths(): ExpressionAttributeNameMap | void;
+    getValues(): Table.AttributeValuesMap | void;
     isReservedName: (name: string) => boolean;
     static isValidAttributeName(name: string): boolean;
     isValidName: (name: string) => boolean;
@@ -439,14 +441,8 @@ export namespace Index {
 
 // @public
 export class KeyCondition {
-    static addParam(key: Table.PrimaryKey.KeyQueryMap | undefined, exp: KeyConditionExpression, params: {
-        KeyConditionExpression?: string;
-    }): {
-        KeyConditionExpression?: string;
-    };
     static beginsWith(value: string): KeyCondition.Resolver;
     static between<T extends Table.AttributeValues>(from: T, to: T): KeyCondition.Resolver;
-    static buildExpression(key: Table.PrimaryKey.KeyQueryMap, exp: KeyConditionExpression): string;
     static compare<T extends Table.AttributeValues>(op: KeyCondition.CompareOperators, value: T): KeyCondition.Resolver;
     static eq<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver;
     static ge<T extends Table.AttributeValues>(value: T): KeyCondition.Resolver;
@@ -464,6 +460,7 @@ export namespace KeyCondition {
         addCondition(condition: string): void;
         addPath(path: string): string;
         addValue(value: Table.AttributeValues): string;
+        getExpression(): string | void;
     }
     export type NumberResolver = KeyCondition.Resolver<'N'>;
     export type Operators = CompareOperators | 'BETWEEN' | 'begins_with';
@@ -473,13 +470,19 @@ export namespace KeyCondition {
 
 // @public
 export class KeyConditionExpression implements KeyCondition.Expression {
-    constructor(attributes?: ExpressionAttributes);
+    constructor(attributes?: Table.ExpressionAttributes);
     addCondition(condition: string): void;
+    static addParam(key: Table.PrimaryKey.KeyQueryMap | undefined, exp: KeyCondition.Expression, params: {
+        KeyConditionExpression?: string;
+    }): {
+        KeyConditionExpression?: string;
+    };
     addPath(path: string): string;
     addValue(value: Table.AttributeValues): string;
-    attributes: ExpressionAttributes;
+    attributes: Table.ExpressionAttributes;
+    static buildExpression(key: Table.PrimaryKey.KeyQueryMap, exp: KeyCondition.Expression): string | void;
     conditions: string[];
-    getExpression(): string;
+    getExpression(): string | void;
 }
 
 // @public (undocumented)
@@ -722,7 +725,7 @@ export namespace Table {
         [key: string]: AttributeValues;
     };
     export interface BaseOptions<T = {}> {
-        attributes?: ExpressionAttributes;
+        attributes?: Table.ExpressionAttributes;
         conditions?: Condition.Resolver[];
         context?: any;
         params?: Optional<T>;
@@ -737,6 +740,14 @@ export namespace Table {
     export interface DeleteInput extends Omit<DocumentClient.DeleteItemInput, 'Expected' | 'ConditionalOperator'> {
     }
     export interface DeleteOptions extends BaseOptions<DeleteInput> {
+    }
+    // (undocumented)
+    export interface ExpressionAttributes {
+        addPath(name: string): string;
+        addValue(value: Table.AttributeValues): string;
+        getPaths(): ExpressionAttributeNameMap | void;
+        getValues(): Table.AttributeValuesMap | void;
+        reset(): void;
     }
     export interface GetInput extends Omit<DocumentClient.GetItemInput, 'AttributesToGet'> {
     }
@@ -890,17 +901,9 @@ export namespace Table {
 // @public
 export class Update {
     static add(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'>;
-    static addAnyValue(exp: Update.Expression, value: Table.AttributeValues | Update.OperandFunction, name: string): string;
-    static addNonStringValue(exp: Update.Expression, value: Table.AttributeValues | Update.OperandFunction, name: string): string;
-    static addParam(updateMap: Update.ResolverMap | undefined, exp: ExpressionAttributes, params: {
-        UpdateExpression?: string;
-    }): {
-        UpdateExpression?: string;
-    };
     static addToSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'>;
     static append(value: Update.OperandList): Update.Resolver<'L'>;
     static arithmetic(left: Update.OperandNumber | undefined, op: '+' | '-', right: Update.OperandNumber): Update.Resolver<'N'>;
-    static buildExpression(updateMap: Update.ResolverMap, exp: UpdateExpression): string | undefined;
     static dec(value: Update.OperandNumber): Update.Resolver<'N'>;
     static default<T extends Table.AttributeValues>(value: T): Update.Resolver<Table.AttributeTypes>;
     static del(): Update.Resolver<Table.AttributeTypes>;
@@ -914,10 +917,9 @@ export class Update {
     static pathWithDefault<T extends Table.AttributeValues>(path: string, value: T): Update.OperandFunction;
     static prepend(value: Update.OperandList): Update.Resolver<'L'>;
     static removeFromSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'>;
-    static resolveMap(name: string | null, map: Update.ResolverMap, exp: Update.Expression): void;
-    static set<T extends Table.AttributeValues>(value: T | Update.OperandFunction): Update.Resolver<Table.AttributeTypes>;
+    static set<T extends Table.AttributeValues>(value: Update.OperandValue<T>): Update.Resolver<Table.AttributeTypes>;
     static setIndexes(values: {
-        [key: number]: Table.AttributeValues | Update.OperandFunction;
+        [key: number]: Update.OperandValue;
     }): Update.Resolver<'L'>;
     static sub(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'>;
 }
@@ -934,6 +936,10 @@ export namespace Update {
         addRemove(value: string): void;
         addSet(value: string): void;
         addValue(value: Table.AttributeValues): string;
+        getExpression(): string | void;
+        resolveMap(map: Update.ResolverMap, name?: string): void;
+        resolvePathValue(value: Update.OperandValue, name: string): string;
+        resolveValue(value: Update.OperandValue, name: string): string;
     }
     export type List<T extends Table.AttributeValues = Table.AttributeValues> = T[] | Update.Resolver<'L'>;
     export type Map<T extends Table.AttributeValues = Table.AttributeValues> = {
@@ -948,8 +954,9 @@ export namespace Update {
     export type Number = number | Update.Resolver<'N'>;
     export type NumberSet = Table.NumberSetValue | Update.Resolver<'NS'>;
     export type OperandFunction = (name: string, exp: Update.Expression) => string;
-    export type OperandList<T extends Table.AttributeValues = Table.AttributeValues> = string | OperandFunction | T[];
-    export type OperandNumber = number | string | OperandFunction;
+    export type OperandList<T extends Table.AttributeValues = Table.AttributeValues> = OperandValue<string | T[]>;
+    export type OperandNumber = OperandValue<string | number>;
+    export type OperandValue<T extends Table.AttributeValues = Table.AttributeValues> = Table.AttributeValues | OperandFunction;
     export type Resolver<T> = (name: string, exp: Update.Expression, type?: T) => void;
     export type ResolverMap = ResolverMapT<Table.AttributeValues>;
     export type ResolverMapT<T> = {
@@ -968,19 +975,28 @@ export namespace Update {
 
 // @public
 export class UpdateExpression implements Update.Expression {
-    constructor(attributes?: ExpressionAttributes);
+    constructor(attributes?: Table.ExpressionAttributes);
     addAdd(value: string): void;
     addDelete(value: string): void;
     addList: string[];
+    static addParam(updateMap: Update.ResolverMap | undefined, exp: Update.Expression, params: {
+        UpdateExpression?: string;
+    }): {
+        UpdateExpression?: string;
+    };
     addPath(name: string): string;
     addRemove(value: string): void;
     addSet(value: string): void;
     addValue(value: Table.AttributeValues): string;
-    attributes: ExpressionAttributes;
-    buildExpression(): string | undefined;
+    attributes: Table.ExpressionAttributes;
+    static buildExpression(updateMap: Update.ResolverMap, exp: Update.Expression): string | void;
     deleteList: string[];
+    getExpression(): string | void;
     removeList: string[];
     reset(): void;
+    resolveMap(map: Update.ResolverMap, name?: string): void;
+    resolvePathValue(value: Update.OperandValue, name: string): string;
+    resolveValue(value: Update.OperandValue, name: string): string;
     setList: string[];
 }
 

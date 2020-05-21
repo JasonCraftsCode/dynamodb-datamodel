@@ -77,7 +77,7 @@ describe('Validate ExpressionAttributes', () => {
     const attrs = new ExpressionAttributes();
     attrs.isValidName = (): boolean => true;
     expect(attrs.addPath('path')).toEqual('path');
-    expect(attrs.getPaths()).toEqual({});
+    expect(attrs.getPaths()).toBeUndefined();
   });
 
   it('addValue string', () => {
@@ -157,26 +157,26 @@ describe('Validate ExpressionAttributes', () => {
 
   it('addParams with no values', () => {
     const attrs = new ExpressionAttributes();
-    expect(attrs.addParams({})).toEqual({});
+    expect(ExpressionAttributes.addParams(attrs, {})).toEqual({});
   });
 
   it('addParams with just name', () => {
     const attrs = new ExpressionAttributes();
     attrs.addPath('name1');
-    expect(attrs.addParams({})).toEqual({ ExpressionAttributeNames: { '#n0': 'name1' } });
+    expect(ExpressionAttributes.addParams(attrs, {})).toEqual({ ExpressionAttributeNames: { '#n0': 'name1' } });
   });
 
   it('addParams with just value', () => {
     const attrs = new ExpressionAttributes();
     attrs.addValue('value1');
-    expect(attrs.addParams({})).toEqual({ ExpressionAttributeValues: { ':v0': 'value1' } });
+    expect(ExpressionAttributes.addParams(attrs, {})).toEqual({ ExpressionAttributeValues: { ':v0': 'value1' } });
   });
 
   it('addParams with both name and value', () => {
     const attrs = new ExpressionAttributes();
     attrs.addPath('name2');
     attrs.addValue('value2');
-    expect(attrs.addParams({})).toEqual({
+    expect(ExpressionAttributes.addParams(attrs, {})).toEqual({
       ExpressionAttributeNames: { '#n0': 'name2' },
       ExpressionAttributeValues: { ':v0': 'value2' },
     });
@@ -189,8 +189,8 @@ describe('Validate ExpressionAttributes', () => {
     expect(attrs.getPaths()).toEqual({ '#n0': 'path1' });
     expect(attrs.getValues()).toEqual({ ':v0': 'value1' });
     attrs.reset();
-    expect(attrs.getPaths()).toEqual({});
-    expect(attrs.getValues()).toEqual({});
+    expect(attrs.getPaths()).toBeUndefined();
+    expect(attrs.getValues()).toBeUndefined();
     attrs.addPath('path1');
     attrs.addValue('value1');
     expect(attrs.getPaths()).toEqual({ '#n0': 'path1' });

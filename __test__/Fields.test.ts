@@ -1,6 +1,6 @@
 //import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-import { Condition, ConditionExpression } from '../src/Condition';
+import { ConditionExpression } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table } from '../src/Table';
@@ -844,9 +844,9 @@ describe('When FieldSplit', () => {
       field.toTableUpdate('revision', {}, data, updateTableContext);
       expect(typeof data.revision).toEqual('function');
       expect(buildUpdate(data)).toEqual({
-        Paths: { '#n0': 'revision' },
+        ExpressionAttributeNames: { '#n0': 'revision' },
+        ExpressionAttributeValues: { ':v0': 1 },
         UpdateExpression: 'SET #n0 = #n0 + :v0',
-        Values: { ':v0': 1 },
       });
     });
 
@@ -871,9 +871,9 @@ describe('When FieldSplit', () => {
       field.toTableUpdate('revision', {}, data, updateTableContext);
       expect(typeof data.R).toEqual('function');
       expect(buildUpdate(data)).toEqual({
-        Paths: { '#n0': 'R' },
+        ExpressionAttributeNames: { '#n0': 'R' },
+        ExpressionAttributeValues: { ':v0': 1 },
         UpdateExpression: 'SET #n0 = #n0 + :v0',
-        Values: { ':v0': 1 },
       });
     });
 
@@ -892,11 +892,11 @@ describe('When FieldSplit', () => {
       putTableContext.conditions = [];
       field.toTable('revision', {}, data, putTableContext);
       expect(buildUpdate(data)).toEqual({
-        Paths: { '#n0': 'revision' },
+        ExpressionAttributeNames: { '#n0': 'revision' },
+        ExpressionAttributeValues: { ':v0': 0 },
         UpdateExpression: 'SET #n0 = :v0',
-        Values: { ':v0': 0 },
       });
-      expect(Condition.resolveTopAnd(putTableContext.conditions, new ConditionExpression())).toEqual(
+      expect(ConditionExpression.buildExpression(putTableContext.conditions, new ConditionExpression())).toEqual(
         '(attribute_not_exists(#n0) OR #n0 = :v0)',
       );
     });
@@ -909,11 +909,13 @@ describe('When FieldSplit', () => {
       field.toTableUpdate('revision', {}, data, updateTableContext);
       expect(typeof data.revision).toEqual('function');
       expect(buildUpdate(data)).toEqual({
-        Paths: { '#n0': 'revision' },
+        ExpressionAttributeNames: { '#n0': 'revision' },
+        ExpressionAttributeValues: { ':v0': 1 },
         UpdateExpression: 'SET #n0 = #n0 + :v0',
-        Values: { ':v0': 1 },
       });
-      expect(Condition.resolveTopAnd(updateTableContext.conditions, new ConditionExpression())).toEqual('#n0 = :v0');
+      expect(ConditionExpression.buildExpression(updateTableContext.conditions, new ConditionExpression())).toEqual(
+        '#n0 = :v0',
+      );
     });
   });
 });

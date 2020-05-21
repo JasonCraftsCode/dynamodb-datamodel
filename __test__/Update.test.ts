@@ -1,45 +1,29 @@
-import { DocumentClient, ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
-import { Table } from '../src/Table';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { Update, UpdateExpression } from '../src/Update';
+import { buildUpdate } from './testCommon';
 
 const documentClient = new DocumentClient({ convertEmptyValues: true });
 
 it('Validate Condition exports', () => {
   expect(typeof Update).toEqual('function');
   expect(typeof UpdateExpression).toEqual('function');
-  expect(typeof Update.buildExpression).toEqual('function');
+  expect(typeof UpdateExpression.buildExpression).toEqual('function');
 });
 
-function buildUpdate(
-  updateMap: Update.ResolverMap,
-  exp = new UpdateExpression(),
-): {
-  UpdateExpression: string | undefined;
-  Paths: ExpressionAttributeNameMap;
-  Values: Table.AttributeValuesMap;
-} {
-  const update = Update.buildExpression(updateMap, exp);
-  return {
-    UpdateExpression: update,
-    Paths: exp.attributes.getPaths(),
-    Values: exp.attributes.getValues(),
-  };
-}
-
-describe('Validate Update.buildExpression for each type', () => {
+describe('Validate UpdateExpression.buildExpression for each type', () => {
   const exp = new UpdateExpression();
   beforeEach(() => {
     exp.reset();
   });
 
-  it('Update.addParam with undefined updateMap', () => {
-    expect(Update.addParam(undefined, exp.attributes, {})).toEqual({});
+  it('UpdateExpression.addParam with undefined updateMap', () => {
+    expect(UpdateExpression.addParam(undefined, exp, {})).toEqual({});
   });
-  it('Update.addParam with empty updateMap', () => {
-    expect(Update.addParam({}, exp.attributes, {})).toEqual({});
+  it('UpdateExpression.addParam with empty updateMap', () => {
+    expect(UpdateExpression.addParam({}, exp, {})).toEqual({});
   });
-  it('Update.addParam', () => {
-    expect(Update.addParam({ testString: 'string' }, exp.attributes, {})).toEqual({
+  it('UpdateExpression.addParam', () => {
+    expect(UpdateExpression.addParam({ testString: 'string' }, exp, {})).toEqual({
       UpdateExpression: 'SET #n0 = :v0',
     });
   });
@@ -47,21 +31,21 @@ describe('Validate Update.buildExpression for each type', () => {
   it('set string', () => {
     expect(buildUpdate({ testString: 'string' }, exp)).toEqual({
       UpdateExpression: 'SET #n0 = :v0',
-      Paths: { '#n0': 'testString' },
-      Values: { ':v0': 'string' },
+      ExpressionAttributeNames: { '#n0': 'testString' },
+      ExpressionAttributeValues: { ':v0': 'string' },
     });
   });
 
   it('set number', () => {
     expect(buildUpdate({ testNumber: 8 }, exp)).toEqual({
       UpdateExpression: 'SET #n0 = :v0',
-      Paths: { '#n0': 'testNumber' },
-      Values: { ':v0': 8 },
+      ExpressionAttributeNames: { '#n0': 'testNumber' },
+      ExpressionAttributeValues: { ':v0': 8 },
     });
   });
 });
 
-describe('Validate Update.buildExpression', () => {
+describe('Validate UpdateExpression.buildExpression', () => {
   const exp = new UpdateExpression();
   beforeEach(() => {
     exp.reset();
@@ -82,7 +66,7 @@ describe('Validate Update.buildExpression', () => {
       testMap: { tBool: true, tString: 'str', tMap: { tNumber: 8 } },
       testNull: null,
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0 = :v0, #n1 = :v1, #n2 = :v2, #n3 = :v3, #n4 = :v4, #n5 = :v5, #n6 = :v6, #n7 = :v7, #n8 = :v8 REMOVE #n9',
     );
@@ -127,16 +111,19 @@ describe('Validate Update.buildExpression', () => {
 
   it('set paths', () => {
     const input = { testPath: Update.path('testPath2') };
-    expect(Update.buildExpression(input, exp)).toEqual('SET #n0 = #n1');
-    expect(exp.attributes.getPaths()).toEqual({ '#n0': 'testPath', '#n1': 'testPath2' });
-    expect(exp.attributes.getValues()).toEqual({});
+    expect(buildUpdate(input, exp)).toEqual({
+      ExpressionAttributeNames: { '#n0': 'testPath', '#n1': 'testPath2' },
+      UpdateExpression: 'SET #n0 = #n1',
+    });
   });
 
   it('set pathWithDefault', () => {
     const input = { testPath: Update.pathWithDefault('testPath3', 'default') };
-    expect(Update.buildExpression(input, exp)).toEqual('SET #n0 = if_not_exists(#n1, :v0)');
-    expect(exp.attributes.getPaths()).toEqual({ '#n0': 'testPath', '#n1': 'testPath3' });
-    expect(exp.attributes.getValues()).toEqual({ ':v0': 'default' });
+    expect(buildUpdate(input, exp)).toEqual({
+      ExpressionAttributeNames: { '#n0': 'testPath', '#n1': 'testPath3' },
+      ExpressionAttributeValues: { ':v0': 'default' },
+      UpdateExpression: 'SET #n0 = if_not_exists(#n1, :v0)',
+    });
   });
 
   it('set Update values', () => {
@@ -161,7 +148,7 @@ describe('Validate Update.buildExpression', () => {
       testDel: Update.del(),
       testFunction: Update.set(Update.path('testFunc1')),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0 = :v0, #n1 = :v1, #n2 = :v2, #n3 = :v3, #n4 = :v4, #n5 = :v5, #n6 = :v6, #n7 = :v7, #n8 = :v8, #n10 = #n11 REMOVE #n9',
     );
@@ -233,7 +220,7 @@ describe('Validate Update.buildExpression', () => {
         tMap: { tNumber: 8 },
       }),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0 = if_not_exists(#n0, :v0), #n1 = if_not_exists(#n1, :v1), #n2 = if_not_exists(#n2, :v2), #n3 = if_not_exists(#n3, :v3), #n4 = if_not_exists(#n4, :v4), #n5 = if_not_exists(#n5, :v5), #n6 = if_not_exists(#n6, :v6), #n7 = if_not_exists(#n7, :v7), #n8 = if_not_exists(#n8, :v8)',
     );
@@ -287,7 +274,7 @@ describe('Validate Update.buildExpression', () => {
       testDecString: Update.dec('fromString'),
       testDecPath: Update.dec(Update.path('fromPath')),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0 = #n0 + :v0, #n1 = #n1 + #n2, #n3 = #n3 + #n4, #n5 = #n5 - :v1, #n6 = #n6 - #n2, #n7 = #n7 - #n4',
     );
@@ -326,7 +313,7 @@ describe('Validate Update.buildExpression', () => {
       testSubLeftPath: Update.sub(Update.path('fromPath'), 5),
       testSubRightPath: Update.sub(6, Update.path('fromPath')),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0 = #n1 + :v0, #n2 = #n3 + :v1, #n4 = :v2 + #n5, #n6 = #n7 - :v3, #n8 = #n9 - :v4, #n10 = :v5 - #n9',
     );
@@ -381,7 +368,7 @@ describe('Validate Update.buildExpression', () => {
       testBinaryJoin2: Update.join(new Array([Buffer.from('987'), Buffer.from('321')]), 'join2BinaryField'),
       testSetStringIndexes: Update.setIndexes({ 19: 'g', 20: 'h', 21: 'i' }),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0 = list_append(#n0, :v0), #n1 = list_append(:v1, #n1), #n3 = list_append(#n4, :v2), #n5 = list_append(:v3, #n6), #n7[16] = :v4, #n7[17] = :v5, #n7[18] = :v6, #n8 = list_append(#n8, :v7), #n9 = list_append(:v8, #n9), #n10 = list_append(#n11, :v9), #n12 = list_append(:v10, #n13), #n14 = list_append(#n14, :v11), #n15 = list_append(:v12, #n15), #n16 = list_append(#n17, :v13), #n18 = list_append(:v14, #n19), #n20[19] = :v15, #n20[20] = :v16, #n20[21] = :v17 REMOVE #n2[7], #n2[8], #n2[9]',
     );
@@ -462,7 +449,7 @@ describe('Validate Update.buildExpression', () => {
       testJoinString: Update.join('join1String', 'join2String'),
       testJoinPath: Update.join(Update.path('join1Path'), Update.path('join2Path')),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0 = list_append(#n0, #n1), #n2 = list_append(#n2, #n3), #n4 = list_append(#n5, #n4), #n6 = list_append(#n7, #n6), #n8 = list_append(#n9, #n10), #n11 = list_append(#n12, #n13)',
     );
@@ -492,7 +479,7 @@ describe('Validate Update.buildExpression', () => {
       '#n8': 'testJoinString',
       '#n9': 'join1String',
     });
-    expect(exp.attributes.getValues()).toEqual({});
+    expect(exp.attributes.getValues()).toBeUndefined();
   });
 
   it('Update add List', () => {
@@ -503,7 +490,7 @@ describe('Validate Update.buildExpression', () => {
         documentClient.createSet([Buffer.from('abc'), Buffer.from('def'), Buffer.from('ghi')]),
       ),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual('ADD #n0 :v0, #n1 :v1, #n2 :v2');
     expect({ add: exp.addList }).toEqual({
       add: ['#n0 :v0', '#n1 :v1', '#n2 :v2'],
@@ -528,7 +515,7 @@ describe('Validate Update.buildExpression', () => {
         documentClient.createSet([Buffer.from('abc'), Buffer.from('def'), Buffer.from('ghi')]),
       ),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual('DELETE #n0 :v0, #n1 :v1, #n2 :v2');
     expect({ del: exp.deleteList }).toEqual({
       del: ['#n0 :v0', '#n1 :v1', '#n2 :v2'],
@@ -562,7 +549,7 @@ describe('Validate Update.buildExpression', () => {
         l1Undefined: undefined,
       }),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0.#n1 = :v0, #n0.#n2 = :v1, #n0.#n3 = :v2, #n0.#n4 = :v3, #n0.#n5 = :v4, #n0.#n6 = :v5',
     );
@@ -607,7 +594,7 @@ describe('Validate Update.buildExpression', () => {
         },
       }),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual('SET #n0.#n1.#n2 = :v0, #n0.#n1.#n3 = #n0.#n1.#n3 + :v1');
     expect({ set: exp.setList }).toEqual({
       set: ['#n0.#n1.#n2 = :v0', '#n0.#n1.#n3 = #n0.#n1.#n3 + :v1'],
@@ -631,7 +618,7 @@ describe('Validate Update.buildExpression', () => {
         l1Number: Update.inc(3),
       }),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual('SET #n0.#n1 = :v0, #n0.#n2 = #n0.#n2 + :v1');
     expect({ set: exp.setList }).toEqual({
       set: ['#n0.#n1 = :v0', '#n0.#n2 = #n0.#n2 + :v1'],
@@ -679,7 +666,7 @@ describe('Validate Update.buildExpression', () => {
         l1RemoveFromSetNumber: Update.removeFromSet(documentClient.createSet([11, 12, 13])),
       }),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0.#n1 = #n2.#n3, #n0.#n4 = if_not_exists(#n0.#n4, :v0), #n0.#n5 = #n0.#n5 + :v1, #n0.#n6 = #n0.#n6 - :v2, #n0.#n7 = #n2.#n8 + :v3, #n0.#n9 = :v4 - #n10.#n8, #n0.#n11 = list_append(#n0.#n11, :v5), #n0.#n12 = list_append(:v6, #n0.#n12), #n0.#n13 = list_append(#n10.#n14, :v7), #n0.#n16[1] = :v8, #n0.#n16[3] = :v9, #n0.#n16[6] = :v10, #n0.#n17.#n18 = :v11, #n0.#n17.#n19 = #n2.#n3, #n0.#n17.#n20 = #n0.#n17.#n20 + :v12, #n0.#n17.#n21 = :v13, #n0.#n17.#n22 = :v14 REMOVE #n0.#n15[1], #n0.#n15[3], #n0.#n15[6], #n0.#n17.#n23, #n0.#n24, #n0.#n25 ADD #n0.#n26 :v15 DELETE #n0.#n27 :v16',
     );
@@ -774,7 +761,7 @@ describe('Validate Update.buildExpression', () => {
         'l1.l2[1][2][3]': '3d array',
       }),
     };
-    const update = Update.buildExpression(input, exp);
+    const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
       'SET #n0.#n1[5] = :v0, #n0.#n2.#n3.#n4 = :v1, #n0.#n2.#n3[3].#n4 = :v2, #n0.#n2.#n3.#n5 = #n0.#n2.#n3.#n5 + :v3, #n0.#n2.#n3[1][2][3] = :v4 REMOVE #n0.#n2.#n4.#n4.#n6',
     );

@@ -2,64 +2,9 @@ import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 /**
- * Object passed down to KeyCondition.Resolver functions to support getting path and value aliases and
- * provide context to the resolver function to support advanced key condition resolvers.
- * @public
- */
-export class KeyConditionExpression implements KeyCondition.Expression {
-  /**
-   * Object for getting path and value aliases.
-   */
-  attributes: ExpressionAttributes;
-
-  /**
-   * Array of conditions expressions.
-   * DynamoDB currently only supports two conditions that with an 'AND' between them.
-   */
-  conditions: string[] = [];
-
-  /**
-   * Initialize KeyConditionExpression with existing or new {@link ExpressionAttributes}.
-   * @param attributes - Object used to get path and value aliases.
-   */
-  constructor(attributes: ExpressionAttributes = new ExpressionAttributes()) {
-    this.attributes = attributes;
-  }
-
-  /**
-   * See {@link ExpressionAttributes.addPath} for details.
-   */
-  addPath(path: string): string {
-    return this.attributes.addPath(path);
-  }
-
-  /**
-   * See {@link ExpressionAttributes.addValue} for details.
-   */
-  addValue(value: Table.AttributeValues): string {
-    return this.attributes.addValue(value);
-  }
-
-  /**
-   * Add key condition expression.
-   * @param condition - Condition expression to add.
-   */
-  addCondition(condition: string): void {
-    if (this.conditions.length < 2) this.conditions.push(condition);
-  }
-
-  /**
-   * Get key condition expression to use KeyConditionExpression param.
-   */
-  getExpression(): string {
-    return this.conditions.join(' AND ');
-  }
-}
-
-/**
  * Set of helper methods to build KeyConditionExpressions used in DynamoDB query and scan operations.
  * All of the condition based methods return a {@link KeyCondition.Resolver} function in the form of
- * '( name: string, exp: KeyConditionExpression, type?: T,): string' this allow key conditions to be
+ * '( name: string, exp: KeyCondition.Expression, type?: T,): string' this allow key conditions to be
  * composed together and even extended in a very simple way.
  *
  *
@@ -257,40 +202,6 @@ export class KeyCondition {
     return (name: string, exp: KeyCondition.Expression): void =>
       exp.addCondition(`begins_with(${exp.addPath(name)}, ${exp.addValue(value)})`);
   }
-
-  /**
-   * Create a key condition expression from a primary key.
-   * @param key - Primary key value to build the expression from.
-   * @param exp - Object used to get path and value aliases and store the key conditions array.
-   */
-  static buildExpression(key: Table.PrimaryKey.KeyQueryMap, exp: KeyConditionExpression): string {
-    Object.keys(key).forEach((name) => {
-      const value = key[name];
-      if (typeof value === 'function') value(name, exp);
-      else KeyCondition.eq(value)(name, exp);
-    });
-    return exp.getExpression();
-  }
-
-  /**
-   * Helper function to set a 'KeyConditionExpression' value on the params argument if there are conditions to resolve.
-   * @param key - List of conditions to evaluate with AND.
-   * @param exp - Used when evaluation conditions and store the names and values mappings.
-   * @param params - Params used for DocumentClient query methods.
-   * @returns The params argument passed in.
-   */
-  static addParam(
-    key: Table.PrimaryKey.KeyQueryMap | undefined,
-    exp: KeyConditionExpression,
-    params: { KeyConditionExpression?: string },
-  ): { KeyConditionExpression?: string } {
-    if (key) {
-      const condition = KeyCondition.buildExpression(key, exp);
-      if (condition) params.KeyConditionExpression = condition;
-      else delete params.KeyConditionExpression;
-    }
-    return params;
-  }
 }
 
 /**
@@ -328,6 +239,12 @@ export namespace KeyCondition {
      * @param condition - Condition expression to add.
      */
     addCondition(condition: string): void;
+
+    /**
+     * Gets the expression from paths, values and conditions added.
+     * @returns key condition expression to use KeyConditionExpression param.
+     */
+    getExpression(): string | void;
   }
 
   /**
@@ -360,4 +277,91 @@ export namespace KeyCondition {
    * Support key condition resolvers.
    */
   export type AttributeResolver = StringResolver | NumberResolver | BinaryResolver;
+}
+
+/**
+ * Object passed down to KeyCondition.Resolver functions to support getting path and value aliases and
+ * provide context to the resolver function to support advanced key condition resolvers.
+ * @public
+ */
+export class KeyConditionExpression implements KeyCondition.Expression {
+  /**
+   * Object for getting path and value aliases.
+   */
+  attributes: Table.ExpressionAttributes;
+
+  /**
+   * Array of conditions expressions.
+   * DynamoDB currently only supports two conditions that with an 'AND' between them.
+   */
+  conditions: string[] = [];
+
+  /**
+   * Initialize KeyConditionExpression with existing or new {@link ExpressionAttributes}.
+   * @param attributes - Object used to get path and value aliases.
+   */
+  constructor(attributes: Table.ExpressionAttributes = new ExpressionAttributes()) {
+    this.attributes = attributes;
+  }
+
+  /**
+   * See {@link ExpressionAttributes.addPath} for details.
+   */
+  addPath(path: string): string {
+    return this.attributes.addPath(path);
+  }
+
+  /**
+   * See {@link ExpressionAttributes.addValue} for details.
+   */
+  addValue(value: Table.AttributeValues): string {
+    return this.attributes.addValue(value);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (KeyCondition:namespace).Expression.addCondition} */
+  addCondition(condition: string): void {
+    if (this.conditions.length < 2) this.conditions.push(condition);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (KeyCondition:namespace).Expression.getExpression} */
+  getExpression(): string | void {
+    if (this.conditions.length > 0) return this.conditions.join(' AND ');
+  }
+
+  /**
+   * Create a key condition expression from a primary key.
+   * @param key - Primary key value to build the expression from.
+   * @param exp - Object used to get path and value aliases and store the key conditions array.
+   * @returns A key condition expression to use for the KeyConditionExpression param.
+   */
+  static buildExpression(key: Table.PrimaryKey.KeyQueryMap, exp: KeyCondition.Expression): string | void {
+    Object.keys(key).forEach((name) => {
+      const value = key[name];
+      if (typeof value === 'function') value(name, exp);
+      else KeyCondition.eq(value)(name, exp);
+    });
+    return exp.getExpression();
+  }
+
+  /**
+   * Helper function to set a 'KeyConditionExpression' value on the params argument if there are conditions to resolve.
+   * @param key - List of conditions to evaluate with AND.
+   * @param exp - Used when evaluation conditions and store the names and values mappings.
+   * @param params - Params used for DocumentClient query methods.
+   * @returns The params argument passed in.
+   */
+  static addParam(
+    key: Table.PrimaryKey.KeyQueryMap | undefined,
+    exp: KeyCondition.Expression,
+    params: { KeyConditionExpression?: string },
+  ): { KeyConditionExpression?: string } {
+    if (key) {
+      const condition = KeyConditionExpression.buildExpression(key, exp);
+      if (condition) params.KeyConditionExpression = condition;
+      else delete params.KeyConditionExpression;
+    }
+    return params;
+  }
 }

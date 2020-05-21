@@ -10,7 +10,7 @@ const filters = or(
   ),
 );
 
-const exp = Condition.resolveTopAnd([filters], new ConditionExpression());
+const exp = ConditionExpression.buildExpression([filters], new ConditionExpression());
 expect(exp).toEqual(
   '(#n0 > :v0 OR (#n1 = :v1 AND size(#n2) > :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))',
 );
