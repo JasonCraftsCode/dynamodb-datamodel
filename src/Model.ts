@@ -1,5 +1,4 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { Condition } from './Condition';
 import { Fields } from './Fields';
 import { Table } from './Table';
 import { Update } from './Update';
@@ -101,7 +100,7 @@ export class Model implements Model.ModelBase {
     const context = this.getContext(action, options);
     const tableData = this.toTable(data, context);
     const result = await this.table.put(tableData.key, tableData.item, options);
-    const item = this.toModel({ ...tableData.key, ...tableData.item }, context);
+    const item = this.toModel(tableData.data, context);
     return { item, result };
   }
   async delete(key: Model.ModelCore, options: Table.DeleteOptions = {}): Promise<Model.DeleteOutput> {
@@ -124,6 +123,7 @@ export class Model implements Model.ModelBase {
   ): {
     key: Table.PrimaryKey.AttributeValuesMap;
     item: Table.AttributeValuesMap;
+    data: Table.AttributeValuesMap;
   } {
     const key: Table.PrimaryKey.AttributeValuesMap = {};
     const item: Table.AttributeValuesMap = { ...data };
@@ -133,7 +133,7 @@ export class Model implements Model.ModelBase {
       key[name] = value;
       delete item[name];
     });
-    return { key, item };
+    return { key, item, data };
   }
 }
 
@@ -154,15 +154,15 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   export type ModelData = { [key: string]: ModelType };
 
   export type TableData = {
+    data: Table.AttributeValuesMap;
     key: Table.PrimaryKey.AttributeValuesMap;
     item?: Table.AttributeValuesMap;
-    conditions?: Condition.Resolver[];
   };
 
   export type TableUpdateData = {
+    data: Update.ResolverMap;
     key: Table.PrimaryKey.AttributeValuesMap;
     item?: Update.ResolverMap;
-    conditions?: Condition.Resolver[];
   };
 
   export interface ModelParams {

@@ -647,15 +647,15 @@ export namespace Model {
     }
     // (undocumented)
     export type TableData = {
+        data: Table.AttributeValuesMap;
         key: Table.PrimaryKey.AttributeValuesMap;
         item?: Table.AttributeValuesMap;
-        conditions?: Condition.Resolver[];
     };
     // (undocumented)
     export type TableUpdateData = {
+        data: Update.ResolverMap;
         key: Table.PrimaryKey.AttributeValuesMap;
         item?: Update.ResolverMap;
-        conditions?: Condition.Resolver[];
     };
     // (undocumented)
     export interface UpdateOutput<T = ModelOut> {
