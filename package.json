@@ -32,9 +32,11 @@
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
     "ncu": "ncu --dep prod,dev -u",
     "build": "tsc -P ./tsconfig.src.json",
+    "build:esm": "tsc -P ./tsconfig.src.esm.json",
     "build:check": "tsc --noEmit -P ./tsconfig.src.json",
     "docs": "typedoc",
     "api": "api-extractor run",

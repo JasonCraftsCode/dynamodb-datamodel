@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts"], // , "__test__/**/*.ts"],  In order to enable
+  "include": ["src/**/*.ts"],
   "exclude": [
     "node_modules",
     "coverage",
