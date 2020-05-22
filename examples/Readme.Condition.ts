@@ -1,7 +1,9 @@
-import { Condition, ConditionExpression } from 'dynamodb-datamodel';
+import { Condition, Table } from 'dynamodb-datamodel';
 
+// Destructuring Condition to make it easier to write filter expression.
 const { and, or, eq, gt, contains, size } = Condition;
-const filters = or(
+
+const filter = or(
   gt('age', 21),
   and(
     eq('region', 'US'),
@@ -10,7 +12,7 @@ const filters = or(
   ),
 );
 
-const exp = ConditionExpression.buildExpression([filters], new ConditionExpression());
-expect(exp).toEqual(
+const params = Table.addParams({}, { conditions: [filter] }, 'filter');
+expect(params.FilterExpression).toEqual(
   '(#n0 > :v0 OR (#n1 = :v1 AND size(#n2) > :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))',
 );

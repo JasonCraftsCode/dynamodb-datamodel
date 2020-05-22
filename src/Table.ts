@@ -425,11 +425,7 @@ export class Table {
    * @returns Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}.
    */
   getParams(key: Table.PrimaryKey.AttributeValuesMap, options: Table.GetOptions = {}): Table.GetInput {
-    return {
-      ...options.params,
-      TableName: this.name,
-      Key: key,
-    };
+    return { ...options.params, TableName: this.name, Key: key };
   }
 
   /**
@@ -442,15 +438,8 @@ export class Table {
     key: Table.PrimaryKey.AttributeValuesMap,
     options: Table.DeleteOptions = {},
   ): DocumentClient.DeleteItemInput {
-    const params: DocumentClient.DeleteItemInput = {
-      ...options.params,
-      TableName: this.name,
-      Key: key,
-    };
-    const attributes = options.attributes || new ExpressionAttributes();
-    ConditionExpression.addAndParam(options.conditions, new ConditionExpression(attributes), params);
-    ExpressionAttributes.addParams(attributes, params);
-    return params;
+    const params = { ...options.params, TableName: this.name, Key: key };
+    return Table.addParams(params, options, 'condition');
   }
 
   /**
@@ -458,7 +447,7 @@ export class Table {
    * @param options - Type of put to get the condition for.
    * @returns Condition resolver that maps to the PutWriteOptions.
    */
-  getPutCondition(options: Table.PutWriteOptions): Condition.Resolver | void {
+  getPutCondition(options: Table.PutWriteOptions | undefined): Condition.Resolver | void {
     if (options === 'Exists') return Condition.exists(this.getPartitionKey());
     if (options === 'NotExists') return Condition.notExists(this.getPartitionKey());
   }
@@ -475,18 +464,11 @@ export class Table {
     item?: Table.AttributeValuesMap,
     options: Table.PutOptions = {},
   ): DocumentClient.PutItemInput {
-    const params: DocumentClient.PutItemInput = {
-      ...options.params,
-      TableName: this.name,
-      Item: { ...key, ...item },
-    };
-    const conditions = options.conditions || [];
-    const condition = this.getPutCondition(options.writeOptions || 'Always');
-    if (condition) conditions.push(condition);
-    const attributes = options.attributes || new ExpressionAttributes();
-    ConditionExpression.addAndParam(conditions, new ConditionExpression(attributes), params);
-    ExpressionAttributes.addParams(attributes, params);
-    return params;
+    let conditions = options.conditions;
+    const resolver = this.getPutCondition(options.writeOptions);
+    if (resolver) conditions = conditions ? conditions.concat(resolver) : [resolver];
+    const params = { ...options.params, TableName: this.name, Item: { ...key, ...item } };
+    return Table.addParams(params, { attributes: options.attributes, conditions }, 'condition');
   }
 
   /**
@@ -501,16 +483,10 @@ export class Table {
     item?: Update.ResolverMap,
     options: Table.UpdateOptions = {},
   ): DocumentClient.UpdateItemInput {
-    const params: DocumentClient.UpdateItemInput = {
-      ...options.params,
-      TableName: this.name,
-      Key: key,
-    };
-    const attributes = options.attributes || new ExpressionAttributes();
-    UpdateExpression.addParam(item, new UpdateExpression(attributes), params);
-    ConditionExpression.addAndParam(options.conditions, new ConditionExpression(attributes), params);
-    ExpressionAttributes.addParams(attributes, params);
-    return params;
+    const params = { ...options.params, TableName: this.name, Key: key };
+    return Table.addParams(params, options, 'condition', (params, attributes) =>
+      UpdateExpression.addParams(params, attributes, item),
+    );
   }
 
   /**
@@ -520,15 +496,10 @@ export class Table {
    * @returns Input params for [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}.
    */
   queryParams(key: Table.PrimaryKey.KeyQueryMap, options: Table.QueryOptions = {}): DocumentClient.QueryInput {
-    const params: DocumentClient.QueryInput = {
-      ...options.params,
-      TableName: this.name,
-    };
-    const attributes = options.attributes || new ExpressionAttributes();
-    KeyConditionExpression.addParam(key, new KeyConditionExpression(attributes), params);
-    ConditionExpression.addAndFilterParam(options.conditions, new ConditionExpression(attributes), params);
-    ExpressionAttributes.addParams(attributes, params);
-    return params;
+    const params = { ...options.params, TableName: this.name };
+    return Table.addParams(params, options, 'filter', (params, attributes) =>
+      KeyConditionExpression.addParams(params, attributes, key),
+    );
   }
 
   /**
@@ -537,14 +508,8 @@ export class Table {
    * @returns Input params for [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
    */
   scanParams(options: Table.ScanOptions = {}): DocumentClient.ScanInput {
-    const params: DocumentClient.ScanInput = {
-      ...options.params,
-      TableName: this.name,
-    };
-    const attributes = options.attributes || new ExpressionAttributes();
-    ConditionExpression.addAndFilterParam(options.conditions, new ConditionExpression(attributes), params);
-    ExpressionAttributes.addParams(attributes, params);
-    return params;
+    const params = { ...options.params, TableName: this.name };
+    return Table.addParams(params, options, 'filter');
   }
 
   /**
@@ -638,6 +603,27 @@ export class Table {
    */
   static isPutAction(action: Table.ItemActions): boolean {
     return action === 'put' || action === 'put-new' || action === 'put-replace';
+  }
+
+  /**
+   * Add expressions properties to the params object.
+   * @param params - The params object to add expression properties to.
+   * @param options - Options used to build params.
+   * @param type - The type of expression to set either 'filter' or 'condition',
+   * @param addParam - Function to add additional expression params.
+   * @returns Params object that was passed in with expression added.
+   */
+  static addParams<T extends Table.ExpressionParams>(
+    params: T,
+    options: Table.BaseOptions,
+    type: 'filter' | 'condition',
+    addParams?: Table.AddExpressionParams,
+  ): T & Table.ExpressionParams {
+    const attributes = options.attributes || new ExpressionAttributes();
+    ConditionExpression.addParams(params, attributes, type, options.conditions);
+    if (addParams) addParams(params, attributes);
+    ExpressionAttributes.addParams(params, attributes);
+    return params;
   }
 }
 
@@ -896,6 +882,10 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     };
   }
 
+  /**
+   * Interface that allows expressions to get aliases for path and values and store that mapping to then
+   * allow ExpressionAttributeNames and ExpressionAttributeValues to be set on params.
+   */
   export interface ExpressionAttributes {
     /**
      * Parse an attribute path and adds the names to the expression attribute names and hands back an alias
@@ -922,12 +912,30 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      * Gets the values map to assign to ExpressionAttributeValues.
      */
     getValues(): Table.AttributeValuesMap | void;
-
-    /**
-     * Resets the names and values map to use for a new expression.
-     */
-    reset(): void;
   }
+
+  /**
+   * The ExpressionAttributes params used by dynamodb.
+   */
+  export type ExpressionAttributeParams = {
+    ExpressionAttributeNames?: ExpressionAttributeNameMap;
+    ExpressionAttributeValues?: Table.AttributeValuesMap;
+  };
+
+  /**
+   * The set of expression params used by dynamodb.
+   */
+  export type ExpressionParams = {
+    ConditionExpression?: string;
+    FilterExpression?: string;
+    KeyConditionExpression?: string;
+    UpdateExpression?: string;
+  } & ExpressionAttributeParams;
+
+  /**
+   * Method to add additional expressions to the params.
+   */
+  export type AddExpressionParams = (params: ExpressionParams, attributes: ExpressionAttributes) => void;
 
   /**
    * Defines what general set of attributes are projected into the secondary index.

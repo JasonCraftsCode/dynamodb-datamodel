@@ -158,6 +158,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#scanparams" class="tsd-kind-icon">scan<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#update" class="tsd-kind-icon">update</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#updateparams" class="tsd-kind-icon">update<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited tsd-is-static"><a href="table.tablet.html#addparams" class="tsd-kind-icon">add<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static"><a href="table.tablet.html#getputaction" class="tsd-kind-icon">get<wbr>Put<wbr>Action</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static"><a href="table.tablet.html#isputaction" class="tsd-kind-icon">is<wbr>Put<wbr>Action</a></li>
 							</ul>
@@ -224,7 +225,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#keyattributes">keyAttributes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1117">Table.ts:1117</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1125">Table.ts:1125</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -240,7 +241,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#keyschema">keySchema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1122">Table.ts:1122</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1130">Table.ts:1130</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -537,7 +538,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1173">Table.ts:1173</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1181">Table.ts:1181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -569,7 +570,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#deleteparams">deleteParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1132">Table.ts:1132</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1140">Table.ts:1140</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -601,7 +602,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1168">Table.ts:1168</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1176">Table.ts:1176</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -633,7 +634,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getparams">getParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1127">Table.ts:1127</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1135">Table.ts:1135</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -682,14 +683,14 @@
 					<a name="getputcondition" class="tsd-anchor"></a>
 					<h3>get<wbr>Put<wbr>Condition</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Put<wbr>Condition<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#putwriteoptions" class="tsd-signature-type">PutWriteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Put<wbr>Condition<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#putwriteoptions" class="tsd-signature-type">PutWriteOptions</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getputcondition">getPutCondition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L461">Table.ts:461</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L450">Table.ts:450</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -700,7 +701,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../classes/table.html#putwriteoptions" class="tsd-signature-type">PutWriteOptions</a></h5>
+									<h5>options: <a href="../classes/table.html#putwriteoptions" class="tsd-signature-type">PutWriteOptions</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Type of put to get the condition for.</p>
 									</div>
@@ -776,7 +777,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#put">put</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1181">Table.ts:1181</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1189">Table.ts:1189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -811,7 +812,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#putparams">putParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1140">Table.ts:1140</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1148">Table.ts:1148</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -846,7 +847,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#query">query</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1199">Table.ts:1199</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1207">Table.ts:1207</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -878,7 +879,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#queryparams">queryParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1158">Table.ts:1158</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1166">Table.ts:1166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -910,7 +911,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#scan">scan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1204">Table.ts:1204</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1212">Table.ts:1212</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -939,7 +940,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#scanparams">scanParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1163">Table.ts:1163</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1171">Table.ts:1171</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -968,7 +969,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#update">update</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1190">Table.ts:1190</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1198">Table.ts:1198</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1003,7 +1004,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#updateparams">updateParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1149">Table.ts:1149</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L1157">Table.ts:1157</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1027,6 +1028,60 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited tsd-is-static">
+					<a name="addparams" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> add<wbr>Params</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Params&lt;T&gt;<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, options<span class="tsd-signature-symbol">: </span><a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a>, type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"filter"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"condition"</span>, addParams<span class="tsd-signature-symbol">?: </span><a href="../classes/table.html#addexpressionparams" class="tsd-signature-type">AddExpressionParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> &amp; </span><a href="../classes/table.html#expressionparams" class="tsd-signature-type">ExpressionParams</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#addparams">addParams</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L616">Table.ts:616</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add expressions properties to the params object.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#expressionparams" class="tsd-signature-type">ExpressionParams</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The params object to add expression properties to.</p>
+									</div>
+								</li>
+								<li>
+									<h5>options: <a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options used to build params.</p>
+									</div>
+								</li>
+								<li>
+									<h5>type: <span class="tsd-signature-type">"filter"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"condition"</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of expression to set either &#39;filter&#39; or &#39;condition&#39;,</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> addParams: <a href="../classes/table.html#addexpressionparams" class="tsd-signature-type">AddExpressionParams</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> &amp; </span><a href="../classes/table.html#expressionparams" class="tsd-signature-type">ExpressionParams</a></h4>
+							<p>Params object that was passed in with expression added.</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
 					<a name="getputaction" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> get<wbr>Put<wbr>Action</h3>
@@ -1038,7 +1093,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getputaction">getPutAction</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L628">Table.ts:628</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L593">Table.ts:593</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1070,7 +1125,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#isputaction">isPutAction</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L639">Table.ts:639</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Table.ts#L604">Table.ts:604</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1222,6 +1277,9 @@
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="table.tablet.html#updateparams" class="tsd-kind-icon">update<wbr>Params</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited tsd-is-static">
+										<a href="table.tablet.html#addparams" class="tsd-kind-icon">add<wbr>Params</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
 										<a href="table.tablet.html#getputaction" class="tsd-kind-icon">get<wbr>Put<wbr>Action</a>

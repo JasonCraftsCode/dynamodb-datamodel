@@ -64,7 +64,6 @@
     "eslint-plugin-jsdoc": "^25.2.0",
     "eslint-plugin-prefer-arrow": "^1.2.0",
     "eslint-plugin-tsdoc": "^0.2.4",
-    "inchjs": "^0.4.1",
     "jest": "^25.5.2",
     "npm-check-updates": "^6.0.0",
     "prettier": "^2.0.5",

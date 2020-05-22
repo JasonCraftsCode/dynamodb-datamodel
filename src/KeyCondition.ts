@@ -1,4 +1,3 @@
-import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 /**
@@ -300,7 +299,7 @@ export class KeyConditionExpression implements KeyCondition.Expression {
    * Initialize KeyConditionExpression with existing or new {@link ExpressionAttributes}.
    * @param attributes - Object used to get path and value aliases.
    */
-  constructor(attributes: Table.ExpressionAttributes = new ExpressionAttributes()) {
+  constructor(attributes: Table.ExpressionAttributes) {
     this.attributes = attributes;
   }
 
@@ -352,16 +351,12 @@ export class KeyConditionExpression implements KeyCondition.Expression {
    * @param params - Params used for DocumentClient query methods.
    * @returns The params argument passed in.
    */
-  static addParam(
-    key: Table.PrimaryKey.KeyQueryMap | undefined,
-    exp: KeyCondition.Expression,
+  static addParams(
     params: { KeyConditionExpression?: string },
-  ): { KeyConditionExpression?: string } {
-    if (key) {
-      const condition = KeyConditionExpression.buildExpression(key, exp);
-      if (condition) params.KeyConditionExpression = condition;
-      else delete params.KeyConditionExpression;
-    }
-    return params;
+    attributes: Table.ExpressionAttributes,
+    key: Table.PrimaryKey.KeyQueryMap,
+  ): void {
+    const exp = KeyConditionExpression.buildExpression(key, new KeyConditionExpression(attributes));
+    if (exp) params.KeyConditionExpression = exp;
   }
 }

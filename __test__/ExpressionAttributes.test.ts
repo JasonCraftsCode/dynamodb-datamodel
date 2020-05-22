@@ -1,4 +1,11 @@
 import { ExpressionAttributes } from '../src/ExpressionAttributes';
+import { Table } from '../src/Table';
+
+function buildParams(attributes: ExpressionAttributes): Table.ExpressionAttributeParams {
+  const params = {};
+  ExpressionAttributes.addParams(params, attributes);
+  return params;
+}
 
 it('Validate ExpressionAttributes exports', () => {
   expect(typeof ExpressionAttributes).toBe('function');
@@ -157,43 +164,28 @@ describe('Validate ExpressionAttributes', () => {
 
   it('addParams with no values', () => {
     const attrs = new ExpressionAttributes();
-    expect(ExpressionAttributes.addParams(attrs, {})).toEqual({});
+    expect(buildParams(attrs)).toEqual({});
   });
 
   it('addParams with just name', () => {
     const attrs = new ExpressionAttributes();
     attrs.addPath('name1');
-    expect(ExpressionAttributes.addParams(attrs, {})).toEqual({ ExpressionAttributeNames: { '#n0': 'name1' } });
+    expect(buildParams(attrs)).toEqual({ ExpressionAttributeNames: { '#n0': 'name1' } });
   });
 
   it('addParams with just value', () => {
     const attrs = new ExpressionAttributes();
     attrs.addValue('value1');
-    expect(ExpressionAttributes.addParams(attrs, {})).toEqual({ ExpressionAttributeValues: { ':v0': 'value1' } });
+    expect(buildParams(attrs)).toEqual({ ExpressionAttributeValues: { ':v0': 'value1' } });
   });
 
   it('addParams with both name and value', () => {
     const attrs = new ExpressionAttributes();
     attrs.addPath('name2');
     attrs.addValue('value2');
-    expect(ExpressionAttributes.addParams(attrs, {})).toEqual({
+    expect(buildParams(attrs)).toEqual({
       ExpressionAttributeNames: { '#n0': 'name2' },
       ExpressionAttributeValues: { ':v0': 'value2' },
     });
-  });
-
-  it('reset', () => {
-    const attrs = new ExpressionAttributes();
-    attrs.addPath('path1');
-    attrs.addValue('value1');
-    expect(attrs.getPaths()).toEqual({ '#n0': 'path1' });
-    expect(attrs.getValues()).toEqual({ ':v0': 'value1' });
-    attrs.reset();
-    expect(attrs.getPaths()).toBeUndefined();
-    expect(attrs.getValues()).toBeUndefined();
-    attrs.addPath('path1');
-    attrs.addValue('value1');
-    expect(attrs.getPaths()).toEqual({ '#n0': 'path1' });
-    expect(attrs.getValues()).toEqual({ ':v0': 'value1' });
   });
 });

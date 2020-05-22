@@ -1,11 +1,10 @@
-//import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-
 import { ConditionExpression } from '../src/Condition';
+import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table } from '../src/Table';
 import { Update } from '../src/Update';
-import { buildUpdate } from './testCommon';
+import { buildUpdateParams } from './testCommon';
 
 const model = { name: 'MyModel' } as Model;
 function getTableContext(action: Table.ItemActions): Fields.TableContext {
@@ -22,6 +21,10 @@ const putTableContext = getTableContext('put');
 const putNewTableContext = getTableContext('put-new');
 const putReplaceTableContext = getTableContext('put-replace');
 const updateTableContext = getTableContext('update');
+
+function createConditionExpression(): ConditionExpression {
+  return new ConditionExpression(new ExpressionAttributes());
+}
 
 interface ChildModel {
   name: string;
@@ -93,62 +96,62 @@ describe('When FieldExpression', () => {
 
   // Condition
   it('expect path returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.path()(exp, 'S')).toEqual('#n0');
   });
 
   it('expect eq returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.eq('xyz')(exp, 'BOOL')).toEqual('#n0 = :v0');
   });
 
   it('expect ne returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.ne('xyz')(exp, 'BOOL')).toEqual('#n0 <> :v0');
   });
 
   it('expect lt returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.lt('xyz')(exp, 'BOOL')).toEqual('#n0 < :v0');
   });
 
   it('expect le returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.le('xyz')(exp, 'BOOL')).toEqual('#n0 <= :v0');
   });
 
   it('expect gt returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.gt('xyz')(exp, 'BOOL')).toEqual('#n0 > :v0');
   });
 
   it('expect ge returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.ge('xyz')(exp, 'BOOL')).toEqual('#n0 >= :v0');
   });
 
   it('expect between returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.between('a', 'z')(exp, 'BOOL')).toEqual('#n0 BETWEEN :v0 AND :v1');
   });
 
   it('expect in returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.in(['a', 'z'])(exp, 'BOOL')).toEqual('#n0 IN (:v0, :v1)');
   });
 
   it('expect typeOf returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.type('S')(exp, 'BOOL')).toEqual('attribute_type(#n0, :v0)');
   });
 
   it('expect exists returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.exists()(exp, 'BOOL')).toEqual('attribute_exists(#n0)');
   });
 
   it('expect notExists returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.notExists()(exp, 'BOOL')).toEqual('attribute_not_exists(#n0)');
   });
 });
@@ -158,17 +161,17 @@ describe('When FieldString', () => {
   field.init('string', model);
 
   it('expect size returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 
   it('expect contains returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.contains('xyz')(exp, 'BOOL')).toEqual('contains(#n0, :v0)');
   });
 
   it('expect beginsWith returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.beginsWith('xyz')(exp, 'BOOL')).toEqual('begins_with(#n0, :v0)');
   });
 });
@@ -183,7 +186,7 @@ describe('When FieldBinary', () => {
   field.init('binary', model);
 
   it('expect size returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
@@ -216,12 +219,12 @@ describe('When FieldSet', () => {
   });
 
   it('expect size returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 
   it('expect contains returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.contains('xyz')(exp, 'BOOL')).toEqual('contains(#n0, :v0)');
   });
 });
@@ -236,7 +239,7 @@ describe('When FieldList', () => {
   });
 
   it('expect size returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
@@ -252,7 +255,7 @@ describe('When FieldModelList', () => {
   });
 
   it('expect size returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
@@ -267,7 +270,7 @@ describe('When FieldMap', () => {
   });
 
   it('expect size returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
@@ -276,7 +279,7 @@ describe('When FieldModelMap', () => {
   const field = Fields.modelMap<GroupModel>({ schema: groupSchema });
   field.init('groups', model);
   it('expect size returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
@@ -291,7 +294,7 @@ describe('When FieldObject', () => {
   });
 
   it('expect size returns condition expression', () => {
-    const exp = new ConditionExpression();
+    const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
 });
@@ -843,7 +846,7 @@ describe('When FieldSplit', () => {
       const data: Table.AttributeValuesMap = {};
       field.toTableUpdate('revision', {}, data, updateTableContext);
       expect(typeof data.revision).toEqual('function');
-      expect(buildUpdate(data)).toEqual({
+      expect(buildUpdateParams(data)).toEqual({
         ExpressionAttributeNames: { '#n0': 'revision' },
         ExpressionAttributeValues: { ':v0': 1 },
         UpdateExpression: 'SET #n0 = #n0 + :v0',
@@ -870,7 +873,7 @@ describe('When FieldSplit', () => {
       const data: Table.AttributeValuesMap = {};
       field.toTableUpdate('revision', {}, data, updateTableContext);
       expect(typeof data.R).toEqual('function');
-      expect(buildUpdate(data)).toEqual({
+      expect(buildUpdateParams(data)).toEqual({
         ExpressionAttributeNames: { '#n0': 'R' },
         ExpressionAttributeValues: { ':v0': 1 },
         UpdateExpression: 'SET #n0 = #n0 + :v0',
@@ -891,12 +894,12 @@ describe('When FieldSplit', () => {
       const data: Table.AttributeValuesMap = {};
       putTableContext.conditions = [];
       field.toTable('revision', {}, data, putTableContext);
-      expect(buildUpdate(data)).toEqual({
+      expect(buildUpdateParams(data)).toEqual({
         ExpressionAttributeNames: { '#n0': 'revision' },
         ExpressionAttributeValues: { ':v0': 0 },
         UpdateExpression: 'SET #n0 = :v0',
       });
-      expect(ConditionExpression.buildExpression(putTableContext.conditions, new ConditionExpression())).toEqual(
+      expect(ConditionExpression.buildExpression(putTableContext.conditions, createConditionExpression())).toEqual(
         '(attribute_not_exists(#n0) OR #n0 = :v0)',
       );
     });
@@ -908,12 +911,12 @@ describe('When FieldSplit', () => {
       updateTableContext.conditions = [];
       field.toTableUpdate('revision', {}, data, updateTableContext);
       expect(typeof data.revision).toEqual('function');
-      expect(buildUpdate(data)).toEqual({
+      expect(buildUpdateParams(data)).toEqual({
         ExpressionAttributeNames: { '#n0': 'revision' },
         ExpressionAttributeValues: { ':v0': 1 },
         UpdateExpression: 'SET #n0 = #n0 + :v0',
       });
-      expect(ConditionExpression.buildExpression(updateTableContext.conditions, new ConditionExpression())).toEqual(
+      expect(ConditionExpression.buildExpression(updateTableContext.conditions, createConditionExpression())).toEqual(
         '#n0 = :v0',
       );
     });

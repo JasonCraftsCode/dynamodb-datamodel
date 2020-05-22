@@ -124,39 +124,15 @@ export class ExpressionAttributes implements Table.ExpressionAttributes {
   }
 
   /**
-   * Resets the names and values map to use for a new expression.
-   */
-  reset(): void {
-    this.names = {};
-    this.nextName = 0;
-    this.values = {};
-    this.nextValue = 0;
-  }
-
-  /**
    * Helper method to set ExpressionAttributeNames and ExpressionAttributeValues values on the input argument.
    * @param params - Input params used for DocumentClient put, delete, update, query and scan methods.
    * @returns The input params argument passed in.
    */
-  static addParams(
-    attributes: Table.ExpressionAttributes,
-    params: {
-      ExpressionAttributeNames?: ExpressionAttributeNameMap;
-      ExpressionAttributeValues?: Table.AttributeValuesMap;
-    },
-  ): {
-    ExpressionAttributeNames?: ExpressionAttributeNameMap;
-    ExpressionAttributeValues?: Table.AttributeValuesMap;
-  } {
+  static addParams(params: Table.ExpressionAttributeParams, attributes: Table.ExpressionAttributes): void {
     const paths = attributes.getPaths();
     if (paths) params.ExpressionAttributeNames = paths;
-    else delete params.ExpressionAttributeNames;
-
     const values = attributes.getValues();
     if (values) params.ExpressionAttributeValues = values;
-    else delete params.ExpressionAttributeValues;
-
-    return params;
   }
 
   /**

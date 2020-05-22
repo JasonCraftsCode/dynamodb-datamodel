@@ -266,3 +266,9 @@ X ?? remove update - though it does provide better typing??
 
 name = Fields.string({alias: abc});
 createdOn = Fields.createdDate({alias: NewOn});
+
+TypeDoc issues:
+
+- @interitDoc should support braces like @link: https://github.com/Microsoft/tsdoc/issues/9
+- Support type selectors for @link: https://github.com/Microsoft/tsdoc/blob/master/spec/code-snippets/DeclarationReferences.ts
+-

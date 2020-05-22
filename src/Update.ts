@@ -1,4 +1,3 @@
-import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 /**
@@ -842,7 +841,7 @@ export class UpdateExpression implements Update.Expression {
    * Initialize UpdateExpression with existing or new {@link ExpressionAttributes}.
    * @param attributes - Object used to get path and value aliases.
    */
-  constructor(attributes: Table.ExpressionAttributes = new ExpressionAttributes()) {
+  constructor(attributes: Table.ExpressionAttributes) {
     this.attributes = attributes;
   }
 
@@ -924,17 +923,6 @@ export class UpdateExpression implements Update.Expression {
   }
 
   /**
-   * Resets the update expression lists and attributes, used for building a new update expression.
-   */
-  reset(): void {
-    this.setList = [];
-    this.removeList = [];
-    this.addList = [];
-    this.deleteList = [];
-    this.attributes.reset();
-  }
-
-  /**
    * Helper function that resolves the updateMap and returns an UpdateExpression to use in DocumentClient.update method calls.
    * @param updateMap - Map of update values and resolvers to evaluate.
    * @param exp - Used when calling update resolver function to store the names and values mappings and update expressions.
@@ -952,16 +940,13 @@ export class UpdateExpression implements Update.Expression {
    * @param params - Params used for DocumentClient update method.
    * @returns The params argument passed in.
    */
-  static addParam(
-    updateMap: Update.ResolverMap | undefined,
-    exp: Update.Expression,
+  static addParams(
     params: { UpdateExpression?: string },
-  ): { UpdateExpression?: string } {
-    if (updateMap) {
-      const expression = UpdateExpression.buildExpression(updateMap, exp);
-      if (expression) params.UpdateExpression = expression;
-      else delete params.UpdateExpression;
-    }
-    return params;
+    attributes: Table.ExpressionAttributes,
+    updateMap?: Update.ResolverMap,
+  ): void {
+    if (!updateMap) return;
+    const exp = UpdateExpression.buildExpression(updateMap, new UpdateExpression(attributes));
+    if (exp) params.UpdateExpression = exp;
   }
 }

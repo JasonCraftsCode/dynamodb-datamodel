@@ -6,19 +6,20 @@ import { Table } from '../src/Table';
 // Note: Using classes to scope static methods, allow use of reserved words (like 'in') as methods and
 // let TypeDoc produce more consistent documentation (thought it does mean that Condition which acts
 // more as a namespace or module has all static methods).
-
 // TODO: would be nice if size returned an object that had eq, ne, lt, le, gt and ge.
-function buildCondition(
-  conditions: Condition.Resolver[],
-  exp = new ConditionExpression(),
+
+function buildParams(
+  conditions: Condition.Resolver[] | undefined,
+  type: 'filter' | 'condition' = 'condition',
 ): {
   ConditionExpression?: string;
   ExpressionAttributeNames?: ExpressionAttributeNameMap;
   ExpressionAttributeValues?: Table.AttributeValuesMap;
-} | void {
+} {
   const params = {};
-  ConditionExpression.addAndParam(conditions, exp, params);
-  ExpressionAttributes.addParams(exp.attributes, params);
+  const attributes = new ExpressionAttributes();
+  ConditionExpression.addParams(params, attributes, type, conditions);
+  ExpressionAttributes.addParams(params, attributes);
   return params;
 }
 
@@ -27,22 +28,10 @@ it('Validate Condition exports', () => {
   expect(typeof Condition.ne).toEqual('function');
 });
 
-describe('Validate ConditionExpression', () => {
-  it('when created expect initialized', () => {
-    const exp = new ConditionExpression();
-    expect(exp.attributes).not.toBeUndefined();
-  });
-});
-
 describe('Validate Condition with values', () => {
-  const exp = new ConditionExpression();
-  beforeEach(() => {
-    exp.attributes.reset();
-  });
-
   it('eq', () => {
     const condition = Condition.eq('path1', 'value1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 = :v0',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1' },
@@ -51,7 +40,7 @@ describe('Validate Condition with values', () => {
 
   it('ne', () => {
     const condition = Condition.ne('path1', 'value1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 <> :v0',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1' },
@@ -60,7 +49,7 @@ describe('Validate Condition with values', () => {
 
   it('lt', () => {
     const condition = Condition.lt('path1', 'value1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 < :v0',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1' },
@@ -68,7 +57,7 @@ describe('Validate Condition with values', () => {
   });
   it('le', () => {
     const condition = Condition.le('path1', 'value1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 <= :v0',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1' },
@@ -77,7 +66,7 @@ describe('Validate Condition with values', () => {
 
   it('gt', () => {
     const condition = Condition.gt('path1', 'value1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 > :v0',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1' },
@@ -86,7 +75,7 @@ describe('Validate Condition with values', () => {
 
   it('ge', () => {
     const condition = Condition.ge('path1', 'value1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 >= :v0',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1' },
@@ -95,7 +84,7 @@ describe('Validate Condition with values', () => {
 
   it('between', () => {
     const condition = Condition.between('path1', 'value1', 'value2');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 BETWEEN :v0 AND :v1',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2' },
@@ -104,7 +93,7 @@ describe('Validate Condition with values', () => {
 
   it('in', () => {
     const condition = Condition.in('path1', ['value1', 'value2', 'value3']);
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 IN (:v0, :v1, :v2)',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2', ':v2': 'value3' },
@@ -113,7 +102,7 @@ describe('Validate Condition with values', () => {
 
   it('contains', () => {
     const condition = Condition.contains('path1', 'value1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: 'contains(#n0, :v0)',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1' },
@@ -122,7 +111,7 @@ describe('Validate Condition with values', () => {
 
   it('beginsWith', () => {
     const condition = Condition.beginsWith('path1', 'value1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: 'begins_with(#n0, :v0)',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'value1' },
@@ -131,7 +120,7 @@ describe('Validate Condition with values', () => {
 
   it('type', () => {
     const condition = Condition.type('path1', 'S');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: 'attribute_type(#n0, :v0)',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 'S' },
@@ -140,7 +129,7 @@ describe('Validate Condition with values', () => {
 
   it('exists', () => {
     const condition = Condition.exists('path1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: 'attribute_exists(#n0)',
       ExpressionAttributeNames: { '#n0': 'path1' },
     });
@@ -148,7 +137,7 @@ describe('Validate Condition with values', () => {
 
   it('notExists', () => {
     const condition = Condition.notExists('path1');
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: 'attribute_not_exists(#n0)',
       ExpressionAttributeNames: { '#n0': 'path1' },
     });
@@ -156,7 +145,7 @@ describe('Validate Condition with values', () => {
 
   it('size', () => {
     const condition = Condition.gt(Condition.size('path1'), 8);
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: 'size(#n0) > :v0',
       ExpressionAttributeNames: { '#n0': 'path1' },
       ExpressionAttributeValues: { ':v0': 8 },
@@ -165,14 +154,9 @@ describe('Validate Condition with values', () => {
 });
 
 describe('Validate Condition with Paths', () => {
-  const exp = new ConditionExpression();
-  beforeEach(() => {
-    exp.attributes.reset();
-  });
-
   it('eq with Path', () => {
     const condition = Condition.eq('path1', Condition.path('value1'));
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 = #n1',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'value1' },
     });
@@ -180,7 +164,7 @@ describe('Validate Condition with Paths', () => {
 
   it('ne with Path', () => {
     const condition = Condition.ne('path1', Condition.path('value1'));
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 <> #n1',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'value1' },
     });
@@ -188,14 +172,14 @@ describe('Validate Condition with Paths', () => {
 
   it('lt with Path', () => {
     const condition = Condition.lt('path1', Condition.path('value1'));
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 < #n1',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'value1' },
     });
   });
   it('le with Path', () => {
     const condition = Condition.le('path1', Condition.path('value1'));
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 <= #n1',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'value1' },
     });
@@ -203,7 +187,7 @@ describe('Validate Condition with Paths', () => {
 
   it('gt with Path', () => {
     const condition = Condition.gt('path1', Condition.path('value1'));
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 > #n1',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'value1' },
     });
@@ -211,7 +195,7 @@ describe('Validate Condition with Paths', () => {
 
   it('ge with Path', () => {
     const condition = Condition.ge('path1', Condition.path('value1'));
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 >= #n1',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'value1' },
     });
@@ -219,7 +203,7 @@ describe('Validate Condition with Paths', () => {
 
   it('between with Path', () => {
     const condition = Condition.between('path1', Condition.path('value1'), Condition.path('value2'));
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 BETWEEN #n1 AND #n2',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'value1', '#n2': 'value2' },
     });
@@ -231,7 +215,7 @@ describe('Validate Condition with Paths', () => {
       Condition.path('value2'),
       Condition.path('value3'),
     ]);
-    expect(buildCondition([condition])).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 IN (#n1, #n2, #n3)',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'value1', '#n2': 'value2', '#n3': 'value3' },
     });
@@ -243,14 +227,10 @@ describe('Validate Condition', () => {
   const condition2 = Condition.ge('path2', 'value2');
   const condition3 = Condition.eq('path3', 3);
   const condition4 = Condition.ne('path4', 4);
-  const exp = new ConditionExpression();
-  beforeEach(() => {
-    exp.attributes.reset();
-  });
 
   it('add Conditions', () => {
     const logical = Condition.and(condition1, condition2);
-    expect(buildCondition([logical])).toEqual({
+    expect(buildParams([logical])).toEqual({
       ConditionExpression: '(#n0 <= :v0 AND #n1 >= :v1)',
       ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2' },
       ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2' },
@@ -259,99 +239,147 @@ describe('Validate Condition', () => {
 
   it('or Conditions', () => {
     const logical = Condition.or(condition1, condition2);
-    expect(logical(exp, 'BOOL')).toEqual('(#n0 <= :v0 OR #n1 >= :v1)');
+    expect(buildParams([logical])).toEqual({
+      ConditionExpression: '(#n0 <= :v0 OR #n1 >= :v1)',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2' },
+    });
   });
 
   it('not Conditions', () => {
     const logical = Condition.not(condition1);
-    expect(logical(exp, 'BOOL')).toEqual('(NOT #n0 <= :v0)');
+    expect(buildParams([logical])).toEqual({
+      ConditionExpression: '(NOT #n0 <= :v0)',
+      ExpressionAttributeNames: { '#n0': 'path1' },
+      ExpressionAttributeValues: { ':v0': 'value1' },
+    });
   });
 
   it('and Conditions with 1', () => {
     const logical = Condition.and(condition1);
-    expect(logical(exp, 'BOOL')).toEqual('(#n0 <= :v0)');
+    expect(buildParams([logical])).toEqual({
+      ConditionExpression: '(#n0 <= :v0)',
+      ExpressionAttributeNames: { '#n0': 'path1' },
+      ExpressionAttributeValues: { ':v0': 'value1' },
+    });
   });
 
   it('or Conditions with 1', () => {
     const logical = Condition.or(condition1);
-    expect(logical(exp, 'BOOL')).toEqual('(#n0 <= :v0)');
+    expect(buildParams([logical])).toEqual({
+      ConditionExpression: '(#n0 <= :v0)',
+      ExpressionAttributeNames: { '#n0': 'path1' },
+      ExpressionAttributeValues: { ':v0': 'value1' },
+    });
   });
 
   it('and with 4 conditions', () => {
     const logical = Condition.and(condition1, condition2, condition3, condition4);
-    expect(logical(exp, 'BOOL')).toEqual('(#n0 <= :v0 AND #n1 >= :v1 AND #n2 = :v2 AND #n3 <> :v3)');
+    expect(buildParams([logical])).toEqual({
+      ConditionExpression: '(#n0 <= :v0 AND #n1 >= :v1 AND #n2 = :v2 AND #n3 <> :v3)',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2', '#n2': 'path3', '#n3': 'path4' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2', ':v2': 3, ':v3': 4 },
+    });
   });
 
   it('and with Conditions', () => {
     const logical1 = Condition.not(condition1);
     const logical2 = Condition.and(condition2, condition3);
     const logical3 = Condition.and(logical1, logical2);
-    expect(logical3(exp, 'BOOL')).toEqual('((NOT #n0 <= :v0) AND (#n1 >= :v1 AND #n2 = :v2))');
+    expect(buildParams([logical3])).toEqual({
+      ConditionExpression: '((NOT #n0 <= :v0) AND (#n1 >= :v1 AND #n2 = :v2))',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2', '#n2': 'path3' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2', ':v2': 3 },
+    });
   });
 
   it('add with Conditions and Conditions', () => {
     const logical1 = Condition.not(condition1);
     const logical3 = Condition.and(logical1, condition2, condition3);
-    expect(logical3(exp, 'BOOL')).toEqual('((NOT #n0 <= :v0) AND #n1 >= :v1 AND #n2 = :v2)');
+    expect(buildParams([logical3])).toEqual({
+      ConditionExpression: '((NOT #n0 <= :v0) AND #n1 >= :v1 AND #n2 = :v2)',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2', '#n2': 'path3' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2', ':v2': 3 },
+    });
   });
 
   it('or with 4 conditions', () => {
     const logical = Condition.or(condition1, condition2, condition3, condition4);
-    expect(logical(exp, 'BOOL')).toEqual('(#n0 <= :v0 OR #n1 >= :v1 OR #n2 = :v2 OR #n3 <> :v3)');
+    expect(buildParams([logical])).toEqual({
+      ConditionExpression: '(#n0 <= :v0 OR #n1 >= :v1 OR #n2 = :v2 OR #n3 <> :v3)',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2', '#n2': 'path3', '#n3': 'path4' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2', ':v2': 3, ':v3': 4 },
+    });
   });
 
   it('or with Conditions', () => {
     const logical1 = Condition.not(condition1);
     const logical2 = Condition.or(condition2, condition3);
     const logical3 = Condition.or(logical1, logical2);
-    expect(logical3(exp, 'BOOL')).toEqual('((NOT #n0 <= :v0) OR (#n1 >= :v1 OR #n2 = :v2))');
+    expect(buildParams([logical3])).toEqual({
+      ConditionExpression: '((NOT #n0 <= :v0) OR (#n1 >= :v1 OR #n2 = :v2))',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2', '#n2': 'path3' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2', ':v2': 3 },
+    });
   });
 
   it('or with Conditions and Conditions', () => {
     const logical1 = Condition.not(condition1);
     const logical3 = Condition.or(logical1, condition2, condition3);
-    expect(logical3(exp, 'BOOL')).toEqual('((NOT #n0 <= :v0) OR #n1 >= :v1 OR #n2 = :v2)');
+    expect(buildParams([logical3])).toEqual({
+      ConditionExpression: '((NOT #n0 <= :v0) OR #n1 >= :v1 OR #n2 = :v2)',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2', '#n2': 'path3' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2', ':v2': 3 },
+    });
   });
 
-  it('addAndParam with undefined conditions', () => {
-    expect(ConditionExpression.addAndParam(undefined, new ConditionExpression(), {})).toEqual({});
+  it('buildParams with undefined conditions', () => {
+    expect(buildParams(undefined)).toEqual({});
   });
 
-  it('addAndParam with empty conditions', () => {
-    expect(ConditionExpression.addAndParam([], new ConditionExpression(), {})).toEqual({});
+  it('buildParams with empty conditions', () => {
+    expect(buildParams([])).toEqual({});
   });
-  it('addAndParam with single conditions', () => {
+  it('buildParams with single conditions', () => {
     const condition = Condition.eq('path1', 'value1');
-    expect(ConditionExpression.addAndParam([condition], new ConditionExpression(), {})).toEqual({
+    expect(buildParams([condition])).toEqual({
       ConditionExpression: '#n0 = :v0',
+      ExpressionAttributeNames: { '#n0': 'path1' },
+      ExpressionAttributeValues: { ':v0': 'value1' },
     });
   });
 
-  it('addAndParam with two conditions', () => {
+  it('buildParams with two conditions', () => {
     const conditions = [Condition.eq('path1', 'value1'), Condition.gt('path2', 'value2')];
-    expect(ConditionExpression.addAndParam(conditions, new ConditionExpression(), {})).toEqual({
+    expect(buildParams(conditions)).toEqual({
       ConditionExpression: '#n0 = :v0 AND #n1 > :v1',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2' },
     });
   });
 
-  it('addAndFilterParam with undefined conditions', () => {
-    expect(ConditionExpression.addAndFilterParam(undefined, new ConditionExpression(), {})).toEqual({});
+  it('buildParams filter with undefined conditions', () => {
+    expect(buildParams(undefined, 'filter')).toEqual({});
   });
 
-  it('addAndFilterParam with empty conditions', () => {
-    expect(ConditionExpression.addAndFilterParam([], new ConditionExpression(), {})).toEqual({});
+  it('buildParams filter with empty conditions', () => {
+    expect(buildParams([], 'filter')).toEqual({});
   });
-  it('addAndFilterParam with single conditions', () => {
+  it('buildParams filter with single conditions', () => {
     const condition = Condition.eq('path1', 'value1');
-    expect(ConditionExpression.addAndFilterParam([condition], new ConditionExpression(), {})).toEqual({
+    expect(buildParams([condition], 'filter')).toEqual({
       FilterExpression: '#n0 = :v0',
+      ExpressionAttributeNames: { '#n0': 'path1' },
+      ExpressionAttributeValues: { ':v0': 'value1' },
     });
   });
 
-  it('addAndFilterParam with two conditions', () => {
+  it('buildParams filter with two conditions', () => {
     const conditions = [Condition.eq('path1', 'value1'), Condition.gt('path2', 'value2')];
-    expect(ConditionExpression.addAndFilterParam(conditions, new ConditionExpression(), {})).toEqual({
+    expect(buildParams(conditions, 'filter')).toEqual({
       FilterExpression: '#n0 = :v0 AND #n1 > :v1',
+      ExpressionAttributeNames: { '#n0': 'path1', '#n1': 'path2' },
+      ExpressionAttributeValues: { ':v0': 'value1', ':v1': 'value2' },
     });
   });
 });

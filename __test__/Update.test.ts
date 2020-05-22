@@ -1,6 +1,7 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Update, UpdateExpression } from '../src/Update';
-import { buildUpdate } from './testCommon';
+import { buildUpdateParams } from './testCommon';
 
 const documentClient = new DocumentClient({ convertEmptyValues: true });
 
@@ -11,25 +12,22 @@ it('Validate Condition exports', () => {
 });
 
 describe('Validate UpdateExpression.buildExpression for each type', () => {
-  const exp = new UpdateExpression();
-  beforeEach(() => {
-    exp.reset();
-  });
-
   it('UpdateExpression.addParam with undefined updateMap', () => {
-    expect(UpdateExpression.addParam(undefined, exp, {})).toEqual({});
+    expect(buildUpdateParams(undefined)).toEqual({});
   });
   it('UpdateExpression.addParam with empty updateMap', () => {
-    expect(UpdateExpression.addParam({}, exp, {})).toEqual({});
+    expect(buildUpdateParams({})).toEqual({});
   });
   it('UpdateExpression.addParam', () => {
-    expect(UpdateExpression.addParam({ testString: 'string' }, exp, {})).toEqual({
+    expect(buildUpdateParams({ testString: 'string' })).toEqual({
+      ExpressionAttributeNames: { '#n0': 'testString' },
+      ExpressionAttributeValues: { ':v0': 'string' },
       UpdateExpression: 'SET #n0 = :v0',
     });
   });
 
   it('set string', () => {
-    expect(buildUpdate({ testString: 'string' }, exp)).toEqual({
+    expect(buildUpdateParams({ testString: 'string' })).toEqual({
       UpdateExpression: 'SET #n0 = :v0',
       ExpressionAttributeNames: { '#n0': 'testString' },
       ExpressionAttributeValues: { ':v0': 'string' },
@@ -37,7 +35,7 @@ describe('Validate UpdateExpression.buildExpression for each type', () => {
   });
 
   it('set number', () => {
-    expect(buildUpdate({ testNumber: 8 }, exp)).toEqual({
+    expect(buildUpdateParams({ testNumber: 8 })).toEqual({
       UpdateExpression: 'SET #n0 = :v0',
       ExpressionAttributeNames: { '#n0': 'testNumber' },
       ExpressionAttributeValues: { ':v0': 8 },
@@ -46,9 +44,9 @@ describe('Validate UpdateExpression.buildExpression for each type', () => {
 });
 
 describe('Validate UpdateExpression.buildExpression', () => {
-  const exp = new UpdateExpression();
+  let exp: UpdateExpression;
   beforeEach(() => {
-    exp.reset();
+    exp = new UpdateExpression(new ExpressionAttributes());
   });
 
   it('set values', () => {
@@ -111,7 +109,7 @@ describe('Validate UpdateExpression.buildExpression', () => {
 
   it('set paths', () => {
     const input = { testPath: Update.path('testPath2') };
-    expect(buildUpdate(input, exp)).toEqual({
+    expect(buildUpdateParams(input)).toEqual({
       ExpressionAttributeNames: { '#n0': 'testPath', '#n1': 'testPath2' },
       UpdateExpression: 'SET #n0 = #n1',
     });
@@ -119,7 +117,7 @@ describe('Validate UpdateExpression.buildExpression', () => {
 
   it('set pathWithDefault', () => {
     const input = { testPath: Update.pathWithDefault('testPath3', 'default') };
-    expect(buildUpdate(input, exp)).toEqual({
+    expect(buildUpdateParams(input)).toEqual({
       ExpressionAttributeNames: { '#n0': 'testPath', '#n1': 'testPath3' },
       ExpressionAttributeValues: { ':v0': 'default' },
       UpdateExpression: 'SET #n0 = if_not_exists(#n1, :v0)',

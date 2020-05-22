@@ -1,4 +1,3 @@
-import { ExpressionAttributes } from './ExpressionAttributes';
 import { Table } from './Table';
 
 /**
@@ -451,7 +450,7 @@ export class ConditionExpression implements Condition.Expression {
    * Initialize ConditionExpression with existing or new {@link ExpressionAttributes}.
    * @param attributes - Object used to get path and value aliases.
    */
-  constructor(attributes: Table.ExpressionAttributes = new ExpressionAttributes()) {
+  constructor(attributes: Table.ExpressionAttributes) {
     this.attributes = attributes;
   }
 
@@ -493,39 +492,24 @@ export class ConditionExpression implements Condition.Expression {
   }
 
   /**
-   * Helper function to set a 'ConditionExpression' value on the params argument if there are conditions to resolve.
-   * @param conditions - List of conditions to evaluate and join together with AND.
-   * @param exp - Used when evaluation conditions and store the names and values mappings.
-   * @param params - Params used for DocumentClient put, delete and update methods.
-   * @returns The params argument passed in.
-   */
-  static addAndParam(
-    conditions: Condition.Resolver[] | undefined,
-    exp: Condition.Expression,
-    params: { ConditionExpression?: string },
-  ): { ConditionExpression?: string } {
-    if (conditions && conditions.length > 0)
-      params.ConditionExpression = ConditionExpression.buildExpression(conditions, exp);
-    else delete params.ConditionExpression;
-    return params;
-  }
-
-  /**
-   * Helper function to set a 'FilterExpression' value on the params argument if there are conditions to resolve.
+   * Helper function to set a 'FilterExpression' or 'ConditionExpression' property on the params argument if there are conditions to resolve.
    * @param conditions - List of conditions to evaluate with AND.
    * @param exp - Used when evaluation conditions and store the names and values mappings.
+   * @param type - The type of expression to set either 'filter' or 'condition',
    * @param params - Params used for DocumentClient query and scan methods.
    * @returns The params argument passed in.
    */
-  static addAndFilterParam(
-    conditions: Condition.Resolver[] | undefined,
-    exp: Condition.Expression,
-    params: { FilterExpression?: string },
-  ): { FilterExpression?: string } {
-    if (conditions && conditions.length > 0)
-      params.FilterExpression = ConditionExpression.buildExpression(conditions, exp);
-    else delete params.FilterExpression;
-    return params;
+  static addParams(
+    params: { ConditionExpression?: string; FilterExpression?: string },
+    attributes: Table.ExpressionAttributes,
+    type: 'filter' | 'condition',
+    conditions?: Condition.Resolver[],
+  ): void {
+    if (conditions && conditions.length) {
+      const exp = ConditionExpression.buildExpression(conditions, new ConditionExpression(attributes));
+      if (type === 'filter') params.FilterExpression = exp;
+      else params.ConditionExpression = exp;
+    }
   }
 
   /**

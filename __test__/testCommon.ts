@@ -1,4 +1,3 @@
-import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Table } from '../src/Table';
 import { Update, UpdateExpression } from '../src/Update';
@@ -18,16 +17,12 @@ export function delayCallback(tms: number, f: () => void) {
 }
 */
 
-export function buildUpdate(
-  updateMap: Update.ResolverMap,
-  exp = new UpdateExpression(),
-): {
-  UpdateExpression?: string | undefined;
-  ExpressionAttributeNames?: ExpressionAttributeNameMap;
-  ExpressionAttributeValues?: Table.AttributeValuesMap;
-} {
+export function buildUpdateParams(
+  updateMap?: Update.ResolverMap,
+): { UpdateExpression?: string } & Table.ExpressionAttributeParams {
   const params = {};
-  UpdateExpression.addParam(updateMap, exp, params);
-  ExpressionAttributes.addParams(exp.attributes, params);
+  const attributes = new ExpressionAttributes();
+  UpdateExpression.addParams(params, attributes, updateMap);
+  ExpressionAttributes.addParams(params, attributes);
   return params;
 }
