@@ -111,6 +111,7 @@ export class ExpressionAttributes implements Table.ExpressionAttributes {
 
   /**
    * Gets the names map to assign to ExpressionAttributeNames.
+   * @returns The map of all names added.
    */
   getPaths(): ExpressionAttributeNameMap | void {
     if (Object.keys(this.names).length > 0) return this.names;
@@ -118,6 +119,7 @@ export class ExpressionAttributes implements Table.ExpressionAttributes {
 
   /**
    * Gets the values map to assign to ExpressionAttributeValues.
+   * @returns The map of all values added.
    */
   getValues(): Table.AttributeValuesMap | void {
     if (Object.keys(this.values).length > 0) return this.values;

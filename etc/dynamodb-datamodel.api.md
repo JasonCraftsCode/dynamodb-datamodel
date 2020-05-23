@@ -101,7 +101,6 @@ export class Fields {
     static modelMap<V>(options: Fields.ModelMapOptions<V>): Fields.FieldModelMap<V>;
     static number(options?: Fields.BaseOptions<number>): Fields.FieldNumber;
     static numberSet(options?: Fields.BaseOptions<Table.NumberSetValue>): Fields.FieldNumberSet;
-    // (undocumented)
     static revision(options?: Fields.RevisionOptions): Fields.FieldRevision;
     static split(options: Fields.SplitOptions): Fields.FieldSplit;
     static string(options?: Fields.BaseOptions<string>): Fields.FieldString;
@@ -112,16 +111,12 @@ export class Fields {
 
 // @public
 export namespace Fields {
-    // (undocumented)
     export interface AttributeDefinition {
-        // (undocumented)
         type: Table.AttributeTypes;
     }
-    // (undocumented)
     export type AttributesSchema = {
         [key: string]: AttributeDefinition;
     };
-    // (undocumented)
     export interface BaseOptions<V> {
         alias?: string;
         default?: V | FieldBase.DefaultFunction<V>;
@@ -143,7 +138,6 @@ export namespace Fields {
     } = {}> = V & {
         [P in keyof T]: FieldCompositeSlot;
     };
-    // (undocumented)
     export interface CreatedDateOptions {
         alias?: string;
         now?: () => Date;
@@ -177,7 +171,6 @@ export namespace Fields {
     }
     export class FieldBoolean extends FieldExpression<boolean, 'BOOL'> {
     }
-    // (undocumented)
     export class FieldComposite {
         constructor(options: CompositeOptions);
         alias: string;
@@ -194,20 +187,15 @@ export namespace Fields {
     }
     export class FieldCompositeSlot implements Field {
         constructor(composite: FieldComposite, slot: number, slots: FieldCompositeSlot[]);
-        // (undocumented)
         composite: FieldComposite;
         init(name: string, model: Model): void;
-        // (undocumented)
         name?: string;
-        // (undocumented)
         slot: number;
-        // (undocumented)
         slots: FieldCompositeSlot[];
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
-    // (undocumented)
     export class FieldCreatedDate implements Fields.Field {
         constructor(options?: CreatedDateOptions);
         alias?: string;
@@ -254,7 +242,6 @@ export namespace Fields {
     }> extends FieldExpression<V, 'M'> {
         constructor(options: ModelOptions<V>);
         init(name: string, model: Model): void;
-        // (undocumented)
         schema: Model.ModelSchemaT<V>;
         size(): Condition.ValueResolver;
     }
@@ -270,7 +257,6 @@ export namespace Fields {
     }> extends FieldMap<V> {
         constructor(options: ModelMapOptions<V>);
         init(name: string, model: Model): void;
-        // (undocumented)
         schema: Model.ModelSchemaT<V>;
     }
     export class FieldNull extends FieldExpression<null, 'NULL'> {
@@ -279,7 +265,6 @@ export namespace Fields {
     }
     export class FieldNumberSet extends FieldSet<Table.NumberSetValue, 'NS'> {
     }
-    // (undocumented)
     export class FieldRevision implements Fields.Field {
         constructor(options?: RevisionOptions);
         alias?: string;
@@ -300,7 +285,6 @@ export namespace Fields {
         aliases: string[];
         delimiter: string;
         init(name: string, model: Model): void;
-        // (undocumented)
         name?: string;
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
@@ -321,7 +305,6 @@ export namespace Fields {
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
     }
-    // (undocumented)
     export class FieldUpdatedDate implements Fields.Field {
         constructor(options?: UpdateDateOptions);
         alias?: string;
@@ -343,14 +326,11 @@ export namespace Fields {
     export interface ModelMapOptions<V> extends BaseOptions<{
         [key: string]: V;
     }> {
-        // (undocumented)
         schema: Model.ModelSchemaT<V>;
     }
     export interface ModelOptions<V> extends BaseOptions<V> {
-        // (undocumented)
         schema: Model.ModelSchemaT<V>;
     }
-    // (undocumented)
     export interface RevisionOptions {
         alias?: string;
         matchOnWrite?: boolean;
@@ -369,7 +349,6 @@ export namespace Fields {
     export interface TypeOptions {
         alias?: string;
     }
-    // (undocumented)
     export interface UpdateDateOptions {
         alias?: string;
         now?: () => Date;
@@ -470,199 +449,118 @@ export class KeyConditionExpression implements KeyCondition.Expression {
     getExpression(): string | void;
 }
 
-// @public (undocumented)
+// @public
 export class Model implements Model.ModelBase {
     constructor(params: Model.ModelParams);
-    // (undocumented)
     create(data: Model.ModelCore, options?: Table.PutOptions): Promise<Model.PutOutput>;
-    // (undocumented)
     delete(key: Model.ModelCore, options?: Table.DeleteOptions): Promise<Model.DeleteOutput>;
-    // (undocumented)
     deleteParams(key: Model.ModelCore, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
-    // (undocumented)
-    get(key: Model.ModelCore, options?: Table.GetOptions): Promise<Model.PutOutput>;
-    // (undocumented)
+    get(key: Model.ModelCore, options?: Table.GetOptions): Promise<Model.GetOutput>;
     getContext(action: Table.ItemActions, options: Table.BaseOptions): Fields.TableContext;
-    // (undocumented)
     getParams(key: Model.ModelCore, options?: Table.GetOptions): DocumentClient.GetItemInput;
-    // (undocumented)
     static initSchema(schema: Model.ModelSchema, model: Model): void;
-    // (undocumented)
     name?: string;
-    // (undocumented)
-    onError?: (msg: string) => void;
-    // (undocumented)
     put(data: Model.ModelCore, options?: Table.PutOptions): Promise<Model.PutOutput>;
-    // (undocumented)
     putParams(item: Model.ModelCore, options?: Table.PutOptions): DocumentClient.PutItemInput;
-    // (undocumented)
     replace(data: Model.ModelCore, options?: Table.PutOptions): Promise<Model.PutOutput>;
-    // (undocumented)
     schema: Model.ModelSchema;
-    // (undocumented)
+    static splitTableData(table: Table, data: Table.AttributeValuesMap): Model.TableData;
     table: Table;
-    // (undocumented)
     toModel(data: Table.AttributeValuesMap | undefined, context: Fields.ModelContext): Model.ModelOut | undefined;
-    // (undocumented)
     toTable(data: Model.ModelData, context: Fields.TableContext): Model.TableData;
-    // (undocumented)
-    toTableKey(key: Model.ModelCore, context: Fields.TableContext): Table.PrimaryKey.AttributeValuesMap;
-    // (undocumented)
     toTableUpdate(data: Model.ModelUpdate, context: Fields.TableContext): Model.TableUpdateData;
-    // (undocumented)
     update(data: Model.ModelUpdate, options?: Table.UpdateOptions): Promise<Model.UpdateOutput>;
-    // (undocumented)
     updateParams(item: Model.ModelUpdate, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
 }
 
 // @public
 export namespace Model {
+    export interface BaseOutput<ITEM, RESULT> {
+        item?: ITEM;
+        result: RESULT;
+    }
     export function createModel<KEY extends {
         [key: string]: any;
     }, MODEL extends KEY = KEY>(params: ModelParamsT<KEY, MODEL>): Model.ModelT<KEY, MODEL>;
-    // (undocumented)
-    export interface DeleteOutput<T = ModelOut> {
-        // (undocumented)
-        item?: T;
-        // (undocumented)
-        result: DocumentClient.DeleteItemOutput;
+    export interface DeleteOutput<T = ModelOut> extends BaseOutput<T, DocumentClient.DeleteItemOutput> {
     }
-    // (undocumented)
-    export interface GetOutput<T = ModelOut> {
-        // (undocumented)
-        item?: T;
-        // (undocumented)
-        result: DocumentClient.GetItemOutput;
+    export interface GetOutput<T = ModelOut> extends BaseOutput<T, DocumentClient.GetItemOutput> {
     }
-    // (undocumented)
     export interface ModelBase {
-        // (undocumented)
         name?: string;
-        // (undocumented)
-        onError?: (msg: string) => void;
-        // (undocumented)
         schema: Model.ModelSchema;
-        // (undocumented)
         table: Table;
     }
-    // (undocumented)
     export type ModelCore = {
         [key: string]: ModelType;
     };
-    // (undocumented)
     export type ModelCoreT<T> = {
         [P in keyof T]: Extract<T[P], ModelType>;
     };
-    // (undocumented)
     export type ModelData = {
         [key: string]: ModelType;
     };
-    // (undocumented)
     export type ModelOut = {
         [key: string]: ModelType;
     };
-    // (undocumented)
     export type ModelOutT<T> = {
         [P in keyof T]: Extract<T[P], ModelType>;
     };
-    // (undocumented)
     export interface ModelParams {
-        // (undocumented)
         name?: string;
-        // (undocumented)
-        schema: ModelSchema;
-        // (undocumented)
+        schema: Model.ModelSchema;
         table: Table;
     }
-    // (undocumented)
     export interface ModelParamsT<KEY, MODEL extends KEY = KEY> extends ModelParams {
-        // (undocumented)
         schema: ModelSchemaT<MODEL>;
     }
-    // (undocumented)
     export type ModelSchema = {
         [key: string]: Fields.Field;
     };
-    // (undocumented)
     export type ModelSchemaT<T extends {
         [key: string]: any;
     }> = {
         [P in keyof Required<T>]: Fields.Field;
     };
-    // (undocumented)
     export interface ModelT<KEY extends {
         [key: string]: any;
     }, MODEL extends KEY = KEY> extends Model {
-        // (undocumented)
         create(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
-        // (undocumented)
         delete(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): Promise<Model.DeleteOutput<MODEL>>;
-        // (undocumented)
         deleteParams(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
-        // (undocumented)
         get(key: Model.ModelCoreT<KEY>, options?: Table.GetOptions): Promise<Model.GetOutput<MODEL>>;
-        // (undocumented)
         getParams(key: Model.ModelCoreT<KEY>, options?: Table.GetOptions): DocumentClient.GetItemInput;
-        // (undocumented)
         put(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
-        // (undocumented)
         putParams(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): DocumentClient.PutItemInput;
-        // (undocumented)
         replace(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
-        // (undocumented)
         schema: Model.ModelSchemaT<MODEL>;
-        // (undocumented)
-        setSchema(schema: Model.ModelSchemaT<MODEL>): void;
-        // (undocumented)
         toModel(data: Table.AttributeValuesMap): Model.ModelOutT<MODEL>;
-        // (undocumented)
         toTable(data: Model.ModelCoreT<MODEL>): Model.TableData;
-        // (undocumented)
-        toTableKey(data: Model.ModelCoreT<KEY>): Table.PrimaryKey.AttributeValuesMap;
-        // (undocumented)
         toTableUpdate(data: Model.ModelUpdateT<MODEL>): Model.TableUpdateData;
-        // (undocumented)
         update(data: Model.ModelUpdateT<MODEL>, options?: Table.UpdateOptions): Promise<Model.UpdateOutput<MODEL>>;
-        // (undocumented)
         updateParams(data: Model.ModelUpdateT<MODEL>, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
     }
-    // (undocumented)
     export type ModelType = number | string | boolean | null | object;
-    // (undocumented)
     export type ModelUpdate = {
         [key: string]: ModelUpdateValue<ModelType>;
     };
-    // (undocumented)
     export type ModelUpdateT<T> = {
         [P in keyof Table.Optional<T>]: ModelUpdateValue<T[P]>;
     };
-    // (undocumented)
     export type ModelUpdateValue<T> = Extract<T, ModelType | Update.Resolver<Table.AttributeTypes>> | null;
-    // (undocumented)
-    export interface PutOutput<T = ModelOut> {
-        // (undocumented)
-        item?: T;
-        // (undocumented)
-        result: DocumentClient.PutItemOutput;
+    export interface PutOutput<T = ModelOut> extends BaseOutput<T, DocumentClient.PutItemOutput> {
     }
-    // (undocumented)
-    export type TableData = {
+    export interface TableData {
         data: Table.AttributeValuesMap;
-        key: Table.PrimaryKey.AttributeValuesMap;
         item?: Table.AttributeValuesMap;
-    };
-    // (undocumented)
-    export type TableUpdateData = {
-        data: Update.ResolverMap;
         key: Table.PrimaryKey.AttributeValuesMap;
+    }
+    export interface TableUpdateData {
+        data: Update.ResolverMap;
         item?: Update.ResolverMap;
-    };
-    // (undocumented)
-    export interface UpdateOutput<T = ModelOut> {
-        // (undocumented)
-        item?: T;
-        // (undocumented)
-        result: DocumentClient.UpdateItemOutput;
+        key: Table.PrimaryKey.AttributeValuesMap;
+    }
+    export interface UpdateOutput<T = ModelOut> extends BaseOutput<T, DocumentClient.UpdateItemOutput> {
     }
 }
 

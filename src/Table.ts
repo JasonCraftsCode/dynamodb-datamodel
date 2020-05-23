@@ -160,7 +160,7 @@ export class Index {
 }
 
 /**
- * Namespace for scoping Index based interfaces and types.
+ * Is also a namespace for scoping Index based interfaces and types.
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
@@ -420,7 +420,7 @@ export class Table {
 
   /**
    * Creates the params that can be used when calling [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}.
-   * @param key - Primary key of item to get.
+   * @param key - Primary key of the item to get.
    * @param options - Additional optional options to use for get.
    * @returns Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}.
    */
@@ -431,7 +431,7 @@ export class Table {
 
   /**
    * Creates the params that can be used when calling [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}.
-   * @param key - Primary key of item to delete.
+   * @param key - Primary key of the item to delete.
    * @param options - Additional optional options to use for delete.
    * @returns Input params for [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}.
    */
@@ -634,7 +634,7 @@ export class Table {
 }
 
 /**
- * Namespace for scoping Table based interfaces and types.
+ * Is also a namespace for scoping Table based interfaces and types.
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
@@ -785,7 +785,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Namespace for scoping PrimaryKey based interfaces and types.
+   * Is also a namespace for scoping PrimaryKey based interfaces and types.
    * @public
    * */
   // eslint-disable-next-line @typescript-eslint/no-namespace

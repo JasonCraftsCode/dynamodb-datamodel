@@ -66,7 +66,7 @@
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Collection of functions for constructing a Model schema with Field objects and the Field classes.
-						Namespace for scoping Condition based interfaces and types.</p>
+						Is also a namespace for scoping Condition based interfaces and types.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
@@ -221,9 +221,14 @@ expect(params).toEqual({
 					<div class="tsd-signature tsd-kind-icon">Attributes<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L299">Fields.ts:299</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L305">Fields.ts:305</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines the set of table attributes that are used by a field.</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -239,7 +244,7 @@ expect(params).toEqual({
 					<div class="tsd-signature tsd-kind-icon">Composite<wbr>Slot<wbr>Map&lt;T, V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1110">Fields.ts:1110</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L1164">Fields.ts:1164</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -288,7 +293,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldbinary.html" class="tsd-signature-type">FieldBinary</a></h4>
-							<p>New field object.</p>
+							<p>New FieldBinary object.</p>
 						</li>
 					</ul>
 				</section>
@@ -320,7 +325,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldbinaryset.html" class="tsd-signature-type">FieldBinarySet</a></h4>
-							<p>New field object.</p>
+							<p>New FieldBinarySet object.</p>
 						</li>
 					</ul>
 				</section>
@@ -352,7 +357,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldboolean.html" class="tsd-signature-type">FieldBoolean</a></h4>
-							<p>New field object.</p>
+							<p>New FieldBoolean object.</p>
 						</li>
 					</ul>
 				</section>
@@ -366,7 +371,7 @@ expect(params).toEqual({
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L171">Fields.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L172">Fields.ts:172</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -437,7 +442,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcomposite.html" class="tsd-signature-type">FieldComposite</a></h4>
-							<p>New composite object.</p>
+							<p>New composite object with array field slots.</p>
 						</li>
 					</ul>
 				</section>
@@ -451,7 +456,7 @@ expect(params).toEqual({
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L187">Fields.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L188">Fields.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -551,7 +556,7 @@ expect(params).toEqual({
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L213">Fields.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L214">Fields.ts:214</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -569,7 +574,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcreateddate.html" class="tsd-signature-type">FieldCreatedDate</a></h4>
-							<p>New field object.</p>
+							<p>New FieldCreatedDate object.</p>
 						</li>
 					</ul>
 				</section>
@@ -601,7 +606,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fielddate.html" class="tsd-signature-type">FieldDate</a></h4>
-							<p>New field object.</p>
+							<p>New FieldDate object.</p>
 						</li>
 					</ul>
 				</section>
@@ -615,7 +620,7 @@ expect(params).toEqual({
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L138">Fields.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L139">Fields.ts:139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -624,6 +629,7 @@ expect(params).toEqual({
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldhidden.html" class="tsd-signature-type">FieldHidden</a></h4>
+							<p>New FieldHidden object.</p>
 						</li>
 					</ul>
 				</section>
@@ -655,7 +661,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldlist.html" class="tsd-signature-type">FieldList</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>New field object.</p>
+							<p>New FieldList object.</p>
 						</li>
 					</ul>
 				</section>
@@ -687,7 +693,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmap.html" class="tsd-signature-type">FieldMap</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>New field object.</p>
+							<p>New FieldMap object.</p>
 						</li>
 					</ul>
 				</section>
@@ -728,7 +734,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodel.html" class="tsd-signature-type">FieldModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>New field object.</p>
+							<p>New FieldModel<V> object.</p>
 						</li>
 					</ul>
 				</section>
@@ -769,7 +775,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodellist.html" class="tsd-signature-type">FieldModelList</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>New field object.</p>
+							<p>New FieldModelList<V> object.</p>
 						</li>
 					</ul>
 				</section>
@@ -810,7 +816,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodelmap.html" class="tsd-signature-type">FieldModelMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>New field object.</p>
+							<p>New FieldModelMap<V> object.</p>
 						</li>
 					</ul>
 				</section>
@@ -842,7 +848,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldnumber.html" class="tsd-signature-type">FieldNumber</a></h4>
-							<p>New field object.</p>
+							<p>New FieldNumber object.</p>
 						</li>
 					</ul>
 				</section>
@@ -874,7 +880,7 @@ expect(params).toEqual({
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldnumberset.html" class="tsd-signature-type">FieldNumberSet</a></h4>
-							<p>New field object.</p>
+							<p>New FieldNumberSet object.</p>
 						</li>
 					</ul>
 				</section>
@@ -888,10 +894,14 @@ expect(params).toEqual({
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L231">Fields.ts:231</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L233">Fields.ts:233</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a field that will be incremented with each update.  It also supports preventing an update if
+									the table attribute doesn&#39;t match the model property.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -917,7 +927,7 @@ expect(params).toEqual({
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L156">Fields.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L157">Fields.ts:157</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -965,7 +975,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldsplit.html" class="tsd-signature-type">FieldSplit</a></h4>
-							<p>New field object.</p>
+							<p>New FieldSplit object.</p>
 						</li>
 					</ul>
 				</section>
@@ -997,7 +1007,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldstring.html" class="tsd-signature-type">FieldString</a></h4>
-							<p>New field object.</p>
+							<p>New FieldString object.</p>
 						</li>
 					</ul>
 				</section>
@@ -1029,7 +1039,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldstringset.html" class="tsd-signature-type">FieldStringSet</a></h4>
-							<p>New field object.</p>
+							<p>New FieldStringSet object.</p>
 						</li>
 					</ul>
 				</section>
@@ -1043,7 +1053,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L204">Fields.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L205">Fields.ts:205</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1093,7 +1103,7 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldtype.html" class="tsd-signature-type">FieldType</a></h4>
-							<p>New field object.</p>
+							<p>New FieldType object.</p>
 						</li>
 					</ul>
 				</section>
@@ -1107,7 +1117,7 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L222">Fields.ts:222</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/Fields.ts#L223">Fields.ts:223</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1125,7 +1135,7 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="fields.fieldupdateddate.html" class="tsd-signature-type">FieldUpdatedDate</a></h4>
-							<p>New field object.</p>
+							<p>New FieldUpdatedDate object.</p>
 						</li>
 					</ul>
 				</section>

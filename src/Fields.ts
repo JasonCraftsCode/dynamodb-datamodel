@@ -15,7 +15,7 @@ export class Fields {
   /**
    * Creates a string field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldString object.
    */
   static string(options?: Fields.BaseOptions<string>): Fields.FieldString {
     return new Fields.FieldString(options);
@@ -24,7 +24,7 @@ export class Fields {
   /**
    * Creates a number field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldNumber object.
    */
   static number(options?: Fields.BaseOptions<number>): Fields.FieldNumber {
     return new Fields.FieldNumber(options);
@@ -33,7 +33,7 @@ export class Fields {
   /**
    * Creates a binary field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldBinary object.
    */
   static binary(options?: Fields.BaseOptions<Table.BinaryValue>): Fields.FieldBinary {
     return new Fields.FieldBinary(options);
@@ -42,7 +42,7 @@ export class Fields {
   /**
    * Creates a boolean field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldBoolean object.
    */
   static boolean(options?: Fields.BaseOptions<boolean>): Fields.FieldBoolean {
     return new Fields.FieldBoolean(options);
@@ -51,7 +51,7 @@ export class Fields {
   /**
    * Creates a string set field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldStringSet object.
    */
   static stringSet(options?: Fields.BaseOptions<Table.StringSetValue>): Fields.FieldStringSet {
     return new Fields.FieldStringSet(options);
@@ -60,7 +60,7 @@ export class Fields {
   /**
    * Creates a number set field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldNumberSet object.
    */
   static numberSet(options?: Fields.BaseOptions<Table.NumberSetValue>): Fields.FieldNumberSet {
     return new Fields.FieldNumberSet(options);
@@ -69,7 +69,7 @@ export class Fields {
   /**
    * Creates a binary set field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldBinarySet object.
    */
   static binarySet(options?: Fields.BaseOptions<Table.BinarySetValue>): Fields.FieldBinarySet {
     return new Fields.FieldBinarySet(options);
@@ -78,7 +78,7 @@ export class Fields {
   /**
    * Creates a list field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldList object.
    */
   static list(options?: Fields.BaseOptions<Table.ListValue>): Fields.FieldList<Table.AttributeValues> {
     return new Fields.FieldList(options);
@@ -88,7 +88,7 @@ export class Fields {
    * Creates a schema based list field object to use in a {@link Model.schema}.
    * @param V - Interface of model to use for schema.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldModelList<V> object.
    */
   static modelList<V>(options: Fields.ModelListOptions<V>): Fields.FieldModelList<V> {
     return new Fields.FieldModelList<V>(options);
@@ -97,7 +97,7 @@ export class Fields {
   /**
    * Creates a map field object to use in a {@link Model.schema}.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldMap object.
    */
   static map(options?: Fields.BaseOptions<Table.MapValue>): Fields.FieldMap<Table.AttributeValues> {
     return new Fields.FieldMap(options);
@@ -107,7 +107,7 @@ export class Fields {
    * Creates a schema based map field object to use in a {@link Model.schema}.
    * @param V - Interface of model to use for schema.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldModelMap<V> object.
    */
   static modelMap<V>(options: Fields.ModelMapOptions<V>): Fields.FieldModelMap<V> {
     return new Fields.FieldModelMap<V>(options);
@@ -117,7 +117,7 @@ export class Fields {
    * Creates a schema based map field object to use in a {@link Model.schema}.
    * @param V - Interface of model to use for schema.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldModel<V> object.
    */
   static model<V>(options: Fields.ModelOptions<V>): Fields.FieldModel<V> {
     return new Fields.FieldModel<V>(options);
@@ -126,7 +126,7 @@ export class Fields {
   /**
    * Creates a date field object to use in a {@link Model.schema}, stored as a number in the table.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldDate object.
    */
   static date(options?: Fields.BaseOptions<Date>): Fields.FieldDate {
     return new Fields.FieldDate(options);
@@ -134,6 +134,7 @@ export class Fields {
 
   /**
    * Creates a hidden field object to use in a {@link Model.schema}, which doesn't get set in the table.
+   * @returns New FieldHidden object.
    */
   static hidden(): Fields.FieldHidden {
     return new Fields.FieldHidden();
@@ -151,7 +152,7 @@ export class Fields {
    * ```
    *
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldSplit object.
    */
   static split(options: Fields.SplitOptions): Fields.FieldSplit {
     return new Fields.FieldSplit(options);
@@ -166,7 +167,7 @@ export class Fields {
    * ```
    *
    * @param options - Options to initialize field with.
-   * @returns New composite object.
+   * @returns New composite object with array field slots.
    */
   static composite(options: Fields.CompositeOptions): Fields.FieldComposite {
     return new Fields.FieldComposite(options);
@@ -199,7 +200,7 @@ export class Fields {
    * ```
    *
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldType object.
    */
   static type(options?: Fields.TypeOptions): Fields.FieldType {
     return new Fields.FieldType(options);
@@ -208,7 +209,7 @@ export class Fields {
   /**
    * Creates a field that add a created date to a table attribute.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldCreatedDate object.
    */
   static createdDate(options?: Fields.CreatedDateOptions): Fields.FieldCreatedDate {
     return new Fields.FieldCreatedDate(options);
@@ -217,14 +218,15 @@ export class Fields {
   /**
    * Creates a field that adds an updated date to a table attribute.
    * @param options - Options to initialize field with.
-   * @returns New field object.
+   * @returns New FieldUpdatedDate object.
    */
   static updatedDate(options?: Fields.UpdateDateOptions): Fields.FieldUpdatedDate {
     return new Fields.FieldUpdatedDate(options);
   }
 
   /**
-   *
+   * Creates a field that will be incremented with each update.  It also supports preventing an update if
+   * the table attribute doesn't match the model property.
    * @param options - Options to initialize field with.
    * @returns New FieldRevision object.
    */
@@ -234,7 +236,7 @@ export class Fields {
 }
 
 /**
- * Namespace for scoping Condition based interfaces and types.
+ * Is also a namespace for scoping Condition based interfaces and types.
  * @public
  * */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
@@ -250,7 +252,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     action: Table.ItemActions;
 
     /**
-     * Array of conditions to resolve and joined with AND conditions, then set as the ConditionExpression param before calling DynamoDB method
+     * Array of conditions to resolve and joined with AND conditions, then set as the ConditionExpression
+     * param before calling DynamoDB method.
      */
     conditions: Condition.Resolver[];
 
@@ -266,8 +269,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Context object passed to {@link Field.toModel} to allow the fields to know
-   * about the broader context and provide more complex behavior.
+   * Context object passed to {@link Field.toModel} to allow the fields to know about the broader context
+   * and provide more complex behavior.
    */
   export interface ModelContext {
     /**
@@ -287,20 +290,23 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   *
+   * Defines the table attributes used by a field.
    */
   export interface AttributeDefinition {
+    /**
+     * The type of the table attribute the field writes.
+     */
     type: Table.AttributeTypes;
   }
 
   /**
-   *
+   * Defines the set of table attributes that are used by a field.
    */
   export type AttributesSchema = { [key: string]: AttributeDefinition };
 
   /**
-   * The core interface all Fields implement and is used by {@link Model} to basically map model data to and from the
-   * table data.
+   * The core interface all Fields implement and is used by {@link Model} to basically map model data
+   * to and from the table data.
    * @example Custom Field
    * ```typescript
    * class CustomField extends Field {
@@ -318,7 +324,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Method called **after** calling into the table object to read and write to the table.  This method will convert the
      * table data into model data.
-     * @param name - Name of the model attribute this field is associated with (generally same as {@link init} name argument)
+     * @param name - Name of the model attribute this field is associated with (generally same as {@link init} name argument).
      * @param tableData - Data from the table that needs to be mapped to the model data.
      * @param modelData - Data object for the model that this method will append to.
      * @param context - Current context this method is being called in.
@@ -328,7 +334,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Method called **before** calling into the table object to read and write to the table.  This method will convert the model data
      * into table data and append read or write conditions.
-     * @param name - Name of the model attribute this field is associated with (generally same as {@link init} name argument)
+     * @param name - Name of the model attribute this field is associated with (generally same as {@link init} name argument).
      * @param modelData - Data from the model that needs to be mapped to the table data.
      * @param tableData - Data object for the table that this method will append to.
      * @param context - Current context this method is being called in.
@@ -355,11 +361,15 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Returns the table attributes and types that the field will read and write to.
-     * Used for validation and creation of access patterns
+     * Used for validation and creation of access patterns.
+     * @returns The set of table attributes that this field will read from and write to.
      */
     getAttributesSchema?(): AttributesSchema;
   }
 
+  /**
+   * Options used for creating {@link FieldBase}
+   */
   export interface BaseOptions<V> {
     /**
      * Table attribute to map this Model property to.
@@ -470,7 +480,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Namespace for scoping FieldBase based interfaces and types.
+   * Is also a namespace for scoping FieldBase based interfaces and types.
    * @public
    */
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -590,7 +600,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * String property field
+   * See {@link Fields.string} for details.
    */
   export class FieldString extends FieldExpression<string, 'S'> {
     /**
@@ -619,12 +629,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Number property field.
+   * See {@link Fields.number} for details.
    */
   export class FieldNumber extends FieldExpression<number, 'N'> {}
 
   /**
-   * Binary property field.
+   * See {@link Fields.binary} for details.
    */
   export class FieldBinary extends FieldExpression<Table.BinaryValue, 'B'> {
     /**
@@ -637,12 +647,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Boolean property field.
+   * See {@link Fields.boolean} for details.
    */
   export class FieldBoolean extends FieldExpression<boolean, 'BOOL'> {}
 
   /**
-   * Null property field.
+   * See {@link Fields.null} for details.
    */
   export class FieldNull extends FieldExpression<null, 'NULL'> {}
 
@@ -668,22 +678,22 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * String set property field.
+   * See {@link Fields.stringSet} for details.
    */
   export class FieldStringSet extends FieldSet<Table.StringSetValue, 'SS'> {}
 
   /**
-   * Number set property field.
+   * See {@link Fields.numberSet} for details.
    */
   export class FieldNumberSet extends FieldSet<Table.NumberSetValue, 'NS'> {}
 
   /**
-   * Binary set property field.
+   * See {@link Fields.binarySet} for details.
    */
   export class FieldBinarySet extends FieldSet<Table.BinarySetValue, 'BS'> {}
 
   /**
-   * List property field.
+   * See {@link Fields.list} for details.
    */
   export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[], 'L'> {
     /**
@@ -706,7 +716,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Model list property field.
+   * See {@link Fields.modelList} for details.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export class FieldModelList<V extends { [key: string]: any }> extends FieldList<V> {
@@ -715,13 +725,17 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     schema: Model.ModelSchemaT<V>;
 
+    /**
+     * Initializes FieldModelList with the options.
+     * @param options - Options to initialize FieldModelList with.
+     */
     constructor(options: ModelListOptions<V>) {
       super(options) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = options.schema;
     }
 
     /**
-     * Initializes the schema property
+     * Initializes the schema property.
      * See {@link Field.init} for more information.
      */
     init(name: string, model: Model): void {
@@ -731,8 +745,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Map property field.
-   * @param V - Type for map values.
+   * See {@link Fields.map} for details.
    */
   export class FieldMap<V extends Table.AttributeValues> extends FieldExpression<{ [key: string]: V }, 'M'> {
     /**
@@ -771,15 +784,20 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * @param V - Type of the map value.
    */
   export interface ModelMapOptions<V> extends BaseOptions<{ [key: string]: V }> {
+    /**
+     * Model schema to use as the value for the Map
+     */
     schema: Model.ModelSchemaT<V>;
   }
 
   /**
-   * Map of model property field.
-   * @param V - Type of the map value.
+   * See {@link Fields.modelMap} for details.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export class FieldModelMap<V extends { [key: string]: any }> extends FieldMap<V> {
+    /**
+     * Model schema to use as the value for the Map
+     */
     schema: Model.ModelSchemaT<V>;
 
     /**
@@ -792,6 +810,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
+     * Initializes the schema property.
      * See {@link Field.init} for more information.
      */
     init(name: string, model: Model): void {
@@ -827,23 +846,33 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * FieldModel constructor options.
    */
   export interface ModelOptions<V> extends BaseOptions<V> {
+    /**
+     * Model schema to use for the FieldModel
+     */
     schema: Model.ModelSchemaT<V>;
   }
 
   /**
-   * Model property field.
-   * @param V - Type of the map value.
+   * See {@link Fields.model} for details.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export class FieldModel<V extends { [key: string]: any }> extends FieldExpression<V, 'M'> {
+    /**
+     * Model schema to use for writing to this field
+     */
     schema: Model.ModelSchemaT<V>;
 
+    /**
+     * Initialize the class with options.
+     * @param options - Options to initialize the class with.
+     */
     constructor(options: ModelOptions<V>) {
       super(options) /* istanbul ignore next: needed for ts with es5 */;
       this.schema = options.schema;
     }
 
     /**
+     * Initializes the schema property.
      * See {@link Field.init} for more information.
      */
     init(name: string, model: Model): void {
@@ -861,7 +890,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Date property field.
+   * See {@link Fields.date} for details.
    */
   export class FieldDate extends FieldBase<Date> {
     // eslint-disable-next-line tsdoc/syntax
@@ -903,6 +932,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
+   * See {@link Fields.hidden} for details.
    * Hidden property field.  Used to avoid writing a property to the DynamoDb table.
    */
   export class FieldHidden implements Fields.Field {
@@ -944,10 +974,29 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * Composite slot property field, comes from the call to createSlots on FieldCompositeSlot.
    */
   export class FieldCompositeSlot implements Field {
+    /**
+     * Model name of the field, set by init function in Model or Field constructor.
+     */
     name?: string;
+    /**
+     * Composite object used to determine some functionality like delimiter.
+     */
     composite: FieldComposite;
+    /**
+     * Index number of this slot in the slots array.
+     */
     slot: number;
+    /**
+     * All of the slots for the composite field of a model.
+     */
     slots: FieldCompositeSlot[];
+
+    /**
+     * Initializes this class the required parameters.
+     * @param composite - Composite object used to determine some functionality like delimiter.
+     * @param slot - Index number of this slot in the slots array.
+     * @param slots - All of the slots for the composite field of a model.
+     */
     constructor(composite: FieldComposite, slot: number, slots: FieldCompositeSlot[]) {
       this.composite = composite;
       this.slot = slot;
@@ -1049,7 +1098,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   *
+   * See {@link Fields.composite} for details.
    */
   export class FieldComposite {
     /**
@@ -1073,6 +1122,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     //slots: CreateCompositeSlot[];
     //toLower = false;
 
+    /**
+     * Initializes the class with options.
+     * @param options - Options to initialize this class with.
+     */
     constructor(options: CompositeOptions) {
       this.alias = options.alias;
       if (options.count) this.count = options.count; // || options.slots!.length;
@@ -1095,6 +1148,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Create the field slots to use when defining the schema for a model.
      * Note: Need to create a new set of field slots for each model that uses this composite definition.
+     * @returns An array of composite slots used for a Model schema.
      */
     createSlots(): FieldCompositeSlot[] {
       const slots = new Array<FieldCompositeSlot>(this.count);
@@ -1123,7 +1177,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Composite
+   * See {@link Fields.compositeNamed} for details.
    */
   export class FieldCompositeNamed<T extends { [index: string]: number }> extends FieldComposite {
     /**
@@ -1131,6 +1185,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     map: T;
 
+    /**
+     * Initializes this class with options.
+     * @param options - Options to initialize class with.
+     */
     constructor(options: CompositeNamedOptions<T>) {
       options.count = Object.keys(options.map).length;
       super(options);
@@ -1140,6 +1198,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Create the named field slots to use when defining the schema for a model.
      * Note: Need to create a new set of field slots for each model that uses this composite definition.
+     * @returns A map of composite slot fields used in the definition of a Model schema.
      */
     createNamedSlots(): CompositeSlotMap<T> {
       const slots = super.createSlots();
@@ -1165,9 +1224,13 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Currently only supports string table attributes.
+   * See {@link Fields.split} for details.
+   * Note: Currently only supports string table attributes.
    */
   export class FieldSplit implements Field {
+    /**
+     * Model name of the field, set by init function in Model or Field constructor.
+     */
     name?: string;
 
     /**
@@ -1180,6 +1243,10 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     delimiter = '.';
 
+    /**
+     * Initialize this class with options.
+     * @param options - Options to initialize this class with.
+     */
     constructor(options: SplitOptions) {
       this.aliases = options.aliases;
       if (options.delimiter) this.delimiter = options.delimiter;
@@ -1252,7 +1319,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Type
+   * See {@link Fields."type"} for details.
    */
   export class FieldType implements Field {
     /**
@@ -1306,6 +1373,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Options for CreateDate class constructor.
+   */
   export interface CreatedDateOptions {
     /**
      * Table attribute to map this Model property to.
@@ -1318,6 +1388,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     now?: () => Date;
   }
 
+  /**
+   * See {@link Fields.createDate} for details.
+   */
   export class FieldCreatedDate implements Fields.Field {
     /**
      * Model name of the field, set by init function in Model or Field constructor.
@@ -1335,9 +1408,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     now: () => Date = (): Date => new Date();
 
     /**
-     * Initialize the Field.
-     * @param type - Name of type.
-     * @param alias - Table attribute name to map this model property to.
+     * Initialize this class with options.
+     * @param options - Options to initialize this class with.
      */
     constructor(options: CreatedDateOptions = {}) {
       this.alias = options.alias;
@@ -1376,6 +1448,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Options used when creating {@link FieldUpdatedDate}
+   */
   export interface UpdateDateOptions {
     /**
      * Table attribute to map this Model property to.
@@ -1388,6 +1463,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     now?: () => Date;
   }
 
+  /**
+   * See {@link Fields.updateDate} for more details.
+   */
   export class FieldUpdatedDate implements Fields.Field {
     /**
      * Model name of the field, set by init function in Model or Field constructor.
@@ -1405,9 +1483,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     now: () => Date = (): Date => new Date();
 
     /**
-     * Initialize the Field.
-     * @param type - Name of type.
-     * @param alias - Table attribute name to map this model property to.
+     * Initialize this class with options.
+     * @param options - Options to initialize this class with.
      */
     constructor(options: UpdateDateOptions = {}) {
       this.alias = options.alias;
@@ -1458,6 +1535,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Options used when creating {@link FieldRevision}
+   */
   export interface RevisionOptions {
     /**
      * Table attribute to map this Model property to.
@@ -1475,6 +1555,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     matchOnWrite?: boolean;
   }
 
+  /**
+   * See {@link Fields.revision} for more details.
+   */
   export class FieldRevision implements Fields.Field {
     /**
      * Model name of the field, set by init function in Model or Field constructor.
@@ -1497,9 +1580,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     matchOnWrite?: boolean;
 
     /**
-     * Initialize the Field.
-     * @param type - Name of type.
-     * @param alias - Table attribute name to map this model property to.
+     * Initialize this class with options.
+     * @param options - Options to initialize this class with.
      */
     constructor(options: RevisionOptions = {}) {
       this.alias = options.alias;

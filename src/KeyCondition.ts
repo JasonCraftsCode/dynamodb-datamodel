@@ -204,7 +204,7 @@ export class KeyCondition {
 }
 
 /**
- * Namespace for scoping KeyCondition based interfaces and types.
+ * Is also a namespace for scoping KeyCondition based interfaces and types.
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare

@@ -340,7 +340,7 @@ export class Condition {
 }
 
 /**
- * Namespace for scoping Condition based interfaces and types.
+ * Is also a namespace for scoping Condition based interfaces and types.
  * @public
  * */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare

@@ -584,7 +584,7 @@ export class Update {
 }
 
 /**
- * Namespace for scoping Update based interfaces and types.
+ * Is also a namespace for scoping Update based interfaces and types.
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
