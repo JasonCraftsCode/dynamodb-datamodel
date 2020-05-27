@@ -191,7 +191,6 @@ describe('Validate Model with Table and Indexes', () => {
 
   describe('model params', () => {
     it('Model.getParams with single id', () => {
-      // TODO: should probably throw in SplitField
       const params = userModel.getParams({ id: 'id1' });
       expect(params).toEqual({
         Key: {
@@ -202,7 +201,6 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.getParams with multiple id', () => {
-      // TODO: should probably throw in SplitField
       const params = userModel.getParams({ id: 'id1.id2.id3.id4' });
       expect(params).toEqual({
         Key: {
@@ -434,7 +432,6 @@ describe('Validate Model with Table and Indexes', () => {
 
     it('Model.get with single id', async () => {
       client.get = jest.fn(() => request({ Item: { P: 'id1' } }));
-      // TODO: should probably throw in SplitField
       const results = await userModel.get({ id: 'id1' });
       expect(results.item).toEqual({ id: 'id1' });
       expect(client.get).toBeCalledWith({

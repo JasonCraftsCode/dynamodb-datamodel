@@ -6,7 +6,6 @@ import { Table } from '../src/Table';
 // Note: Using classes to scope static methods, allow use of reserved words (like 'in') as methods and
 // let TypeDoc produce more consistent documentation (thought it does mean that Condition which acts
 // more as a namespace or module has all static methods).
-// TODO: would be nice if size returned an object that had eq, ne, lt, le, gt and ge.
 
 function buildParams(
   conditions: Condition.Resolver[] | undefined,

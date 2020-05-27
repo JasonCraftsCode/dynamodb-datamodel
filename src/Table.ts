@@ -835,7 +835,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      */
     export type SortBinary = Table.BinaryValue | { type: 'B' } | { keyType: 'RANGE' } | KeyCondition.BinaryResolver;
 
-    // *Map used as key based params in Table
     /**
      * Definition for the {@link Table.keyAttributes}
      */
@@ -858,7 +857,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      */
     export type AttributeValuesMap = { [key: string]: AttributeValues };
 
-    // *MapT used as key based params in TableT
     /**
      * Typed based version of {@link Table.PrimaryKey.AttributeTypesMap} used in {@link Table.TableT}
      */
@@ -1020,7 +1018,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      */
     params?: Optional<T>;
 
-    // TODO: Consider passing BaseOptions or something similar to Condition, KeyCondition and Update
     /**
      * User defined context that gets passed through to all Fields.
      */

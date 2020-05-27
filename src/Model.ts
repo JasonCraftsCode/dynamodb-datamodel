@@ -330,9 +330,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
    * Model property value used for item updates.
    */
   export type ModelUpdateValue<T> = Extract<T, ModelType | Update.Resolver<Table.AttributeTypes>> | null;
-  //| Update.Resolver<Table.AttributeTypes>;
 
-  // *Map used as model data based params in Model
   /**
    * Type for the Model schema which contains a Field for each Model property.
    */

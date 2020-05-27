@@ -3,6 +3,8 @@ import { Model } from './Model';
 import { Table } from './Table';
 import { Update } from './Update';
 
+// TODO: Consider supporting throwing when invalid type.
+
 /**
  * Collection of functions for constructing a Model schema with Field objects and the Field classes.
  * @example [examples/Fields.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
@@ -359,6 +361,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       context: TableContext,
     ): void;
 
+    // TODO: Implement getTableSchema for Fields, add to validateModel to avoid overwrites
+    // Though need to determine a good production value for this.
     /**
      * Returns the table attributes and types that the field will read and write to.
      * Used for validation and creation of access patterns.
@@ -398,6 +402,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     alias?: string;
 
+    // TODO: Add support for different default actions, like if not present in table
+    // use default in model, delete attribute if set to default, and set default in update.
     /**
      * Value or function to get value from to use when the Model property is empty.
      */
@@ -1019,7 +1025,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: ModelContext,
     ): void {
-      //if (this.composite.writeOnly) return;
       const value = tableData[this.composite.alias];
       if (typeof value !== 'string') return;
       const parts = value.split(this.composite.delimiter);
@@ -1092,9 +1097,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     delimiter?: string;
 
+    // TODO: Add support to converting value to lower case (or run a simple convert function).
+    // TODO: Add support for slots to also write the value to the field name, slot name or alias.
+    // TODO: Add support for custom slot fields.
+    // TODO: Add support for default slot values.
     //toLower?: boolean;
     //slots?: CreateCompositeSlot[];
-    //writeOnly?: boolean;
   }
 
   /**
@@ -1118,7 +1126,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      */
     delimiter = ';';
 
-    //writeOnly = false;
     //slots: CreateCompositeSlot[];
     //toLower = false;
 
@@ -1131,7 +1138,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (options.count) this.count = options.count; // || options.slots!.length;
       if (options.delimiter) this.delimiter = options.delimiter;
 
-      //if (options.writeOnly) this.writeOnly = options.writeOnly;
       //if (options.toLower) this.toLower = options.toLower;
       //if (options.slots) this.slots = options.slots;
       //else {
@@ -1630,7 +1636,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.ResolverMap,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: Fields.TableContext,
     ): void {
       if (this.matchOnWrite) context.conditions.push(Condition.eq(name, modelData[name]));

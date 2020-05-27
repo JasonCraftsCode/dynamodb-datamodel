@@ -455,6 +455,7 @@ export class Update {
     return (name: string, exp: Update.Expression): void =>
       Object.keys(values).forEach((key) => {
         const value = values[Number(key)];
+        // TODO: Add support for undefined and null.
         // if (value === undefined) return;
         // if (value === null) exp.addRemove(`${name}[${key}]`);
         //else
