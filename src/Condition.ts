@@ -87,6 +87,7 @@ export class Condition {
    * @returns Resolver to use when generate condition expression.
    */
   static compare(left: Condition.Path, op: Condition.CompareOperators, right: Condition.Value): Condition.Resolver {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     return (exp: Condition.Expression): string => `${exp.resolvePath(left)} ${op} ${exp.resolveValues([right])}`;
   }
 

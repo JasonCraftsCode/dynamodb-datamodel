@@ -853,7 +853,7 @@ export namespace Update {
     export type Resolver<T> = (name: string, exp: Update.Expression, type?: T) => void;
     export type ResolverMap = ResolverMapT<Table.AttributeValues>;
     export type ResolverMapT<T> = {
-        [key: string]: T | Resolver<Table.AttributeTypes> | undefined;
+        [key: string]: T | Resolver<Table.AttributeTypes> | OperandFunction | undefined;
     };
     export type ResolverModel<T> = {
         [P in keyof Table.Optional<T>]: ResolverModelValue<T[P]>;

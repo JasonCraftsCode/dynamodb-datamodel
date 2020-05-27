@@ -275,6 +275,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Types supported by the Model.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   export type ModelType = number | string | boolean | null | object;
 
   /**

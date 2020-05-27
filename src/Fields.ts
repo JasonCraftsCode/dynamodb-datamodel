@@ -1167,6 +1167,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Defines the map for the named slots for a composite named field.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   export type CompositeSlotMap<T extends { [index: string]: number }, V extends { [index: string]: Field } = {}> = V &
     {
       [P in keyof T]: FieldCompositeSlot;

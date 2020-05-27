@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Table, Index } from './Table';
 
 /**
@@ -30,9 +31,9 @@ export function validateKeyAttributes<ATTRIBUTES extends { [index: string]: any 
   onError: (msg: string) => void,
 ): void {
   Object.keys(keyAttributes).forEach((key) => {
-    const attr = keyAttributes[key];
+    const attr = keyAttributes[key] as { type: Table.PrimaryKey.AttributeTypes };
     if (attr.type !== 'S' && attr.type !== 'N' && attr.type !== 'B') {
-      onError(`Primary key '${key}' has an invalid type of '${attr.type}' in table '${name}'`);
+      onError(`Primary key '${key}' has an invalid type of '${attr.type as string}' in table '${name}'`);
     }
   });
 }
@@ -60,8 +61,8 @@ export function validateKeySchema<
 ): KeyName {
   let { pk, sk }: KeyName = {};
   Object.keys(keySchema).forEach((key) => {
-    const schema = keySchema[key];
-    const attr = keyAttributes[key];
+    const schema = keySchema[key] as { keyType: Table.PrimaryKey.KeyTypes };
+    const attr = keyAttributes[key] as { type: Table.PrimaryKey.AttributeTypes };
     if (attr === undefined) {
       onError(`Key '${key}' not in table's keyAttributes`);
     }
@@ -72,7 +73,7 @@ export function validateKeySchema<
       if (sk !== undefined) onError(`Key '${key}' invalid, ${name} already has sort key '${sk}'`);
       sk = key;
     } else {
-      onError(`Key '${key}' has an invalid key type of '${schema.keyType}'`);
+      onError(`Key '${key}' has an invalid key type of '${schema.keyType as string}'`);
     }
   });
   if (pk === undefined) onError(`${name} needs partition key`);
@@ -95,7 +96,7 @@ export function validateIndexes(index: Index, names: Set<string>, onError: (msg:
       onError(`'${index.name}' projection type '${type}' must have attributes`);
     }
   } else if (type !== 'ALL' && type !== 'KEYS_ONLY') {
-    onError(`'${index.name}' projection type is invalidate '${type}'`);
+    onError(`'${index.name}' projection type is invalidate '${type as string}'`);
   } else {
     if (index.projection.attributes) onError(`${index.name}' projection type '${type}' does not support attributes`);
   }

@@ -46,11 +46,13 @@ const model = Model.createModel<ModelKey, ModelItem>({
 // Additional models can also be defined
 
 // 7. Use the model to read and write data
-// Write item
-model.put({ id: 'P-GUID.S-0', name: 'user name' });
-// Update item
-model.update({ id: 'P-GUID.S-0', name: 'new user name' });
-// Get item
-model.get({ id: 'P-GUID.S-0' });
-// Delete item
-model.delete({ id: 'P-GUID.S-0' });
+export async function main(): Promise<void> {
+  // Write item
+  await model.put({ id: 'P-GUID.S-0', name: 'user name' });
+  // Update item
+  await model.update({ id: 'P-GUID.S-0', name: 'new user name' });
+  // Get item
+  await model.get({ id: 'P-GUID.S-0' });
+  // Delete item
+  await model.delete({ id: 'P-GUID.S-0' });
+}

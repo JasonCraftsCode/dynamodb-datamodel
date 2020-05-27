@@ -3,7 +3,7 @@ import { Table } from '../src/Table';
 import { Update, UpdateExpression } from '../src/Update';
 
 // t = milliseconds
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export function delay(tms: number, v: any): Promise<unknown> {
   return new Promise((resolve) => {
     setTimeout(resolve.bind(null, v), tms);

@@ -999,6 +999,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Base options for all table operations like get, put, delete, update and others.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   export interface BaseOptions<T = {}> {
     /**
      * Expression attributes to use for resolving conditions and updates.  Will be used to generate the

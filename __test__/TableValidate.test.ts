@@ -152,6 +152,7 @@ describe('When table', () => {
   });
 
   it('partition key is not in table.keyAttributes expect throw', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     const table = Table.createTable<{ P: Table.PrimaryKey.PartitionString }, {}>({
       name: 'TestTable',
       keyAttributes: {},

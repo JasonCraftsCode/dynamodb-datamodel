@@ -6,7 +6,13 @@
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.options": {},
-  "cSpell.words": ["Birdland", "tsdoc", "unscoped"],
+  "cSpell.words": [
+    "Birdland",
+    "keyof",
+    "prepend",
+    "tsdoc",
+    "unscoped"
+  ],
   "files.associations": {
     "api-extractor.json": "jsonc"
   }

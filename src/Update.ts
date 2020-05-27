@@ -678,7 +678,7 @@ export namespace Update {
    * @param T - The model interface.
    */
   export type ResolverMapT<T> = {
-    [key: string]: T | Resolver<Table.AttributeTypes> | undefined;
+    [key: string]: T | Resolver<Table.AttributeTypes> | OperandFunction | undefined;
   };
 
   /**
@@ -863,7 +863,7 @@ export class UpdateExpression implements Update.Expression {
   // eslint-disable-next-line tsdoc/syntax
   /** @inheritDoc {@inheritDoc (Update:namespace).Expression.resolveValue} */
   resolveValue(value: Update.OperandValue, name: string): string {
-    return typeof value === 'function' ? value(name, this) : this.addValue(value);
+    return typeof value === 'function' ? (value as Update.OperandFunction)(name, this) : this.addValue(value);
   }
 
   // eslint-disable-next-line tsdoc/syntax
@@ -881,7 +881,7 @@ export class UpdateExpression implements Update.Expression {
       if (value === undefined) return;
       const path = name ? `${name}.${this.addPath(key)}` : this.addPath(key);
       if (typeof value === 'function') {
-        const newValue = value(path, this);
+        const newValue = (value as Update.OperandFunction)(path, this);
         if (newValue !== undefined) this.addSet(`${path} = ${newValue}`);
       } else if (value === null) this.addRemove(path);
       else this.addSet(`${path} = ${this.addValue(value)}`);
