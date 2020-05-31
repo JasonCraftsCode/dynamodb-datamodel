@@ -7,7 +7,7 @@ import { Update } from './Update';
  * The Model object that wraps access to the DynamoDB table and makes it easy to map table data to
  * and from model data.
  *
- *  * @example [examples/Model.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts} (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+ * @example [examples/Model.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts} (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
  * ```typescript
  * [[include:Model.ts]]
  * ```

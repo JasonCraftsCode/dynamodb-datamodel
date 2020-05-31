@@ -189,7 +189,7 @@ export class KeyCondition {
    * // Expands to: '#n0 = :v0 AND begins_with(#n1, :v1)'
    * const key = {
    *   P: 'guid',
-   *   S: KeyCondition.beginsWith('a', 'z')
+   *   S: KeyCondition.beginsWith('a')
    * }
    * const results = await table.query(key);
    * ```

@@ -578,6 +578,7 @@ export class Table {
     delete(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.DeleteOptions): Promise<DocumentClient.DeleteItemOutput>;
     deleteParams(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
     get(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.GetOptions): Promise<DocumentClient.GetItemOutput>;
+    static getKeyName(keySchema: Table.PrimaryKey.KeyTypesMap, type: Table.PrimaryKey.KeyTypes): string;
     getParams(key: Table.PrimaryKey.AttributeValuesMap, options?: Table.GetOptions): Table.GetInput;
     getPartitionKey(): string;
     static getPutAction(options?: Table.PutWriteOptions): Table.PutItemActions;

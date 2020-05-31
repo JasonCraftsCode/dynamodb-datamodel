@@ -1,4 +1,5 @@
-import { Table, Index } from '../src/Table';
+import { Table } from '../src/Table';
+import { Index } from '../src/TableIndex';
 import { validateKeySchema, validateTable } from '../src/TableValidate';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 

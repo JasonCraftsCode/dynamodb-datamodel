@@ -372,7 +372,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Options used for creating {@link FieldBase}
+   * Options used for creating {@link FieldBase}.
+   * @param V - Type used for default value.
    */
   export interface BaseOptions<V> {
     /**

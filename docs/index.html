@@ -60,8 +60,8 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#dynamodb-datamodel" id="dynamodb-datamodel" style="color: inherit; text-decoration: none;">
-					<h1>DynamoDB DataModel</h1>
+				<a href="#dynamodb-datamodel-" id="dynamodb-datamodel-" style="color: inherit; text-decoration: none;">
+					<h1>DynamoDB DataModel <!-- omit in TOC --></h1>
 				</a>
 				<p><a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/actions"><img src="https://github.com/JasonCraftsCode/dynamodb-datamodel/workflows/build/badge.svg" alt="Actions Status"></a>
 					<a href="https://www.npmjs.com/package/dynamodb-datamodel"><img src="https://badgen.net/npm/v/dynamodb-datamodel" alt="npm version"></a>
@@ -72,63 +72,106 @@
 					<a href="https://deepscan.io/dashboard#view=project&amp;tid=8443&amp;pid=11172&amp;bid=162758"><img src="https://deepscan.io/api/teams/8443/projects/11172/branches/162758/badge/grade.svg" alt="DeepScan grade"></a>
 					<a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/npm/types/dynamodb-datamodel" alt="npm type definitions"></a>
 				<a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/LICENSE"><img src="https://badgen.net/npm/license/dynamodb-datamodel" alt="npm license"></a></p>
-				<p><strong>NOTE:</strong> This project is in BETA and is constantly being updated. Please submit <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/issues">issues/feedback</a>.</p>
-				<p>The <strong>DynamoDB DataModel</strong> is a javascript and typescript library to simplify working with single table designs on <a href="https://aws.amazon.com/dynamodb/">Amazon DynamoDB</a>. The goal is to be able to easily map an object model into a table based storage model and provide operations for conditions and updates.</p>
+				<p><strong>NOTE:</strong> This project is in BETA (not yet 1.0.0) and is constantly being updated. Feedback and bugs are very much welcomed <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/issues">issues/feedback</a>.</p>
+				<p>The <strong>DynamoDB DataModel</strong> is a javascript and typescript library to simplify working with single table designs on <a href="https://aws.amazon.com/dynamodb/">Amazon DynamoDB</a>. This library builds off of the <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html">aw-sdk DocumentClient</a> and makes it easy to work with many different item types and access patterns in a single DynamoDB table with secondary indexes.</p>
+				<p>If you&#39;re wondering what single table design is and why you should use it then I recommend you check out the <a href="#resources">Resources</a> section below. Then come back and check out how DynamoDB-DataModel can help.</p>
+				<details>
+					<summary><b>Table of Context</b> - <i>(click to expand)</i></summary>
+					<ul>
+						<li><a href="#why">Why</a></li>
+						<li><a href="#problems-this-library-focuses-on">Problems this library focuses on</a></li>
+						<li><a href="#non-goals">Non goals</a></li>
+						<li><a href="#installation">Installation</a></li>
+						<li><a href="#basic-usage">Basic usage</a></li>
+						<li><a href="#components">Components</a><ul>
+								<li><a href="#table">Table</a></li>
+								<li><a href="#index">Index</a></li>
+								<li><a href="#model">Model</a></li>
+								<li><a href="#fields">Fields</a><ul>
+										<li><a href="#core-fields">Core Fields</a></li>
+										<li><a href="#extended-fields">Extended Fields</a></li>
+										<li><a href="#create-your-own-custom-fields">Create your own custom fields</a></li>
+										<li><a href="#example">Example</a></li>
+									</ul>
+								</li>
+								<li><a href="#condition-or-filter-expressions">Condition or Filter Expressions</a><ul>
+										<li><a href="#condition-functions">Condition functions</a></li>
+										<li><a href="#create-your-own-custom-conditions">Create your own custom conditions</a></li>
+										<li><a href="#condition-examples">Condition Examples</a></li>
+									</ul>
+								</li>
+								<li><a href="#keycondition-expressions">KeyCondition Expressions</a><ul>
+										<li><a href="#sort-key-functions">Sort key functions</a></li>
+										<li><a href="#keycondition-examples">KeyCondition Examples</a></li>
+									</ul>
+								</li>
+								<li><a href="#update-expressions">Update Expressions</a><ul>
+										<li><a href="#update-functions">Update functions</a></li>
+										<li><a href="#create-your-own-custom-update-resolvers">Create your own custom update resolvers</a></li>
+										<li><a href="#update-examples">Update Examples</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><a href="#best-practices">Best practices</a></li>
+						<li><a href="#resources">Resources</a></li>
+						<li><a href="#contributions-and-feedback">Contributions and Feedback</a></li>
+					</ul>
+				</details>
 				<a href="#why" id="why" style="color: inherit; text-decoration: none;">
 					<h2>Why</h2>
 				</a>
-				<p>While developing a side project using single table design I found I was frequently writing similar code to map model data to and from table data. Additional writing update and condition expressions was cumbersome. I looked around to see if there was an npm package, including <a href="https://github.com/awslabs/dynamodb-data-mapper-js">@aws/dynamodb-data-mapper</a>, <a href="https://github.com/awspilot/dynamodb-oop">@AwsPilot/dynamodb</a> project, <a href="https://github.com/baseprime/dynamodb">@BasePrime&#39;s dynamodb</a>, <a href="https://github.com/jeremydaly/dynamodb-toolbox">Jeremy Daly&#39;s dynamodb-toolbox</a> and others.</p>
-				<p>This is not a Object-Relational Mapping (ORM) module, so it doesn&#39;t use any SQL concepts. Many SQL concepts don&#39;t directly apply to NoSQL data bases like dynamodb, so this tool focuses on the unique capabilities of dynamodb.</p>
-				<p>This is also not a table management module, since with single table design the table will be created and managed through CloudFormation. This module solely focused on reading and writing table and index data.</p>
+				<p>The <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html">aws-sdk DocumentClient</a> is a great library that allows applications to use native JavaScript types when reading and writing data to a DynamoDB table. But as you work more with single table designs you&#39;ll find yourself frequently mapping your application data to secondary index key attributes to support your various access patterns. Additionally, the DocumentClient provides very little help building expressions for key condition, write condition, filter and update.</p>
+				<p>This is where DynamoDB-DataModel comes into play, by making it easy to map the data between your application models and how it stored in the DynamoDB table to leverage single table design and support all of your applications access patterns. It also makes it easy to build expressions for key condition, write condition, filter and update, even using your model properties names.</p>
 				<a href="#problems-this-library-focuses-on" id="problems-this-library-focuses-on" style="color: inherit; text-decoration: none;">
 					<h2>Problems this library focuses on</h2>
 				</a>
 				<ul>
 					<li><strong>Bidirectional data mapping</strong> - In single table design the primary key attributes for tables and indexes are named in a generic way to allow each item type to use the attributes for different properties, to allow multiple access patterns with limited secondary indexes.</li>
 					<li><strong>Table item update</strong> - Even simple updates to a table item are not easy, especially in the context of data mappings.</li>
-					<li><strong>Table condition expression</strong> - DynamoDb supports conditional writes, but building the ConditionExpression can be tricky, especially in the context of data mappings.</li>
-					<li><strong>Focus on NoSQL capabilities</strong> - Make it easy to use DynamoDb&#39;s unique capabilities, and avoid SQL concepts that don&#39;t make sense in the NoSQL world (don&#39;t be an ORM).</li>
-					<li><strong>Simple to use and open for extension</strong> - Though this library tries to capture the current capabilities of DynamoDb with a simple API surface, it also exposes ways to extend is capabilities to support more complex use cases or if AWS adds additional update, filter or condition expression features.</li>
-					<li><strong>Good TypeScript support</strong> - Not all libraries have good up to date and well documented typescript support.</li>
+					<li><strong>Table condition and filter expression</strong> - DynamoDB supports conditional writes or filtered queries/scans, but building the ConditionExpression/FilterExpression can be tricky, especially in the context of data mappings.</li>
+					<li><strong>Focus on NoSQL capabilities</strong> - Make it easy to use DynamoDB&#39;s unique capabilities, and avoid SQL concepts that don&#39;t make sense in the NoSQL world (don&#39;t be an ORM).</li>
+					<li><strong>Simple to use and open for extension</strong> - Though this library tries to capture the current capabilities of DynamoDB with a simple API surface, it also exposes ways to extend is capabilities to support more complex use cases or if AWS adds additional update, filter or condition expression features.</li>
+					<li><strong>Good TypeScript support</strong> - Not all libraries have good, up to date and well documented typescript support.</li>
 					<li><strong>Small and light weight</strong> - The main use case is to run in AWS Lambda so it needs to be small, light weight and have little to no dependencies.</li>
 				</ul>
 				<a href="#non-goals" id="non-goals" style="color: inherit; text-decoration: none;">
 					<h2>Non goals</h2>
 				</a>
 				<ul>
-					<li><strong>Not a validator or coercer</strong> - There are many very good data validators and coercer, like joi, yup, ajv... This library does not attempt to do any validation or coercion, but it is <strong>highly</strong> recommended that you validate (and coerce if desired) the data before writing it to DynamoDb using DynamoDb-DataModel.</li>
-					<li><strong>Not a table manager</strong> - This library is just for reading and writing data to DynamoDb, for most all single table usage the table will be managed through CloudFormation.</li>
+					<li><strong>Not a validator or coercer</strong> - There are already many very good open source data validators and coercer, like <a href="https://www.npmjs.com/package/@hapi/joi">joi</a>, <a href="https://www.npmjs.com/package/yup">yup</a>, <a href="https://www.npmjs.com/package/ajv">ajv</a> and others. This library does not attempt to do any validation or coercion, but it is <strong>highly</strong> recommended that you validate and coerce the data before writing it to DynamoDB using DynamoDB-DataModel.</li>
+					<li><strong>Not a table manager</strong> - This library is just for reading and writing data to DynamoDB, for most all single table usage the table will be managed through CloudFormation.</li>
+					<li><strong>Not a Object-Relational Mapping (ORM)</strong> - DynamoDB-Datamodel doesn&#39;t use any SQL concepts. Many SQL concepts don&#39;t directly apply to NoSQL data bases like dynamodb, so this tool focuses on the unique capabilities of dynamodb. If you need an ORM, there are several existing libraries: <a href="https://github.com/awslabs/dynamodb-data-mapper-js">@aws/dynamodb-data-mapper</a>, <a href="https://github.com/awspilot/dynamodb-oop">@AwsPilot/dynamodb</a> project or <a href="https://github.com/baseprime/dynamodb">@BasePrime&#39;s dynamodb</a></li>
 				</ul>
-				<a href="#best-practices" id="best-practices" style="color: inherit; text-decoration: none;">
-					<h2>Best Practices</h2>
-				</a>
+				<p>Note: As I was factoring this library out of a personal project, I came across <a href="https://github.com/jeremydaly/dynamodb-toolbox">Jeremy Daly&#39;s dynamodb-toolbox</a> the v0.1 version and played around with it, but it didn&#39;t have typescript support and didn&#39;t quite fit my personal project needs. I also felt that DynamoDB-DataModel had a unique and extensible take on building key condition, condition, filter and update expressions. And the ability to have custom fields for model schemes has made it easy to extend the libraries core capabilities.</p>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
-				<p>Install the DynamoDB DataModel with npm:</p>
+				<p>Install the DynamoDB-DataModel with npm:</p>
 				<pre><code class="language-bash">npm i dynamodb-datamodel</code></pre>
 				<p>or yarn:</p>
 				<pre><code class="language-bash">yarn add dynamodb-datamodel</code></pre>
 				<p>Dependencies:</p>
 				<ul>
-					<li>aws-sdk &gt; 2.585.0 (peerDependency)</li>
-					<li>node.js &gt; 8.0.0</li>
+					<li>aws-sdk &gt;= 2.585.0 (peerDependency)</li>
+					<li>node.js &gt;= 8.0.0</li>
 				</ul>
 				<a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
 					<h2>Basic usage</h2>
 				</a>
-				<p>Dynamodb-datamodel consists of three core components:</p>
+				<p>DynamoDB-DataModel consists of three core components:</p>
 				<ul>
-					<li><code>Table</code> - The Table object is the first component you&#39;ll need to create and has a one-to-one corelation with a provisioned DynamoDb table. Table is essentially a wrapper around the DynamoDb DocumentClient and is used by the Model objects to read and write data to the table. Following a single table design you&#39;ll only need a single table object.</li>
-					<li><code>Model</code> - The Model object is the secondary component you&#39;ll need to create and has a one-to-one corelation with each of the data types you are storing in the DynamoDb table. You will create multiple Models, one for each data type, and they each will reference the same table object. The Model object contains a schema that defines how the model data will be represented in the dynamodb table. Models are the main object you will be using to read and write data to the DynamoDb table.</li>
-					<li><code>Field</code> - The Field objects are created when declaring the Model schema and each data property on the model will be associated with a Field object. There are separate Field classes for each of the native DynamoDb data types (string, number, boolean, binary, null, list, map, string set, number set and binary set), in addition to more advanced fields (like composite, date, created date, type and others). You can also create custom Fields for your own data types. Each Fields main purpose is to map the data between model properties and table attributes (bidirectional), but they can also add update, filter and condition expressions to support more complex behavior. Since there are many types of fields they are all contained within the <code>Fields</code> namespace.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html"><code>Table</code></a> - The Table object is the first component you&#39;ll need to create and has a one-to-one corelation with a provisioned DynamoDB table. Table is essentially a wrapper around the <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html">DynamoDB DocumentClient</a> and is used by the Model objects to read and write data to the table. Following a single table design you&#39;ll only need a single table object.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html"><code>Model</code></a> - The Model object is the secondary component you&#39;ll need to create and has a one-to-one corelation with each of the data item types you are storing in the DynamoDB table. You will create multiple Models, one for each data item type, and they each will reference the same table object. The Model object contains a schema that defines how the model data will be represented in the dynamodb table. Models are the main object you will be using to read and write data to the DynamoDB table.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html"><code>Field</code></a> - The Field objects are created when declaring the Model schema and each item data property on the model will be associated with a Field object. There are separate Field classes for each of the native DynamoDB data types (string, number, boolean, binary, null, list, map, string set, number set and binary set), in addition to more advanced fields (like composite, date, created date, type and others). You can also create custom Fields for your own data types. Each Fields main purpose is to map the data between model properties and table attributes (bidirectional), but they can also add update, filter and condition expressions to support more complex behavior. Since there are many types of fields they are all contained within the <code>Fields</code> namespace.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/tableindex.html"><code>Index</code></a> - Index objects are created along side the <code>Table</code></li>
 				</ul>
 				<p>Import or require <code>Table</code>, <code>Model</code> and <code>Fields</code> from <code>dynamodb-datamodel</code>:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Table, Model, Fields } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;</code></pre>
 				<p>General usage flow:</p>
 				<ol>
 					<li>Import or require <code>Table</code>, <code>Model</code> and <code>Fields</code> from <code>dynamodb-datamodel</code></li>
-					<li>Create DynamoDB DocumentClient</li>
+					<li>Create <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html">DynamoDB DocumentClient</a></li>
 					<li>(<em>TypeScript</em>) Define Table&#39;s primary key interface</li>
 					<li>Create Table and define key attributes and schema</li>
 					<li>(<em>TypeScript</em>) Define each Model key and data interface</li>
@@ -199,49 +242,292 @@
 				<p>Core:</p>
 				<ul>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html">Fields</a> - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html">Index</a> - Classes that represents Global or Local Secondary Indexes associated with a table.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/tableindex.html">Index</a> - Classes that represents Global or Local Secondary Indexes associated with a table.</li>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html">Model</a> - Class that uses the model schema and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.</li>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html">Table</a> - Class the represents the Table and wraps table actions.</li>
 				</ul>
-				<p>Helpers:</p>
+				<p>Expressions:</p>
 				<ul>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html">Condition</a> - Contains methods to build complex condition expressions.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/conditionexpression.html">ConditionExpression</a> - Contains methods to build complex condition expressions.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/expressionattributes.html">ExpressionAttributes</a> - Class to hold the condition, key condition and update expressions attribute names and values.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html">KeyCondition</a> - Contains the method to build sort key conditions for Table.query.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keyconditionexpression.html">KeyExpressionAttributes</a> - Help class used to build the key condition expression.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> - Contains the methods to build any update expression.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/updateexpression.html">UpdateExpression</a> - Help class used to help build update expressions.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html">Condition</a> - Contains functions for building complex condition and filter expressions.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/conditionexpression.html">ConditionExpression</a> - Object passed to the resolvers returned by the <code>Condition</code> functions.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/expressionattributes.html">ExpressionAttributes</a> - Object that maps and saves expression attribute names and values to a placeholder, used by ConditionExpression, KeConditionExpression and UpdateExpression.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html">KeyCondition</a> - Contains functions for building sort key conditions used in <code>Table.query</code> and <code>Index.query</code> methods.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keyconditionexpression.html">KeyExpressionExpression</a> - Object passed to the resolvers return by the <code>KeyCondition</code> functions.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> - Contains functions for building complex update expressions used in <code>Table.update</code> and <code>Module.update</code> methods.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/updateexpression.html">UpdateExpression</a> - Object passed to the resolves return by the <code>Update</code> functions.</li>
 				</ul>
-				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
-					<h2>Table of Contents</h2>
-				</a>
 				<a href="#table" id="table" style="color: inherit; text-decoration: none;">
-					<h2>Table</h2>
+					<h3>Table</h3>
 				</a>
-				<p>A Table is the first object that you will need to create when working with dynamodb-datamodel. It is the object that contains the configuration data for a provisioned DynamoDb Table and uses the DynamoDb DocumentObject to read and write to the DynamoDb Table.</p>
-				<p>You can either create a simple JavaScript based Table using <code>new Table()</code> or if you want to get additional typescript based type checking and code editor autocomplete you can use <code>Table.createTable&lt;KEY, ATTRIBUTES&gt;</code> to create a Table that knows about the primary key types and all key attributes.</p>
-				<p>Creating a table is simple, there are only three things needed: 1) the name of the DynamoDb table, 2) a map of key attribute types, 3) a map of primary key types.</p>
+				<p><code>Table</code> is the first object that you will need to create when working with dynamodb-datamodel. It is the object that contains the configuration data for a provisioned DynamoDB Table and uses the DynamoDB DocumentObject to read and write to the DynamoDB Table.</p>
+				<p>You can either create a simple JavaScript based Table using <code>new Table()</code> or if you want to get additional typescript based type checking and code editor autocomplete you can use <code>Table.createTable&lt;KEY, ATTRIBUTES&gt;</code> to create a Table.</p>
+				<p>Creating a table is simple, there are only three things needed: 1) the name of the DynamoDB table, 2) a map of key attribute types, 3) a map of primary key types.</p>
+				<pre><code class="language-typescript"></code></pre>
 				<a href="#index" id="index" style="color: inherit; text-decoration: none;">
-					<h2>Index</h2>
+					<h3>Index</h3>
 				</a>
-				<p>DynamoDb supports two types of secondary indexes: local secondary index (LSI) and global secondary index (GSI). Just like Table, an Index object has a one-to-one corelation with a provisioned secondary index. Like <code>Model</code>, <code>Index</code> uses <code>Table</code> to query and scan the secondary indexes of the DynamoDb Table.</p>
-				<p>Also like Table you can create either a JavaScript based index using <code>new Index()</code> or if you want additional typescript based type checking and code editor autocomplete you can use <code>Index.createIndex&lt;KEY&gt;</code> to create an Index that knows about its primary key to get some type safety when calling query and queryParam.</p>
+				<p>DynamoDB supports two types of secondary indexes: local secondary index (LSI) and global secondary index (GSI). Just like Table, an Index object has a one-to-one corelation with a provisioned secondary index. Like <code>Model</code>, <code>Index</code> uses <code>Table</code> to query and scan the secondary indexes of the DynamoDB Table.</p>
+				<p>Also like Table you can create either a JavaScript based index using <code>new Index()</code> or if you want additional typescript based type checking and code editor autocomplete you can use <code>Index.createIndex&lt;KEY&gt;</code> to create an Index.</p>
 				<p>Creating a index is simple, there are only three things needed: 1) the name of the secondary index, 2) a map of the primary key types, 3) the projection type.</p>
+				<pre><code class="language-typescript"></code></pre>
 				<a href="#model" id="model" style="color: inherit; text-decoration: none;">
-					<h2>Model</h2>
+					<h3>Model</h3>
 				</a>
+				<pre><code class="language-typescript"></code></pre>
 				<a href="#fields" id="fields" style="color: inherit; text-decoration: none;">
-					<h2>Fields</h2>
+					<h3>Fields</h3>
 				</a>
-				<a href="#update-expressions" id="update-expressions" style="color: inherit; text-decoration: none;">
-					<h2>Update Expressions</h2>
+				<a href="#core-fields" id="core-fields" style="color: inherit; text-decoration: none;">
+					<h4>Core Fields</h4>
 				</a>
-				<a href="#condition-expressions" id="condition-expressions" style="color: inherit; text-decoration: none;">
-					<h2>Condition Expressions</h2>
+				<table>
+					<thead>
+						<tr>
+							<th align="left">Name</th>
+							<th align="left">Table Type</th>
+							<th align="left">Description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#string">string</a></td>
+							<td align="left">S</td>
+							<td align="left">JavaScript string</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#number">number</a></td>
+							<td align="left">N</td>
+							<td align="left">JavaScript number</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#binary">binary</a></td>
+							<td align="left">B</td>
+							<td align="left">JavaScript binary</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#boolean">boolean</a></td>
+							<td align="left">BOOL</td>
+							<td align="left">JavaScript boolean</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#stringset">stringSet</a></td>
+							<td align="left">SS</td>
+							<td align="left">DocumentClient string set</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#numberset">numberSet</a></td>
+							<td align="left">NS</td>
+							<td align="left">DocumentClient number set</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#binaryset">binarySet</a></td>
+							<td align="left">BS</td>
+							<td align="left">DocumentClient binary set</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#list">list</a></td>
+							<td align="left">L</td>
+							<td align="left">JavaScript list</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#map">map</a></td>
+							<td align="left">M</td>
+							<td align="left">JavaScript map</td>
+						</tr>
+				</tbody></table>
+				<a href="#extended-fields" id="extended-fields" style="color: inherit; text-decoration: none;">
+					<h4>Extended Fields</h4>
 				</a>
-				<a href="#keycondition-expressions" id="keycondition-expressions" style="color: inherit; text-decoration: none;">
-					<h2>KeyCondition Expressions</h2>
+				<table>
+					<thead>
+						<tr>
+							<th align="left">name</th>
+							<th align="left">Table Type</th>
+							<th align="left">Description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#model">model</a></td>
+							<td align="left">M</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#modellist">modelList</a></td>
+							<td align="left">L</td>
+							<td align="left">List of models</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#modelmap">modelMap</a></td>
+							<td align="left">M</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#date">date</a></td>
+							<td align="left">N</td>
+							<td align="left">JavaScript Date</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#hidden">hidden</a></td>
+							<td align="left">-</td>
+							<td align="left">Hide field from getting written to DynamoDB</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#split">split</a></td>
+							<td align="left">S</td>
+							<td align="left">Split the field property into multiple DynamoDB attributes</td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#composite">composite</a></td>
+							<td align="left">S</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#compositenamed">compositeNamed</a></td>
+							<td align="left">S</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#type">type</a></td>
+							<td align="left">S</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#createdate">createdDate</a></td>
+							<td align="left">N</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#updatedate">updatedDate</a></td>
+							<td align="left">N</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#revision">revision</a></td>
+							<td align="left">N</td>
+							<td align="left"></td>
+						</tr>
+				</tbody></table>
+				<a href="#create-your-own-custom-fields" id="create-your-own-custom-fields" style="color: inherit; text-decoration: none;">
+					<h4>Create your own custom fields</h4>
+				</a>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h4>Example</h4>
+				</a>
+				<pre><code class="language-typescript"></code></pre>
+				<a href="#condition-or-filter-expressions" id="condition-or-filter-expressions" style="color: inherit; text-decoration: none;">
+					<h3>Condition or Filter Expressions</h3>
+				</a>
+				<a href="#condition-functions" id="condition-functions" style="color: inherit; text-decoration: none;">
+					<h4>Condition functions</h4>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th align="left">Name</th>
+							<th align="left">Supported Types</th>
+							<th align="left">Description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#path-1">path</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#size">size</a></td>
+							<td align="left">B, BS, NS, S, SS, M, L</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#compare">compare</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#eq">eq</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#ne">ne</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#ge">ge</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#gt">gt</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#le">le</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#lt">lt</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#between">between</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#beginswith">beginsWith</a></td>
+							<td align="left">S</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#contains">contains</a></td>
+							<td align="left">S, BS, NS, SS</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#in">in</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#exists">exists</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#notExists">notExists</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#type">type</a></td>
+							<td align="left">all</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#and">and</a></td>
+							<td align="left">conditions</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#or">or</a></td>
+							<td align="left">conditions</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#not">not</a></td>
+							<td align="left">conditions</td>
+							<td align="left"></td>
+						</tr>
+				</tbody></table>
+				<a href="#create-your-own-custom-conditions" id="create-your-own-custom-conditions" style="color: inherit; text-decoration: none;">
+					<h4>Create your own custom conditions</h4>
+				</a>
+				<a href="#condition-examples" id="condition-examples" style="color: inherit; text-decoration: none;">
+					<h4>Condition Examples</h4>
 				</a>
 				<p>Condition where age &gt; 21 OR ((region = &#39;US&#39; AND size(interests) &gt; 10) AND interests contain nodejs, dynamodb, or serverless):</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> { and, or, eq, gt, contains, size } = Condition;
@@ -275,6 +561,135 @@
     or(interests.contains(<span class="hljs-string">'nodejs'</span>), interests.contains(<span class="hljs-string">'dynamodb'</span>), interests.contains(<span class="hljs-string">'serverless'</span>)),
   ),
 );</code></pre>
+				<a href="#keycondition-expressions" id="keycondition-expressions" style="color: inherit; text-decoration: none;">
+					<h3>KeyCondition Expressions</h3>
+				</a>
+				<a href="#sort-key-functions" id="sort-key-functions" style="color: inherit; text-decoration: none;">
+					<h4>Sort key functions</h4>
+				</a>
+				<p>The Partition key only supports a single condition which is equal (&#39;=&#39;). Sort keys support several &#39;range&#39; based conditions to query for a continuous range of items. You may notice that not-equal (&#39;&lt;&gt;&#39;) isn&#39;t support and the reason is simply that a not-equal query would not return a continuous range of items.</p>
+				<table>
+					<thead>
+						<tr>
+							<th align="left">Name</th>
+							<th align="left">Supported Types</th>
+							<th align="left">Description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#beginswith">beginsWith</a></td>
+							<td align="left">S</td>
+							<td align="left">Return all items that begin with the value. Note: case sensitive. Example: <code>KeyCondition.</code></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#between">between</a></td>
+							<td align="left">B, N, S (all)</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#compare">compare</a></td>
+							<td align="left">B, N, S (all)</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#eq">eq</a></td>
+							<td align="left">B, N, S (all)</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#ge">ge</a></td>
+							<td align="left">B, N, S (all)</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#gt">gt</a></td>
+							<td align="left">B, N, S (all)</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#le">le</a></td>
+							<td align="left">B, N, S (all)</td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#lt">lt</a></td>
+							<td align="left">B, N, S (all)</td>
+							<td align="left"></td>
+						</tr>
+				</tbody></table>
+				<p>Note: All of the above KeyCondition functions return a resolver function, allowing for custom KeyConditions, though current DynamoDB</p>
+				<a href="#keycondition-examples" id="keycondition-examples" style="color: inherit; text-decoration: none;">
+					<h4>KeyCondition Examples</h4>
+				</a>
+				<pre><code class="language-typescript"></code></pre>
+				<a href="#update-expressions" id="update-expressions" style="color: inherit; text-decoration: none;">
+					<h3>Update Expressions</h3>
+				</a>
+				<a href="#update-functions" id="update-functions" style="color: inherit; text-decoration: none;">
+					<h4>Update functions</h4>
+				</a>
+				<p>For more details on what you can do with update expressions see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html">DynamodDB&#39;s Update Expression guide</a>.</p>
+				<p>Supported <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> functions:
+					| Name | Supported Types | Description |
+					| :---------------------------------------------------------------------------------------------------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#path">path</a> | all | Ensures that a value is treated as a path. Example: <code>{ name: Update.path(&#39;fullname&#39;) }</code> |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#pathwithdefault">pathWithDefault</a> | all | Ensures that a value is either a path or a default value if the path doesn&#39;t exists. Example: <code>{ name: Update.pathWithDefault(&#39;fullname&#39;, &#39;John Smith&#39;)}</code>. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#default">default</a> | all | Ensures an attribute has a default value. Example: <code>{ name: Update.default(&#39;John Smith&#39;) }</code>, if name doesn&#39;t exists then set it to &#39;John Smith&#39;. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#del">del</a> | all | Deletes an attribute from item, can also assign <code>null</code> to a value. Example : <code>{ name: Update.del() }</code> or <code>{ name: null }</code>. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#set">set</a> | all | Sets an attribute to a value, can also assign value directly. Example: <code>{ name: Update.set(&#39;John Smith&#39;) }</code> or <code>{ name: &#39;John Smith }</code> |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#arthmetic">arithmetic</a> | N | Preforms basic arithmetic on an attribute, used by in, dec, add and sub below. Example: <code>{ total: Update.arithmetic(&#39;total&#39;, &#39;+&#39;, 1) }</code>, adds 1 to total attribute. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#inc">inc</a> | N | Increments an attribute by a value. Example: <code>{ total: Update.inc(2) }</code>, increments total by 2. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#dec">dec</a> | N | Decrements an attribute by a value. Example: <code>{ total: Update.dec(3) }</code>, decrements total by 3. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#add">add</a> | N | Sets the receiving attribute to the addition of a value to the value of an attribute. Example: <code>{ total: Update.add(&#39;count&#39;, 1) }</code>, set total to the result of adding 1 to the value of &#39;count&#39;. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#sub">sub</a> | N | Sets the receiving attribute to the subtraction of a value from the value of an attribute. Example: <code>{ total: Update.sub(&#39;count&#39;, 2) }</code> , set total to the result of subtrating 1 from the value of &#39;count&#39;. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#join">join</a> | L | Sets the receiving attribute to the result of joining two lists. Example: <code>{ relatives: Update.join(&#39;children&#39;, &#39;parents&#39;) }</code>, set the relative attribute to the result of join children and parents together. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#append">append</a> | L | Appends a list to the beginning of a list attribute. <code>{ relatives: Update.append(&#39;children&#39;) }</code>, appends the value of the children attribute to relatives. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#prepend">prepend</a> | L | Prepends a list to the end of an list attribute. <code>{ relatives: Update.prepend(&#39;parents&#39;) }</code>, appends the value of the children attribute to relatives. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#delindexes">delIndexes</a> | L | Deletes values from a list attribute using an array of indexes. <code>{ relatives: Update.delIndexes([1, 3]) }</code> , deletes the 1 and 3 value from the relatives list attribute. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#setindexes">setIndexes</a> | L | Sets the values from a list attribute using a map of indexes to values. <code>{ relatives: Update.setIndexes({1:&#39;bob&#39;, 3:&#39;lucy&#39;}) }</code> , sets value at index 1 to &#39;bob&#39; and value in index 3 to &#39;lucy&#39; in relatives list attribute. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#addtoset">addToSet</a> | SS, NS, BS | Add values to a DynamoDB set attribute. Example: <code>{ color: Update.addToSet(table.createStringSet([&#39;yellow&#39;, &#39;red&#39;])) }</code>, adds yellow and red to the color set attribute. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#removefromset">removeFromSet</a> | SS, NS, BS | Remove values from a DynamoDB set attribute. Example: <code>{ color: Update.removeFromSet(table.createStringSet([&#39;blue&#39;, &#39;green&#39;])) }</code>, removes blue and green from the color set attribute. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#map">map</a> | M | Sets the receiving map attribute to the result of resolving a map of Update functions. Can also support &#39;.&#39; delimited path values for setting deep values. Example: <code>{ address: Update.map( street: &#39;One Infinity Loop&#39; ) }</code>, sets the street attribute within address to &#39;One Infinity Loop&#39;&#39;. |
+					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#model">model</a> | M | Typed based wrapper around map to ensure the input matches an interface. Example: see <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#model">Update.model</a> |
+				| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#modelmap">modelMap</a> | M | String based key to model map, that enforces the key strings are only used as paths. Example: see <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#modelmap">Update.modelMap</a> |</p>
+				<a href="#create-your-own-custom-update-resolvers" id="create-your-own-custom-update-resolvers" style="color: inherit; text-decoration: none;">
+					<h4>Create your own custom update resolvers</h4>
+				</a>
+				<p>All of the above Update functions just return a <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#resolver">Update.Resolver</a> arrow function with the signature of: <code>(name: string, exp: Update.Expression, type?: T) =&gt; void</code>. When <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html#update">Model.update</a> or <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html#update">Table.update</a> run each object property value will get resolved and values that have a type of &#39;function&#39; will get called with the property name, an <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/interfaces/update.expression.html">Update.Expression</a> object and an optional type param.</p>
+				<p>It is in the implementation of the <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#resolver">Update.Resolver</a> functions that the update expression is constructed. This is done by calling methods on the <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/interfaces/update.expression.html">Update.Expression</a> object to add and get placeholders for attribute names and paths, and add expressions to one of the four support clauses: SET, REMOVE, ADD or DELETE.</p>
+				<p>After all <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#resolver">Update.Resolver</a> are called and all other expressions are resolved, the expressions for the update are generated and set on the input params passed to the DynamoDB DocumentClient update method.</p>
+				<p>To create custom Update functions you just need to return an arrow function that when called adds the necessary names, values and update expressions to support the functionality you need.</p>
+				<p><strong>Note</strong>: In future versions of this library I am looking to add additional context (like Model or Field) to the <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/interfaces/update.expression.html">Update.Expression</a>, to enable more advanced scenarios. Let me know if you need this so I can prioritize it appropriately.</p>
+				<a href="#update-examples" id="update-examples" style="color: inherit; text-decoration: none;">
+					<h4>Update Examples</h4>
+				</a>
+				<pre><code class="language-typescript"></code></pre>
+				<a href="#best-practices" id="best-practices" style="color: inherit; text-decoration: none;">
+					<h2>Best practices</h2>
+				</a>
+				<ul>
+					<li>Use generic primary key names for Tables and Indexes. Examples:<ul>
+							<li>Table: &#39;P&#39; = partition key and &#39;S&#39; = sort key.</li>
+							<li>Index: &#39;G0P&#39; = partition key and &#39;G0S&#39; = sort key for Global Secondary Index #0.</li>
+						</ul>
+					</li>
+					<li>Use generic secondary index names since they will be used for many different access patterns. Example: GSI0 or LSI0.</li>
+					<li>Normalize values used in index primary keys, like lower case strings or use generated values.</li>
+				</ul>
+				<a href="#resources" id="resources" style="color: inherit; text-decoration: none;">
+					<h2>Resources</h2>
+				</a>
+				<p>There are a lot of DynamoDB resources out there, with more being added every day. But I would start with the following:</p>
+				<ul>
+					<li><a href="https://www.youtube.com/watch?v=HaEPXoXVf2k&amp;t=310s">Advanced Design Patterns for DynamoDB</a> talk by <a href="https://twitter.com/houlihan_rick">Rick Houlihan</a> - This talk is just mind blowing, Rick really drives home how useful DynamoDB can be.</li>
+					<li><a href="https://www.alexdebrie.com/posts/dynamodb-single-table/">DynamoDB Single Table Design</a> blog post by <a href="https://twitter.com/alexbdebrie">Alex DeBrie</a> - Good summary of the what, when and why of single table design. Alex&#39;s blog also has many other good DynamoDB posts.</li>
+					<li><a href="https://www.dynamodbbook.com/">The DynamoDB Book</a> by <a href="https://twitter.com/alexbdebrie">Alex DeBrie</a> - Probably the most approachable and best written guild for DynamoDB and single table design. It&#39;s not free like the other resources but well worth the investment.</li>
+					<li><a href="https://github.com/alexdebrie/awesome-dynamodb">Awesome-DynamoDB</a> - List of resources for learning about modeling, operating, and using Amazon DynamoDB.</li>
+				</ul>
+				<a href="#contributions-and-feedback" id="contributions-and-feedback" style="color: inherit; text-decoration: none;">
+					<h2>Contributions and Feedback</h2>
+				</a>
+				<p>Any and all contributions are greatly appreciated! For suggestions, feedback and bugs, please create a <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/issues/new/choose">new issue</a>. For contributions you can start a <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/compare">pull request</a>. Feel free contact me on Twitter: <a href="https://twitter.com/JasonCraftsCode">@JasonCraftsCode</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

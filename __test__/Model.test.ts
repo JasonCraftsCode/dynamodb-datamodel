@@ -5,7 +5,8 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { Condition } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
-import { Table, Index } from '../src/Table';
+import { Table } from '../src/Table';
+import { Index } from '../src/TableIndex';
 import { Update } from '../src/Update';
 import { delay } from './testCommon';
 

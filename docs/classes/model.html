@@ -69,38 +69,43 @@
 							and from model data.
 						Is also a namespace for scoping Model based interfaces and types.</p>
 					</div>
-					<ul>
-						<li>@example <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts" class="external">examples/Model.ts</a> (imports: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts" class="external">examples/Table.ts</a>)<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><p><a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts" class="external">examples/Model.ts</a> (imports: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts" class="external">examples/Table.ts</a>)</p>
+							<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 <span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+
+<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelKey {
+  id: <span class="hljs-built_in">string</span>;
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
+  name: Update.String;
+  age?: Update.Number;
+  children?: Update.List&lt;{ name: <span class="hljs-built_in">string</span>; age: <span class="hljs-built_in">number</span> }&gt;;
+  sports?: Update.StringSet;
+}
+
+<span class="hljs-comment">// Define the schema using Fields</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
+  schema: {
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
+    name: Fields.string(),
+    age: Fields.number(),
+    children: Fields.list(),
+    sports: Fields.stringSet(),
+  },
+  table: table <span class="hljs-keyword">as</span> Table,
+});
+
+<span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
+<span class="hljs-keyword">const</span> params = model.getParams({ id: <span class="hljs-string">'P-1.S-1'</span> });
+
+<span class="hljs-comment">// (jest) output of getParams</span>
+expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> }, TableName: <span class="hljs-string">'ExampleTable'</span> });
 </code></pre>
-						</li>
-					</ul>
-					<p>// (TypeScript) Define model key and item interface.
-						export interface ModelKey {
-						id: string;
-						}
-						export interface ModelItem extends ModelKey {
-						name: Update.String;
-						age?: Update.Number;
-						children?: Update.List&lt;{ name: string; age: number }&gt;;
-						sports?: Update.StringSet;
-					}</p>
-					<p>// Define the schema using Fields
-						export const model = Model.createModel&lt;ModelKey, ModelItem&gt;({
-						schema: {
-						id: Fields.split({ aliases: [&#39;P&#39;, &#39;S&#39;] }),
-						name: Fields.string(),
-						age: Fields.number(),
-						children: Fields.list(),
-						sports: Fields.stringSet(),
-						},
-						table: table as Table,
-					});</p>
-					<p>// Generate params to pass to DocumentClient or call the action method
-					const params = model.getParams({ id: &#39;P-1.S-1&#39; });</p>
-					<p>// (jest) output of getParams
-					expect(params).toEqual({ Key: { P: &#39;P-1&#39;, S: &#39;S-1&#39; }, TableName: &#39;ExampleTable&#39; });</p>
-					<pre><code></code></pre>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">

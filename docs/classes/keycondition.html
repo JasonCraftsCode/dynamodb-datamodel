@@ -336,7 +336,7 @@
 									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND begins_with(#n1, :v1)'</span>
 <span class="hljs-keyword">const</span> key = {
   P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.beginsWith(<span class="hljs-string">'a'</span>, <span class="hljs-string">'z'</span>)
+  S: KeyCondition.beginsWith(<span class="hljs-string">'a'</span>)
 }
 <span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
 									</dd>

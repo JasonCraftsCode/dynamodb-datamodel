@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { Table, Index } from './Table';
+import { Table } from './Table';
+import { Index } from './TableIndex';
 
 /**
  * Attribute names of the primary key for tables and indexes.
