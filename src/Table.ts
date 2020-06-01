@@ -350,6 +350,7 @@ export class Table {
 
   /**
    * Add expressions properties to the params object.
+   * @param T - Type of table action input params
    * @param params - The params object to add expression properties to.
    * @param options - Options used to build params.
    * @param type - The type of expression to set either 'filter' or 'condition',

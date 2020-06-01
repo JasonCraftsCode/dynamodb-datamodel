@@ -24,15 +24,19 @@ If you're wondering what single table design is and why you should use it then I
 - [Non goals](#non-goals)
 - [Installation](#installation)
 - [Basic usage](#basic-usage)
+  - [Basic usage example](#basic-usage-example)
 - [Components](#components)
   - [Table](#table)
+    - [Table Example](#table-example)
   - [Index](#index)
+    - [Index Example](#index-example)
   - [Model](#model)
+    - [Model Example](#model-example)
   - [Fields](#fields)
     - [Core Fields](#core-fields)
     - [Extended Fields](#extended-fields)
     - [Create your own custom fields](#create-your-own-custom-fields)
-    - [Example](#example)
+    - [Fields Examples](#fields-examples)
   - [Condition or Filter Expressions](#condition-or-filter-expressions)
     - [Condition functions](#condition-functions)
     - [Create your own custom conditions](#create-your-own-custom-conditions)
@@ -95,13 +99,6 @@ Dependencies:
 
 ## Basic usage
 
-DynamoDB-DataModel consists of three core components:
-
-- [`Table`](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html) - The Table object is the first component you'll need to create and has a one-to-one corelation with a provisioned DynamoDB table. Table is essentially a wrapper around the [DynamoDB DocumentClient](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html) and is used by the Model objects to read and write data to the table. Following a single table design you'll only need a single table object.
-- [`Model`](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) - The Model object is the secondary component you'll need to create and has a one-to-one corelation with each of the data item types you are storing in the DynamoDB table. You will create multiple Models, one for each data item type, and they each will reference the same table object. The Model object contains a schema that defines how the model data will be represented in the dynamodb table. Models are the main object you will be using to read and write data to the DynamoDB table.
-- [`Field`](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html) - The Field objects are created when declaring the Model schema and each item data property on the model will be associated with a Field object. There are separate Field classes for each of the native DynamoDB data types (string, number, boolean, binary, null, list, map, string set, number set and binary set), in addition to more advanced fields (like composite, date, created date, type and others). You can also create custom Fields for your own data types. Each Fields main purpose is to map the data between model properties and table attributes (bidirectional), but they can also add update, filter and condition expressions to support more complex behavior. Since there are many types of fields they are all contained within the `Fields` namespace.
-- [`Index`](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/tableindex.html) - Index objects are created along side the `Table`
-
 Import or require `Table`, `Model` and `Fields` from `dynamodb-datamodel`:
 
 ```typescript
@@ -118,7 +115,9 @@ General usage flow:
 6. Create each Model and define data schema
 7. Use the model to read and write data
 
-Example:
+### Basic usage example
+
+From: [examples/Readme.BasicUsage.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.BasicUsage.ts)
 
 ```typescript
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
@@ -169,26 +168,28 @@ const model = Model.createModel<ModelKey, ModelItem>({
 // Additional models can also be defined
 
 // 7. Use the model to read and write data
-// Write item
-await model.put({ id: 'P-GUID.S-0', name: 'user name' });
-// Update item
-await model.update({ id: 'P-GUID.S-0', name: 'new user name' });
-// Get item
-const item = await model.get({ id: 'P-GUID.S-0' });
-// Delete item
-await model.delete({ id: 'P-GUID.S-0' });
+export async function handler(): Promise<void> {
+  // Write item
+  await model.put({ id: 'P-GUID.S-0', name: 'user name' });
+  // Update item
+  await model.update({ id: 'P-GUID.S-0', name: 'new user name' });
+  // Get item
+  await model.get({ id: 'P-GUID.S-0' });
+  // Delete item
+  await model.delete({ id: 'P-GUID.S-0' });
+}
 ```
 
 ## Components
 
 DynamoDB-DataMode is composed of several components that can be used on their own and are used by the higher level components like Fields and Model.
 
-Core:
+DynamoDB-DataModel consists of four core components:
 
-- [Fields](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html) - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.
-- [Index](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/tableindex.html) - Classes that represents Global or Local Secondary Indexes associated with a table.
-- [Model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) - Class that uses the model schema and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.
-- [Table](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html) - Class the represents the Table and wraps table actions.
+- [Table](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html) - The Table object is the first object you'll need to create and has a one-to-one corelation with a provisioned DynamoDB table. Table is essentially a wrapper around the [DynamoDB DocumentClient](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html) and is used by the Model objects to read and write data to the table. Following a single table design you'll only need a single table object.
+- [Model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) - The Model object is the secondary component you'll need to create and has a one-to-one corelation with each of the data item types you are storing in the DynamoDB table. You will create multiple Models, one for each data item type, and they each will reference the same table object. The Model object contains a schema that defines how the model data will be represented in the dynamodb table. Models are the main object you will be using to read and write data to the DynamoDB table.
+- [Field](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html) - The Field objects are created when declaring the Model schema and each item data property on the model will be associated with a Field object. There are separate Field classes for each of the native DynamoDB data types (string, number, boolean, binary, null, list, map, string set, number set and binary set), in addition to more advanced fields (like composite, date, created date, type and others). You can also create custom fields for your own data types. Each fields main purpose is to map the data between model properties and table attributes (bidirectional), but they can also add update, filter and condition expressions to support more complex behavior. Since there are many types of fields they are all contained within the `Fields` namespace.
+- [Index](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html) - Index objects are created along side the `Table` for each global or local secondary index that is associated with the DynamoDB table.
 
 Expressions:
 
@@ -208,7 +209,41 @@ You can either create a simple JavaScript based Table using `new Table()` or if 
 
 Creating a table is simple, there are only three things needed: 1) the name of the DynamoDB table, 2) a map of key attribute types, 3) a map of primary key types.
 
+#### Table Example
+
+From: [examples/Table.Simple.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.Simple.ts)
+
 ```typescript
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { Table } from 'dynamodb-datamodel';
+
+export const client = new DocumentClient({ convertEmptyValues: true });
+
+// Define the table primary key interface.
+export interface TableKey {
+  P: Table.PrimaryKey.PartitionString;
+  S?: Table.PrimaryKey.SortString;
+}
+
+// Create the table object for the primary key and secondary indexes.
+export const table = Table.createTable<TableKey>({
+  client,
+  name: 'SimpleTable',
+  keyAttributes: {
+    P: Table.PrimaryKey.StringType,
+    S: Table.PrimaryKey.StringType,
+  },
+  keySchema: {
+    P: Table.PrimaryKey.PartitionKeyType,
+    S: Table.PrimaryKey.SortKeyType,
+  },
+});
+
+// Generate params to pass to DocumentClient or call the action method
+const params = table.getParams({ P: 'p1', S: 's1' });
+
+// (jest) output of getParams
+expect(params).toEqual({ Key: { P: 'p1', S: 's1' }, TableName: 'SimpleTable' });
 ```
 
 ### Index
@@ -219,17 +254,116 @@ Also like Table you can create either a JavaScript based index using `new Index(
 
 Creating a index is simple, there are only three things needed: 1) the name of the secondary index, 2) a map of the primary key types, 3) the projection type.
 
+#### Index Example
+
+From: [examples/Index.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts)
+
 ```typescript
+import { Index, Table } from 'dynamodb-datamodel';
+
+// Define a Global Secondary Index (GSI) key interface for GSI0.
+export interface GSI0Key {
+  G0P: Table.PrimaryKey.PartitionString;
+  G0S?: Table.PrimaryKey.SortString;
+}
+
+// Create an Index object for GSI0 based on GSI0Key, and project all attributes.
+export const gsi0 = Index.createIndex<GSI0Key>({
+  name: 'GSI0',
+  // Defines the key type ('HASH' or 'RANGE') for the GSI primary keys.
+  keySchema: {
+    G0P: Table.PrimaryKey.PartitionKeyType,
+    G0S: Table.PrimaryKey.SortKeyType,
+  },
+  projection: { type: 'ALL' },
+});
+
+// Define a Local Secondary Index (LSI) key interface for LSI0, partition key must be same as the table's
+export interface LSI0Key {
+  P: Table.PrimaryKey.PartitionString;
+  L0S?: Table.PrimaryKey.SortNumber;
+}
+
+// Create an Index object for LSI0 based on LSI0Key, and project all attributes.
+export const lsi0 = Index.createIndex<LSI0Key>({
+  name: 'LSI0',
+  // Defines the key type ('HASH' or 'RANGE') for the LSI primary keys.
+  keySchema: {
+    P: Table.PrimaryKey.PartitionKeyType,
+    L0S: Table.PrimaryKey.SortKeyType,
+  },
+  projection: { type: 'ALL' },
+});
 ```
 
 ### Model
 
+#### Model Example
+
+From: [examples/Model.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts) (imports: [examples/Table.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts))
+
 ```typescript
+import { Fields, Model, Table, Update } from 'dynamodb-datamodel';
+import { table } from './Table';
+
+// (TypeScript) Define model key and item interface.
+export interface ModelKey {
+  id: string;
+}
+export interface ModelItem extends ModelKey {
+  name: Update.String;
+  age?: Update.Number;
+  children?: Update.List<{ name: string; age: number }>;
+  sports?: Update.StringSet;
+}
+
+// Define the schema using Fields
+export const model = Model.createModel<ModelKey, ModelItem>({
+  schema: {
+    id: Fields.split({ aliases: ['P', 'S'] }),
+    name: Fields.string(),
+    age: Fields.number(),
+    children: Fields.list(),
+    sports: Fields.stringSet(),
+  },
+  table: table as Table,
+});
+
+// Generate params to pass to DocumentClient or call the action method
+const params = model.getParams({ id: 'P-1.S-1' });
+
+// (jest) output of getParams
+expect(params).toEqual({ Key: { P: 'P-1', S: 'S-1' }, TableName: 'ExampleTable' });
 ```
 
 ### Fields
 
+Fields encapsulate the logic that bi-directionally maps model property value(s) to a table attribute value(s) by implementing the Field interface contract.
+
+Field has three require functions and one optional function:
+
+```typescript
+export interface Field {
+  init(name: string, model: Model): void;
+
+  toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+
+  toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+
+  toTableUpdate?(
+    name: string,
+    modelData: Model.ModelUpdate,
+    tableData: Update.ResolverMap,
+    context: TableContext,
+  ): void;
+}
+```
+
+There are several built in Fields that provide a base set of capabilities for mapping data and provide some core logic.
+
 #### Core Fields
+
+Below are the fields that map to the native DynamoDB types and in most cases map to the native JavaScript types.
 
 | Name                                                                                            | Table Type | Description               |
 | :---------------------------------------------------------------------------------------------- | :--------- | :------------------------ |
@@ -245,26 +379,66 @@ Creating a index is simple, there are only three things needed: 1) the name of t
 
 #### Extended Fields
 
-| name                                                                                                      | Table Type | Description                                                |
-| :-------------------------------------------------------------------------------------------------------- | :--------- | :--------------------------------------------------------- |
-| [model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#model)                   | M          |                                                            |
-| [modelList](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#modellist)           | L          | List of models                                             |
-| [modelMap](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#modelmap)             | M          |                                                            |
-| [date](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#date)                     | N          | JavaScript Date                                            |
-| [hidden](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#hidden)                 | -          | Hide field from getting written to DynamoDB                |
-| [split](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#split)                   | S          | Split the field property into multiple DynamoDB attributes |
-| [composite](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#composite)           | S          |                                                            |
-| [compositeNamed](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#compositenamed) | S          |                                                            |
-| [type](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#type)                     | S          |                                                            |
-| [createdDate](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#createdate)        | N          |                                                            |
-| [updatedDate](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#updatedate)        | N          |                                                            |
-| [revision](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#revision)             | N          |                                                            |
+| name                                                                                                      | Table Type | Description                                                                                                                                                                |
+| :-------------------------------------------------------------------------------------------------------- | :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#model)                   | M          | A map based field that contains a schema in the same format as [Model](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html) to allow for nested types. |
+| [modelList](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#modellist)           | L          | List of single model type that follows a schema, to all for a list of nested types.                                                                                        |
+| [modelMap](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#modelmap)             | M          | Similar to modelList except instead of a array of models this is a map of models with string based keys.                                                                   |
+| [date](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#date)                     | N          | Maps a JavaScript Date object for mapping a date to a table attribute number.                                                                                              |
+| [hidden](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#hidden)                 | -          | Hide field from getting written to DynamoDB .                                                                                                                              |
+| [split](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#split)                   | S          | Split the field property into multiple DynamoDB attributes. Commonly used as model id field.                                                                               |
+| [composite](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#composite)           | S          | Compose multiple model properties into a single table attribute to allow for more complex queries.                                                                         |
+| [compositeNamed](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#compositenamed) | S          | Similar to composite, but uses names instead of indexes to identify the slots.                                                                                             |
+| [type](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#type)                     | S          | Writes the Model name to a table attribute.                                                                                                                                |
+| [createdDate](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#createdate)        | N          | Sets an attribute to the date the item was put or creaed.                                                                                                                  |
+| [updatedDate](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#updatedate)        | N          | Updates an attribute each time the item is updated.                                                                                                                        |
+| [revision](https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#revision)             | N          | Increments a table attribute by one for each update. Can also prevent writes if input revision doesn't match.                                                              |
 
 #### Create your own custom fields
 
-#### Example
+#### Fields Examples
+
+From: [examples/Fields.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts)
 
 ```typescript
+import { Fields, Model, Table, Update } from 'dynamodb-datamodel';
+import { table } from './Table';
+
+// (TypeScript) Define model key and item interface.
+export interface ModelKey {
+  id: string;
+}
+// Use Update types so model.update will have some type safety.
+export interface ModelItem extends ModelKey {
+  name: Update.String;
+  age?: Update.Number;
+  children?: Update.List<{ name: string; age: number }>;
+  sports?: Update.StringSet;
+}
+
+// Define the schema using Fields
+export const model = Model.createModel<ModelKey, ModelItem>({
+  schema: {
+    id: Fields.split({ aliases: ['P', 'S'] }),
+    name: Fields.string(),
+    age: Fields.number(),
+    children: Fields.list(),
+    sports: Fields.stringSet(),
+  },
+  table: table as Table,
+});
+
+// Generate params to pass to DocumentClient or call the action method
+const params = model.updateParams({ id: 'P-1.S-1', age: Update.inc(1) });
+
+// (jest) output of updateParams
+expect(params).toEqual({
+  ExpressionAttributeNames: { '#n0': 'age' },
+  ExpressionAttributeValues: { ':v0': 1 },
+  Key: { P: 'P-1', S: 'S-1' },
+  TableName: 'ExampleTable',
+  UpdateExpression: 'SET #n0 = #n0 + :v0',
+});
 ```
 
 ### Condition or Filter Expressions
@@ -299,9 +473,15 @@ Creating a index is simple, there are only three things needed: 1) the name of t
 
 Condition where age > 21 OR ((region = 'US' AND size(interests) > 10) AND interests contain nodejs, dynamodb, or serverless):
 
+From: [examples/Readme.Condition.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.ts)
+
 ```typescript Using Condition helpers
+import { Condition, Table } from 'dynamodb-datamodel';
+
+// Destructuring Condition to make it easier to write filter expression.
 const { and, or, eq, gt, contains, size } = Condition;
-const filters = or(
+
+const filter = or(
   gt('age', 21),
   and(
     eq('region', 'US'),
@@ -309,30 +489,47 @@ const filters = or(
     or(contains('interests', 'nodejs'), contains('interests', 'dynamodb'), contains('interests', 'serverless')),
   ),
 );
+
+const params = Table.addParams({}, { conditions: [filter] }, 'filter');
+expect(params.FilterExpression).toEqual(
+  '(#n0 > :v0 OR (#n1 = :v1 AND size(#n2) > :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))',
+);
 ```
 
-```typescript Using Field methods to ensure attribute paths are correct
+Using Field methods to ensure attribute paths are correct.
+
+From: [examples/Readme.Condition.Fields.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.Fields.ts)
+
+```typescript
+import { Condition, Fields, Model, Table } from 'dynamodb-datamodel';
+import { table } from './Table';
+
 const schema = {
-  age: Field.number(),
-  region: Field.string(),
-  interests: Field.string(),
+  age: Fields.number(),
+  region: Fields.string(),
+  interests: Fields.string(),
 };
 
-// Assigning a schema to a model will initialize the schema fields with model property name
-// which is needed for the field condition methods to work below.
-const testModel = new Model({
-  name: 'TestModel',
-  schema,
-});
+// Assigning the schema to a model will initialize the schema fields to use below.
+new Model({ name: 'TestModel', schema, table: table as Table });
 
+// Destructuring schema and Condition to make it easier to write filter expression.
 const { age, region, interests } = schema;
-const filters = or(
+const { and, or, gt } = Condition;
+
+const filter = or(
   age.gt(21),
   and(
     region.eq('US'),
     gt(interests.size(), 10),
     or(interests.contains('nodejs'), interests.contains('dynamodb'), interests.contains('serverless')),
   ),
+);
+
+// build and validate expression
+const params = Table.addParams({}, { conditions: [filter] }, 'filter');
+expect(params.FilterExpression).toEqual(
+  '(#n0 > :v0 OR (#n1 = :v1 AND size(#n2) > :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))',
 );
 ```
 
@@ -357,7 +554,25 @@ Note: All of the above KeyCondition functions return a resolver function, allowi
 
 #### KeyCondition Examples
 
+From: [examples/KeyCondition.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/KeyCondition.ts)
+
 ```typescript
+import { KeyCondition } from 'dynamodb-datamodel';
+import { table } from './Table';
+
+// Use KeyCondition to query the table with primary key of 'P-GUID' and sort key between (and including) 'a' and 'z'
+const key = {
+  P: 'P-GUID',
+  S: KeyCondition.between('a', 'z'),
+};
+const params = table.queryParams(key);
+
+expect(params).toEqual({
+  ExpressionAttributeNames: { '#n0': 'P', '#n1': 'S' },
+  ExpressionAttributeValues: { ':v0': 'P-GUID', ':v1': 'a', ':v2': 'z' },
+  KeyConditionExpression: '#n0 = :v0 AND #n1 BETWEEN :v1 AND :v2',
+  TableName: 'ExampleTable',
+});
 ```
 
 ### Update Expressions
@@ -404,7 +619,47 @@ To create custom Update functions you just need to return an arrow function that
 
 #### Update Examples
 
+From: [examples/Update.Model.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Model.ts)
+
 ```typescript
+import { Fields, Model, Table, Update } from 'dynamodb-datamodel';
+import { table } from './Table';
+
+interface ModelKey {
+  id: string;
+}
+interface ModelItem extends ModelKey {
+  name: Update.String;
+  revision: Update.Number;
+  nickName: Update.String;
+}
+
+const model = Model.createModel<ModelKey, ModelItem>({
+  schema: {
+    id: Fields.split({ aliases: ['P', 'S'] }),
+    name: Fields.string(),
+    nickName: Fields.string(),
+    revision: Fields.number(),
+  },
+  table: table as Table,
+});
+
+// update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.
+const params = model.updateParams({
+  id: 'P-1.S-1',
+  name: 'new name',
+  nickName: Update.del(),
+  revision: Update.inc(2),
+});
+
+// (jest) output of updateParams
+expect(params).toEqual({
+  ExpressionAttributeNames: { '#n0': 'name', '#n1': 'nickName', '#n2': 'revision' },
+  ExpressionAttributeValues: { ':v0': 'new name', ':v1': 2 },
+  Key: { P: 'P-1', S: 'S-1' },
+  TableName: 'ExampleTable',
+  UpdateExpression: 'SET #n0 = :v0, #n2 = #n2 + :v1 REMOVE #n1',
+});
 ```
 
 ## Best practices

@@ -143,7 +143,6 @@ export namespace Fields {
         now?: () => Date;
     }
     export interface Field {
-        getAttributesSchema?(): AttributesSchema;
         init(name: string, model: Model): void;
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;

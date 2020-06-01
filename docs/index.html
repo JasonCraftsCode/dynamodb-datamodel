@@ -82,16 +82,28 @@
 						<li><a href="#problems-this-library-focuses-on">Problems this library focuses on</a></li>
 						<li><a href="#non-goals">Non goals</a></li>
 						<li><a href="#installation">Installation</a></li>
-						<li><a href="#basic-usage">Basic usage</a></li>
+						<li><a href="#basic-usage">Basic usage</a><ul>
+								<li><a href="#basic-usage-example">Basic usage example</a></li>
+							</ul>
+						</li>
 						<li><a href="#components">Components</a><ul>
-								<li><a href="#table">Table</a></li>
-								<li><a href="#index">Index</a></li>
-								<li><a href="#model">Model</a></li>
+								<li><a href="#table">Table</a><ul>
+										<li><a href="#table-example">Table Example</a></li>
+									</ul>
+								</li>
+								<li><a href="#index">Index</a><ul>
+										<li><a href="#index-example">Index Example</a></li>
+									</ul>
+								</li>
+								<li><a href="#model">Model</a><ul>
+										<li><a href="#model-example">Model Example</a></li>
+									</ul>
+								</li>
 								<li><a href="#fields">Fields</a><ul>
 										<li><a href="#core-fields">Core Fields</a></li>
 										<li><a href="#extended-fields">Extended Fields</a></li>
 										<li><a href="#create-your-own-custom-fields">Create your own custom fields</a></li>
-										<li><a href="#example">Example</a></li>
+										<li><a href="#fields-examples">Fields Examples</a></li>
 									</ul>
 								</li>
 								<li><a href="#condition-or-filter-expressions">Condition or Filter Expressions</a><ul>
@@ -159,13 +171,6 @@
 				<a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
 					<h2>Basic usage</h2>
 				</a>
-				<p>DynamoDB-DataModel consists of three core components:</p>
-				<ul>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html"><code>Table</code></a> - The Table object is the first component you&#39;ll need to create and has a one-to-one corelation with a provisioned DynamoDB table. Table is essentially a wrapper around the <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html">DynamoDB DocumentClient</a> and is used by the Model objects to read and write data to the table. Following a single table design you&#39;ll only need a single table object.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html"><code>Model</code></a> - The Model object is the secondary component you&#39;ll need to create and has a one-to-one corelation with each of the data item types you are storing in the DynamoDB table. You will create multiple Models, one for each data item type, and they each will reference the same table object. The Model object contains a schema that defines how the model data will be represented in the dynamodb table. Models are the main object you will be using to read and write data to the DynamoDB table.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html"><code>Field</code></a> - The Field objects are created when declaring the Model schema and each item data property on the model will be associated with a Field object. There are separate Field classes for each of the native DynamoDB data types (string, number, boolean, binary, null, list, map, string set, number set and binary set), in addition to more advanced fields (like composite, date, created date, type and others). You can also create custom Fields for your own data types. Each Fields main purpose is to map the data between model properties and table attributes (bidirectional), but they can also add update, filter and condition expressions to support more complex behavior. Since there are many types of fields they are all contained within the <code>Fields</code> namespace.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/tableindex.html"><code>Index</code></a> - Index objects are created along side the <code>Table</code></li>
-				</ul>
 				<p>Import or require <code>Table</code>, <code>Model</code> and <code>Fields</code> from <code>dynamodb-datamodel</code>:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Table, Model, Fields } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;</code></pre>
 				<p>General usage flow:</p>
@@ -178,7 +183,10 @@
 					<li>Create each Model and define data schema</li>
 					<li>Use the model to read and write data</li>
 				</ol>
-				<p>Example:</p>
+				<a href="#basic-usage-example" id="basic-usage-example" style="color: inherit; text-decoration: none;">
+					<h3>Basic usage example</h3>
+				</a>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.BasicUsage.ts">examples/Readme.BasicUsage.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DocumentClient } <span class="hljs-keyword">from</span> <span class="hljs-string">'aws-sdk/clients/dynamodb'</span>;
 <span class="hljs-comment">// 1. Import or require `Table`, `Model` and `Fields` from `dynamodb-datamodel`</span>
 <span class="hljs-keyword">import</span> { Table, Model, Fields } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
@@ -227,24 +235,26 @@
 <span class="hljs-comment">// Additional models can also be defined</span>
 
 <span class="hljs-comment">// 7. Use the model to read and write data</span>
-<span class="hljs-comment">// Write item</span>
-<span class="hljs-keyword">await</span> model.put({ id: <span class="hljs-string">'P-GUID.S-0'</span>, name: <span class="hljs-string">'user name'</span> });
-<span class="hljs-comment">// Update item</span>
-<span class="hljs-keyword">await</span> model.update({ id: <span class="hljs-string">'P-GUID.S-0'</span>, name: <span class="hljs-string">'new user name'</span> });
-<span class="hljs-comment">// Get item</span>
-<span class="hljs-keyword">const</span> item = <span class="hljs-keyword">await</span> model.get({ id: <span class="hljs-string">'P-GUID.S-0'</span> });
-<span class="hljs-comment">// Delete item</span>
-<span class="hljs-keyword">await</span> model.delete({ id: <span class="hljs-string">'P-GUID.S-0'</span> });</code></pre>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span>(<span class="hljs-params"></span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">void</span>&gt; </span>{
+  <span class="hljs-comment">// Write item</span>
+  <span class="hljs-keyword">await</span> model.put({ id: <span class="hljs-string">'P-GUID.S-0'</span>, name: <span class="hljs-string">'user name'</span> });
+  <span class="hljs-comment">// Update item</span>
+  <span class="hljs-keyword">await</span> model.update({ id: <span class="hljs-string">'P-GUID.S-0'</span>, name: <span class="hljs-string">'new user name'</span> });
+  <span class="hljs-comment">// Get item</span>
+  <span class="hljs-keyword">await</span> model.get({ id: <span class="hljs-string">'P-GUID.S-0'</span> });
+  <span class="hljs-comment">// Delete item</span>
+  <span class="hljs-keyword">await</span> model.delete({ id: <span class="hljs-string">'P-GUID.S-0'</span> });
+}</code></pre>
 				<a href="#components" id="components" style="color: inherit; text-decoration: none;">
 					<h2>Components</h2>
 				</a>
 				<p>DynamoDB-DataMode is composed of several components that can be used on their own and are used by the higher level components like Fields and Model.</p>
-				<p>Core:</p>
+				<p>DynamoDB-DataModel consists of four core components:</p>
 				<ul>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html">Fields</a> - Typed based Fields used in the Model schema to support mapping the model data to and from the table data.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/tableindex.html">Index</a> - Classes that represents Global or Local Secondary Indexes associated with a table.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html">Model</a> - Class that uses the model schema and fields to map model data, updates and conditions to the table attributes and maps the table data back to the model.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html">Table</a> - Class the represents the Table and wraps table actions.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html">Table</a> - The Table object is the first object you&#39;ll need to create and has a one-to-one corelation with a provisioned DynamoDB table. Table is essentially a wrapper around the <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html">DynamoDB DocumentClient</a> and is used by the Model objects to read and write data to the table. Following a single table design you&#39;ll only need a single table object.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html">Model</a> - The Model object is the secondary component you&#39;ll need to create and has a one-to-one corelation with each of the data item types you are storing in the DynamoDB table. You will create multiple Models, one for each data item type, and they each will reference the same table object. The Model object contains a schema that defines how the model data will be represented in the dynamodb table. Models are the main object you will be using to read and write data to the DynamoDB table.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html">Field</a> - The Field objects are created when declaring the Model schema and each item data property on the model will be associated with a Field object. There are separate Field classes for each of the native DynamoDB data types (string, number, boolean, binary, null, list, map, string set, number set and binary set), in addition to more advanced fields (like composite, date, created date, type and others). You can also create custom fields for your own data types. Each fields main purpose is to map the data between model properties and table attributes (bidirectional), but they can also add update, filter and condition expressions to support more complex behavior. Since there are many types of fields they are all contained within the <code>Fields</code> namespace.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html">Index</a> - Index objects are created along side the <code>Table</code> for each global or local secondary index that is associated with the DynamoDB table.</li>
 				</ul>
 				<p>Expressions:</p>
 				<ul>
@@ -262,24 +272,147 @@
 				<p><code>Table</code> is the first object that you will need to create when working with dynamodb-datamodel. It is the object that contains the configuration data for a provisioned DynamoDB Table and uses the DynamoDB DocumentObject to read and write to the DynamoDB Table.</p>
 				<p>You can either create a simple JavaScript based Table using <code>new Table()</code> or if you want to get additional typescript based type checking and code editor autocomplete you can use <code>Table.createTable&lt;KEY, ATTRIBUTES&gt;</code> to create a Table.</p>
 				<p>Creating a table is simple, there are only three things needed: 1) the name of the DynamoDB table, 2) a map of key attribute types, 3) a map of primary key types.</p>
-				<pre><code class="language-typescript"></code></pre>
+				<a href="#table-example" id="table-example" style="color: inherit; text-decoration: none;">
+					<h4>Table Example</h4>
+				</a>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.Simple.ts">examples/Table.Simple.ts</a></p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DocumentClient } <span class="hljs-keyword">from</span> <span class="hljs-string">'aws-sdk/clients/dynamodb'</span>;
+<span class="hljs-keyword">import</span> { Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> DocumentClient({ convertEmptyValues: <span class="hljs-literal">true</span> });
+
+<span class="hljs-comment">// Define the table primary key interface.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> TableKey {
+  P: Table.PrimaryKey.PartitionString;
+  S?: Table.PrimaryKey.SortString;
+}
+
+<span class="hljs-comment">// Create the table object for the primary key and secondary indexes.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> table = Table.createTable&lt;TableKey&gt;({
+  client,
+  name: <span class="hljs-string">'SimpleTable'</span>,
+  keyAttributes: {
+    P: Table.PrimaryKey.StringType,
+    S: Table.PrimaryKey.StringType,
+  },
+  keySchema: {
+    P: Table.PrimaryKey.PartitionKeyType,
+    S: Table.PrimaryKey.SortKeyType,
+  },
+});
+
+<span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
+<span class="hljs-keyword">const</span> params = table.getParams({ P: <span class="hljs-string">'p1'</span>, S: <span class="hljs-string">'s1'</span> });
+
+<span class="hljs-comment">// (jest) output of getParams</span>
+expect(params).toEqual({ Key: { P: <span class="hljs-string">'p1'</span>, S: <span class="hljs-string">'s1'</span> }, TableName: <span class="hljs-string">'SimpleTable'</span> });</code></pre>
 				<a href="#index" id="index" style="color: inherit; text-decoration: none;">
 					<h3>Index</h3>
 				</a>
 				<p>DynamoDB supports two types of secondary indexes: local secondary index (LSI) and global secondary index (GSI). Just like Table, an Index object has a one-to-one corelation with a provisioned secondary index. Like <code>Model</code>, <code>Index</code> uses <code>Table</code> to query and scan the secondary indexes of the DynamoDB Table.</p>
 				<p>Also like Table you can create either a JavaScript based index using <code>new Index()</code> or if you want additional typescript based type checking and code editor autocomplete you can use <code>Index.createIndex&lt;KEY&gt;</code> to create an Index.</p>
 				<p>Creating a index is simple, there are only three things needed: 1) the name of the secondary index, 2) a map of the primary key types, 3) the projection type.</p>
-				<pre><code class="language-typescript"></code></pre>
+				<a href="#index-example" id="index-example" style="color: inherit; text-decoration: none;">
+					<h4>Index Example</h4>
+				</a>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts">examples/Index.ts</a></p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Index, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-comment">// Define a Global Secondary Index (GSI) key interface for GSI0.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> GSI0Key {
+  G0P: Table.PrimaryKey.PartitionString;
+  G0S?: Table.PrimaryKey.SortString;
+}
+
+<span class="hljs-comment">// Create an Index object for GSI0 based on GSI0Key, and project all attributes.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> gsi0 = Index.createIndex&lt;GSI0Key&gt;({
+  name: <span class="hljs-string">'GSI0'</span>,
+  <span class="hljs-comment">// Defines the key type ('HASH' or 'RANGE') for the GSI primary keys.</span>
+  keySchema: {
+    G0P: Table.PrimaryKey.PartitionKeyType,
+    G0S: Table.PrimaryKey.SortKeyType,
+  },
+  projection: { <span class="hljs-keyword">type</span>: <span class="hljs-string">'ALL'</span> },
+});
+
+<span class="hljs-comment">// Define a Local Secondary Index (LSI) key interface for LSI0, partition key must be same as the table's</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> LSI0Key {
+  P: Table.PrimaryKey.PartitionString;
+  L0S?: Table.PrimaryKey.SortNumber;
+}
+
+<span class="hljs-comment">// Create an Index object for LSI0 based on LSI0Key, and project all attributes.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> lsi0 = Index.createIndex&lt;LSI0Key&gt;({
+  name: <span class="hljs-string">'LSI0'</span>,
+  <span class="hljs-comment">// Defines the key type ('HASH' or 'RANGE') for the LSI primary keys.</span>
+  keySchema: {
+    P: Table.PrimaryKey.PartitionKeyType,
+    L0S: Table.PrimaryKey.SortKeyType,
+  },
+  projection: { <span class="hljs-keyword">type</span>: <span class="hljs-string">'ALL'</span> },
+});</code></pre>
 				<a href="#model" id="model" style="color: inherit; text-decoration: none;">
 					<h3>Model</h3>
 				</a>
-				<pre><code class="language-typescript"></code></pre>
+				<a href="#model-example" id="model-example" style="color: inherit; text-decoration: none;">
+					<h4>Model Example</h4>
+				</a>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts">examples/Model.ts</a> (imports: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts">examples/Table.ts</a>)</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+
+<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelKey {
+  id: <span class="hljs-built_in">string</span>;
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
+  name: Update.String;
+  age?: Update.Number;
+  children?: Update.List&lt;{ name: <span class="hljs-built_in">string</span>; age: <span class="hljs-built_in">number</span> }&gt;;
+  sports?: Update.StringSet;
+}
+
+<span class="hljs-comment">// Define the schema using Fields</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
+  schema: {
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
+    name: Fields.string(),
+    age: Fields.number(),
+    children: Fields.list(),
+    sports: Fields.stringSet(),
+  },
+  table: table <span class="hljs-keyword">as</span> Table,
+});
+
+<span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
+<span class="hljs-keyword">const</span> params = model.getParams({ id: <span class="hljs-string">'P-1.S-1'</span> });
+
+<span class="hljs-comment">// (jest) output of getParams</span>
+expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> }, TableName: <span class="hljs-string">'ExampleTable'</span> });</code></pre>
 				<a href="#fields" id="fields" style="color: inherit; text-decoration: none;">
 					<h3>Fields</h3>
 				</a>
+				<p>Fields encapsulate the logic that bi-directionally maps model property value(s) to a table attribute value(s) by implementing the Field interface contract.</p>
+				<p>Field has three require functions and one optional function:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> Field {
+  init(name: <span class="hljs-built_in">string</span>, model: Model): <span class="hljs-built_in">void</span>;
+
+  toModel(name: <span class="hljs-built_in">string</span>, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): <span class="hljs-built_in">void</span>;
+
+  toTable(name: <span class="hljs-built_in">string</span>, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): <span class="hljs-built_in">void</span>;
+
+  toTableUpdate?(
+    name: <span class="hljs-built_in">string</span>,
+    modelData: Model.ModelUpdate,
+    tableData: Update.ResolverMap,
+    context: TableContext,
+  ): <span class="hljs-built_in">void</span>;
+}</code></pre>
+				<p>There are several built in Fields that provide a base set of capabilities for mapping data and provide some core logic.</p>
 				<a href="#core-fields" id="core-fields" style="color: inherit; text-decoration: none;">
 					<h4>Core Fields</h4>
 				</a>
+				<p>Below are the fields that map to the native DynamoDB types and in most cases map to the native JavaScript types.</p>
 				<table>
 					<thead>
 						<tr>
@@ -348,71 +481,109 @@
 					<tbody><tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#model">model</a></td>
 							<td align="left">M</td>
-							<td align="left"></td>
+							<td align="left">A map based field that contains a schema in the same format as <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html">Model</a> to allow for nested types.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#modellist">modelList</a></td>
 							<td align="left">L</td>
-							<td align="left">List of models</td>
+							<td align="left">List of single model type that follows a schema, to all for a list of nested types.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#modelmap">modelMap</a></td>
 							<td align="left">M</td>
-							<td align="left"></td>
+							<td align="left">Similar to modelList except instead of a array of models this is a map of models with string based keys.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#date">date</a></td>
 							<td align="left">N</td>
-							<td align="left">JavaScript Date</td>
+							<td align="left">Maps a JavaScript Date object for mapping a date to a table attribute number.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#hidden">hidden</a></td>
 							<td align="left">-</td>
-							<td align="left">Hide field from getting written to DynamoDB</td>
+							<td align="left">Hide field from getting written to DynamoDB .</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#split">split</a></td>
 							<td align="left">S</td>
-							<td align="left">Split the field property into multiple DynamoDB attributes</td>
+							<td align="left">Split the field property into multiple DynamoDB attributes. Commonly used as model id field.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#composite">composite</a></td>
 							<td align="left">S</td>
-							<td align="left"></td>
+							<td align="left">Compose multiple model properties into a single table attribute to allow for more complex queries.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#compositenamed">compositeNamed</a></td>
 							<td align="left">S</td>
-							<td align="left"></td>
+							<td align="left">Similar to composite, but uses names instead of indexes to identify the slots.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#type">type</a></td>
 							<td align="left">S</td>
-							<td align="left"></td>
+							<td align="left">Writes the Model name to a table attribute.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#createdate">createdDate</a></td>
 							<td align="left">N</td>
-							<td align="left"></td>
+							<td align="left">Sets an attribute to the date the item was put or creaed.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#updatedate">updatedDate</a></td>
 							<td align="left">N</td>
-							<td align="left"></td>
+							<td align="left">Updates an attribute each time the item is updated.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html#revision">revision</a></td>
 							<td align="left">N</td>
-							<td align="left"></td>
+							<td align="left">Increments a table attribute by one for each update. Can also prevent writes if input revision doesn&#39;t match.</td>
 						</tr>
 				</tbody></table>
 				<a href="#create-your-own-custom-fields" id="create-your-own-custom-fields" style="color: inherit; text-decoration: none;">
 					<h4>Create your own custom fields</h4>
 				</a>
-				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
-					<h4>Example</h4>
+				<a href="#fields-examples" id="fields-examples" style="color: inherit; text-decoration: none;">
+					<h4>Fields Examples</h4>
 				</a>
-				<pre><code class="language-typescript"></code></pre>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts">examples/Fields.ts</a></p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+
+<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelKey {
+  id: <span class="hljs-built_in">string</span>;
+}
+<span class="hljs-comment">// Use Update types so model.update will have some type safety.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
+  name: Update.String;
+  age?: Update.Number;
+  children?: Update.List&lt;{ name: <span class="hljs-built_in">string</span>; age: <span class="hljs-built_in">number</span> }&gt;;
+  sports?: Update.StringSet;
+}
+
+<span class="hljs-comment">// Define the schema using Fields</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
+  schema: {
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
+    name: Fields.string(),
+    age: Fields.number(),
+    children: Fields.list(),
+    sports: Fields.stringSet(),
+  },
+  table: table <span class="hljs-keyword">as</span> Table,
+});
+
+<span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
+<span class="hljs-keyword">const</span> params = model.updateParams({ id: <span class="hljs-string">'P-1.S-1'</span>, age: Update.inc(<span class="hljs-number">1</span>) });
+
+<span class="hljs-comment">// (jest) output of updateParams</span>
+expect(params).toEqual({
+  ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'age'</span> },
+  ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-number">1</span> },
+  Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> },
+  TableName: <span class="hljs-string">'ExampleTable'</span>,
+  UpdateExpression: <span class="hljs-string">'SET #n0 = #n0 + :v0'</span>,
+});</code></pre>
 				<a href="#condition-or-filter-expressions" id="condition-or-filter-expressions" style="color: inherit; text-decoration: none;">
 					<h3>Condition or Filter Expressions</h3>
 				</a>
@@ -530,36 +701,56 @@
 					<h4>Condition Examples</h4>
 				</a>
 				<p>Condition where age &gt; 21 OR ((region = &#39;US&#39; AND size(interests) &gt; 10) AND interests contain nodejs, dynamodb, or serverless):</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> { and, or, eq, gt, contains, size } = Condition;
-<span class="hljs-keyword">const</span> filters = or(
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.ts">examples/Readme.Condition.ts</a></p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Condition, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+
+<span class="hljs-comment">// Destructuring Condition to make it easier to write filter expression.</span>
+<span class="hljs-keyword">const</span> { and, or, eq, gt, contains, size } = Condition;
+
+<span class="hljs-keyword">const</span> filter = or(
   gt(<span class="hljs-string">'age'</span>, <span class="hljs-number">21</span>),
   and(
     eq(<span class="hljs-string">'region'</span>, <span class="hljs-string">'US'</span>),
     gt(size(<span class="hljs-string">'interests'</span>), <span class="hljs-number">10</span>),
     or(contains(<span class="hljs-string">'interests'</span>, <span class="hljs-string">'nodejs'</span>), contains(<span class="hljs-string">'interests'</span>, <span class="hljs-string">'dynamodb'</span>), contains(<span class="hljs-string">'interests'</span>, <span class="hljs-string">'serverless'</span>)),
   ),
+);
+
+<span class="hljs-keyword">const</span> params = Table.addParams({}, { conditions: [filter] }, <span class="hljs-string">'filter'</span>);
+expect(params.FilterExpression).toEqual(
+  <span class="hljs-string">'(#n0 &gt; :v0 OR (#n1 = :v1 AND size(#n2) &gt; :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))'</span>,
 );</code></pre>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> schema = {
-  age: Field.number(),
-  region: Field.string(),
-  interests: Field.string(),
+				<p>Using Field methods to ensure attribute paths are correct.</p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.Fields.ts">examples/Readme.Condition.Fields.ts</a></p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Condition, Fields, Model, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+
+<span class="hljs-keyword">const</span> schema = {
+  age: Fields.number(),
+  region: Fields.string(),
+  interests: Fields.string(),
 };
 
-<span class="hljs-comment">// Assigning a schema to a model will initialize the schema fields with model property name</span>
-<span class="hljs-comment">// which is needed for the field condition methods to work below.</span>
-<span class="hljs-keyword">const</span> testModel = <span class="hljs-keyword">new</span> Model({
-  name: <span class="hljs-string">'TestModel'</span>,
-  schema,
-});
+<span class="hljs-comment">// Assigning the schema to a model will initialize the schema fields to use below.</span>
+<span class="hljs-keyword">new</span> Model({ name: <span class="hljs-string">'TestModel'</span>, schema, table: table <span class="hljs-keyword">as</span> Table });
 
+<span class="hljs-comment">// Destructuring schema and Condition to make it easier to write filter expression.</span>
 <span class="hljs-keyword">const</span> { age, region, interests } = schema;
-<span class="hljs-keyword">const</span> filters = or(
+<span class="hljs-keyword">const</span> { and, or, gt } = Condition;
+
+<span class="hljs-keyword">const</span> filter = or(
   age.gt(<span class="hljs-number">21</span>),
   and(
     region.eq(<span class="hljs-string">'US'</span>),
     gt(interests.size(), <span class="hljs-number">10</span>),
     or(interests.contains(<span class="hljs-string">'nodejs'</span>), interests.contains(<span class="hljs-string">'dynamodb'</span>), interests.contains(<span class="hljs-string">'serverless'</span>)),
   ),
+);
+
+<span class="hljs-comment">// build and validate expression</span>
+<span class="hljs-keyword">const</span> params = Table.addParams({}, { conditions: [filter] }, <span class="hljs-string">'filter'</span>);
+expect(params.FilterExpression).toEqual(
+  <span class="hljs-string">'(#n0 &gt; :v0 OR (#n1 = :v1 AND size(#n2) &gt; :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))'</span>,
 );</code></pre>
 				<a href="#keycondition-expressions" id="keycondition-expressions" style="color: inherit; text-decoration: none;">
 					<h3>KeyCondition Expressions</h3>
@@ -621,7 +812,23 @@
 				<a href="#keycondition-examples" id="keycondition-examples" style="color: inherit; text-decoration: none;">
 					<h4>KeyCondition Examples</h4>
 				</a>
-				<pre><code class="language-typescript"></code></pre>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/KeyCondition.ts">examples/KeyCondition.ts</a></p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { KeyCondition } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+
+<span class="hljs-comment">// Use KeyCondition to query the table with primary key of 'P-GUID' and sort key between (and including) 'a' and 'z'</span>
+<span class="hljs-keyword">const</span> key = {
+  P: <span class="hljs-string">'P-GUID'</span>,
+  S: KeyCondition.between(<span class="hljs-string">'a'</span>, <span class="hljs-string">'z'</span>),
+};
+<span class="hljs-keyword">const</span> params = table.queryParams(key);
+
+expect(params).toEqual({
+  ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'P'</span>, <span class="hljs-string">'#n1'</span>: <span class="hljs-string">'S'</span> },
+  ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-string">'P-GUID'</span>, <span class="hljs-string">':v1'</span>: <span class="hljs-string">'a'</span>, <span class="hljs-string">':v2'</span>: <span class="hljs-string">'z'</span> },
+  KeyConditionExpression: <span class="hljs-string">'#n0 = :v0 AND #n1 BETWEEN :v1 AND :v2'</span>,
+  TableName: <span class="hljs-string">'ExampleTable'</span>,
+});</code></pre>
 				<a href="#update-expressions" id="update-expressions" style="color: inherit; text-decoration: none;">
 					<h3>Update Expressions</h3>
 				</a>
@@ -663,7 +870,45 @@
 				<a href="#update-examples" id="update-examples" style="color: inherit; text-decoration: none;">
 					<h4>Update Examples</h4>
 				</a>
-				<pre><code class="language-typescript"></code></pre>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Model.ts">examples/Update.Model.ts</a></p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
+<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+
+<span class="hljs-keyword">interface</span> ModelKey {
+  id: <span class="hljs-built_in">string</span>;
+}
+<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
+  name: Update.String;
+  revision: Update.Number;
+  nickName: Update.String;
+}
+
+<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
+  schema: {
+    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
+    name: Fields.string(),
+    nickName: Fields.string(),
+    revision: Fields.number(),
+  },
+  table: table <span class="hljs-keyword">as</span> Table,
+});
+
+<span class="hljs-comment">// update will: set name attribute to 'new name', delete nickName attribute and increment revision attribute by 2.</span>
+<span class="hljs-keyword">const</span> params = model.updateParams({
+  id: <span class="hljs-string">'P-1.S-1'</span>,
+  name: <span class="hljs-string">'new name'</span>,
+  nickName: Update.del(),
+  revision: Update.inc(<span class="hljs-number">2</span>),
+});
+
+<span class="hljs-comment">// (jest) output of updateParams</span>
+expect(params).toEqual({
+  ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'name'</span>, <span class="hljs-string">'#n1'</span>: <span class="hljs-string">'nickName'</span>, <span class="hljs-string">'#n2'</span>: <span class="hljs-string">'revision'</span> },
+  ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-string">'new name'</span>, <span class="hljs-string">':v1'</span>: <span class="hljs-number">2</span> },
+  Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> },
+  TableName: <span class="hljs-string">'ExampleTable'</span>,
+  UpdateExpression: <span class="hljs-string">'SET #n0 = :v0, #n2 = #n2 + :v1 REMOVE #n1'</span>,
+});</code></pre>
 				<a href="#best-practices" id="best-practices" style="color: inherit; text-decoration: none;">
 					<h2>Best practices</h2>
 				</a>

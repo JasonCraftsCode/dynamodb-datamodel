@@ -360,15 +360,6 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Update.ResolverMap,
       context: TableContext,
     ): void;
-
-    // TODO: Implement getTableSchema for Fields, add to validateModel to avoid overwrites
-    // Though need to determine a good production value for this.
-    /**
-     * Returns the table attributes and types that the field will read and write to.
-     * Used for validation and creation of access patterns.
-     * @returns The set of table attributes that this field will read from and write to.
-     */
-    getAttributesSchema?(): AttributesSchema;
   }
 
   /**

@@ -14,22 +14,11 @@ import { Table } from './Table';
  * Condition is also used by {@link fields} to allow each field type to only expose the conditions that the field supports.
  *
  *
- * @example
+ * @example [examples/Condition.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Condition.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
  * ```typescript
- * import { Condition, ConditionExpression } from 'dynamodb-datamodel';
- * // Destructuring methods from Condition to make writing expression more concise
- * const { eq, ne, and, path } = Condition;
- * const condition = and(eq('first', 'john'), eq('last', 'smith'), ne('first', path('nickname')));
- * const exp = new ConditionExpression();
- * const params = {
- *   // (#n0 = :v0 AND #n1 = :v1 AND #n0 <> #n2)
- *   ConditionExpression: condition(exp);,
- *   // { '#n0': first, '#n1': last, '#n2': nickname }
- *   ExpressionAttributeNames: exp.attributes.getPaths(),
- *   // { ':v0': john, ':v1': smith }
- *   ExpressionAttributeValues: exp.attributes.getValues(),
- * };
+ * [[include:Condition.ts]]
  * ```
+ *
  *
  * Note: Condition is a class that contains only static methods to support using javascript reserved words as
  * method names, like '{@link in}'.  Condition is also a namespace to scope the Condition specific typings, like Resolver.
@@ -41,7 +30,7 @@ export class Condition {
    * @example
    * ```typescript
    * // Expands to: '#n0 = #n1'
-   * const condition = Condition.eq('name', Condition.path('name'));
+   * const condition = Condition.eq('name', Condition.path('nickname'));
    * ```
    * @param value - Path to use for a condition value.
    * @returns Resolver to use when generate condition expression.

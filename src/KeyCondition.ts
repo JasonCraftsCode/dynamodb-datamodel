@@ -11,35 +11,9 @@ import { Table } from './Table';
  * for details on how each of the below key comparison operations and functions work.
  *
  *
- * @example
+ * @example [examples/KeyCondition.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/KeyCondition.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
  * ```typescript
- * import { KeyCondition, KeyConditionExpression } from 'dynamodb-datamodel';
- *
- * // [TypeScript] Define table primary key type
- * interface Key {
- *   P: Table.PrimaryKey.PartitionString;
- *   S?: Table.PrimaryKey.SortString;
- * }
- *
- * // Create table object.  Use 'new Table()' if your not using TypeScript.
- * const table = Table.createTable<Key>({
- *   name: 'TestTable',
- *   keyAttributes: {
- *     P: Table.PrimaryKey.StringType,
- *     S: Table.PrimaryKey.StringType,
- *   },
- *   keySchema: {
- *     P: Table.PrimaryKey.PartitionKeyType,
- *     S: Table.PrimaryKey.SortKeyType,
- *   },
- * });
- *
- * // Use KeyCondition to query the table with primary key of 'P-GUID' and sort key between (and including) 'a' and 'z'
- * const key = {
- *   P:'P-GUID',
- *   S: KeyCondition.between('a', 'z')
- * };
- * const results = await table.query(key);
+ * [[include:KeyCondition.ts]]
  * ```
  * @public
  */
