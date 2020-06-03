@@ -27,7 +27,7 @@ To get a more detailed list of task see the [projection tab](https://github.com/
 - [x] Support a basic set of model fields and capabilities
 - [x] Provide basic table and index validation
 - [x] Test all of the code (100% test coverage)
-- [ ] Document all of the code
+- [x] Document all of the code
 - [ ] Well written and complete readme.md
 - [ ] Working examples
 

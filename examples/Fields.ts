@@ -34,5 +34,6 @@ expect(params).toEqual({
   ExpressionAttributeValues: { ':v0': 1 },
   Key: { P: 'P-1', S: 'S-1' },
   TableName: 'ExampleTable',
+  ReturnValues: 'ALL_NEW',
   UpdateExpression: 'SET #n0 = #n0 + :v0',
 });

@@ -194,9 +194,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.getParams with single id', () => {
       const params = userModel.getParams({ id: 'id1' });
       expect(params).toEqual({
-        Key: {
-          P: 'id1',
-        },
+        Key: { P: 'id1' },
         TableName: 'MainTable',
       });
     });
@@ -204,10 +202,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.getParams with multiple id', () => {
       const params = userModel.getParams({ id: 'id1.id2.id3.id4' });
       expect(params).toEqual({
-        Key: {
-          P: 'id1.id2.id3',
-          S: 'id4',
-        },
+        Key: { P: 'id1.id2.id3', S: 'id4' },
         TableName: 'MainTable',
       });
     });
@@ -215,10 +210,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.getParams with two id', () => {
       const params = userModel.getParams({ id: 'id1.id2' });
       expect(params).toEqual({
-        Key: {
-          P: 'id1',
-          S: 'id2',
-        },
+        Key: { P: 'id1', S: 'id2' },
         TableName: 'MainTable',
       });
     });
@@ -226,10 +218,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.deleteParams', () => {
       const params = userModel.deleteParams({ id: 'id1.id2' });
       expect(params).toEqual({
-        Key: {
-          P: 'id1',
-          S: 'id2',
-        },
+        Key: { P: 'id1', S: 'id2' },
         TableName: 'MainTable',
       });
     });
@@ -331,14 +320,10 @@ describe('Validate Model with Table and Indexes', () => {
     });
 
     it('Model.updateParams min args', () => {
-      const params = userModel.updateParams({
-        id: 'id1.id2',
-      });
+      const params = userModel.updateParams({ id: 'id1.id2' });
       expect(params).toEqual({
-        Key: {
-          P: 'id1',
-          S: 'id2',
-        },
+        Key: { P: 'id1', S: 'id2' },
+        ReturnValues: 'ALL_NEW',
         TableName: 'MainTable',
       });
     });
@@ -396,29 +381,19 @@ describe('Validate Model with Table and Indexes', () => {
         ExpressionAttributeValues: {
           ':v0': 'kirkland;wa;usa',
           ':v1': 'new name',
-          ':v10': {
-            role: 3,
-          },
+          ':v10': { role: 3 },
           ':v11': 1585553302,
           ':v2': 3,
           ':v3': 1,
           ':v4': table.createStringSet(['soccer', 'football']),
           ':v5': table.createNumberSet([1585533302, 1585543302]),
-          ':v6': [
-            {
-              adult: false,
-              age: 3,
-              name: 'child3',
-            },
-          ],
+          ':v6': [{ adult: false, age: 3, name: 'child3' }],
           ':v7': 1,
           ':v8': 'new spouse',
           ':v9': 2,
         },
-        Key: {
-          P: 'id1',
-          S: 'id2',
-        },
+        Key: { P: 'id1', S: 'id2' },
+        ReturnValues: 'ALL_NEW',
         TableName: 'MainTable',
         UpdateExpression:
           'SET #n0 = :v0, #n1 = :v1, #n2 = #n3 + :v2, #n5 = #n5 + :v3, #n7 = #n7, #n10 = list_append(:v6, #n10), #n11.#n12 = #n11.#n12 - :v7, #n11.#n1 = :v8, #n14.#n16.#n17 = :v9, #n14.#n18 = :v10, #n19 = :v11 REMOVE #n4, #n6, #n11.#n13, #n14.#n15 ADD #n9 :v5 DELETE #n8 :v4',
@@ -464,10 +439,7 @@ describe('Validate Model with Table and Indexes', () => {
       const results = await userModel.get({ id: 'id1.id2' });
       expect(results.item).toEqual({ id: 'id1.id2' });
       expect(client.get).toBeCalledWith({
-        Key: {
-          P: 'id1',
-          S: 'id2',
-        },
+        Key: { P: 'id1', S: 'id2' },
         TableName: 'MainTable',
       });
       expect(client.get).toBeCalledTimes(1);
@@ -497,12 +469,8 @@ describe('Validate Model with Table and Indexes', () => {
             created: 1585563302,
             desc: 'user description',
             groups: {
-              group1: {
-                role: 0,
-              },
-              group3: {
-                role: 1,
-              },
+              group1: { role: 0 },
+              group3: { role: 1 },
             },
             interests: table.createStringSet(['basketball', 'soccer', 'football']),
             modified: table.createNumberSet([1585553302, 1585563302]),
@@ -538,12 +506,8 @@ describe('Validate Model with Table and Indexes', () => {
         created: new Date('2020-03-30T10:15:02.000Z'),
         description: 'user description',
         groups: {
-          group1: {
-            role: 0,
-          },
-          group3: {
-            role: 1,
-          },
+          group1: { role: 0 },
+          group3: { role: 1 },
         },
         id: 'id1.id2',
         interests: table.createStringSet(['basketball', 'soccer', 'football']),
@@ -559,10 +523,7 @@ describe('Validate Model with Table and Indexes', () => {
         state: 'new york',
       });
       expect(client.get).toBeCalledWith({
-        Key: {
-          P: 'id1',
-          S: 'id2',
-        },
+        Key: { P: 'id1', S: 'id2' },
         TableName: 'MainTable',
       });
       expect(client.get).toBeCalledTimes(1);
@@ -649,10 +610,8 @@ describe('Validate Model with Table and Indexes', () => {
       });
       expect(results.item).toEqual({ id: 'id1.id2' });
       expect(client.update).toBeCalledWith({
-        Key: {
-          P: 'id1',
-          S: 'id2',
-        },
+        Key: { P: 'id1', S: 'id2' },
+        ReturnValues: 'ALL_NEW',
         TableName: 'MainTable',
       });
       expect(client.update).toBeCalledTimes(1);
@@ -708,10 +667,8 @@ describe('Validate Model with Table and Indexes', () => {
           ':v2': 1,
           ':v3': 1585553302,
         },
-        Key: {
-          P: 'id1',
-          S: 'id2',
-        },
+        Key: { P: 'id1', S: 'id2' },
+        ReturnValues: 'ALL_NEW',
         TableName: 'MainTable',
         UpdateExpression: 'SET #n0 = :v0, #n1 = :v1, #n2 = #n2 + :v2, #n3 = :v3',
       });

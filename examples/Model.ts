@@ -5,6 +5,7 @@ import { table } from './Table';
 export interface ModelKey {
   id: string;
 }
+// Use Update.* types to support type checking when using Model.update.
 export interface ModelItem extends ModelKey {
   name: Update.String;
   age?: Update.Number;

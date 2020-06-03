@@ -79,6 +79,7 @@
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelKey {
   id: <span class="hljs-built_in">string</span>;
 }
+<span class="hljs-comment">// Use Update.* types to support type checking when using Model.update.</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
   name: Update.String;
   age?: Update.Number;

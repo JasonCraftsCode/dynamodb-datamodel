@@ -86,43 +86,42 @@
 								<li><a href="#basic-usage-example">Basic usage example</a></li>
 							</ul>
 						</li>
-						<li><a href="#components">Components</a><ul>
-								<li><a href="#table">Table</a><ul>
-										<li><a href="#table-example">Table Example</a></li>
-									</ul>
-								</li>
-								<li><a href="#index">Index</a><ul>
-										<li><a href="#index-example">Index Example</a></li>
-									</ul>
-								</li>
-								<li><a href="#model">Model</a><ul>
-										<li><a href="#model-example">Model Example</a></li>
-									</ul>
-								</li>
-								<li><a href="#fields">Fields</a><ul>
-										<li><a href="#core-fields">Core Fields</a></li>
-										<li><a href="#extended-fields">Extended Fields</a></li>
-										<li><a href="#create-your-own-custom-fields">Create your own custom fields</a></li>
-										<li><a href="#fields-examples">Fields Examples</a></li>
-									</ul>
-								</li>
-								<li><a href="#condition-or-filter-expressions">Condition or Filter Expressions</a><ul>
-										<li><a href="#condition-functions">Condition functions</a></li>
-										<li><a href="#create-your-own-custom-conditions">Create your own custom conditions</a></li>
-										<li><a href="#condition-examples">Condition Examples</a></li>
-									</ul>
-								</li>
-								<li><a href="#keycondition-expressions">KeyCondition Expressions</a><ul>
-										<li><a href="#sort-key-functions">Sort key functions</a></li>
-										<li><a href="#keycondition-examples">KeyCondition Examples</a></li>
-									</ul>
-								</li>
-								<li><a href="#update-expressions">Update Expressions</a><ul>
-										<li><a href="#update-functions">Update functions</a></li>
-										<li><a href="#create-your-own-custom-update-resolvers">Create your own custom update resolvers</a></li>
-										<li><a href="#update-examples">Update Examples</a></li>
-									</ul>
-								</li>
+						<li><a href="#components">Components</a></li>
+						<li><a href="#table">Table</a><ul>
+								<li><a href="#table-example">Table Example</a></li>
+							</ul>
+						</li>
+						<li><a href="#index">Index</a><ul>
+								<li><a href="#index-example">Index Example</a></li>
+							</ul>
+						</li>
+						<li><a href="#model">Model</a><ul>
+								<li><a href="#model-example">Model Example</a></li>
+							</ul>
+						</li>
+						<li><a href="#fields">Fields</a><ul>
+								<li><a href="#core-fields">Core Fields</a></li>
+								<li><a href="#extended-fields">Extended Fields</a></li>
+								<li><a href="#create-your-own-custom-fields">Create your own custom fields</a></li>
+								<li><a href="#fields-examples">Fields Examples</a></li>
+							</ul>
+						</li>
+						<li><a href="#condition-and-filter-expressions">Condition and Filter Expressions</a><ul>
+								<li><a href="#condition-functions">Condition functions</a></li>
+								<li><a href="#create-your-own-custom-conditions">Create your own custom conditions</a></li>
+								<li><a href="#condition-examples">Condition Examples</a></li>
+							</ul>
+						</li>
+						<li><a href="#keycondition-expressions">KeyCondition Expressions</a><ul>
+								<li><a href="#sort-key-functions">Sort key functions</a></li>
+								<li><a href="#create-your-own-custom-key-conditions">Create your own custom key conditions</a></li>
+								<li><a href="#keycondition-examples">KeyCondition Examples</a></li>
+							</ul>
+						</li>
+						<li><a href="#update-expressions">Update Expressions</a><ul>
+								<li><a href="#update-functions">Update functions</a></li>
+								<li><a href="#create-your-own-custom-update-resolvers">Create your own custom update resolvers</a></li>
+								<li><a href="#update-examples">Update Examples</a></li>
 							</ul>
 						</li>
 						<li><a href="#best-practices">Best practices</a></li>
@@ -171,7 +170,7 @@
 				<a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
 					<h2>Basic usage</h2>
 				</a>
-				<p>Import or require <code>Table</code>, <code>Model</code> and <code>Fields</code> from <code>dynamodb-datamodel</code>:</p>
+				<p>Import or require Table, Model and Fields from <code>dynamodb-datamodel</code>:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Table, Model, Fields } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;</code></pre>
 				<p>General usage flow:</p>
 				<ol>
@@ -254,9 +253,9 @@
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html">Table</a> - The Table object is the first object you&#39;ll need to create and has a one-to-one corelation with a provisioned DynamoDB table. Table is essentially a wrapper around the <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html">DynamoDB DocumentClient</a> and is used by the Model objects to read and write data to the table. Following a single table design you&#39;ll only need a single table object.</li>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html">Model</a> - The Model object is the secondary component you&#39;ll need to create and has a one-to-one corelation with each of the data item types you are storing in the DynamoDB table. You will create multiple Models, one for each data item type, and they each will reference the same table object. The Model object contains a schema that defines how the model data will be represented in the dynamodb table. Models are the main object you will be using to read and write data to the DynamoDB table.</li>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/fields.html">Field</a> - The Field objects are created when declaring the Model schema and each item data property on the model will be associated with a Field object. There are separate Field classes for each of the native DynamoDB data types (string, number, boolean, binary, null, list, map, string set, number set and binary set), in addition to more advanced fields (like composite, date, created date, type and others). You can also create custom fields for your own data types. Each fields main purpose is to map the data between model properties and table attributes (bidirectional), but they can also add update, filter and condition expressions to support more complex behavior. Since there are many types of fields they are all contained within the <code>Fields</code> namespace.</li>
-					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html">Index</a> - Index objects are created along side the <code>Table</code> for each global or local secondary index that is associated with the DynamoDB table.</li>
+					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/index.html">Index</a> - Index objects are created along side the Table for each global or local secondary index that is associated with the DynamoDB table.</li>
 				</ul>
-				<p>Expressions:</p>
+				<p>Expressions components:</p>
 				<ul>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html">Condition</a> - Contains functions for building complex condition and filter expressions.</li>
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/conditionexpression.html">ConditionExpression</a> - Object passed to the resolvers returned by the <code>Condition</code> functions.</li>
@@ -267,13 +266,13 @@
 					<li><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/updateexpression.html">UpdateExpression</a> - Object passed to the resolves return by the <code>Update</code> functions.</li>
 				</ul>
 				<a href="#table" id="table" style="color: inherit; text-decoration: none;">
-					<h3>Table</h3>
+					<h2>Table</h2>
 				</a>
-				<p><code>Table</code> is the first object that you will need to create when working with dynamodb-datamodel. It is the object that contains the configuration data for a provisioned DynamoDB Table and uses the DynamoDB DocumentObject to read and write to the DynamoDB Table.</p>
+				<p>Table is the first object that you will need to create when working with dynamodb-datamodel. It is the object that contains the configuration data for a provisioned DynamoDB Table and uses the DynamoDB DocumentObject to read and write to the DynamoDB Table.</p>
 				<p>You can either create a simple JavaScript based Table using <code>new Table()</code> or if you want to get additional typescript based type checking and code editor autocomplete you can use <code>Table.createTable&lt;KEY, ATTRIBUTES&gt;</code> to create a Table.</p>
 				<p>Creating a table is simple, there are only three things needed: 1) the name of the DynamoDB table, 2) a map of key attribute types, 3) a map of primary key types.</p>
 				<a href="#table-example" id="table-example" style="color: inherit; text-decoration: none;">
-					<h4>Table Example</h4>
+					<h3>Table Example</h3>
 				</a>
 				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.Simple.ts">examples/Table.Simple.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DocumentClient } <span class="hljs-keyword">from</span> <span class="hljs-string">'aws-sdk/clients/dynamodb'</span>;
@@ -302,18 +301,15 @@
 });
 
 <span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
-<span class="hljs-keyword">const</span> params = table.getParams({ P: <span class="hljs-string">'p1'</span>, S: <span class="hljs-string">'s1'</span> });
-
-<span class="hljs-comment">// (jest) output of getParams</span>
-expect(params).toEqual({ Key: { P: <span class="hljs-string">'p1'</span>, S: <span class="hljs-string">'s1'</span> }, TableName: <span class="hljs-string">'SimpleTable'</span> });</code></pre>
+<span class="hljs-keyword">const</span> params = table.getParams({ P: <span class="hljs-string">'p1'</span>, S: <span class="hljs-string">'s1'</span> });</code></pre>
 				<a href="#index" id="index" style="color: inherit; text-decoration: none;">
-					<h3>Index</h3>
+					<h2>Index</h2>
 				</a>
-				<p>DynamoDB supports two types of secondary indexes: local secondary index (LSI) and global secondary index (GSI). Just like Table, an Index object has a one-to-one corelation with a provisioned secondary index. Like <code>Model</code>, <code>Index</code> uses <code>Table</code> to query and scan the secondary indexes of the DynamoDB Table.</p>
+				<p>DynamoDB supports two types of secondary indexes: local secondary index (LSI) and global secondary index (GSI). Just like Table, an Index object has a one-to-one corelation with a provisioned secondary index. Like Model, Index uses Table to query and scan the secondary indexes of the DynamoDB Table.</p>
 				<p>Also like Table you can create either a JavaScript based index using <code>new Index()</code> or if you want additional typescript based type checking and code editor autocomplete you can use <code>Index.createIndex&lt;KEY&gt;</code> to create an Index.</p>
 				<p>Creating a index is simple, there are only three things needed: 1) the name of the secondary index, 2) a map of the primary key types, 3) the projection type.</p>
 				<a href="#index-example" id="index-example" style="color: inherit; text-decoration: none;">
-					<h4>Index Example</h4>
+					<h3>Index Example</h3>
 				</a>
 				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts">examples/Index.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Index, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
@@ -352,10 +348,24 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'p1'</span>, S: <sp
   projection: { <span class="hljs-keyword">type</span>: <span class="hljs-string">'ALL'</span> },
 });</code></pre>
 				<a href="#model" id="model" style="color: inherit; text-decoration: none;">
-					<h3>Model</h3>
+					<h2>Model</h2>
 				</a>
+				<p>The Model object is the main object you&#39;ll be interacting with to read and write data to DynamoDB. There are 4 main methods that can be used to read and write data to the table, they are: get, delete, put and update. At the core these methods do three things:</p>
+				<ol>
+					<li>Transform the input model data into DynamoDB compatible table data using the schema fields.</li>
+					<li>Call the associated Table methods to read and write the data to DynamoDB.</li>
+					<li>Transform the output table data into model data..</li>
+				</ol>
+				<p>These read and write methods allow DynamoDB parameters to get added to the input parameters just before calling the DocumentClient method, allowing you to override any defaults that the Model or Table object set.</p>
+				<p>A model will need to be created for each item type that is stored in DynamoDB. If your application has a lot of item types you&#39;ll probably want to create and cache each model on demand to avoid allocation a lot of objects when your code starts ups, especially in AWS Lambda since cold start times can have impact.</p>
+				<p>A model only needs three things when created:</p>
+				<ol>
+					<li><em>(typescript only)</em> Key and Model type definition to support type checking when calling read/write methods.</li>
+					<li>Table object to use when read and write to DynamoDB.</li>
+					<li>The model schema based on the model type to support the bi-directional mapping between model and table data.</li>
+				</ol>
 				<a href="#model-example" id="model-example" style="color: inherit; text-decoration: none;">
-					<h4>Model Example</h4>
+					<h3>Model Example</h3>
 				</a>
 				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts">examples/Model.ts</a> (imports: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts">examples/Table.ts</a>)</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
@@ -365,6 +375,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'p1'</span>, S: <sp
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelKey {
   id: <span class="hljs-built_in">string</span>;
 }
+<span class="hljs-comment">// Use Update.* types to support type checking when using Model.update.</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
   name: Update.String;
   age?: Update.Number;
@@ -385,15 +396,12 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'p1'</span>, S: <sp
 });
 
 <span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
-<span class="hljs-keyword">const</span> params = model.getParams({ id: <span class="hljs-string">'P-1.S-1'</span> });
-
-<span class="hljs-comment">// (jest) output of getParams</span>
-expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> }, TableName: <span class="hljs-string">'ExampleTable'</span> });</code></pre>
+<span class="hljs-keyword">const</span> params = model.getParams({ id: <span class="hljs-string">'P-1.S-1'</span> });</code></pre>
 				<a href="#fields" id="fields" style="color: inherit; text-decoration: none;">
-					<h3>Fields</h3>
+					<h2>Fields</h2>
 				</a>
-				<p>Fields encapsulate the logic that bi-directionally maps model property value(s) to a table attribute value(s) by implementing the Field interface contract.</p>
-				<p>Field has three require functions and one optional function:</p>
+				<p>Fields encapsulate the logic that bi-directionally maps model property value(s) to the table attribute value(s) by implementing the Field interface contract.</p>
+				<p>A Field object needs to implement three function, and has an additional optional 4 function. The typescript Field interface is as follows:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> Field {
   init(name: <span class="hljs-built_in">string</span>, model: Model): <span class="hljs-built_in">void</span>;
 
@@ -408,9 +416,12 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
     context: TableContext,
   ): <span class="hljs-built_in">void</span>;
 }</code></pre>
+				<p>The <code>init</code> method is called during the constructor of Model for each Field and is passed the <code>name</code> of the model property the Field is associated with along with the Model that the Field belongs to.</p>
+				<p>The <code>toModel</code> method is called after reading and writing to the DynamoDB, with four arguments. The implementation of this method will generally map the data from <code>tableData</code> to the <code>modelData</code> object. The <code>name</code> argument is the name of the model property the field is associated with, should be the same name as passed in <code>init</code>. The <code>tableData</code> argument contains the data that was returned from the table and will be mapped to the <code>modelData</code>. The <code>modelData</code> argument is the model data that this method is writing to. The <code>context</code> argument has additional contextual data used by the more extended field objects.</p>
+				<p>The <code>toTable</code> and <code>toTableUpdate</code> methods are called before reading and writing to the DynamoDB data, with four arguments. The implementation of this method will generally map data from the <code>modelData</code> to the <code>tableData</code> object, in some this is the opposite of <code>toModel</code>. Like both <code>init</code> and <code>toModel</code> the <code>name</code> argument is the name of the model property the field is associated with. <code>modelData</code> is the input model data that will be mapped to the <code>tableData</code> argument. The <code>context</code> argument is the same as <code>toModel</code>.</p>
 				<p>There are several built in Fields that provide a base set of capabilities for mapping data and provide some core logic.</p>
 				<a href="#core-fields" id="core-fields" style="color: inherit; text-decoration: none;">
-					<h4>Core Fields</h4>
+					<h3>Core Fields</h3>
 				</a>
 				<p>Below are the fields that map to the native DynamoDB types and in most cases map to the native JavaScript types.</p>
 				<table>
@@ -468,7 +479,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 						</tr>
 				</tbody></table>
 				<a href="#extended-fields" id="extended-fields" style="color: inherit; text-decoration: none;">
-					<h4>Extended Fields</h4>
+					<h3>Extended Fields</h3>
 				</a>
 				<table>
 					<thead>
@@ -540,10 +551,10 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 						</tr>
 				</tbody></table>
 				<a href="#create-your-own-custom-fields" id="create-your-own-custom-fields" style="color: inherit; text-decoration: none;">
-					<h4>Create your own custom fields</h4>
+					<h3>Create your own custom fields</h3>
 				</a>
 				<a href="#fields-examples" id="fields-examples" style="color: inherit; text-decoration: none;">
-					<h4>Fields Examples</h4>
+					<h3>Fields Examples</h3>
 				</a>
 				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts">examples/Fields.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
@@ -576,7 +587,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 <span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
 <span class="hljs-keyword">const</span> params = model.updateParams({ id: <span class="hljs-string">'P-1.S-1'</span>, age: Update.inc(<span class="hljs-number">1</span>) });
 
-<span class="hljs-comment">// (jest) output of updateParams</span>
+<span class="hljs-comment">// (jest) validate output of updateParams</span>
 expect(params).toEqual({
   ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'age'</span> },
   ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-number">1</span> },
@@ -584,11 +595,20 @@ expect(params).toEqual({
   TableName: <span class="hljs-string">'ExampleTable'</span>,
   UpdateExpression: <span class="hljs-string">'SET #n0 = #n0 + :v0'</span>,
 });</code></pre>
-				<a href="#condition-or-filter-expressions" id="condition-or-filter-expressions" style="color: inherit; text-decoration: none;">
-					<h3>Condition or Filter Expressions</h3>
+				<a href="#condition-and-filter-expressions" id="condition-and-filter-expressions" style="color: inherit; text-decoration: none;">
+					<h2>Condition and Filter Expressions</h2>
 				</a>
+				<p>The Condition component in <code>DynamoDB-DataModel</code> is a collection of functions that make building condition and filter expressions very easy and leverages typescript to ensure the correct types are used for each supported operation.</p>
+				<p>All of the condition functions return a resolver function that has the signature of <code>(exp: Condition.Expression, type: &#39;BOOL&#39;) =&gt; string</code>. This simple mechanism of returning a function enables two things:</p>
+				<ol>
+					<li>Allows multiple conditions to be composed together in a simple and recursive way, which can support deeply nested and and or conditions.</li>
+					<li>Enables the expression to be resolved recursively as a single unit.</li>
+				</ol>
+				<p>The use of a resolver function also allows for custom Condition functions to be written that provide higher level concepts.</p>
+				<p>Conditions are a lower level component and can be used on its own. It is also used by Table, Model and Fields.</p>
+				<p>To get more details on condition expression see the <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.OperatorsAndFunctions.html">AWS Condition Expression Reference</a>.</p>
 				<a href="#condition-functions" id="condition-functions" style="color: inherit; text-decoration: none;">
-					<h4>Condition functions</h4>
+					<h3>Condition functions</h3>
 				</a>
 				<table>
 					<thead>
@@ -601,104 +621,106 @@ expect(params).toEqual({
 					<tbody><tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#path-1">path</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">Returns the the placeholder for an attribute path.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#size">size</a></td>
 							<td align="left">B, BS, NS, S, SS, M, L</td>
-							<td align="left"></td>
+							<td align="left">Gets the size of an attribute and can be used in the below compare functions to ensure a certain size</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#compare">compare</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">Compares the value of an attribute for a path against a value with a given operator: &#39;=&#39;, &#39;&lt;&gt;&#39;, &#39;&gt;&#39;, &#39;&gt;=&#39;, &#39;&lt;=&#39;, and &#39;&lt;&#39;.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#eq">eq</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path is equal to the passed in value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#ne">ne</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path is not equal to the passed in value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#ge">ge</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path is greater then or equal to the passed in value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#gt">gt</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path is greater then the passed in value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#le">le</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path is less then or equal to the passed in value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#lt">lt</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path is less then the passed in value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#between">between</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path is between two passed in value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#beginswith">beginsWith</a></td>
 							<td align="left">S</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path begins with the passed in string value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#contains">contains</a></td>
 							<td align="left">S, BS, NS, SS</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path contains the passed in value.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#in">in</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path equals on of the values in the passed in array.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#exists">exists</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path exists in the table item.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#notExists">notExists</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute for a path does not exists in the table item.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#type">type</a></td>
 							<td align="left">all</td>
-							<td align="left"></td>
+							<td align="left">True if the value of an attribute is the passed in type.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#and">and</a></td>
 							<td align="left">conditions</td>
-							<td align="left"></td>
+							<td align="left">True if the result of all conditions are also true.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#or">or</a></td>
 							<td align="left">conditions</td>
-							<td align="left"></td>
+							<td align="left">True if the results of any condition is true.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/condition.html#not">not</a></td>
 							<td align="left">conditions</td>
-							<td align="left"></td>
+							<td align="left">True if the result of the condition is false.</td>
 						</tr>
 				</tbody></table>
 				<a href="#create-your-own-custom-conditions" id="create-your-own-custom-conditions" style="color: inherit; text-decoration: none;">
-					<h4>Create your own custom conditions</h4>
+					<h3>Create your own custom conditions</h3>
 				</a>
+				<p>It is easy to create your own custom conditions. As was stated above all Condition functions just return a resolver function with the signature of <code>(exp: Condition.Expression, type: &#39;BOOL&#39;) =&gt; string</code>. So to create a custom condition you just need to have a function that returns a resolve function. In the implementation of the resolver function you can use the <code>Condition.Expression</code> object to add and get the placeholders for the attribute names and values in your custom expression then return the condition or filter expression string that does what you want.</p>
+				<p>See <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.OperatorsAndFunctions.html">AWS Condition Expression Reference</a> for details one the syntax and operations supported.</p>
 				<a href="#condition-examples" id="condition-examples" style="color: inherit; text-decoration: none;">
-					<h4>Condition Examples</h4>
+					<h3>Condition Examples</h3>
 				</a>
 				<p>Condition where age &gt; 21 OR ((region = &#39;US&#39; AND size(interests) &gt; 10) AND interests contain nodejs, dynamodb, or serverless):</p>
 				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.ts">examples/Readme.Condition.ts</a></p>
@@ -753,10 +775,12 @@ expect(params.FilterExpression).toEqual(
   <span class="hljs-string">'(#n0 &gt; :v0 OR (#n1 = :v1 AND size(#n2) &gt; :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))'</span>,
 );</code></pre>
 				<a href="#keycondition-expressions" id="keycondition-expressions" style="color: inherit; text-decoration: none;">
-					<h3>KeyCondition Expressions</h3>
+					<h2>KeyCondition Expressions</h2>
 				</a>
+				<p>KeyCondition like Condition is a lower level component that is used by Table and Index to build key condition expression for query based DynamoDB reads. In any query there is at most two conditions, with the partition key only supporting a simple equal condition via &#39;=&#39; and the sort key support a single &#39;range&#39; based condition.</p>
+				<p>To get more details see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.KeyConditionExpressions">AWS Key Condition Expression Resource</a>.</p>
 				<a href="#sort-key-functions" id="sort-key-functions" style="color: inherit; text-decoration: none;">
-					<h4>Sort key functions</h4>
+					<h3>Sort key functions</h3>
 				</a>
 				<p>The Partition key only supports a single condition which is equal (&#39;=&#39;). Sort keys support several &#39;range&#39; based conditions to query for a continuous range of items. You may notice that not-equal (&#39;&lt;&gt;&#39;) isn&#39;t support and the reason is simply that a not-equal query would not return a continuous range of items.</p>
 				<table>
@@ -770,47 +794,50 @@ expect(params.FilterExpression).toEqual(
 					<tbody><tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#beginswith">beginsWith</a></td>
 							<td align="left">S</td>
-							<td align="left">Return all items that begin with the value. Note: case sensitive. Example: <code>KeyCondition.</code></td>
+							<td align="left">Return all items with a sort key that begin with the value. Note: case sensitive. Example: <code>KeyCondition.</code></td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#between">between</a></td>
 							<td align="left">B, N, S (all)</td>
-							<td align="left"></td>
+							<td align="left">Returns all items with a sort key that is between and inclusive of a lower and upper values passed in.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#compare">compare</a></td>
 							<td align="left">B, N, S (all)</td>
-							<td align="left"></td>
+							<td align="left">Returns all items with a sort key that resolves to true for the operation and value passed in.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#eq">eq</a></td>
 							<td align="left">B, N, S (all)</td>
-							<td align="left"></td>
+							<td align="left">Returns all items with a sort key that is equal to the value passed in.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#ge">ge</a></td>
 							<td align="left">B, N, S (all)</td>
-							<td align="left"></td>
+							<td align="left">Returns all items with a sort key is greater then and equal to the value passed in.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#gt">gt</a></td>
 							<td align="left">B, N, S (all)</td>
-							<td align="left"></td>
+							<td align="left">Returns all items with a sort key is greater then the value passed in.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#le">le</a></td>
 							<td align="left">B, N, S (all)</td>
-							<td align="left"></td>
+							<td align="left">Returns all items with a sort key is less then and equal to the value passed in.</td>
 						</tr>
 						<tr>
 							<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/keycondition.html#lt">lt</a></td>
 							<td align="left">B, N, S (all)</td>
-							<td align="left"></td>
+							<td align="left">Returns all items with a sort key is less then the value passed in.</td>
 						</tr>
 				</tbody></table>
-				<p>Note: All of the above KeyCondition functions return a resolver function, allowing for custom KeyConditions, though current DynamoDB</p>
+				<a href="#create-your-own-custom-key-conditions" id="create-your-own-custom-key-conditions" style="color: inherit; text-decoration: none;">
+					<h3>Create your own custom key conditions</h3>
+				</a>
+				<p>All of the above KeyCondition functions return a resolver function, allowing for custom key conditions. Though given the limited syntax supported by DynamoDB there really isn&#39;t a need for custom key conditions.</p>
 				<a href="#keycondition-examples" id="keycondition-examples" style="color: inherit; text-decoration: none;">
-					<h4>KeyCondition Examples</h4>
+					<h3>KeyCondition Examples</h3>
 				</a>
 				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/KeyCondition.ts">examples/KeyCondition.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { KeyCondition } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
@@ -830,10 +857,10 @@ expect(params).toEqual({
   TableName: <span class="hljs-string">'ExampleTable'</span>,
 });</code></pre>
 				<a href="#update-expressions" id="update-expressions" style="color: inherit; text-decoration: none;">
-					<h3>Update Expressions</h3>
+					<h2>Update Expressions</h2>
 				</a>
 				<a href="#update-functions" id="update-functions" style="color: inherit; text-decoration: none;">
-					<h4>Update functions</h4>
+					<h3>Update functions</h3>
 				</a>
 				<p>For more details on what you can do with update expressions see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html">DynamodDB&#39;s Update Expression guide</a>.</p>
 				<p>Supported <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> functions:
@@ -860,15 +887,15 @@ expect(params).toEqual({
 					| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#model">model</a> | M | Typed based wrapper around map to ensure the input matches an interface. Example: see <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#model">Update.model</a> |
 				| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#modelmap">modelMap</a> | M | String based key to model map, that enforces the key strings are only used as paths. Example: see <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#modelmap">Update.modelMap</a> |</p>
 				<a href="#create-your-own-custom-update-resolvers" id="create-your-own-custom-update-resolvers" style="color: inherit; text-decoration: none;">
-					<h4>Create your own custom update resolvers</h4>
+					<h3>Create your own custom update resolvers</h3>
 				</a>
-				<p>All of the above Update functions just return a <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#resolver">Update.Resolver</a> arrow function with the signature of: <code>(name: string, exp: Update.Expression, type?: T) =&gt; void</code>. When <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html#update">Model.update</a> or <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html#update">Table.update</a> run each object property value will get resolved and values that have a type of &#39;function&#39; will get called with the property name, an <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/interfaces/update.expression.html">Update.Expression</a> object and an optional type param.</p>
-				<p>It is in the implementation of the <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#resolver">Update.Resolver</a> functions that the update expression is constructed. This is done by calling methods on the <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/interfaces/update.expression.html">Update.Expression</a> object to add and get placeholders for attribute names and paths, and add expressions to one of the four support clauses: SET, REMOVE, ADD or DELETE.</p>
+				<p>All of the above Update functions return a <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#resolver">Update.Resolver</a> arrow function with the signature of: <code>(name: string, exp: Update.Expression, type?: T) =&gt; void</code>. When <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/model.html#update">Model.update</a> or <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/table.html#update">Table.update</a> execute each object property value will get resolved and values that have a type of &#39;function&#39; will get called with the property name, an <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/interfaces/update.expression.html">Update.Expression</a> object and an optional type param.</p>
+				<p>It is in the implementation of the <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#resolver">Update.Resolver</a> functions that the update expression is constructed. This is done by calling methods on the <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/interfaces/update.expression.html">Update.Expression</a> object to add and get placeholders for attribute paths and values, and add expressions to one of the four support clauses: SET, REMOVE, ADD or DELETE.</p>
 				<p>After all <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#resolver">Update.Resolver</a> are called and all other expressions are resolved, the expressions for the update are generated and set on the input params passed to the DynamoDB DocumentClient update method.</p>
 				<p>To create custom Update functions you just need to return an arrow function that when called adds the necessary names, values and update expressions to support the functionality you need.</p>
 				<p><strong>Note</strong>: In future versions of this library I am looking to add additional context (like Model or Field) to the <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/interfaces/update.expression.html">Update.Expression</a>, to enable more advanced scenarios. Let me know if you need this so I can prioritize it appropriately.</p>
 				<a href="#update-examples" id="update-examples" style="color: inherit; text-decoration: none;">
-					<h4>Update Examples</h4>
+					<h3>Update Examples</h3>
 				</a>
 				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Model.ts">examples/Update.Model.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;

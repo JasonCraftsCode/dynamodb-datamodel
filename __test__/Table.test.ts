@@ -323,6 +323,7 @@ describe('Validate Table with indexes', () => {
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
       ReturnConsumedCapacity: 'TOTAL',
+      ReturnValues: 'ALL_NEW',
       TableName: 'TestTable',
     });
   });
@@ -331,6 +332,7 @@ describe('Validate Table with indexes', () => {
     const params = testTable.updateParams({ P: 'pk', S: 'sk' });
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
+      ReturnValues: 'ALL_NEW',
       TableName: 'TestTable',
     });
   });
@@ -415,6 +417,7 @@ describe('Validate Table with indexes', () => {
     expect(results).toEqual({ Attributes: {} });
     expect(client.update).toBeCalledWith({
       Key: { P: 'pk', S: 'sk' },
+      ReturnValues: 'ALL_NEW',
       TableName: 'TestTable',
     });
     expect(client.update).toBeCalledTimes(1);
@@ -436,6 +439,7 @@ describe('Validate Table with indexes', () => {
         ':v2': true,
       },
       Key: { P: 'pk', S: 'sk' },
+      ReturnValues: 'ALL_NEW',
       TableName: 'TestTable',
       UpdateExpression: 'SET #n0 = :v0, #n1 = :v1, #n2 = :v2',
     });

@@ -106,6 +106,7 @@ expect(params).toEqual({
   ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'name'</span>, <span class="hljs-string">'#n1'</span>: <span class="hljs-string">'nickName'</span>, <span class="hljs-string">'#n2'</span>: <span class="hljs-string">'revision'</span> },
   ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-string">'new name'</span>, <span class="hljs-string">':v1'</span>: <span class="hljs-number">2</span> },
   Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> },
+  ReturnValues: <span class="hljs-string">'ALL_NEW'</span>,
   TableName: <span class="hljs-string">'ExampleTable'</span>,
   UpdateExpression: <span class="hljs-string">'SET #n0 = :v0, #n2 = #n2 + :v1 REMOVE #n1'</span>,
 });
@@ -128,6 +129,7 @@ expect(params).toEqual({
   ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'name'</span>, <span class="hljs-string">'#n1'</span>: <span class="hljs-string">'nickName'</span>, <span class="hljs-string">'#n2'</span>: <span class="hljs-string">'revision'</span> },
   ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-string">'new name'</span>, <span class="hljs-string">':v1'</span>: <span class="hljs-number">2</span> },
   Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> },
+  ReturnValues: <span class="hljs-string">'ALL_NEW'</span>,
   TableName: <span class="hljs-string">'ExampleTable'</span>,
   UpdateExpression: <span class="hljs-string">'SET #n0 = :v0, #n2 = #n2 + :v1 REMOVE #n1'</span>,
 });

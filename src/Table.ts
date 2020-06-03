@@ -213,6 +213,8 @@ export class Table {
 
   /**
    * Creates the params that can be used when calling [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}.
+   * By default this method uses `ReturnValues: 'ALL_NEW'` to return all of the properties for an item,
+   * since many APIs or server code use the updated values in some way.
    * @param key - Primary key of item to update.
    * @param item - Attributes of the item to update.
    * @param options - Additional optional options to use for update.
@@ -224,7 +226,7 @@ export class Table {
     options: Table.UpdateOptions = {},
   ): DocumentClient.UpdateItemInput {
     return Table.addParams<DocumentClient.UpdateItemInput>(
-      { TableName: this.name, Key: key },
+      { TableName: this.name, Key: key, ReturnValues: 'ALL_NEW' },
       options,
       'condition',
       (params, attributes) => UpdateExpression.addParams(params, attributes, item),
