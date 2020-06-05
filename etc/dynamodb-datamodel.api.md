@@ -494,7 +494,7 @@ export namespace Model {
         [key: string]: ModelType;
     };
     export type ModelCoreT<T> = {
-        [P in keyof T]: Extract<T[P], ModelType>;
+        [P in keyof T]: Exclude<T[P], Function>;
     };
     export type ModelData = {
         [key: string]: ModelType;
@@ -503,7 +503,7 @@ export namespace Model {
         [key: string]: ModelType;
     };
     export type ModelOutT<T> = {
-        [P in keyof T]: Extract<T[P], ModelType>;
+        [P in keyof T]: Exclude<T[P], Function>;
     };
     export interface ModelParams {
         name?: string;
@@ -834,15 +834,18 @@ export namespace Update {
         resolvePathValue(value: Update.OperandValue, name: string): string;
         resolveValue(value: Update.OperandValue, name: string): string;
     }
-    export type List<T extends Table.AttributeValues = Table.AttributeValues> = T[] | Update.Resolver<'L'>;
+    export type List<T extends Table.AttributeValues = Table.AttributeValues> = ModelT<T>[] | Update.Resolver<'L'>;
     export type Map<T extends Table.AttributeValues = Table.AttributeValues> = {
-        [key: string]: T;
+        [key: string]: ModelT<T>;
     } | Update.Resolver<'M'>;
-    export type Model<T> = T | Update.Resolver<'M'>;
-    export type ModelList<T> = T[] | Update.Resolver<'L'>;
+    export type Model<T> = ModelT<T> | Update.Resolver<'M'>;
+    export type ModelList<T> = ModelT<T>[] | Update.Resolver<'L'>;
     export type ModelMap<T> = {
-        [key: string]: T;
+        [key: string]: ModelT<T>;
     } | Update.Resolver<'M'>;
+    export type ModelT<T> = {
+        [P in keyof T]: Exclude<T[P], Function>;
+    };
     export type Null = null | Update.Resolver<'NULL'>;
     export type Number = number | Update.Resolver<'N'>;
     export type NumberSet = Table.NumberSetValue | Update.Resolver<'NS'>;

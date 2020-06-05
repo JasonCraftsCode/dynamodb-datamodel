@@ -130,6 +130,43 @@ interface UserKey {
   id: string;
 }
 
+interface SpouseModelOutput {
+  name: string; //string;
+  age: number;
+  married: boolean;
+}
+
+interface ChildModelOutput {
+  name: string;
+  age: number;
+  adult: boolean;
+}
+
+interface GroupModelOutput {
+  role: Role;
+}
+
+interface UserModelOutput extends UserKey {
+  type?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  name: string;
+  count?: number;
+  description?: string;
+  revision: number;
+  adult: boolean;
+  photo?: Table.BinaryValue;
+  interests?: Table.StringSetValue;
+  modified?: Table.NumberSetValue;
+  spouse?: SpouseModelOutput;
+  children?: ChildModelOutput[];
+  groups?: { [key: string]: GroupModelOutput };
+  created?: Date;
+  hide?: Set<Date>;
+  nickname?: string;
+}
+
 interface UserModel extends UserKey {
   type?: string;
   city?: string;
@@ -486,7 +523,9 @@ describe('Validate Model with Table and Indexes', () => {
         }),
       );
       const results = await userModel.get({ id: 'id1.id2' });
-      expect(results.item).toEqual({
+      // Ensure item can be case to javascript native type
+      const item: UserModelOutput | undefined = results.item;
+      expect(item).toEqual({
         adult: true,
         children: [
           {

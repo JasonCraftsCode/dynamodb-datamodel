@@ -405,14 +405,16 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
    * Model input type used in most ModelT methods.
    */
   export type ModelCoreT<T> = {
-    [P in keyof T]: Extract<T[P], ModelType>;
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    [P in keyof T]: Exclude<T[P], Function>;
   };
 
   /**
    * Model output type used in most ModelT methods.
    */
   export type ModelOutT<T> = {
-    [P in keyof T]: Extract<T[P], ModelType>;
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    [P in keyof T]: Exclude<T[P], Function>;
   };
 
   /**

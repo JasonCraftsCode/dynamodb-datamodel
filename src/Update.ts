@@ -774,36 +774,44 @@ export namespace Update {
   export type BinarySet = Table.BinarySetValue | Update.Resolver<'BS'>;
 
   /**
+   * Wrapper to remove recursive types so model interface properties get output with correct type.
+   */
+  export type ModelT<T> = {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    [P in keyof T]: Exclude<T[P], Function>;
+  };
+
+  /**
    * List specific update resolver, used to define properties in Model interfaces.
    * @param T - The model interface.
    */
-  export type List<T extends Table.AttributeValues = Table.AttributeValues> = T[] | Update.Resolver<'L'>;
+  export type List<T extends Table.AttributeValues = Table.AttributeValues> = ModelT<T>[] | Update.Resolver<'L'>;
 
   /**
    * Map specific update resolver, used to define properties in Model interfaces.
    * @param T - The model interface.
    */
   export type Map<T extends Table.AttributeValues = Table.AttributeValues> =
-    | { [key: string]: T }
+    | { [key: string]: ModelT<T> }
     | Update.Resolver<'M'>;
 
   /**
    * Map specific update resolver, used to define properties in Model interfaces.
    * @param T - The model interface.
    */
-  export type Model<T> = T | Update.Resolver<'M'>;
+  export type Model<T> = ModelT<T> | Update.Resolver<'M'>;
 
   /**
    * Map specific update resolver, used to define properties in Model interfaces.
    * @param T - The model interface.
    */
-  export type ModelMap<T> = { [key: string]: T } | Update.Resolver<'M'>;
+  export type ModelMap<T> = { [key: string]: ModelT<T> } | Update.Resolver<'M'>;
 
   /**
    * List specific update resolver, used to define properties in Model interfaces.
    * @param T - The model interface.
    */
-  export type ModelList<T> = T[] | Update.Resolver<'L'>;
+  export type ModelList<T> = ModelT<T>[] | Update.Resolver<'L'>;
 }
 
 /**
