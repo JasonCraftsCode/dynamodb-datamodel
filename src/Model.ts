@@ -361,7 +361,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Model item data read from the table.
      */
-    item?: ITEM;
+    item?: ModelOutT<ITEM>;
 
     /**
      * The result of the table read/write.

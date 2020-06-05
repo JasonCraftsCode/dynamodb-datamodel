@@ -475,7 +475,7 @@ export class Model implements Model.ModelBase {
 // @public
 export namespace Model {
     export interface BaseOutput<ITEM, RESULT> {
-        item?: ITEM;
+        item?: ModelOutT<ITEM>;
         result: RESULT;
     }
     export function createModel<KEY extends {
