@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>dynamodb-datamodel - v0.1.18</title>
+	<title>dynamodb-datamodel - v0.2.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">dynamodb-datamodel - v0.1.18</a>
+					<a href="index.html" class="title">dynamodb-datamodel - v0.2.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1>dynamodb-datamodel - v0.1.18</h1>
+			<h1>dynamodb-datamodel - v0.2.0</h1>
 		</div>
 	</div>
 </header>
@@ -331,7 +331,7 @@
   },
   projection: { <span class="hljs-keyword">type</span>: <span class="hljs-string">'ALL'</span> },
   table: table <span class="hljs-keyword">as</span> Table,
-  <span class="hljs-keyword">type</span>: <span class="hljs-string">'LOCAL'</span>,
+  <span class="hljs-keyword">type</span>: <span class="hljs-string">'GLOBAL'</span>,
 });
 
 <span class="hljs-comment">// Define a Local Secondary Index (LSI) key interface for LSI0, partition key must be same as the table's</span>
