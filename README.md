@@ -276,7 +276,7 @@ export const gsi0 = Index.createIndex<GSI0Key>({
   },
   projection: { type: 'ALL' },
   table: table as Table,
-  type: 'LOCAL',
+  type: 'GLOBAL',
 });
 
 // Define a Local Secondary Index (LSI) key interface for LSI0, partition key must be same as the table's
