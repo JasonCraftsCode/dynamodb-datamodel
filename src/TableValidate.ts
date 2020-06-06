@@ -81,6 +81,7 @@ export function validateKeySchema<
  * Validates an {@link Index} for a {@link Table}.
  * @param index - An index for a Table.
  * @param names - Name of the other indexes.
+ * @public
  */
 export function validateIndex(index: Index, names?: Set<string>): void {
   const { name, keySchema, projection, table, type } = index;
@@ -116,8 +117,9 @@ export function validateIndex(index: Index, names?: Set<string>): void {
 }
 
 /**
- * Validates an {@link Index} for a {@link Table}.
+ * Validates an array of {@link Index} for a {@link Table}.
  * @param indexes - Indexes for a Table.
+ * @public
  */
 export function validateIndexes(indexes: Index[]): void {
   const names = new Set<string>();

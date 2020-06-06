@@ -82,6 +82,8 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function"><a href="globals.html#validateindex" class="tsd-kind-icon">validate<wbr>Index</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#validateindexes" class="tsd-kind-icon">validate<wbr>Indexes</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#validatetable" class="tsd-kind-icon">validate<wbr>Table</a></li>
 							</ul>
 						</section>
@@ -90,6 +92,74 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="validateindex" class="tsd-anchor"></a>
+					<h3>validate<wbr>Index</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">validate<wbr>Index<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><a href="classes/index.html" class="tsd-signature-type">Index</a>, names<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableValidate.ts#L86">TableValidate.ts:86</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Validates an <a href="classes/index.html">Index</a> for a <a href="classes/table.html">Table</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>index: <a href="classes/index.html" class="tsd-signature-type">Index</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An index for a Table.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> names: <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the other indexes.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="validateindexes" class="tsd-anchor"></a>
+					<h3>validate<wbr>Indexes</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">validate<wbr>Indexes<span class="tsd-signature-symbol">(</span>indexes<span class="tsd-signature-symbol">: </span><a href="classes/index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableValidate.ts#L124">TableValidate.ts:124</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Validates an array of <a href="classes/index.html">Index</a> for a <a href="classes/table.html">Table</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>indexes: <a href="classes/index.html" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Indexes for a Table.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
 					<a name="validatetable" class="tsd-anchor"></a>
 					<h3>validate<wbr>Table</h3>
@@ -100,7 +170,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableValidate.ts#L136">TableValidate.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableValidate.ts#L138">TableValidate.ts:138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -182,6 +252,12 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/updateexpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#validateindex" class="tsd-kind-icon">validate<wbr>Index</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#validateindexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#validatetable" class="tsd-kind-icon">validate<wbr>Table</a>

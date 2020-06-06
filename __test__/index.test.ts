@@ -9,6 +9,8 @@ import {
   Index,
   Table,
   validateTable,
+  validateIndex,
+  validateIndexes,
   Update,
   UpdateExpression,
 } from '../src/index';
@@ -24,6 +26,8 @@ it('Validate top level exports', () => {
   expect(typeof Index).toBe('function');
   expect(typeof Table).toBe('function');
   expect(typeof validateTable).toBe('function');
+  expect(typeof validateIndex).toBe('function');
+  expect(typeof validateIndexes).toBe('function');
   expect(typeof Update).toBe('function');
   expect(typeof UpdateExpression).toBe('function');
 });

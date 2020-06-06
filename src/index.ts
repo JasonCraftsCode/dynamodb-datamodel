@@ -5,5 +5,5 @@ export { KeyCondition, KeyConditionExpression } from './KeyCondition';
 export { Model } from './Model';
 export { Table } from './Table';
 export { Index } from './TableIndex';
-export { validateTable } from './TableValidate';
+export { validateTable, validateIndex, validateIndexes } from './TableValidate';
 export { Update, UpdateExpression } from './Update';

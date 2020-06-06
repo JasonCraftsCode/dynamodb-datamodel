@@ -891,6 +891,12 @@ export class UpdateExpression implements Update.Expression {
 }
 
 // @public
+export function validateIndex(index: Index, names?: Set<string>): void;
+
+// @public
+export function validateIndexes(indexes: Index[]): void;
+
+// @public
 export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>): void;
 
 
