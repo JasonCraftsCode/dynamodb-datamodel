@@ -35,7 +35,7 @@
   "module": "dist/esm/index.js",
   "scripts": {
     "ncu": "ncu --dep prod,dev --reject typedoc",
-    "ncu:update": "ncu --dep prod,dev -u --reject typedoc",
+    "ncu:update": "ncu --dep prod,dev -u --reject typedoc && npm install",
     "build": "tsc -P ./tsconfig.src.json",
     "build:esm": "tsc -P ./tsconfig.src.esm.json",
     "build:check": "tsc --noEmit -P ./tsconfig.src.json",
