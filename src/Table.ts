@@ -7,7 +7,6 @@ import { Condition, ConditionExpression } from './Condition';
 import { ExpressionAttributes } from './ExpressionAttributes';
 import { KeyCondition, KeyConditionExpression } from './KeyCondition';
 import { Update, UpdateExpression } from './Update';
-import { Index } from './TableIndex';
 
 /**
  * Object that represents the DynamoDB table.
@@ -41,16 +40,6 @@ export class Table {
   keySchema: Table.PrimaryKey.KeyTypesMap;
 
   /**
-   * List of the global secondary indexes (GSI) for the table.
-   */
-  globalIndexes: Index[] = [];
-
-  /**
-   * List of the local secondary indexes (LSI) for the table.
-   */
-  localIndexes: Index[] = [];
-
-  /**
    * Determines how errors should be handled.
    * The default is to throw on any errors.
    */
@@ -65,8 +54,6 @@ export class Table {
     this.name = params.name;
     this.keyAttributes = params.keyAttributes;
     this.keySchema = params.keySchema;
-    if (params.globalIndexes) this.addGlobalIndexes(params.globalIndexes);
-    if (params.localIndexes) this.addLocalIndexes(params.localIndexes);
     this._createClient =
       typeof params.client === 'function' ? params.client : (): DocumentClient => params.client as DocumentClient;
   }
@@ -78,24 +65,6 @@ export class Table {
   get client(): DocumentClient {
     if (!this._client) this._client = this._createClient();
     return this._client;
-  }
-
-  /**
-   * Add global secondary indexes for the Table and initialize the index.
-   * @param gsi - List of global secondary indexes to add to the table.
-   */
-  addGlobalIndexes(gsi: Index[]): void {
-    gsi.forEach((index) => index.init(this));
-    this.globalIndexes = this.globalIndexes.concat(gsi);
-  }
-
-  /**
-   * Add local secondary indexes for the Table and initialize the index.
-   * @param gsi - List of local secondary indexes to add to the table.
-   */
-  addLocalIndexes(lsi: Index[]): void {
-    lsi.forEach((index) => index.init(this));
-    this.localIndexes = this.localIndexes.concat(lsi);
   }
 
   /**
@@ -483,16 +452,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
      * Schema map for the Table's primary key, in the form of \{ \<partition key name\>: \{ keyType: 'HASH' \} \}.
      */
     keySchema: Table.PrimaryKey.KeyTypesMap;
-
-    /**
-     * List of the global secondary indexes (GSI) for the table.
-     */
-    globalIndexes?: Index[];
-
-    /**
-     * List of the local secondary indexes (LSI) for the table.
-     */
-    localIndexes?: Index[];
 
     /**
      * DocumentClient to use in the {@link Table}.  Can be a function to support creating the DocumentClient on demand.

@@ -1,6 +1,6 @@
 import { Table } from '../src/Table';
 import { Index } from '../src/TableIndex';
-import { validateKeySchema, validateTable } from '../src/TableValidate';
+import { validateKeySchema, validateTable, validateIndex, validateIndexes } from '../src/TableValidate';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
 it('Validate ValidateTable exports', () => {
@@ -44,16 +44,6 @@ const testTableParams: Table.TableParamsT<SimpleTableKey, SimpleKeyAttributes> =
   },
   client: getTestClient(),
 };
-
-function TestIndex<KEY>(keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>, name = 'GSI0'): Index.IndexT<KEY> {
-  return Index.createIndex<KEY>({
-    name,
-    keySchema,
-    projection: {
-      type: 'ALL',
-    },
-  });
-}
 
 describe('When table', () => {
   it('has valid key attributes expect validateTable succeed', () => {
@@ -224,12 +214,25 @@ describe('When table', () => {
   });
 });
 
+function TestIndex<KEY>(
+  keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>,
+  name = 'GSI0',
+  table: Table,
+  type: Index.Type,
+): Index.IndexT<KEY> {
+  return Index.createIndex<KEY>({
+    name,
+    keySchema,
+    projection: {
+      type: 'ALL',
+    },
+    table,
+    type,
+  });
+}
+
 describe('When global index', () => {
   const testTable = Table.createTable<SimpleTableKey, SimpleKeyAttributes>(testTableParams);
-  beforeAll(() => {
-    testTable.globalIndexes = [];
-    testTable.localIndexes = [];
-  });
 
   function ProjectionIndex(projection: {
     type: Table.ProjectionType;
@@ -243,88 +246,80 @@ describe('When global index', () => {
       name: 'GSI',
       keySchema: { G0P: Table.PrimaryKey.PartitionKeyType },
       projection,
+      table: testTable as Table,
+      type: 'GLOBAL',
     });
   }
 
   it('missing name expect throw', () => {
     const gsi = ProjectionIndex({ type: 'ALL' });
-    gsi.name = '';
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error('Global index must have a name'));
+    gsi.name = (undefined as unknown) as string;
+    expect(() => validateIndex(gsi)).toThrowError(new Error('Global index must have a name'));
   });
 
   it('has validate ALL projection expect validateTable succeeds', () => {
     const gsi = ProjectionIndex({ type: 'ALL' });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).not.toThrow();
+    expect(() => validateIndex(gsi)).not.toThrow();
   });
 
   it('has validate KEYS_ONLY projection expect validateTable succeeds', () => {
     const gsi = ProjectionIndex({ type: 'KEYS_ONLY' });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).not.toThrow();
+    expect(() => validateIndex(gsi)).not.toThrow();
   });
 
   it('has validate INCLUDE projection expect validateTable succeeds', () => {
     const gsi = ProjectionIndex({ type: 'INCLUDE', attributes: ['attr1'] });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).not.toThrow();
+    expect(() => validateIndex(gsi)).not.toThrow();
   });
 
   it('has ALL projection that does not support attributes expect throw', () => {
     const gsi = ProjectionIndex({ type: 'ALL', attributes: ['attr'] });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(
-      new Error("GSI' projection type 'ALL' does not support attributes"),
-    );
+    expect(() => validateIndex(gsi)).toThrowError(new Error("GSI' projection type 'ALL' does not support attributes"));
   });
 
   it('has KEYS_ONLY projection that does not support attributes expect throw', () => {
     const gsi = ProjectionIndex({ type: 'KEYS_ONLY', attributes: ['attr'] });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(
+    expect(() => validateIndex(gsi)).toThrowError(
       new Error("GSI' projection type 'KEYS_ONLY' does not support attributes"),
     );
   });
 
   it('has invalidate projection type expect throw', () => {
     const gsi = ProjectionIndex({ type: 'PARTIAL' as 'KEYS_ONLY' });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error("'GSI' projection type is invalidate 'PARTIAL'"));
+    expect(() => validateIndex(gsi)).toThrowError(new Error("'GSI' projection type is invalidate 'PARTIAL'"));
   });
 
   it('has INCLUDE projection with no attributes expect throw', () => {
     const gsi = ProjectionIndex({ type: 'INCLUDE' });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(
-      new Error("'GSI' projection type 'INCLUDE' must have attributes"),
-    );
+    expect(() => validateIndex(gsi)).toThrowError(new Error("'GSI' projection type 'INCLUDE' must have attributes"));
   });
 
-  it('has validate partition key expect validateTable succeeds', () => {
+  it('has validate partition key expect validateIndex succeeds', () => {
     const gsi = TestIndex<{
       G0P: Table.PrimaryKey.PartitionString;
-    }>({ G0P: Table.PrimaryKey.PartitionKeyType });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).not.toThrow();
+    }>({ G0P: Table.PrimaryKey.PartitionKeyType }, 'GSI0', testTable as Table, 'GLOBAL');
+    expect(() => validateIndex(gsi)).not.toThrow();
   });
 
   it('has validate partition and sort keys expect validateTable succeeds', () => {
     const gsi = TestIndex<{
       G0P: Table.PrimaryKey.PartitionString;
       G0S: Table.PrimaryKey.SortString;
-    }>({ G0P: Table.PrimaryKey.PartitionKeyType, G0S: Table.PrimaryKey.SortKeyType });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).not.toThrow();
+    }>(
+      { G0P: Table.PrimaryKey.PartitionKeyType, G0S: Table.PrimaryKey.SortKeyType },
+      'GSI0',
+      testTable as Table,
+      'GLOBAL',
+    );
+    expect(() => validateIndex(gsi)).not.toThrow();
   });
 
   it('partition and sort key same as table expect throw', () => {
     const gsi = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       S: Table.PrimaryKey.SortString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(
+    }>({ P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType }, 'GSI0', testTable as Table, 'GLOBAL');
+    expect(() => validateIndex(gsi)).toThrowError(
       new Error("GSI0 has same partition key 'P' and sort key 'S' as table"),
     );
   });
@@ -332,37 +327,41 @@ describe('When global index', () => {
   it('missing partition key expect throw', () => {
     const gsi = TestIndex<{
       S: Table.PrimaryKey.SortString;
-    }>({ S: Table.PrimaryKey.SortKeyType });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error('GSI0 needs partition key'));
+    }>({ S: Table.PrimaryKey.SortKeyType }, 'GSI0', testTable as Table, 'GLOBAL');
+    expect(() => validateIndex(gsi)).toThrowError(new Error('GSI0 needs partition key'));
   });
 
   it('partition key is not in table.keyAttributes expect throw', () => {
     const gsi = TestIndex<{
       Z0P: Table.PrimaryKey.PartitionString;
-    }>({ Z0P: Table.PrimaryKey.PartitionKeyType });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error("Key 'Z0P' not in table's keyAttributes"));
+    }>({ Z0P: Table.PrimaryKey.PartitionKeyType }, 'GSI0', testTable as Table, 'GLOBAL');
+    expect(() => validateIndex(gsi)).toThrowError(new Error("Key 'Z0P' not in table's keyAttributes"));
   });
 
   it('has more then one partition key expect throw', () => {
     const gsi = TestIndex<{
       G0P: Table.PrimaryKey.PartitionString;
       G1P: Table.PrimaryKey.PartitionString;
-    }>({ G0P: Table.PrimaryKey.PartitionKeyType, G1P: Table.PrimaryKey.PartitionKeyType });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(
-      new Error("Key 'G1P' invalid, GSI0 already has partition key 'G0P'"),
+    }>(
+      { G0P: Table.PrimaryKey.PartitionKeyType, G1P: Table.PrimaryKey.PartitionKeyType },
+      'GSI0',
+      testTable as Table,
+      'GLOBAL',
     );
+    expect(() => validateIndex(gsi)).toThrowError(new Error("Key 'G1P' invalid, GSI0 already has partition key 'G0P'"));
   });
 
   it('sort key is not in table.keyAttributes expect throw', () => {
     const gsi = TestIndex<{
       G0P: Table.PrimaryKey.PartitionString;
       Z0S: Table.PrimaryKey.SortString;
-    }>({ G0P: Table.PrimaryKey.PartitionKeyType, Z0S: Table.PrimaryKey.SortKeyType });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error("Key 'Z0S' not in table's keyAttributes"));
+    }>(
+      { G0P: Table.PrimaryKey.PartitionKeyType, Z0S: Table.PrimaryKey.SortKeyType },
+      'GSI0',
+      testTable as Table,
+      'GLOBAL',
+    );
+    expect(() => validateIndex(gsi)).toThrowError(new Error("Key 'Z0S' not in table's keyAttributes"));
   });
 
   it('as more then one sort key expect throw', () => {
@@ -370,80 +369,114 @@ describe('When global index', () => {
       G0P: Table.PrimaryKey.PartitionString;
       G0S: Table.PrimaryKey.SortString;
       G1S: Table.PrimaryKey.SortString;
-    }>({
-      G0P: Table.PrimaryKey.PartitionKeyType,
-      G0S: Table.PrimaryKey.SortKeyType,
-      G1S: Table.PrimaryKey.SortKeyType,
-    });
-    testTable.globalIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(
-      new Error("Key 'G1S' invalid, GSI0 already has sort key 'G0S'"),
+    }>(
+      {
+        G0P: Table.PrimaryKey.PartitionKeyType,
+        G0S: Table.PrimaryKey.SortKeyType,
+        G1S: Table.PrimaryKey.SortKeyType,
+      },
+      'GSI0',
+      testTable as Table,
+      'GLOBAL',
     );
+    expect(() => validateIndex(gsi)).toThrowError(new Error("Key 'G1S' invalid, GSI0 already has sort key 'G0S'"));
   });
 
   it('has same name expect throw', () => {
-    const gsi0 = TestIndex<{ G0P: Table.PrimaryKey.PartitionString }>({ G0P: Table.PrimaryKey.PartitionKeyType });
-    const gsi1 = TestIndex<{ G0P: Table.PrimaryKey.PartitionString }>({ G0P: Table.PrimaryKey.PartitionKeyType });
-    testTable.globalIndexes = [gsi0, gsi1] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error("Duplicate index name 'GSI0'"));
+    const gsi0 = TestIndex<{ G0P: Table.PrimaryKey.PartitionString }>(
+      { G0P: Table.PrimaryKey.PartitionKeyType },
+      'GSI0',
+      testTable as Table,
+      'GLOBAL',
+    );
+    const gsi1 = TestIndex<{ G0P: Table.PrimaryKey.PartitionString }>(
+      { G0P: Table.PrimaryKey.PartitionKeyType },
+      'GSI0',
+      testTable as Table,
+      'GLOBAL',
+    );
+    expect(() => validateIndexes([gsi0, gsi1] as Index[])).toThrowError(new Error("Duplicate index name 'GSI0'"));
   });
 });
 
 describe('When local index', () => {
   const testTable = Table.createTable<SimpleTableKey, SimpleKeyAttributes>(testTableParams);
-  beforeAll(() => {
-    testTable.globalIndexes = [];
-    testTable.localIndexes = [];
-  });
 
   it('has validate partition and sort keys expect validateTable succeeds', () => {
     const lsi = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       G0S: Table.PrimaryKey.SortString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, G0S: Table.PrimaryKey.SortKeyType });
-    testTable.localIndexes = [lsi as Index];
-    expect(() => validateTable(testTable)).not.toThrow();
+    }>(
+      { P: Table.PrimaryKey.PartitionKeyType, G0S: Table.PrimaryKey.SortKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
+    );
+    expect(() => validateIndex(lsi)).not.toThrow();
+  });
+
+  it('type is not validate expect throw', () => {
+    const lsi = TestIndex<{ G0P: Table.PrimaryKey.PartitionString }>(
+      { G0P: Table.PrimaryKey.PartitionKeyType },
+      'LSI0',
+      testTable as Table,
+      'bad' as 'LOCAL',
+    );
+    expect(() => validateIndex(lsi)).toThrowError(new Error('LSI0 has invalid type: bad'));
   });
 
   it('partition key name is not same as table expect throw', () => {
-    const lsi = TestIndex<{ G0P: Table.PrimaryKey.PartitionString }>({ G0P: Table.PrimaryKey.PartitionKeyType });
-    testTable.localIndexes = [lsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error("GSI0 partition key 'G0P' needs to be 'P'"));
+    const lsi = TestIndex<{ G0P: Table.PrimaryKey.PartitionString }>(
+      { G0P: Table.PrimaryKey.PartitionKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
+    );
+    expect(() => validateIndex(lsi)).toThrowError(new Error("LSI0 partition key 'G0P' needs to be 'P'"));
   });
 
   it('as more then one partition key expect throw', () => {
-    const gsi = TestIndex<{
+    const lsi = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       G0P: Table.PrimaryKey.PartitionString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, G0P: Table.PrimaryKey.PartitionKeyType });
-    testTable.localIndexes = [gsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(
-      new Error("Key 'G0P' invalid, GSI0 already has partition key 'P'"),
+    }>(
+      { P: Table.PrimaryKey.PartitionKeyType, G0P: Table.PrimaryKey.PartitionKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
     );
+    expect(() => validateIndex(lsi)).toThrowError(new Error("Key 'G0P' invalid, LSI0 already has partition key 'P'"));
   });
 
   it('sort key must exist expect throw', () => {
-    const lsi = TestIndex<{ P: Table.PrimaryKey.PartitionString }>({ P: Table.PrimaryKey.PartitionKeyType });
-    testTable.localIndexes = [lsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error('GSI0 must have a sort key'));
+    const lsi = TestIndex<{ P: Table.PrimaryKey.PartitionString }>(
+      { P: Table.PrimaryKey.PartitionKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
+    );
+    expect(() => validateIndex(lsi)).toThrowError(new Error('LSI0 must have a sort key'));
   });
 
   it('sort key is same as table expect throw', () => {
     const lsi = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       S: Table.PrimaryKey.SortString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType });
-    testTable.localIndexes = [lsi] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error("GSI0 has same sort key 'S' as table"));
+    }>({ P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType }, 'LSI0', testTable as Table, 'LOCAL');
+    expect(() => validateIndex(lsi)).toThrowError(new Error("LSI0 has same sort key 'S' as table"));
   });
 
   it('sort key is not in table.keyAttributes expect throw', () => {
     const lsi = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       Z0S: Table.PrimaryKey.SortString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, Z0S: Table.PrimaryKey.SortKeyType });
-    testTable.localIndexes = [lsi as Index];
-    expect(() => validateTable(testTable)).toThrowError(new Error("Key 'Z0S' not in table's keyAttributes"));
+    }>(
+      { P: Table.PrimaryKey.PartitionKeyType, Z0S: Table.PrimaryKey.SortKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
+    );
+    expect(() => validateIndex(lsi)).toThrowError(new Error("Key 'Z0S' not in table's keyAttributes"));
   });
 
   it('as more then one sort key expect throw', () => {
@@ -451,37 +484,56 @@ describe('When local index', () => {
       P: Table.PrimaryKey.PartitionString;
       L0S: Table.PrimaryKey.SortString;
       L1S: Table.PrimaryKey.SortString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, L0S: Table.PrimaryKey.SortKeyType, L1S: Table.PrimaryKey.SortKeyType });
-    testTable.localIndexes = [lsi as Index];
-    expect(() => validateTable(testTable)).toThrowError(
-      new Error("Key 'L1S' invalid, GSI0 already has sort key 'L0S'"),
+    }>(
+      { P: Table.PrimaryKey.PartitionKeyType, L0S: Table.PrimaryKey.SortKeyType, L1S: Table.PrimaryKey.SortKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
     );
+    expect(() => validateIndex(lsi)).toThrowError(new Error("Key 'L1S' invalid, LSI0 already has sort key 'L0S'"));
   });
 
   it('two local indexes have same name expect throw', () => {
     const lsi0 = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       L0S: Table.PrimaryKey.SortString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, L0S: Table.PrimaryKey.SortKeyType });
+    }>(
+      { P: Table.PrimaryKey.PartitionKeyType, L0S: Table.PrimaryKey.SortKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
+    );
     const lsi1 = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       L1S: Table.PrimaryKey.SortString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, L1S: Table.PrimaryKey.SortKeyType });
-    testTable.localIndexes = [lsi0, lsi1] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error("Duplicate index name 'GSI0'"));
+    }>(
+      { P: Table.PrimaryKey.PartitionKeyType, L1S: Table.PrimaryKey.SortKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
+    );
+    expect(() => validateIndexes([lsi0, lsi1])).toThrowError(new Error("Duplicate index name 'LSI0'"));
   });
 
   it('global and local has same name expect throw', () => {
     const lsi0 = TestIndex<{
       P: Table.PrimaryKey.PartitionString;
       L0S: Table.PrimaryKey.SortString;
-    }>({ P: Table.PrimaryKey.PartitionKeyType, L0S: Table.PrimaryKey.SortKeyType });
+    }>(
+      { P: Table.PrimaryKey.PartitionKeyType, L0S: Table.PrimaryKey.SortKeyType },
+      'LSI0',
+      testTable as Table,
+      'LOCAL',
+    );
     const gsi0 = TestIndex<{
       G0P: Table.PrimaryKey.PartitionString;
       G0S: Table.PrimaryKey.SortString;
-    }>({ G0P: Table.PrimaryKey.PartitionKeyType, G0S: Table.PrimaryKey.SortKeyType });
-    testTable.globalIndexes = [gsi0] as Index[];
-    testTable.localIndexes = [lsi0] as Index[];
-    expect(() => validateTable(testTable)).toThrowError(new Error("Duplicate index name 'GSI0'"));
+    }>(
+      { G0P: Table.PrimaryKey.PartitionKeyType, G0S: Table.PrimaryKey.SortKeyType },
+      'LSI0',
+      testTable as Table,
+      'GLOBAL',
+    );
+    expect(() => validateIndexes([gsi0, lsi0])).toThrowError(new Error("Duplicate index name 'LSI0'"));
   });
 });

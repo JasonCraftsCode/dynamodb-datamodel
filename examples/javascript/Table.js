@@ -23,8 +23,6 @@ exports.table = new Table({
     P: Table.PrimaryKey.PartitionKeyType,
     S: Table.PrimaryKey.SortKeyType,
   },
-  globalIndexes: [gsi0],
-  localIndexes: [lsi0],
 });
 
 // export from here to consolidate imports

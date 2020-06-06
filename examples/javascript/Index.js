@@ -1,4 +1,5 @@
 const { Index, Table } = require('dynamodb-datamodel');
+const { table } = require('./Table');
 
 // Create an Index object for GSI0 based on GSI0Key, and project all attributes.
 const gsi0 = new Index({
@@ -9,6 +10,8 @@ const gsi0 = new Index({
     G0S: Table.PrimaryKey.SortKeyType,
   },
   projection: { type: 'ALL' },
+  table,
+  type: 'GLOBAL',
 });
 exports.gsi0 = gsi0;
 
@@ -21,4 +24,6 @@ exports.lsi0 = new Index({
     L0S: Table.PrimaryKey.SortKeyType,
   },
   projection: { type: 'ALL' },
+  table,
+  type: 'LOCAL',
 });

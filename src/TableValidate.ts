@@ -33,9 +33,8 @@ export function validateKeyAttributes<ATTRIBUTES extends { [index: string]: any 
 ): void {
   Object.keys(keyAttributes).forEach((key) => {
     const attr = keyAttributes[key] as { type: Table.PrimaryKey.AttributeTypes };
-    if (attr.type !== 'S' && attr.type !== 'N' && attr.type !== 'B') {
+    if (attr.type !== 'S' && attr.type !== 'N' && attr.type !== 'B')
       onError(`Primary key '${key}' has an invalid type of '${attr.type as string}' in table '${name}'`);
-    }
   });
 }
 
@@ -64,18 +63,15 @@ export function validateKeySchema<
   Object.keys(keySchema).forEach((key) => {
     const schema = keySchema[key] as { keyType: Table.PrimaryKey.KeyTypes };
     const attr = keyAttributes[key] as { type: Table.PrimaryKey.AttributeTypes };
-    if (attr === undefined) {
-      onError(`Key '${key}' not in table's keyAttributes`);
-    }
+    if (attr === undefined) onError(`Key '${key}' not in table's keyAttributes`);
+
     if (schema.keyType === 'HASH') {
       if (pk !== undefined) onError(`Key '${key}' invalid, ${name} already has partition key '${pk}'`);
       pk = key;
     } else if (schema.keyType === 'RANGE') {
       if (sk !== undefined) onError(`Key '${key}' invalid, ${name} already has sort key '${sk}'`);
       sk = key;
-    } else {
-      onError(`Key '${key}' has an invalid key type of '${schema.keyType as string}'`);
-    }
+    } else onError(`Key '${key}' has an invalid key type of '${schema.keyType as string}'`);
   });
   if (pk === undefined) onError(`${name} needs partition key`);
   return { pk, sk };
@@ -84,23 +80,48 @@ export function validateKeySchema<
 /**
  * Validates an {@link Index} for a {@link Table}.
  * @param index - An index for a Table.
- * @param names - Name of the Table.
- * @param onError - Method to call when there is a validation error.
+ * @param names - Name of the other indexes.
  */
-export function validateIndexes(index: Index, names: Set<string>, onError: (msg: string) => void): void {
-  if (!index.name) onError(`Global index must have a name`);
-  if (names.has(index.name)) onError(`Duplicate index name '${index.name}'`);
-  names.add(index.name);
-  const type = index.projection.type;
-  if (type === 'INCLUDE') {
-    if (!index.projection.attributes || index.projection.attributes.length <= 0) {
-      onError(`'${index.name}' projection type '${type}' must have attributes`);
-    }
-  } else if (type !== 'ALL' && type !== 'KEYS_ONLY') {
-    onError(`'${index.name}' projection type is invalidate '${type as string}'`);
-  } else {
-    if (index.projection.attributes) onError(`${index.name}' projection type '${type}' does not support attributes`);
+export function validateIndex(index: Index, names?: Set<string>): void {
+  const { name, keySchema, projection, table, type } = index;
+  const { keyAttributes, onError } = table;
+
+  // Validate index name
+  if (!name) onError(`Global index must have a name`);
+  if (names) {
+    if (names.has(name)) onError(`Duplicate index name '${name}'`);
+    names.add(name);
   }
+
+  // Validate index projection
+  const projType = projection.type;
+  if (projType === 'INCLUDE') {
+    if (!projection.attributes || projection.attributes.length <= 0)
+      onError(`'${name}' projection type '${projType}' must have attributes`);
+  } else if (projType !== 'ALL' && projType !== 'KEYS_ONLY')
+    onError(`'${name}' projection type is invalidate '${projType as string}'`);
+  else if (projection.attributes) onError(`${name}' projection type '${projType}' does not support attributes`);
+
+  // Validate index keySchema
+  const tableKey = { pk: table.getPartitionKey(), sk: table.getSortKey() };
+  const indexKey = validateKeySchema(keySchema, keyAttributes, name, onError);
+  if (type === 'GLOBAL') {
+    if (indexKey.pk === tableKey.pk && indexKey.sk === tableKey.sk)
+      onError(`${name} has same partition key '${indexKey.pk}' and sort key '${indexKey.sk}' as table`);
+  } else if (type === 'LOCAL') {
+    if (indexKey.pk !== tableKey.pk) onError(`${name} partition key '${indexKey.pk}' needs to be '${tableKey.pk}'`);
+    if (indexKey.sk === tableKey.sk) onError(`${name} has same sort key '${tableKey.sk}' as table`);
+    if (indexKey.sk === undefined) onError(`${name} must have a sort key`);
+  } else onError(`${name} has invalid type: ${type}`);
+}
+
+/**
+ * Validates an {@link Index} for a {@link Table}.
+ * @param indexes - Indexes for a Table.
+ */
+export function validateIndexes(indexes: Index[]): void {
+  const names = new Set<string>();
+  indexes.forEach((index) => validateIndex(index, names));
 }
 
 /**
@@ -113,23 +134,8 @@ export function validateIndexes(index: Index, names: Set<string>, onError: (msg:
  * @public
  */
 export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>): void {
-  if (!table.name) table.onError(`Table must have a name`);
-  validateKeyAttributes(table.keyAttributes, table.name, table.onError);
-  const { pk, sk } = validateKeySchema(table.keySchema, table.keyAttributes, table.name, table.onError);
-  const names = new Set<string>();
-  table.globalIndexes.forEach((index) => {
-    validateIndexes(index, names, table.onError);
-    const { name, keySchema } = index;
-    const iKeys = validateKeySchema(keySchema, table.keyAttributes, name, table.onError);
-    if (iKeys.pk === pk && iKeys.sk === sk)
-      table.onError(`${name} has same partition key '${pk}' and sort key '${sk}' as table`);
-  });
-  table.localIndexes.forEach((index) => {
-    validateIndexes(index, names, table.onError);
-    const { name, keySchema } = index;
-    const iKeys = validateKeySchema(keySchema, table.keyAttributes, name, table.onError);
-    if (iKeys.pk !== pk) table.onError(`${name} partition key '${iKeys.pk}' needs to be '${pk}'`);
-    if (iKeys.sk === sk) table.onError(`${name} has same sort key '${sk}' as table`);
-    if (iKeys.sk === undefined) table.onError(`${name} must have a sort key`);
-  });
+  const { name, keyAttributes, keySchema, onError } = table;
+  if (!name) onError(`Table must have a name`);
+  validateKeyAttributes(keyAttributes, name, onError);
+  validateKeySchema(keySchema, keyAttributes, name, onError);
 }

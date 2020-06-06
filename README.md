@@ -258,6 +258,7 @@ From: [examples/Index.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/
 
 ```typescript
 import { Index, Table } from 'dynamodb-datamodel';
+import { table } from './Table';
 
 // Define a Global Secondary Index (GSI) key interface for GSI0.
 export interface GSI0Key {
@@ -274,6 +275,8 @@ export const gsi0 = Index.createIndex<GSI0Key>({
     G0S: Table.PrimaryKey.SortKeyType,
   },
   projection: { type: 'ALL' },
+  table: table as Table,
+  type: 'LOCAL',
 });
 
 // Define a Local Secondary Index (LSI) key interface for LSI0, partition key must be same as the table's
@@ -291,6 +294,8 @@ export const lsi0 = Index.createIndex<LSI0Key>({
     L0S: Table.PrimaryKey.SortKeyType,
   },
   projection: { type: 'ALL' },
+  table: table as Table,
+  type: 'LOCAL',
 });
 ```
 

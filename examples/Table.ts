@@ -1,5 +1,5 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { Index, Table } from 'dynamodb-datamodel';
+import { Table } from 'dynamodb-datamodel';
 import { GSI0Key, gsi0, LSI0Key, lsi0 } from './Index';
 export { GSI0Key, gsi0, LSI0Key, lsi0 }; // export from here to consolidate imports
 
@@ -33,6 +33,4 @@ export const table = Table.createTable<TableKey, KeyAttributes>({
     P: Table.PrimaryKey.PartitionKeyType,
     S: Table.PrimaryKey.SortKeyType,
   },
-  globalIndexes: [gsi0] as Index[],
-  localIndexes: [lsi0] as Index[],
 });

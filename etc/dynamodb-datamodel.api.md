@@ -361,7 +361,6 @@ export class Index {
     getQueryOptions(options?: Table.QueryOptions): Table.QueryOptions;
     getScanOptions(options?: Table.ScanOptions): Table.ScanOptions;
     getSortKey(): string;
-    init(table: Table): void;
     keySchema: Table.PrimaryKey.KeyTypesMap;
     name: string;
     projection: {
@@ -372,7 +371,8 @@ export class Index {
     queryParams(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): DocumentClient.QueryInput;
     scan(options?: Table.ScanOptions): Promise<DocumentClient.ScanOutput>;
     scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput;
-    table?: Table;
+    table: Table;
+    type: Index.Type;
 }
 
 // @public
@@ -393,6 +393,8 @@ export namespace Index {
             attributes?: string[];
             type: Table.ProjectionType;
         };
+        table: Table;
+        type: Index.Type;
     }
     export interface IndexParamsT<KEY> extends IndexParams {
         keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>;
@@ -402,6 +404,7 @@ export namespace Index {
         query(key: Table.PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput>;
         queryParams(key: Table.PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): DocumentClient.QueryInput;
     }
+    export type Type = 'GLOBAL' | 'LOCAL';
 }
 
 // @public
@@ -566,8 +569,6 @@ export namespace Model {
 // @public
 export class Table {
     constructor(params: Table.TableParams);
-    addGlobalIndexes(gsi: Index[]): void;
-    addLocalIndexes(lsi: Index[]): void;
     static addParams<T extends Table.ExpressionParams>(params: T, options: Table.BaseOptions, type: 'filter' | 'condition', addParams?: Table.AddExpressionParams): T & Table.ExpressionParams;
     get client(): DocumentClient;
     createBinarySet(list: Table.BinaryValue[], options?: DocumentClient.CreateSetOptions): Table.BinarySetValue;
@@ -583,11 +584,9 @@ export class Table {
     static getPutAction(options?: Table.PutWriteOptions): Table.PutItemActions;
     getPutCondition(options: Table.PutWriteOptions | undefined): Condition.Resolver | void;
     getSortKey(): string;
-    globalIndexes: Index[];
     static isPutAction(action: Table.ItemActions): boolean;
     keyAttributes: Table.PrimaryKey.AttributeTypesMap;
     keySchema: Table.PrimaryKey.KeyTypesMap;
-    localIndexes: Index[];
     name: string;
     onError: (msg: string) => void;
     put(key: Table.PrimaryKey.AttributeValuesMap, items?: Table.AttributeValuesMap, options?: Table.PutOptions): Promise<DocumentClient.PutItemOutput>;
@@ -758,10 +757,8 @@ export namespace Table {
     export type StringSetValue = DocumentClient.StringSet;
     export interface TableParams {
         client: DocumentClient | (() => DocumentClient);
-        globalIndexes?: Index[];
         keyAttributes: Table.PrimaryKey.AttributeTypesMap;
         keySchema: Table.PrimaryKey.KeyTypesMap;
-        localIndexes?: Index[];
         name: string;
         onError?: (msg: string) => void;
     }

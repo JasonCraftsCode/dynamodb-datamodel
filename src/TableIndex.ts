@@ -7,14 +7,7 @@ import { Table } from './Table';
 
 /**
  * Represents either Global Secondary Index (GSI) or Local Secondary Index (LSI) for a table.  GSI and LSI can be
- * associated with a {@link Table} by add GSI to the {@link Table.globalIndexes} array property and LSI to the {@link Table.localIndexes}
- * array property, either through the {@link Table."constructor"} or by calling {@link Table.addGlobalIndexes} or {@link Table.addLocalIndexes}.
- *
- * When the index is added to the Table either through the constructor, addGlobalIndexes or addLocalIndexes each index's
- * {@link init} will be passed the Table it is associated with to support the Index methods:
- * {@link queryParams}, {@link scanParams}, {@link query}, and {@link scan}.
- *
- * Once the GSI and LSI are associated with a table they can be validated using {@link validateTable}.
+ * validated using {@link validateIndex} or {@link validateIndexes}.
  *
  * If you are using TypeScript you can use {@link Index.createIndex} to create an Index with strong typing for the primary key.
  * This provides strong types for the {@link Index.keySchema} property, {@link Index.queryParams} and {@link Index.scan} methods.
@@ -50,10 +43,16 @@ export class Index {
      */
     type: Table.ProjectionType;
   };
+
   /**
    * The table this index is associated with.  Used in {@link queryParams}, {@link scanParams}, {@link query}, and {@link scan}.
    */
-  table?: Table;
+  table: Table;
+
+  /**
+   * The type of this secondary index.
+   */
+  type: Index.Type;
 
   /**
    * @param params - Initialize the Index's name, keySchema and projection properties.
@@ -62,14 +61,8 @@ export class Index {
     this.name = params.name;
     this.keySchema = params.keySchema;
     this.projection = params.projection;
-  }
-
-  /**
-   * Used to initialize the Index with the table to support {@link queryParams}, {@link scanParams}, {@link query}, and {@link scan}.
-   * @param table - Table to initialize the index with.
-   */
-  init(table: Table): void {
-    this.table = table;
+    this.table = params.table;
+    this.type = params.type;
   }
 
   /**
@@ -114,7 +107,7 @@ export class Index {
    */
   queryParams(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): DocumentClient.QueryInput {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.table!.queryParams(key, this.getQueryOptions(options));
+    return this.table.queryParams(key, this.getQueryOptions(options));
   }
 
   /**
@@ -124,7 +117,7 @@ export class Index {
    */
   scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.table!.scanParams(this.getScanOptions(options));
+    return this.table.scanParams(this.getScanOptions(options));
   }
 
   /**
@@ -136,7 +129,7 @@ export class Index {
    */
   query(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput> {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.table!.query(key, this.getQueryOptions(options));
+    return this.table.query(key, this.getQueryOptions(options));
   }
   /**
    * Wrapper around [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property}
@@ -146,7 +139,7 @@ export class Index {
    */
   scan(options?: Table.ScanOptions): Promise<DocumentClient.ScanOutput> {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.table!.scan(this.getScanOptions(options));
+    return this.table.scan(this.getScanOptions(options));
   }
 }
 
@@ -156,6 +149,11 @@ export class Index {
  */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
+  /**
+   * Type of secondary index.
+   */
+  export type Type = 'GLOBAL' | 'LOCAL';
+
   // NOTE: if you update the docs for the properties of IndexParams also update the docs for Index properties.
   /**
    * Used in {@link Index."constructor"}.
@@ -185,6 +183,16 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
        */
       type: Table.ProjectionType;
     };
+
+    /**
+     * The table this index is associated with.  Used in {@link queryParams}, {@link scanParams}, {@link query}, and {@link scan}.
+     */
+    table: Table;
+
+    /**
+     * The type of this secondary index.
+     */
+    type: Index.Type;
   }
 
   /**

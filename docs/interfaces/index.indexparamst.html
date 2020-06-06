@@ -108,6 +108,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="index.indexparamst.html#keyschema" class="tsd-kind-icon">key<wbr>Schema</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.indexparamst.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.indexparamst.html#projection" class="tsd-kind-icon">projection</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.indexparamst.html#table" class="tsd-kind-icon">table</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="index.indexparamst.html#type-1" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -122,7 +124,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="index.indexparams.html">IndexParams</a>.<a href="index.indexparams.html#keyschema">keySchema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableIndex.ts#L230">TableIndex.ts:230</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableIndex.ts#L238">TableIndex.ts:238</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -138,7 +140,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.indexparams.html">IndexParams</a>.<a href="index.indexparams.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableIndex.ts#L167">TableIndex.ts:167</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableIndex.ts#L165">TableIndex.ts:165</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,7 +156,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="index.indexparams.html">IndexParams</a>.<a href="index.indexparams.html#projection">projection</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableIndex.ts#L177">TableIndex.ts:177</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableIndex.ts#L175">TableIndex.ts:175</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -182,6 +184,38 @@
 								</div>
 							</li>
 						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="table" class="tsd-anchor"></a>
+					<h3>table</h3>
+					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html" class="tsd-signature-type">Table</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="index.indexparams.html">IndexParams</a>.<a href="index.indexparams.html#table">table</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableIndex.ts#L190">TableIndex.ts:190</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The table this index is associated with.  Used in <a href="../classes/index.html#queryparams">queryParams</a>, <a href="../classes/index.html#scanparams">scanParams</a>, <a href="../classes/index.html#query">query</a>, and <a href="../classes/index.html#scan">scan</a>.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="type-1" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../classes/index.html#type" class="tsd-signature-type">Type</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="index.indexparams.html">IndexParams</a>.<a href="index.indexparams.html#type-1">type</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/src/TableIndex.ts#L195">TableIndex.ts:195</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The type of this secondary index.</p>
+						</div>
 					</div>
 				</section>
 			</section>
@@ -234,10 +268,19 @@
 									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 										<a href="index.indexparamst.html#projection" class="tsd-kind-icon">projection</a>
 									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="index.indexparamst.html#table" class="tsd-kind-icon">table</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="index.indexparamst.html#type-1" class="tsd-kind-icon">type</a>
+									</li>
 								</ul>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="index.indext.html" class="tsd-kind-icon">IndexT</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="../classes/index.html#type" class="tsd-kind-icon">Type</a>
 							</li>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="../classes/index.html#constructor" class="tsd-kind-icon">constructor</a>
@@ -254,6 +297,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="../classes/index.html#table" class="tsd-kind-icon">table</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="../classes/index.html#type-2" class="tsd-kind-icon">type</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/index.html#getpartitionkey" class="tsd-kind-icon">get<wbr>Partition<wbr>Key</a>
 							</li>
@@ -265,9 +311,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/index.html#getsortkey" class="tsd-kind-icon">get<wbr>Sort<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="../classes/index.html#init" class="tsd-kind-icon">init</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/index.html#query" class="tsd-kind-icon">query</a>

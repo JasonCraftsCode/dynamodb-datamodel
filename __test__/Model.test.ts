@@ -6,7 +6,7 @@ import { Condition } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table } from '../src/Table';
-import { Index } from '../src/TableIndex';
+// import { Index } from '../src/TableIndex';
 import { Update } from '../src/Update';
 import { delay } from './testCommon';
 
@@ -41,24 +41,6 @@ interface LSI0Key {
 
 interface TableAttributes extends TableKey, GSI0Key, LSI0Key {}
 
-const gsi0 = Index.createIndex<GSI0Key>({
-  name: 'GSI0',
-  keySchema: {
-    G0P: Table.PrimaryKey.PartitionKeyType,
-    G0S: Table.PrimaryKey.SortKeyType,
-  },
-  projection: { type: 'ALL' },
-});
-
-const lsi0 = Index.createIndex<LSI0Key>({
-  name: 'LSI0',
-  keySchema: {
-    P: Table.PrimaryKey.PartitionKeyType,
-    L0S: Table.PrimaryKey.SortKeyType,
-  },
-  projection: { type: 'ALL' },
-});
-
 const table = Table.createTable<TableKey, TableAttributes>({
   name: 'MainTable',
   keyAttributes: {
@@ -72,10 +54,32 @@ const table = Table.createTable<TableKey, TableAttributes>({
     P: Table.PrimaryKey.PartitionKeyType,
     S: Table.PrimaryKey.SortKeyType,
   },
-  globalIndexes: [gsi0] as Index[],
-  localIndexes: [lsi0] as Index[],
   client,
 });
+
+/*
+const gsi0 = Index.createIndex<GSI0Key>({
+  name: 'GSI0',
+  keySchema: {
+    G0P: Table.PrimaryKey.PartitionKeyType,
+    G0S: Table.PrimaryKey.SortKeyType,
+  },
+  projection: { type: 'ALL' },
+  table: table as Table,
+  type: 'GLOBAL',
+});
+
+const lsi0 = Index.createIndex<LSI0Key>({
+  name: 'LSI0',
+  keySchema: {
+    P: Table.PrimaryKey.PartitionKeyType,
+    L0S: Table.PrimaryKey.SortKeyType,
+  },
+  projection: { type: 'ALL' },
+  table: table as Table,
+  type: 'LOCAL',
+});
+*/
 
 const location = Fields.compositeNamed({
   alias: 'G0S',
