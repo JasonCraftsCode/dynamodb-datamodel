@@ -420,45 +420,52 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Model input type used for update Model methods.
    */
-  export type ModelUpdateT<T> = {
-    [P in keyof Table.Optional<T>]: ModelUpdateValue<T[P]>;
-  };
+  export type ModelUpdateT<KEY, INPUT> = {
+    [P in keyof Table.Optional<INPUT>]: ModelUpdateValue<INPUT[P]>;
+  } &
+    KEY;
 
   /**
    * Params used when creating {@link ModelT}.
    * @param KEY - Key part of the model used for get and delete actions.
-   * @param MODEL - The model interface.
+   * @param OUTPUT - The model output interface.
    */
-  export interface ModelParamsT<KEY, MODEL extends KEY = KEY> extends ModelParams {
+  export interface ModelParamsT<KEY, OUTPUT extends KEY = KEY> extends ModelParams {
     /**
      * Schema to use for mapping data between the model and table data.
      */
-    schema: ModelSchemaT<MODEL>;
+    schema: ModelSchemaT<OUTPUT>;
   }
 
   /**
    * Generic version of Model, see {@link Model} for more details.
    * @param KEY - Key part of the model used for get and delete actions.
-   * @param MODEL - The model interface.
+   * @param INPUT - The model input interface used for put and update.
+   * @param OUTPUT - The model output interface.
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export interface ModelT<KEY extends { [key: string]: any }, MODEL extends KEY = KEY> extends Model {
+  export interface ModelT<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any,
+    KEY extends { [key: string]: any },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any,
+    INPUT extends { [key: string]: any } = KEY,
+    OUTPUT extends INPUT & KEY = INPUT & KEY
+  > extends Model {
     /**
      * Schema to use for mapping data between the model and table data.
      */
-    schema: Model.ModelSchemaT<MODEL>;
+    schema: Model.ModelSchemaT<OUTPUT>;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).toModel} */
-    toModel(data: Table.AttributeValuesMap): Model.ModelOutT<MODEL>;
+    toModel(data: Table.AttributeValuesMap): Model.ModelOutT<OUTPUT>;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).toTable} */
-    toTable(data: Model.ModelCoreT<MODEL>): Model.TableData;
+    toTable(data: Model.ModelCoreT<INPUT>): Model.TableData;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).toTableUpdate} */
-    toTableUpdate(data: Model.ModelUpdateT<MODEL>): Model.TableUpdateData;
+    toTableUpdate(data: Model.ModelUpdateT<KEY, INPUT>): Model.TableUpdateData;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).getParams} */
@@ -470,46 +477,53 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).putParams} */
-    putParams(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): DocumentClient.PutItemInput;
+    putParams(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): DocumentClient.PutItemInput;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).updateParams} */
-    updateParams(data: Model.ModelUpdateT<MODEL>, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
+    updateParams(data: Model.ModelUpdateT<KEY, INPUT>, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).get} */
-    get(key: Model.ModelCoreT<KEY>, options?: Table.GetOptions): Promise<Model.GetOutput<MODEL>>;
+    get(key: Model.ModelCoreT<KEY>, options?: Table.GetOptions): Promise<Model.GetOutput<OUTPUT>>;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).delete} */
-    delete(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): Promise<Model.DeleteOutput<MODEL>>;
+    delete(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): Promise<Model.DeleteOutput<OUTPUT>>;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).create} */
-    create(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
+    create(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): Promise<Model.PutOutput<OUTPUT>>;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).replace} */
-    replace(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
+    replace(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): Promise<Model.PutOutput<OUTPUT>>;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).put} */
-    put(data: Model.ModelCoreT<MODEL>, options?: Table.PutOptions): Promise<Model.PutOutput<MODEL>>;
+    put(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): Promise<Model.PutOutput<OUTPUT>>;
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).update} */
-    update(data: Model.ModelUpdateT<MODEL>, options?: Table.UpdateOptions): Promise<Model.UpdateOutput<MODEL>>;
+    update(data: Model.ModelUpdateT<KEY, INPUT>, options?: Table.UpdateOptions): Promise<Model.UpdateOutput<OUTPUT>>;
   }
 
   /**
    *
    * See {@link Table.createTable} reasoning for having a createTable over support 'new TableT'.
+   * @param KEY - Key part of the model used for get and delete actions.
+   * @param INPUT - The model input interface used for put and update.
+   * @param OUTPUT - The model output interface.
    * @param params - Options to used when creating Model
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-inner-declarations
-  export function createModel<KEY extends { [key: string]: any }, MODEL extends KEY = KEY>(
-    params: ModelParamsT<KEY, MODEL>,
-  ): Model.ModelT<KEY, MODEL> {
-    return new Model(params) as Model.ModelT<KEY, MODEL>;
+  // // eslint-disable-next-line no-inner-declarations
+  export function createModel<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any,
+    KEY extends { [key: string]: any },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any,
+    INPUT extends { [key: string]: any } = KEY,
+    OUTPUT extends INPUT & KEY = INPUT & KEY
+  >(params: ModelParamsT<KEY, OUTPUT>): Model.ModelT<KEY, INPUT, OUTPUT> {
+    return new Model(params) as Model.ModelT<KEY, INPUT, OUTPUT>;
   }
 }

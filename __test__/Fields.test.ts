@@ -314,16 +314,50 @@ describe('When FieldDate', () => {
     expect(data).toEqual({ date: new Date(1585564302000000) });
   });
 
+  it('toModel expect empty data to return empty date', () => {
+    const data: Model.ModelData = {};
+    field.toModel('date', {}, data, modelContext);
+    expect(data).toEqual({});
+  });
+
   it('toTable expect date as number', () => {
     const data: Table.AttributeValuesMap = {};
     field.toTable('date', { date: new Date(1585574302000000) }, data, tableContext);
     expect(data).toEqual({ date: 1585574302000 });
   });
 
+  it('toTable expect empty data to return empty date', () => {
+    const data: Table.AttributeValuesMap = {};
+    field.toTable('date', {}, data, tableContext);
+    expect(data).toEqual({});
+  });
+
   it('toTableUpdate expect date as number', () => {
     const data: Table.AttributeValuesMap = {};
     field.toTableUpdate('date', { date: new Date(1585584302000000) }, data, tableContext);
     expect(data).toEqual({ date: 1585584302000 });
+  });
+
+  it('default value expects to be set', () => {
+    const value = new Date(1585584306000000);
+    const field = Fields.date({ default: value });
+    expect(field.default).toEqual(value);
+    expect(field.getDefault('', {} as Model.ModelData, {} as Fields.TableContext)).toEqual(value);
+  });
+
+  it('default function expects to be set', () => {
+    const value = new Date(1585584305000000);
+    const field = Fields.date({ default: () => value });
+    expect(typeof field.default).toEqual('function');
+    expect(field.getDefault('', {} as Model.ModelData, {} as Fields.TableContext)).toEqual(value);
+  });
+
+  it('toTable with default expect date to be default', () => {
+    const value = new Date(1585584303000000);
+    const field = Fields.date({ default: () => value });
+    const data: Table.AttributeValuesMap = {};
+    field.toTable('date', {}, data, tableContext);
+    expect(data).toEqual({ date: 1585584303000 });
   });
 });
 
@@ -677,7 +711,7 @@ describe('When FieldSplit', () => {
     it('toTable with default now returns date', () => {
       const field = Fields.createdDate();
       field.init('createdOn', model);
-      const now = Math.round(new Date().valueOf() / 1000);
+      const now = Math.floor(new Date().valueOf() / 1000);
       const data: Table.AttributeValuesMap = {};
       field.toTable('createdOn', {}, data, putTableContext);
       expect(data).toEqual({ createdOn: data.createdOn });
@@ -773,7 +807,7 @@ describe('When FieldSplit', () => {
     it('toTable with default now returns date', () => {
       const field = Fields.updatedDate();
       field.init('updatedOn', model);
-      const now = Math.round(new Date().valueOf() / 1000);
+      const now = Math.floor(new Date().valueOf() / 1000);
       const data: Table.AttributeValuesMap = {};
       field.toTable('updatedOn', {}, data, putTableContext);
       expect(data).toEqual({ updatedOn: data.updatedOn });
@@ -791,6 +825,215 @@ describe('When FieldSplit', () => {
 
     it('alias with toModel expect date data', () => {
       const field = Fields.updatedDate({ alias: 'editNow', now: getNow });
+      field.init('updatedOn', model);
+      const data: Model.ModelData = {};
+      field.toModel('updatedOn', { editOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({});
+    });
+  });
+
+  describe('When FieldCreatedNumberDate', () => {
+    const getNow = jest.fn(() => new Date(1585564302000000));
+    const field = Fields.createdNumberDate({ now: getNow });
+    field.init('createdOn', model);
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('expect date returns correct type', () => {
+      expect(field.name).toEqual('createdOn');
+    });
+
+    it('toModel expect date data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('createdOn', { createdOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({ createdOn: 1585664302000 });
+    });
+
+    it('toModel attribute not exist, expect no data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('createdOn', {}, data, modelContext);
+      expect(data).toEqual({});
+    });
+
+    it('toTable unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, tableContext);
+      expect(data).toEqual({});
+      expect(getNow).not.toBeCalled();
+    });
+
+    it('toTable with date and unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, tableContext);
+      expect(data).toEqual({});
+      expect(getNow).not.toBeCalled();
+    });
+
+    it('toTable with put action, createdOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putTableContext);
+      expect(data).toEqual({ createdOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with put-new action, createdOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putNewTableContext);
+      expect(data).toEqual({ createdOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with put-replace action, createdOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putReplaceTableContext);
+      expect(data).toEqual({ createdOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with date and put action, expect date returned', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', { createdOn: 1585664302000 }, data, putTableContext);
+      expect(data).toEqual({ createdOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with default now returns date', () => {
+      const field = Fields.createdNumberDate();
+      field.init('createdOn', model);
+      const now = Math.floor(new Date().valueOf() / 1000);
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putTableContext);
+      expect(data).toEqual({ createdOn: data.createdOn });
+      expect(data.createdOn).toBeGreaterThanOrEqual(now);
+    });
+
+    it('alias with toTable with put action, date set and getNow called', () => {
+      const field = Fields.createdNumberDate({ alias: 'addOn', now: getNow });
+      field.init('createdOn', model);
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, putTableContext);
+      expect(data).toEqual({ addOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('alias with toModel expect date data', () => {
+      const field = Fields.createdNumberDate({ alias: 'addOn', now: getNow });
+      field.init('createdOn', model);
+      const data: Model.ModelData = {};
+      field.toModel('createdOn', { addOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({ createdOn: 1585664302000 });
+    });
+  });
+
+  describe('When FieldUpdatedNumberDate', () => {
+    const getNow = jest.fn(() => new Date(1585564302000000));
+    const field = Fields.updatedNumberDate({
+      now: getNow,
+      writeOnPut: true,
+      toModelDefaultAlias: 'createdOn',
+    });
+    field.init('updatedOn', model);
+
+    // TODO: writeOnPut: false
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('expect date returns correct type', () => {
+      expect(field.name).toEqual('updatedOn');
+    });
+
+    it('toModel expect date data', () => {
+      const data: Model.ModelData = {};
+      field.toModel('updatedOn', { updatedOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({ updatedOn: 1585664302000 });
+    });
+
+    it('toModel with missing updateOn expect to use createOn', () => {
+      const data: Model.ModelData = {};
+      field.toModel('updatedOn', { createdOn: 1585664302000 }, data, modelContext);
+      expect(data).toEqual({ updatedOn: 1585664302000 });
+    });
+
+    it('toTable unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('createdOn', {}, data, tableContext);
+      expect(data).toEqual({});
+      expect(getNow).not.toBeCalled();
+    });
+
+    it('toTable with date and unsupported action, skip date', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, updateTableContext);
+      expect(data).toEqual({});
+      expect(getNow).not.toBeCalled();
+    });
+
+    it('toTable with put action, updatedOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, putTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with put-new action, updatedOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, putNewTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with put-replace action, updatedOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', {}, data, putReplaceTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTableUpdate with update action, updatedOn set and getNow called', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTableUpdate('updatedOn', {}, data, updateTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with date and put action, expect date returned', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTable('updatedOn', { updatedOn: 1585664302000 }, data, putTableContext);
+      expect(data).toEqual({ updatedOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('toTable with default now returns date', () => {
+      const field = Fields.updatedNumberDate();
+      field.init('updatedOn', model);
+      const now = Math.floor(new Date().valueOf() / 1000);
+      const data: Table.AttributeValuesMap = {};
+      field.toTableUpdate('updatedOn', {}, data, updateTableContext);
+      expect(data).toEqual({ updatedOn: data.updatedOn });
+      expect(data.updatedOn).toBeGreaterThanOrEqual(now);
+    });
+
+    it('alias with toTableUpdate with put action, date set and getNow called', () => {
+      const field = Fields.updatedNumberDate({
+        alias: 'editOn',
+        now: getNow,
+      });
+      field.init('updatedOn', model);
+      const data: Table.AttributeValuesMap = {};
+      field.toTableUpdate('updatedOn', {}, data, updateTableContext);
+      expect(data).toEqual({ editOn: 1585564302000 });
+      expect(getNow).toBeCalledTimes(1);
+    });
+
+    it('alias with toModel expect date data', () => {
+      const field = Fields.updatedNumberDate({
+        alias: 'editNow',
+        now: getNow,
+      });
       field.init('updatedOn', model);
       const data: Model.ModelData = {};
       field.toModel('updatedOn', { editOn: 1585664302000 }, data, modelContext);

@@ -150,7 +150,8 @@ interface GroupModelOutput {
   role: Role;
 }
 
-interface UserModelOutput extends UserKey {
+interface ApiUserModel {
+  id: string;
   type?: string;
   city?: string;
   state?: string;
@@ -166,20 +167,19 @@ interface UserModelOutput extends UserKey {
   spouse?: SpouseModelOutput;
   children?: ChildModelOutput[];
   groups?: { [key: string]: GroupModelOutput };
-  created?: Date;
+  created: number;
+  updated: number;
   hide?: Set<Date>;
   nickname?: string;
 }
 
-interface UserModel extends UserKey {
-  type?: string;
+interface UserInputModel extends UserKey {
   city?: string;
   state?: string;
   country?: string;
   name: Update.String;
   count?: Update.Number;
   description?: Update.String;
-  revision: Update.Number;
   adult: Update.Boolean;
   photo?: Update.Binary;
   interests?: Update.StringSet;
@@ -187,13 +187,19 @@ interface UserModel extends UserKey {
   spouse?: Update.Model<SpouseModel>;
   children?: Update.List<ChildModel>;
   groups?: Update.Map<GroupModel>;
-  created?: Date;
   hide?: Set<Date>;
   nickname?: Update.String;
 }
 
+interface UserOutputModel extends UserKey, UserInputModel {
+  type?: string;
+  revision: Update.Number;
+  created: Update.Number;
+  updated: Update.Number;
+}
+
 const userSchema = {
-  id: Fields.split({ aliases: ['P', 'S'] }),
+  id: Fields.split({ aliases: [table.getPartitionKey(), table.getSortKey()] }),
   type: Fields.type({ alias: 'T' }),
   city: locationSlots.city,
   state: locationSlots.state,
@@ -201,7 +207,7 @@ const userSchema = {
   name: Fields.string(),
   count: Fields.number(),
   description: Fields.string({ alias: 'desc' }),
-  revision: Fields.number({ alias: 'rev' }),
+  revision: Fields.revision({ alias: 'rev', start: 1 }),
   adult: Fields.boolean(),
   photo: Fields.binary(),
   interests: Fields.stringSet(),
@@ -209,12 +215,13 @@ const userSchema = {
   children: Fields.modelList<ChildModel>({ schema: childSchema }),
   spouse: Fields.model<SpouseModel>({ schema: spouseSchema }),
   groups: Fields.modelMap<GroupModel>({ schema: groupSchema }),
-  created: Fields.date(),
+  created: Fields.createdNumberDate({ now: () => new Date(1585563302000) }),
+  updated: Fields.updatedNumberDate({ now: () => new Date(1585563303000), toModelDefaultAlias: 'created' }),
   hide: Fields.hidden(),
   nickname: Fields.string({ default: 'none' }),
 };
 
-const userModel = Model.createModel<UserKey, UserModel>({
+const userModel = Model.createModel<UserKey, UserInputModel, UserOutputModel>({
   schema: userSchema,
   table: table as Table,
 });
@@ -268,7 +275,6 @@ describe('Validate Model with Table and Indexes', () => {
       const params = userModel.putParams({
         id: 'id1.id2',
         name: 'name1',
-        revision: 1,
         adult: true,
       });
       expect(params).toEqual({
@@ -279,6 +285,7 @@ describe('Validate Model with Table and Indexes', () => {
           rev: 1,
           adult: true,
           nickname: 'none',
+          created: 1585563302,
         },
         TableName: 'MainTable',
       });
@@ -288,14 +295,12 @@ describe('Validate Model with Table and Indexes', () => {
       const params = userModel.putParams({
         id: 'id1.id2',
         name: 'name1',
-        revision: 1,
         adult: true,
         city: 'new york',
         state: 'new york',
         country: 'usa',
         description: 'user description',
         count: 2,
-        created: new Date(1585563302000),
         photo: Buffer.from('Photo Buffer'),
         spouse: { age: 40, married: true, name: 'spouse' },
         children: [
@@ -363,9 +368,12 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.updateParams min args', () => {
       const params = userModel.updateParams({ id: 'id1.id2' });
       expect(params).toEqual({
+        ExpressionAttributeNames: { '#n0': 'rev', '#n1': 'updated' },
+        ExpressionAttributeValues: { ':v0': 1, ':v1': 1585563303 },
         Key: { P: 'id1', S: 'id2' },
         ReturnValues: 'ALL_NEW',
         TableName: 'MainTable',
+        UpdateExpression: 'SET #n0 = #n0 + :v0, #n1 = :v1',
       });
     });
 
@@ -373,11 +381,9 @@ describe('Validate Model with Table and Indexes', () => {
       const params = userModel.updateParams({
         id: 'id1.id2',
         name: Update.set('new name'),
-        revision: Update.inc(1),
         city: 'kirkland',
         state: 'wa',
         country: 'usa',
-        created: new Date(1585553302000),
         description: null,
         adult: Update.del(),
         count: Update.add('revision', 3),
@@ -409,7 +415,7 @@ describe('Validate Model with Table and Indexes', () => {
           '#n16': 'group3',
           '#n17': 'role',
           '#n18': 'group4',
-          '#n19': 'created',
+          '#n19': 'updated',
           '#n2': 'count',
           '#n3': 'revision',
           '#n4': 'desc',
@@ -423,7 +429,7 @@ describe('Validate Model with Table and Indexes', () => {
           ':v0': 'kirkland;wa;usa',
           ':v1': 'new name',
           ':v10': { role: 3 },
-          ':v11': 1585553302,
+          ':v11': 1585563303,
           ':v2': 3,
           ':v3': 1,
           ':v4': table.createStringSet(['soccer', 'football']),
@@ -528,7 +534,7 @@ describe('Validate Model with Table and Indexes', () => {
       );
       const results = await userModel.get({ id: 'id1.id2' });
       // Ensure item can be case to javascript native type
-      const item: UserModelOutput | undefined = results.item;
+      const item: ApiUserModel | undefined = results.item;
       expect(item).toEqual({
         adult: true,
         children: [
@@ -546,7 +552,7 @@ describe('Validate Model with Table and Indexes', () => {
         city: 'new york',
         count: 2,
         country: 'usa',
-        created: new Date('2020-03-30T10:15:02.000Z'),
+        created: 1585563302,
         description: 'user description',
         groups: {
           group1: { role: 0 },
@@ -564,6 +570,7 @@ describe('Validate Model with Table and Indexes', () => {
           name: 'spouse',
         },
         state: 'new york',
+        updated: 1585563302,
       });
       expect(client.get).toBeCalledWith({
         Key: { P: 'id1', S: 'id2' },
@@ -598,7 +605,9 @@ describe('Validate Model with Table and Indexes', () => {
       };
       const putResultsData = {
         ...putModelData,
+        created: 1585563302,
         nickname: 'none',
+        updated: 1585563302,
       };
       const putTableItem = {
         adult: true,
@@ -606,6 +615,7 @@ describe('Validate Model with Table and Indexes', () => {
         S: 'id2',
         name: 'name1',
         nickname: 'none',
+        created: 1585563302,
         rev: 1,
       };
       it('Model.put', async () => {
@@ -653,9 +663,18 @@ describe('Validate Model with Table and Indexes', () => {
       });
       expect(results.item).toEqual({ id: 'id1.id2' });
       expect(client.update).toBeCalledWith({
+        ExpressionAttributeNames: {
+          '#n0': 'rev',
+          '#n1': 'updated',
+        },
+        ExpressionAttributeValues: {
+          ':v0': 1,
+          ':v1': 1585563303,
+        },
         Key: { P: 'id1', S: 'id2' },
         ReturnValues: 'ALL_NEW',
         TableName: 'MainTable',
+        UpdateExpression: 'SET #n0 = #n0 + :v0, #n1 = :v1',
       });
       expect(client.update).toBeCalledTimes(1);
     });
@@ -683,11 +702,9 @@ describe('Validate Model with Table and Indexes', () => {
       const results = await userModel.update({
         id: 'id1.id2',
         name: 'new name',
-        revision: Update.inc(1),
         city: 'kirkland',
         state: 'wa',
         country: 'usa',
-        created: new Date(1585553302000),
       });
       expect(results.item).toEqual({
         id: 'id1.id2',
@@ -695,20 +712,21 @@ describe('Validate Model with Table and Indexes', () => {
         city: 'hudson',
         state: 'wi',
         country: 'usa',
-        created: new Date(1585553202000),
+        created: 1585553202,
+        updated: 1585553202,
       });
       expect(client.update).toBeCalledWith({
         ExpressionAttributeNames: {
           '#n0': 'G0S',
           '#n1': 'name',
           '#n2': 'rev',
-          '#n3': 'created',
+          '#n3': 'updated',
         },
         ExpressionAttributeValues: {
           ':v0': 'kirkland;wa;usa',
           ':v1': 'new name',
           ':v2': 1,
-          ':v3': 1585553302,
+          ':v3': 1585563303,
         },
         Key: { P: 'id1', S: 'id2' },
         ReturnValues: 'ALL_NEW',

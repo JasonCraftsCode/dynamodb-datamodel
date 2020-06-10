@@ -5,6 +5,14 @@ import { Update } from './Update';
 
 // TODO: Consider supporting throwing when invalid type.
 
+function toEpochSec(value: Date): number {
+  return Math.floor(value.valueOf() / 1000);
+}
+
+function toDate(epochSec: number): Date {
+  return new Date(epochSec * 1000);
+}
+
 /**
  * Collection of functions for constructing a Model schema with Field objects and the Field classes.
  * @example [examples/Fields.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
@@ -227,6 +235,24 @@ export class Fields {
   }
 
   /**
+   * Creates a field that add a created date as a number in seconds since UTC UNIX epoch time (January 1, 1970 00:00:00 UTC) to a table attribute.
+   * @param options - Options to initialize field with.
+   * @returns New FieldCreatedNumberDate object.
+   */
+  static createdNumberDate(options?: Fields.CreatedDateOptions): Fields.FieldCreatedNumberDate {
+    return new Fields.FieldCreatedNumberDate(options);
+  }
+
+  /**
+   * Creates a field that adds an updated date as a number in seconds since UTC UNIX epoch time (January 1, 1970 00:00:00 UTC) to a table attribute.
+   * @param options - Options to initialize field with.
+   * @returns New FieldUpdatedNumberDate object.
+   */
+  static updatedNumberDate(options?: Fields.UpdateNumberDateOptions): Fields.FieldUpdatedNumberDate {
+    return new Fields.FieldUpdatedNumberDate(options);
+  }
+
+  /**
    * Creates a field that will be incremented with each update.  It also supports preventing an update if
    * the table attribute doesn't match the model property.
    * @param options - Options to initialize field with.
@@ -245,7 +271,6 @@ export class Fields {
 export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Context object passed to {@link Field.toTable} and {@link Field.toTableUpdate} to allow the fields to know
-   * about the broader context and provide more complex behavior, like appending to the conditions param.
    */
   export interface TableContext {
     /**
@@ -445,7 +470,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
-    toTableUpdate(
+    toTableUpdate?(
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.ResolverMap,
@@ -901,7 +926,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       context: ModelContext,
     ): void {
       const value = tableData[this.alias || name];
-      if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
+      if (typeof value === 'number') modelData[name] = toDate(value);
     }
 
     // eslint-disable-next-line tsdoc/syntax
@@ -914,7 +939,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       let value = modelData[name] as Date | undefined;
       if (value === undefined) value = super.getDefault(name, modelData, context);
-      if (value !== undefined) tableData[this.alias || name] = Math.round(value.valueOf() / 1000);
+      if (value !== undefined) tableData[this.alias || name] = toEpochSec(value);
     }
 
     // eslint-disable-next-line tsdoc/syntax
@@ -1373,7 +1398,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Options for CreateDate class constructor.
+   * Options for {@link CreatedDate} class constructor.
    */
   export interface CreatedDateOptions {
     /**
@@ -1388,7 +1413,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * See {@link Fields.createDate} for details.
+   * See {@link Fields.createdDate} for details.
    */
   export class FieldCreatedDate implements Fields.Field {
     /**
@@ -1432,7 +1457,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       context: Fields.ModelContext,
     ): void {
       const value = tableData[this.alias || name];
-      if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
+      if (typeof value === 'number') modelData[name] = toDate(value);
     }
 
     // eslint-disable-next-line tsdoc/syntax
@@ -1443,7 +1468,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       context: Fields.TableContext,
     ): void {
-      if (Table.isPutAction(context.action)) tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
+      if (Table.isPutAction(context.action)) tableData[this.alias || name] = toEpochSec(this.now());
     }
   }
 
@@ -1463,7 +1488,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * See {@link Fields.updateDate} for more details.
+   * See {@link Fields.updatedDate} for more details.
    */
   export class FieldUpdatedDate implements Fields.Field {
     /**
@@ -1507,7 +1532,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       context: Fields.ModelContext,
     ): void {
       const value = tableData[this.alias || name];
-      if (value !== undefined) modelData[name] = new Date((value as number) * 1000);
+      if (typeof value === 'number') modelData[name] = toDate(value);
     }
 
     // eslint-disable-next-line tsdoc/syntax
@@ -1518,7 +1543,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       context: Fields.TableContext,
     ): void {
-      if (Table.isPutAction(context.action)) tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
+      if (Table.isPutAction(context.action)) tableData[this.alias || name] = toEpochSec(this.now());
     }
 
     // eslint-disable-next-line tsdoc/syntax
@@ -1530,7 +1555,133 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: Fields.TableContext,
     ): void {
-      tableData[this.alias || name] = Math.round(this.now().valueOf() / 1000);
+      tableData[this.alias || name] = toEpochSec(this.now());
+    }
+  }
+
+  /**
+   * See {@link Fields.createdNumberDate} for more details.
+   */
+  export class FieldCreatedNumberDate extends FieldNumber {
+    /**
+     * Function to get the current date.
+     */
+    now = (): Date => new Date();
+
+    /**
+     * Initialize this class with options.
+     * @param options - Options to initialize this class with.
+     */
+    constructor(options: CreatedDateOptions = {}) {
+      super(options);
+      if (options.now) this.now = options.now;
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
+    toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: Fields.TableContext,
+    ): void {
+      if (Table.isPutAction(context.action)) tableData[this.alias || name] = toEpochSec(this.now());
+    }
+
+    /** toTableUpdate not supported by FieldCreatedNumberDate */
+    toTableUpdate = undefined;
+  }
+
+  /**
+   * Options used when creating {@link FieldUpdatedNumberDate}
+   */
+  export interface UpdateNumberDateOptions {
+    /**
+     * Table attribute to map this Model property to.
+     */
+    alias?: string;
+
+    /**
+     * Function to get the current date.
+     */
+    now?: () => Date;
+
+    /**
+     * Sets the updated date when item it put.
+     */
+    writeOnPut?: boolean;
+
+    /**
+     * Table attribute to use in toModel when value is not present.
+     */
+    toModelDefaultAlias?: string;
+  }
+
+  /**
+   * See {@link Fields.updatedNumberDate} for more details.
+   */
+  export class FieldUpdatedNumberDate extends FieldNumber {
+    /**
+     * Function to get the current date.
+     */
+    now: () => Date = (): Date => new Date();
+
+    /**
+     * Sets the updated date when item it put.
+     */
+    writeOnPut?: boolean;
+
+    /**
+     * Table attribute to use in toModel when value is not present.
+     */
+    toModelDefaultAlias?: string;
+
+    /**
+     * Initialize this class with options.
+     * @param options - Options to initialize this class with.
+     */
+    constructor(options: UpdateNumberDateOptions = {}) {
+      super(options);
+      if (options.now) this.now = options.now;
+      this.writeOnPut = options.writeOnPut;
+      this.toModelDefaultAlias = options.toModelDefaultAlias;
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
+    toModel(
+      name: string,
+      tableData: Table.AttributeValuesMap,
+      modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: Fields.ModelContext,
+    ): void {
+      let value = tableData[this.alias || name];
+      if (value === undefined && this.toModelDefaultAlias) value = tableData[this.toModelDefaultAlias];
+      if (value !== undefined) modelData[name] = value;
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
+    toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: Fields.TableContext,
+    ): void {
+      if (this.writeOnPut && Table.isPutAction(context.action)) tableData[this.alias || name] = toEpochSec(this.now());
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.ResolverMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: Fields.TableContext,
+    ): void {
+      tableData[this.alias || name] = toEpochSec(this.now());
     }
   }
 
