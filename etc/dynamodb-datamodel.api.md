@@ -491,7 +491,7 @@ export class Model implements Model.ModelBase {
     schema: Model.ModelSchema;
     static splitTableData(table: Table, data: Table.AttributeValuesMap): Model.TableData;
     table: Table;
-    toModel(data: Table.AttributeValuesMap | undefined, context: Fields.ModelContext): Model.ModelOut | undefined;
+    toModel(data: Table.AttributeValuesMap | undefined, context: Fields.ModelContext): Model.ModelOut;
     toTable(data: Model.ModelData, context: Fields.TableContext): Model.TableData;
     toTableUpdate(data: Model.ModelUpdate, context: Fields.TableContext): Model.TableUpdateData;
     update(data: Model.ModelUpdate, options?: Table.UpdateOptions): Promise<Model.UpdateOutput>;
@@ -501,7 +501,7 @@ export class Model implements Model.ModelBase {
 // @public
 export namespace Model {
     export interface BaseOutput<ITEM, RESULT> {
-        item?: ModelOutT<ITEM>;
+        item: ModelOutT<ITEM>;
         result: RESULT;
     }
     export function createModel<KEY extends {

@@ -6,7 +6,6 @@ import { Condition } from '../src/Condition';
 import { Fields } from '../src/Fields';
 import { Model } from '../src/Model';
 import { Table } from '../src/Table';
-// import { Index } from '../src/TableIndex';
 import { Update } from '../src/Update';
 import { delay } from './testCommon';
 
@@ -467,7 +466,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.get no Item expect results undefined ', async () => {
       client.get = jest.fn(() => request({}));
       const results = await userModel.get({ id: 'id1' });
-      expect(results.item).toBeUndefined();
+      expect(results.item).toEqual({});
     });
 
     it('Model.get with multiple id', async () => {
@@ -593,7 +592,7 @@ describe('Validate Model with Table and Indexes', () => {
     it('Model.delete Attributes missing expect results undefined', async () => {
       client.delete = jest.fn(() => request({}));
       const results = await userModel.delete({ id: 'id1.id2' });
-      expect(results.item).toBeUndefined();
+      expect(results.item).toEqual({});
     });
 
     describe('put based methods', () => {
@@ -684,7 +683,7 @@ describe('Validate Model with Table and Indexes', () => {
       const results = await userModel.update({
         id: 'id1.id2',
       });
-      expect(results.item).toBeUndefined();
+      expect(results.item).toEqual({});
     });
 
     it('Model.update with all fields', async () => {

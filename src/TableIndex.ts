@@ -265,7 +265,6 @@ export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
    * See {@link Table.createTable} reasoning for having a createTable over support 'new TableT'.
    * @param params - Index constructor params.
    */
-  // eslint-disable-next-line no-inner-declarations
   export function createIndex<KEY = DefaultGlobalIndexKey>(params: IndexParamsT<KEY>): IndexT<KEY> {
     return new Index(params) as IndexT<KEY>;
   }

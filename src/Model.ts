@@ -49,11 +49,11 @@ export class Model implements Model.ModelBase {
    * @param context - Context used for converting table to model data, passed to each field object.
    * @returns Model data converted from the table data.
    */
-  toModel(data: Table.AttributeValuesMap | undefined, context: Fields.ModelContext): Model.ModelOut | undefined {
+  toModel(data: Table.AttributeValuesMap | undefined, context: Fields.ModelContext): Model.ModelOut {
     const tableData = data || {};
     const modelData: Model.ModelOut = {};
     Object.keys(this.schema).forEach((key) => this.schema[key].toModel(key, tableData, modelData, context));
-    return Object.keys(modelData).length > 0 ? modelData : undefined;
+    return modelData;
   }
 
   /**
@@ -361,7 +361,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Model item data read from the table.
      */
-    item?: ModelOutT<ITEM>;
+    item: ModelOutT<ITEM>;
 
     /**
      * The result of the table read/write.
@@ -516,7 +516,6 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
    * @param OUTPUT - The model output interface.
    * @param params - Options to used when creating Model
    */
-  // // eslint-disable-next-line no-inner-declarations
   export function createModel<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any,
     KEY extends { [key: string]: any },

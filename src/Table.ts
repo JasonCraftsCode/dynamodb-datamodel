@@ -943,7 +943,6 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
    * @param params - Table constructor params.
    * @returns A new table as TableT.
    */
-  // eslint-disable-next-line no-inner-declarations
   export function createTable<KEY = Table.DefaultTableKey, ATTRIBUTES = KEY>(
     params: TableParamsT<KEY, ATTRIBUTES>,
   ): TableT<KEY, ATTRIBUTES> {
