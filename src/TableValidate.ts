@@ -88,8 +88,8 @@ export function validateIndex(index: Index, names?: Set<string>): void {
   const { keyAttributes, onError } = table;
 
   // Validate index name
-  if (!name) onError(`Global index must have a name`);
-  if (names) {
+  if (!name) onError(`Secondary index must have a name`);
+  else if (names) {
     if (names.has(name)) onError(`Duplicate index name '${name}'`);
     names.add(name);
   }
@@ -108,12 +108,12 @@ export function validateIndex(index: Index, names?: Set<string>): void {
   const indexKey = validateKeySchema(keySchema, keyAttributes, name, onError);
   if (type === 'GLOBAL') {
     if (indexKey.pk === tableKey.pk && indexKey.sk === tableKey.sk)
-      onError(`${name} has same partition key '${indexKey.pk}' and sort key '${indexKey.sk}' as table`);
+      onError(`${name} global index has same partition key '${indexKey.pk}' and sort key '${indexKey.sk}' as table`);
   } else if (type === 'LOCAL') {
     if (indexKey.pk !== tableKey.pk) onError(`${name} partition key '${indexKey.pk}' needs to be '${tableKey.pk}'`);
     if (indexKey.sk === tableKey.sk) onError(`${name} has same sort key '${tableKey.sk}' as table`);
     if (indexKey.sk === undefined) onError(`${name} must have a sort key`);
-  } else onError(`${name} has invalid type: ${type}`);
+  } else onError(`${name} index has invalid type: ${type}`);
 }
 
 /**

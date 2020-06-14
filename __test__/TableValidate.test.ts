@@ -254,7 +254,7 @@ describe('When global index', () => {
   it('missing name expect throw', () => {
     const gsi = ProjectionIndex({ type: 'ALL' });
     gsi.name = (undefined as unknown) as string;
-    expect(() => validateIndex(gsi)).toThrowError(new Error('Global index must have a name'));
+    expect(() => validateIndex(gsi)).toThrowError(new Error('Secondary index must have a name'));
   });
 
   it('has validate ALL projection expect validateTable succeeds', () => {
@@ -320,7 +320,7 @@ describe('When global index', () => {
       S: Table.PrimaryKey.SortString;
     }>({ P: Table.PrimaryKey.PartitionKeyType, S: Table.PrimaryKey.SortKeyType }, 'GSI0', testTable as Table, 'GLOBAL');
     expect(() => validateIndex(gsi)).toThrowError(
-      new Error("GSI0 has same partition key 'P' and sort key 'S' as table"),
+      new Error("GSI0 global index has same partition key 'P' and sort key 'S' as table"),
     );
   });
 
@@ -422,7 +422,7 @@ describe('When local index', () => {
       testTable as Table,
       'bad' as 'LOCAL',
     );
-    expect(() => validateIndex(lsi)).toThrowError(new Error('LSI0 has invalid type: bad'));
+    expect(() => validateIndex(lsi)).toThrowError(new Error('LSI0 index has invalid type: bad'));
   });
 
   it('partition key name is not same as table expect throw', () => {
