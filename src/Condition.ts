@@ -14,7 +14,7 @@ import { Table } from './Table';
  * Condition is also used by {@link fields} to allow each field type to only expose the conditions that the field supports.
  *
  *
- * @example [examples/Condition.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Condition.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+ * @example [examples/Condition.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Condition.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Table.ts})
  * ```typescript
  * [[include:Condition.ts]]
  * ```

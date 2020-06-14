@@ -15,7 +15,7 @@ function toDate(epochSec: number): Date {
 
 /**
  * Collection of functions for constructing a Model schema with Field objects and the Field classes.
- * @example [examples/Fields.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+ * @example [examples/Fields.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.ts}, (imports: [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts})
  * ```typescript
  * [[include:Fields.ts]]
  * ```
@@ -156,7 +156,7 @@ export class Fields {
    * Example: Model schema contains 'id: Fields.split(\{ aliases: ['P','S'] \})' and when id = 'guid.date' the field will split the id value
    * in to the table primary key of \{ P: 'guid', S: 'date' \}
    *
-   * @example [examples/Fields.split.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.split.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+   * @example [examples/Fields.split.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.split.ts}, (imports: [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts})
    * ```typescript
    * [[include:Fields.split.ts]]
    * ```
@@ -171,7 +171,7 @@ export class Fields {
   /**
    * Creates an indices based slots composite field object which can then return FieldCompositeSlot by index to use in a {@link Model.schema}.
    *
-   * @example [examples/Fields.composite.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.composite.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+   * @example [examples/Fields.composite.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.composite.ts}, (imports: [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts})
    * ```typescript
    * [[include:Fields.composite.ts]]
    * ```
@@ -186,7 +186,7 @@ export class Fields {
   /**
    * Creates an name based slots composite field object which can then return FieldCompositeSlot by name to use in a {@link Model.schema}.
    *
-   * @example [examples/Fields.compositeNamed.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.compositeNamed.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+   * @example [examples/Fields.compositeNamed.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.compositeNamed.ts}, (imports: [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts})
    * ```typescript
    * [[include:Fields.compositeNamed.ts]]
    * ```
@@ -204,7 +204,7 @@ export class Fields {
   /**
    * Creates a field that adds the Model name to a table attribute.
    *
-   * @example [examples/Fields.type.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.type.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+   * @example [examples/Fields.type.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.type.ts}, (imports: [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts})
    * ```typescript
    * [[include:Fields.type.ts]]
    * ```

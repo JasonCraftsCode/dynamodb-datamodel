@@ -12,7 +12,7 @@ import { Update, UpdateExpression } from './Update';
  * Object that represents the DynamoDB table.
  *
  * In most single table designs secondary indexes will be used like in the following example:
- * @example [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts} (imports: [examples/Index.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts})
+ * @example [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts} (imports: [examples/Index.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Index.ts})
  * ```typescript
  * [[include:Table.ts]]
  * ```
