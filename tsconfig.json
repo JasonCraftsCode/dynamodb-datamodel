@@ -34,7 +34,7 @@
     "mode": "library", // requires: npm add -D typedoc@0.17.0-3 --save-exact
     "out": "docs",
     "theme": "default",
-    "gitRevision": "master",
+    "gitRevision": "main",
     "includes": "./examples/"
     // "toc": ["Table", "Model"]
   }

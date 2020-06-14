@@ -68,10 +68,10 @@
 					<a href="https://bundlephobia.com/result?p=dynamodb-datamodel"><img src="https://badgen.net/bundlephobia/minzip/dynamodb-datamodel" alt="minzip bundle size"></a>
 					<a href="https://david-dm.org/jasoncraftscode/dynamodb-datamodel"><img src="https://badgen.net/david/dep/jasoncraftscode/dynamodb-datamodel" alt="dependencies Status"></a>
 					<a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/pulls?q=is%3Apr+label%3Adependencies+"><img src="https://badgen.net/dependabot/JasonCraftsCode/dynamodb-datamodel?icon=dependabot" alt="DependABot Status"></a>
-					<a href="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel"><img src="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/master/graph/badge.svg" alt="CodeCov"></a>
+					<a href="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel"><img src="https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/main/graph/badge.svg" alt="CodeCov"></a>
 					<a href="https://deepscan.io/dashboard#view=project&amp;tid=8443&amp;pid=11172&amp;bid=162758"><img src="https://deepscan.io/api/teams/8443/projects/11172/branches/162758/badge/grade.svg" alt="DeepScan grade"></a>
 					<a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/npm/types/dynamodb-datamodel" alt="npm type definitions"></a>
-				<a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/LICENSE"><img src="https://badgen.net/npm/license/dynamodb-datamodel" alt="npm license"></a></p>
+				<a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/LICENSE"><img src="https://badgen.net/npm/license/dynamodb-datamodel" alt="npm license"></a></p>
 				<p><strong>NOTE:</strong> This project is in BETA (not yet 1.0.0) and is constantly being updated. Feedback and bugs are very much welcomed <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/issues">issues/feedback</a>.</p>
 				<p>The <strong>DynamoDB DataModel</strong> is a javascript and typescript library to simplify working with single table designs on <a href="https://aws.amazon.com/dynamodb/">Amazon DynamoDB</a>. This library builds off of the <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html">aw-sdk DocumentClient</a> and makes it easy to work with many different item types and access patterns in a single DynamoDB table with secondary indexes.</p>
 				<p>If you&#39;re wondering what single table design is and why you should use it then I recommend you check out the <a href="#resources">Resources</a> section below. Then come back and check out how DynamoDB-DataModel can help.</p>
@@ -185,7 +185,7 @@
 				<a href="#basic-usage-example" id="basic-usage-example" style="color: inherit; text-decoration: none;">
 					<h3>Basic usage example</h3>
 				</a>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.BasicUsage.ts">examples/Readme.BasicUsage.ts</a></p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Readme.BasicUsage.ts">examples/Readme.BasicUsage.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DocumentClient } <span class="hljs-keyword">from</span> <span class="hljs-string">'aws-sdk/clients/dynamodb'</span>;
 <span class="hljs-comment">// 1. Import or require `Table`, `Model` and `Fields` from `dynamodb-datamodel`</span>
 <span class="hljs-keyword">import</span> { Table, Model, Fields } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
@@ -274,7 +274,7 @@
 				<a href="#table-example" id="table-example" style="color: inherit; text-decoration: none;">
 					<h3>Table Example</h3>
 				</a>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.Simple.ts">examples/Table.Simple.ts</a></p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Table.Simple.ts">examples/Table.Simple.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DocumentClient } <span class="hljs-keyword">from</span> <span class="hljs-string">'aws-sdk/clients/dynamodb'</span>;
 <span class="hljs-keyword">import</span> { Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 
@@ -311,7 +311,7 @@
 				<a href="#index-example" id="index-example" style="color: inherit; text-decoration: none;">
 					<h3>Index Example</h3>
 				</a>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts">examples/Index.ts</a></p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Index.ts">examples/Index.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Index, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 <span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
 
@@ -372,7 +372,7 @@
 				<a href="#model-example" id="model-example" style="color: inherit; text-decoration: none;">
 					<h3>Model Example</h3>
 				</a>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts">examples/Model.ts</a> (imports: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts">examples/Table.ts</a>)</p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Model.ts">examples/Model.ts</a> (imports: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Table.ts">examples/Table.ts</a>)</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 <span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
 
@@ -561,7 +561,7 @@
 				<a href="#fields-examples" id="fields-examples" style="color: inherit; text-decoration: none;">
 					<h3>Fields Examples</h3>
 				</a>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts">examples/Fields.ts</a></p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Fields.ts">examples/Fields.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 <span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
 
@@ -728,7 +728,7 @@ expect(params).toEqual({
 					<h3>Condition Examples</h3>
 				</a>
 				<p>Condition where age &gt; 21 OR ((region = &#39;US&#39; AND size(interests) &gt; 10) AND interests contain nodejs, dynamodb, or serverless):</p>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.ts">examples/Readme.Condition.ts</a></p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Readme.Condition.ts">examples/Readme.Condition.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Condition, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 
 <span class="hljs-comment">// Destructuring Condition to make it easier to write filter expression.</span>
@@ -748,7 +748,7 @@ expect(params.FilterExpression).toEqual(
   <span class="hljs-string">'(#n0 &gt; :v0 OR (#n1 = :v1 AND size(#n2) &gt; :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))'</span>,
 );</code></pre>
 				<p>Using Field methods to ensure attribute paths are correct.</p>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.Fields.ts">examples/Readme.Condition.Fields.ts</a></p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Readme.Condition.Fields.ts">examples/Readme.Condition.Fields.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Condition, Fields, Model, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 <span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
 
@@ -844,7 +844,7 @@ expect(params.FilterExpression).toEqual(
 				<a href="#keycondition-examples" id="keycondition-examples" style="color: inherit; text-decoration: none;">
 					<h3>KeyCondition Examples</h3>
 				</a>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/KeyCondition.ts">examples/KeyCondition.ts</a></p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/KeyCondition.ts">examples/KeyCondition.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { KeyCondition } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 <span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
 
@@ -902,7 +902,7 @@ expect(params).toEqual({
 				<a href="#update-examples" id="update-examples" style="color: inherit; text-decoration: none;">
 					<h3>Update Examples</h3>
 				</a>
-				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Model.ts">examples/Update.Model.ts</a></p>
+				<p>From: <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Update.Model.ts">examples/Update.Model.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
 <span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
 

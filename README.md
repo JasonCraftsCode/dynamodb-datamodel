@@ -5,10 +5,10 @@
 [![minzip bundle size](https://badgen.net/bundlephobia/minzip/dynamodb-datamodel)](https://bundlephobia.com/result?p=dynamodb-datamodel)
 [![dependencies Status](https://badgen.net/david/dep/jasoncraftscode/dynamodb-datamodel)](https://david-dm.org/jasoncraftscode/dynamodb-datamodel)
 [![DependABot Status](https://badgen.net/dependabot/JasonCraftsCode/dynamodb-datamodel?icon=dependabot)](https://github.com/JasonCraftsCode/dynamodb-datamodel/pulls?q=is%3Apr+label%3Adependencies+)
-[![CodeCov](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/master/graph/badge.svg)](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel)
+[![CodeCov](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/main/graph/badge.svg)](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel)
 [![DeepScan grade](https://deepscan.io/api/teams/8443/projects/11172/branches/162758/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=8443&pid=11172&bid=162758)
 [![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)](https://www.typescriptlang.org/)
-[![npm license](https://badgen.net/npm/license/dynamodb-datamodel)](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/LICENSE)
+[![npm license](https://badgen.net/npm/license/dynamodb-datamodel)](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/LICENSE)
 
 **NOTE:** This project is in BETA (not yet 1.0.0) and is constantly being updated. Feedback and bugs are very much welcomed [issues/feedback](https://github.com/JasonCraftsCode/dynamodb-datamodel/issues).
 
@@ -118,7 +118,7 @@ General usage flow:
 
 ### Basic usage example
 
-From: [examples/Readme.BasicUsage.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.BasicUsage.ts)
+From: [examples/Readme.BasicUsage.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Readme.BasicUsage.ts)
 
 ```typescript
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
@@ -212,7 +212,7 @@ Creating a table is simple, there are only three things needed: 1) the name of t
 
 ### Table Example
 
-From: [examples/Table.Simple.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.Simple.ts)
+From: [examples/Table.Simple.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Table.Simple.ts)
 
 ```typescript
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
@@ -254,7 +254,7 @@ Creating a index is simple, there are only three things needed: 1) the name of t
 
 ### Index Example
 
-From: [examples/Index.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts)
+From: [examples/Index.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Index.ts)
 
 ```typescript
 import { Index, Table } from 'dynamodb-datamodel';
@@ -319,7 +319,7 @@ A model only needs three things when created:
 
 ### Model Example
 
-From: [examples/Model.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Model.ts) (imports: [examples/Table.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts))
+From: [examples/Model.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Model.ts) (imports: [examples/Table.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Table.ts))
 
 ```typescript
 import { Fields, Model, Table, Update } from 'dynamodb-datamodel';
@@ -421,7 +421,7 @@ Below are the fields that map to the native DynamoDB types and in most cases map
 
 ### Fields Examples
 
-From: [examples/Fields.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Fields.ts)
+From: [examples/Fields.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Fields.ts)
 
 ```typescript
 import { Fields, Model, Table, Update } from 'dynamodb-datamodel';
@@ -513,7 +513,7 @@ See [AWS Condition Expression Reference](https://docs.aws.amazon.com/amazondynam
 
 Condition where age > 21 OR ((region = 'US' AND size(interests) > 10) AND interests contain nodejs, dynamodb, or serverless):
 
-From: [examples/Readme.Condition.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.ts)
+From: [examples/Readme.Condition.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Readme.Condition.ts)
 
 ```typescript Using Condition helpers
 import { Condition, Table } from 'dynamodb-datamodel';
@@ -538,7 +538,7 @@ expect(params.FilterExpression).toEqual(
 
 Using Field methods to ensure attribute paths are correct.
 
-From: [examples/Readme.Condition.Fields.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Readme.Condition.Fields.ts)
+From: [examples/Readme.Condition.Fields.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Readme.Condition.Fields.ts)
 
 ```typescript
 import { Condition, Fields, Model, Table } from 'dynamodb-datamodel';
@@ -600,7 +600,7 @@ All of the above KeyCondition functions return a resolver function, allowing for
 
 ### KeyCondition Examples
 
-From: [examples/KeyCondition.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/KeyCondition.ts)
+From: [examples/KeyCondition.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/KeyCondition.ts)
 
 ```typescript
 import { KeyCondition } from 'dynamodb-datamodel';
@@ -665,7 +665,7 @@ To create custom Update functions you just need to return an arrow function that
 
 ### Update Examples
 
-From: [examples/Update.Model.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Model.ts)
+From: [examples/Update.Model.ts](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/examples/Update.Model.ts)
 
 ```typescript
 import { Fields, Model, Table, Update } from 'dynamodb-datamodel';

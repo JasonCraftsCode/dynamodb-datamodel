@@ -12,7 +12,7 @@ import { Table } from './Table';
  * If you are using TypeScript you can use {@link Index.createIndex} to create an Index with strong typing for the primary key.
  * This provides strong types for the {@link Index.keySchema} property, {@link Index.queryParams} and {@link Index.scan} methods.
  *
- * @example [examples/Index.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Index.ts}
+ * @example [examples/Index.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Index.ts}
  * ```typescript
  * [[include:Index.ts]]
  * ```

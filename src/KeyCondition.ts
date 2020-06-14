@@ -11,7 +11,7 @@ import { Table } from './Table';
  * for details on how each of the below key comparison operations and functions work.
  *
  *
- * @example [examples/KeyCondition.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/KeyCondition.ts}, (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+ * @example [examples/KeyCondition.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/KeyCondition.ts}, (imports: [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts})
  * ```typescript
  * [[include:KeyCondition.ts]]
  * ```

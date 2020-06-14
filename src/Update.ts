@@ -3,13 +3,13 @@ import { Table } from './Table';
 /**
  * Set of helper methods used to build UpdateExpression for use in DynamoDB update method.
  *
- * @example [examples/Update.Model.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Model.ts} (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+ * @example [examples/Update.Model.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Update.Model.ts} (imports: [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts})
  * ```typescript
  * [[include:Update.Model.ts]]
  * ```
  *
  * Using Table (though in most cases you'll use Model):
- * @example [examples/Update.Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Update.Table.ts} (imports: [examples/Table.ts]{@link https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/master/examples/Table.ts})
+ * @example [examples/Update.Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Update.Table.ts} (imports: [examples/Table.ts]{@link https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts})
  * ```typescript
  * [[include:Update.Table.ts]]
  * ```
