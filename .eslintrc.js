@@ -55,5 +55,12 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
       },
     },
+    {
+      // add limited set of rules here to avoid having to add eslint-disable comments to examples
+      files: ['examples/**/*.ts'],
+      rules: {
+        '@typescript-eslint/unbound-method': 'off',
+      },
+    },
   ],
 };
