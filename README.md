@@ -10,7 +10,7 @@
 [![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)](https://www.typescriptlang.org/)
 [![npm license](https://badgen.net/npm/license/dynamodb-datamodel)](https://github.com/JasonCraftsCode/dynamodb-datamodel/tree/main/LICENSE)
 
-**NOTE:** This project is in BETA (not yet 1.0.0) and is constantly being updated. Feedback and bugs are very much welcomed [issues/feedback](https://github.com/JasonCraftsCode/dynamodb-datamodel/issues).
+**NOTE:** This project is in BETA (not yet 1.0.0) and is constantly being updated. Feedback and bugs are very much welcomed [issues/feedback](https://github.com/JasonCraftsCode/dynamodb-datamodel/issues).  I am current working to integrate this back into my personal project to fully validate all aspects of this library once that is finished and all issues I find are fixed I'll update the library version to a 1.0.0 stable version.
 
 The **DynamoDB DataModel** is a javascript and typescript library to simplify working with single table designs on [Amazon DynamoDB](https://aws.amazon.com/dynamodb/). This library builds off of the [aw-sdk DocumentClient](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html) and makes it easy to work with many different item types and access patterns in a single DynamoDB table with secondary indexes.
 
