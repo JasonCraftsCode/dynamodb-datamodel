@@ -237,7 +237,7 @@ export class Table {
     options: Table.BatchGetTableOptions = {},
   ): DocumentClient.BatchGetItemInput {
     const params: DocumentClient.BatchGetItemInput = { RequestItems: {} };
-    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
+    Table.addBatchParams(options, params);
     params.RequestItems[this.name] = Table.addItemAttributes<Table.BatchGetTableInput>(
       { Keys: keys },
       options.itemAttributes,
@@ -259,8 +259,7 @@ export class Table {
     options: Table.BatchWriteTableOptions = {},
   ): DocumentClient.BatchWriteItemInput {
     const params: DocumentClient.BatchWriteItemInput = { RequestItems: {} };
-    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
-    if (options.metrics) params.ReturnItemCollectionMetrics = options.metrics;
+    Table.addBatchParams(options, params);
     const writeItems: DocumentClient.WriteRequest[] = [];
     if (putItems) putItems.forEach((item) => writeItems.push({ PutRequest: { Item: item } }));
     if (delKeys) delKeys.forEach((key) => writeItems.push({ DeleteRequest: { Key: key } }));
@@ -282,7 +281,7 @@ export class Table {
   ): DocumentClient.TransactGetItemsInput {
     const items: DocumentClient.TransactGetItemList = [];
     const params: DocumentClient.TransactGetItemsInput = { TransactItems: items };
-    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
+    Table.addBatchParams(options, params);
     if (keys) keys.forEach((key) => items.push({ Get: { Key: key, TableName: this.name } }));
     if (getItems)
       getItems.forEach((item) =>
@@ -308,9 +307,7 @@ export class Table {
   ): DocumentClient.TransactWriteItemsInput {
     const items: DocumentClient.TransactWriteItemList = [];
     const params: DocumentClient.TransactWriteItemsInput = { TransactItems: items };
-    if (options.token) params.ClientRequestToken = options.token;
-    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
-    if (options.metrics) params.ReturnItemCollectionMetrics = options.metrics;
+    Table.addBatchParams(options, params);
 
     write.check?.forEach((item) =>
       items.push({
@@ -558,6 +555,23 @@ export class Table {
   ): T & Table.ExpressionParams {
     if (item.returnFailure) params.ReturnValuesOnConditionCheckFailure = item.returnFailure;
     return Table.addParams(params, item, 'condition', addParams);
+  }
+
+  static addBatchParams(
+    options: {
+      token?: DocumentClient.ClientRequestToken;
+      consumed?: DocumentClient.ReturnConsumedCapacity;
+      metrics?: DocumentClient.ReturnItemCollectionMetrics;
+    },
+    params: {
+      ClientRequestToken?: DocumentClient.ClientRequestToken;
+      ReturnConsumedCapacity?: DocumentClient.ReturnConsumedCapacity;
+      ReturnItemCollectionMetrics?: DocumentClient.ReturnItemCollectionMetrics;
+    },
+  ): void {
+    if (options.token) params.ClientRequestToken = options.token;
+    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
+    if (options.metrics) params.ReturnItemCollectionMetrics = options.metrics;
   }
 
   /**
@@ -1070,7 +1084,10 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   export interface TransactGetItem {
+    /** Keys of items to get.  */
     key: Table.PrimaryKey.AttributeValuesMap;
+
+    /** Attributes of the items to get. */
     itemAttributes?: string[];
   }
 
@@ -1079,6 +1096,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface TransactWriteTableOptions extends Omit<BaseOptions, 'conditions' | 'attributes'> {
+    /** Token to use for the transact request. */
     token?: DocumentClient.ClientRequestToken;
 
     /** Returns the ConsumedCapacity for the table operation. */
