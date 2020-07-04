@@ -227,6 +227,128 @@ export class Table {
   }
 
   /**
+   * Creates the params that can be used when calling [DocumentClient.batchGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property} method.
+   * @param keys - Keys of items to get.
+   * @param options - Used in building the batchGet params.
+   * @returns Input params for [DocumentClient.batchGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property} method.
+   */
+  batchGetParams(
+    keys: Table.PrimaryKey.AttributeValuesMap[],
+    options: Table.BatchGetTableOptions = {},
+  ): DocumentClient.BatchGetItemInput {
+    const params: DocumentClient.BatchGetItemInput = { RequestItems: {} };
+    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
+    params.RequestItems[this.name] = Table.addItemAttributes<Table.BatchGetTableInput>(
+      { Keys: keys },
+      options.itemAttributes,
+      options,
+    );
+    return params;
+  }
+
+  /**
+   * Creates the params that can be used when calling [DocumentClient.batchWrite]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property} method.
+   * @param putItems - Items to put in the table.
+   * @param delKeys - Keys of items to delete from the table.
+   * @param options - Used in building the batchWrite params.
+   * @returns Input params for [DocumentClient.batchWrite]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property} method.
+   */
+  batchWriteParams(
+    putItems?: Table.AttributeValuesMap[],
+    delKeys?: Table.PrimaryKey.AttributeValuesMap[],
+    options: Table.BatchWriteTableOptions = {},
+  ): DocumentClient.BatchWriteItemInput {
+    const params: DocumentClient.BatchWriteItemInput = { RequestItems: {} };
+    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
+    if (options.metrics) params.ReturnItemCollectionMetrics = options.metrics;
+    const writeItems: DocumentClient.WriteRequest[] = [];
+    if (putItems) putItems.forEach((item) => writeItems.push({ PutRequest: { Item: item } }));
+    if (delKeys) delKeys.forEach((key) => writeItems.push({ DeleteRequest: { Key: key } }));
+    params.RequestItems[this.name] = writeItems;
+    return params;
+  }
+
+  /**
+   * Creates the params that can be used when calling [DocumentClient.transactGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactGet-property} method.
+   * @param keys - Keys of items to get.
+   * @param getItems - Keys of items and associated attributes to get.
+   * @param options - Used in building the transactGet params.
+   * @returns Input params for [DocumentClient.transactGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactGet-property} method.
+   */
+  transactGetParams(
+    keys?: Table.PrimaryKey.AttributeValuesMap[],
+    getItems?: Table.TransactGetItem[],
+    options: Table.TransactGetTableOptions = {},
+  ): DocumentClient.TransactGetItemsInput {
+    const items: DocumentClient.TransactGetItemList = [];
+    const params: DocumentClient.TransactGetItemsInput = { TransactItems: items };
+    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
+    if (keys) keys.forEach((key) => items.push({ Get: { Key: key, TableName: this.name } }));
+    if (getItems)
+      getItems.forEach((item) =>
+        items.push({
+          Get: Table.addItemAttributes<DocumentClient.Get>(
+            { Key: item.key, TableName: this.name },
+            item.itemAttributes,
+          ),
+        }),
+      );
+    return params;
+  }
+
+  /**
+   * Creates the params that can be used when calling [DocumentClient.transactWrite]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactWrite-property} method.
+   * @param write - Set of operations to write in the transaction.
+   * @param options - Used in building the transactWrite params.
+   * @returns Input params for [DocumentClient.transactWrite]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactWrite-property} method.
+   */
+  transactWriteParams(
+    write: Table.TransactWrite,
+    options: Table.TransactWriteTableOptions = {},
+  ): DocumentClient.TransactWriteItemsInput {
+    const items: DocumentClient.TransactWriteItemList = [];
+    const params: DocumentClient.TransactWriteItemsInput = { TransactItems: items };
+    if (options.token) params.ClientRequestToken = options.token;
+    if (options.consumed) params.ReturnConsumedCapacity = options.consumed;
+    if (options.metrics) params.ReturnItemCollectionMetrics = options.metrics;
+
+    write.check?.forEach((item) =>
+      items.push({
+        ConditionCheck: Table.addWriteParams<DocumentClient.ConditionCheck>(
+          { TableName: this.name, Key: item.key } as DocumentClient.ConditionCheck,
+          item,
+        ),
+      }),
+    );
+
+    write.delete?.forEach((item) =>
+      items.push({
+        Delete: Table.addWriteParams<DocumentClient.Delete>({ TableName: this.name, Key: item.key }, item),
+      }),
+    );
+
+    write.put?.forEach((item) =>
+      items.push({
+        Put: Table.addWriteParams<DocumentClient.Put>(
+          { TableName: this.name, Item: { ...item.key, ...item.item } },
+          item,
+        ),
+      }),
+    );
+
+    write.update?.forEach((item) =>
+      items.push({
+        Update: Table.addWriteParams<DocumentClient.Update>(
+          { TableName: this.name, Key: item.key } as DocumentClient.Update,
+          item,
+          (params, attributes) => UpdateExpression.addParams(params, attributes, item),
+        ),
+      }),
+    );
+    return params;
+  }
+
+  /**
    * Wrapper method for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property} method.
    * @param key - Primary key of item to get.
    * @param options - Additional optional options to use for get.
@@ -273,10 +395,10 @@ export class Table {
    */
   update(
     key: Table.PrimaryKey.AttributeValuesMap,
-    items?: Update.ResolverMap,
+    item?: Update.ResolverMap,
     options?: Table.UpdateOptions,
   ): Promise<DocumentClient.UpdateItemOutput> {
-    return this.client.update(this.updateParams(key, items, options)).promise();
+    return this.client.update(this.updateParams(key, item, options)).promise();
   }
 
   /**
@@ -301,6 +423,62 @@ export class Table {
   }
 
   /**
+   * Wrapper around [DocumentClient.batchGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property} method.
+   * @param keys - Keys of items to get.
+   * @param options - Used in building the batchGet params.
+   * @returns Promise with the batchGet results, including responses fetched.
+   */
+  batchGet(
+    keys: Table.PrimaryKey.AttributeValuesMap[],
+    options?: Table.BatchGetTableOptions,
+  ): Promise<DocumentClient.BatchGetItemOutput> {
+    return this.client.batchGet(this.batchGetParams(keys, options)).promise();
+  }
+
+  /**
+   * Wrapper around [DocumentClient.batchWrite]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property} method.
+   * @param putItems - Items to put in the table.
+   * @param delKeys - Keys of items to delete from the table.
+   * @param options - Used in building the batchGet params.
+   * @returns Promise with the batchWrite results, including responses fetched.
+   */
+  batchWrite(
+    putItems?: Table.AttributeValuesMap[],
+    delKeys?: Table.PrimaryKey.AttributeValuesMap[],
+    options?: Table.BatchWriteTableOptions,
+  ): Promise<DocumentClient.BatchWriteItemOutput> {
+    return this.client.batchWrite(this.batchWriteParams(putItems, delKeys, options)).promise();
+  }
+
+  /**
+   * Wrapper around [DocumentClient.transactGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactGet-property} method.
+   * @param keys - Keys of items to get.
+   * @param getItems - Keys of items and associated attributes to get.
+   * @param options - Used in building the transactGet params.
+   * @returns Promise with the transactGet results, including responses fetched.
+   */
+  transactGet(
+    keys?: Table.PrimaryKey.AttributeValuesMap[],
+    getItems?: Table.TransactGetItem[],
+    options?: Table.TransactGetTableOptions,
+  ): Promise<DocumentClient.TransactGetItemsOutput> {
+    return this.client.transactGet(this.transactGetParams(keys, getItems, options)).promise();
+  }
+
+  /**
+   * Wrapper around [DocumentClient.transactWrite]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactWrite-property} method.
+   * @param write - Set of operations to write in the transaction.
+   * @param options - Used in building the transactWrite params.
+   * @returns IPromise with the transactWrite results, including responses fetched.
+   */
+  transactWrite(
+    write: Table.TransactWrite,
+    options: Table.TransactWriteTableOptions = {},
+  ): Promise<DocumentClient.TransactWriteItemsOutput> {
+    return this.client.transactWrite(this.transactWriteParams(write, options)).promise();
+  }
+
+  /**
    * Maps PutWriteOptions to one of the put based ItemActions used by Fields to tell the type of put operation.
    * @param options - Put write option to map into a put item action.
    */
@@ -317,6 +495,23 @@ export class Table {
    */
   static isPutAction(action: Table.ItemActions): boolean {
     return action === 'put' || action === 'put-new' || action === 'put-replace';
+  }
+
+  static addItemAttributes<T extends Table.ExpressionParams>(
+    params: T,
+    itemAttributes?: string[],
+    options?: Table.BaseOptions,
+    attributes?: Table.ExpressionAttributes,
+  ): T & Table.ExpressionParams {
+    if (itemAttributes && itemAttributes.length > 0) {
+      const exp = attributes || new ExpressionAttributes();
+      itemAttributes.forEach((value) => exp.addPath(value));
+      return Object.assign(params, {
+        ProjectionExpression: itemAttributes.join(', '),
+        ExpressionAttributeNames: exp.getPaths() || undefined,
+      });
+    }
+    return options?.params ? Object.assign(params, options.params) : params;
   }
 
   /**
@@ -339,6 +534,30 @@ export class Table {
     if (addParams) addParams(params, attributes);
     ExpressionAttributes.addParams(params, attributes);
     return options.params ? Object.assign(params, options.params) : params;
+  }
+
+  /**
+   * Add expressions properties to the params object.
+   * @param T - Type of table transact write item input params
+   * @param params - The params object to add expression properties to.
+   * @param item - Transact write item used to build params.
+   * @param addParam - Function to add additional expression params.
+   * @returns Params object that was passed in with expression added.
+   */
+  static addWriteParams<
+    T extends Table.ExpressionParams & {
+      ReturnValuesOnConditionCheckFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+    }
+  >(
+    params: T,
+    item: {
+      conditions?: Condition.Resolver[];
+      returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+    },
+    addParams?: Table.AddExpressionParams,
+  ): T & Table.ExpressionParams {
+    if (item.returnFailure) params.ReturnValuesOnConditionCheckFailure = item.returnFailure;
+    return Table.addParams(params, item, 'condition', addParams);
   }
 
   /**
@@ -595,6 +814,21 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     export type AttributeValuesMapT<T> = {
       [P in keyof Required<T>]: Extract<T[P], Table.AttributeValues>;
     };
+
+    /**
+     * Attribute query value of the primary key for tables and indexes.
+     */
+    export interface KeyQuery {
+      /**
+       * Partition key query value.
+       */
+      pk: Table.AttributeValues;
+
+      /**
+       * Sort key query value.
+       */
+      sk?: Table.AttributeValues | KeyCondition.AttributeResolver;
+    }
   }
 
   /**
@@ -645,6 +879,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     FilterExpression?: string;
     KeyConditionExpression?: string;
     UpdateExpression?: string;
+    ProjectionExpression?: string;
   } & ExpressionAttributeParams;
 
   /**
@@ -706,6 +941,13 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ScanInput
     extends Omit<DocumentClient.ScanInput, 'AttributesToGet' | 'ScanFilter' | 'ConditionalOperator'> {}
+
+  /**
+   * Input per table params for [DocumentClient.batchGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property}
+   * Removes legacy parameters from the type definition, including AttributesToGet
+   */
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface BatchGetTableInput extends Omit<DocumentClient.KeysAndAttributes, 'AttributesToGet'> {}
 
   /**
    * Base options for all table operations like get, put, delete, update and others.
@@ -793,6 +1035,83 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ScanOptions extends BaseOptions<ScanInput> {}
+
+  /**
+   * Options used in following methods: {@link Table.batchGet}, {@link Table.batchGetParams}.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface BatchGetTableOptions extends Omit<BaseOptions<BatchGetTableInput>, 'conditions'> {
+    /** List of attributes to return from table for operation. */
+    itemAttributes?: string[];
+
+    /** Returns the ConsumedCapacity for the table operation. */
+    consumed?: DocumentClient.ReturnConsumedCapacity;
+  }
+
+  /**
+   * Options used in following methods: {@link Table.batchWrite}, {@link Table.batchWriteParams}.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface BatchWriteTableOptions extends Omit<BaseOptions, 'conditions'> {
+    /** Returns the ConsumedCapacity for the table operation. */
+    consumed?: DocumentClient.ReturnConsumedCapacity;
+
+    /** Returns the ReturnItemCollectionMetrics for the table operation. */
+    metrics?: DocumentClient.ReturnItemCollectionMetrics;
+  }
+
+  /**
+   * Options used in following methods: {@link Table.transactGet}, {@link Table.transactGetParams}.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface TransactGetTableOptions extends Omit<BaseOptions, 'conditions' | 'attributes'> {
+    /** Returns the ConsumedCapacity for the table operation. */
+    consumed?: DocumentClient.ReturnConsumedCapacity;
+  }
+
+  export interface TransactGetItem {
+    key: Table.PrimaryKey.AttributeValuesMap;
+    itemAttributes?: string[];
+  }
+
+  /**
+   * Options used in following methods: {@link Table.transactWrite}, {@link Table.transactWriteParams}.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface TransactWriteTableOptions extends Omit<BaseOptions, 'conditions' | 'attributes'> {
+    token?: DocumentClient.ClientRequestToken;
+
+    /** Returns the ConsumedCapacity for the table operation. */
+    consumed?: DocumentClient.ReturnConsumedCapacity;
+
+    /** Returns the ReturnItemCollectionMetrics for the table operation. */
+    metrics?: DocumentClient.ReturnItemCollectionMetrics;
+  }
+
+  export interface TransactWrite {
+    check?: {
+      key: Table.PrimaryKey.AttributeValuesMap;
+      conditions: Condition.Resolver[];
+      returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+    }[];
+    delete?: {
+      key: Table.PrimaryKey.AttributeValuesMap;
+      conditions?: Condition.Resolver[];
+      returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+    }[];
+    put?: {
+      key: Table.PrimaryKey.AttributeValuesMap;
+      item?: Table.AttributeValuesMap;
+      conditions?: Condition.Resolver[];
+      returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+    }[];
+    update?: {
+      key: Table.PrimaryKey.AttributeValuesMap;
+      item?: Update.ResolverMap;
+      conditions?: Condition.Resolver[];
+      returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+    }[];
+  }
 
   /**
    * Default and Example table primary key with a generalized compact format.
