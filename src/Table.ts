@@ -226,6 +226,8 @@ export class Table {
     return Table.addParams<DocumentClient.ScanInput>({ TableName: this.name }, options, 'filter');
   }
 
+  // TODO:
+  // Add Generics Table methods
   /**
    * Creates the params that can be used when calling [DocumentClient.batchGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property} method.
    * @param keys - Keys of items to get.
@@ -241,7 +243,6 @@ export class Table {
     params.RequestItems[this.name] = Table.addItemAttributes<Table.BatchGetTableInput>(
       { Keys: keys },
       options.itemAttributes,
-      options,
     );
     return params;
   }
@@ -260,10 +261,10 @@ export class Table {
   ): DocumentClient.BatchWriteItemInput {
     const params: DocumentClient.BatchWriteItemInput = { RequestItems: {} };
     Table.addBatchParams(options, params);
-    const writeItems: DocumentClient.WriteRequest[] = [];
-    if (putItems) putItems.forEach((item) => writeItems.push({ PutRequest: { Item: item } }));
-    if (delKeys) delKeys.forEach((key) => writeItems.push({ DeleteRequest: { Key: key } }));
-    params.RequestItems[this.name] = writeItems;
+    const items: DocumentClient.WriteRequest[] = [];
+    if (putItems) putItems.forEach((item) => items.push({ PutRequest: { Item: item } }));
+    if (delKeys) delKeys.forEach((key) => items.push({ DeleteRequest: { Key: key } }));
+    params.RequestItems[this.name] = items;
     return params;
   }
 
@@ -338,7 +339,7 @@ export class Table {
         Update: Table.addWriteParams<DocumentClient.Update>(
           { TableName: this.name, Key: item.key } as DocumentClient.Update,
           item,
-          (params, attributes) => UpdateExpression.addParams(params, attributes, item),
+          (params, attributes) => UpdateExpression.addParams(params, attributes, item.item),
         ),
       }),
     );
@@ -497,7 +498,6 @@ export class Table {
   static addItemAttributes<T extends Table.ExpressionParams>(
     params: T,
     itemAttributes?: string[],
-    options?: Table.BaseOptions,
     attributes?: Table.ExpressionAttributes,
   ): T & Table.ExpressionParams {
     if (itemAttributes && itemAttributes.length > 0) {
@@ -505,10 +505,10 @@ export class Table {
       itemAttributes.forEach((value) => exp.addPath(value));
       return Object.assign(params, {
         ProjectionExpression: itemAttributes.join(', '),
-        ExpressionAttributeNames: exp.getPaths() || undefined,
+        ExpressionAttributeNames: exp.getPaths(),
       });
     }
-    return options?.params ? Object.assign(params, options.params) : params;
+    return params;
   }
 
   /**
