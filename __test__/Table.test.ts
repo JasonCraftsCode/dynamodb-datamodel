@@ -365,8 +365,8 @@ describe('Validate Table with indexes', () => {
   it('batchWriteParams', () => {
     const params = testTable.batchWriteParams(
       [
-        { P: 'pk1', S: 'sk1', attrib1: 'a1' },
-        { P: 'pk2', S: 'sk2', attrib2: 'a2' },
+        { key: { P: 'pk1', S: 'sk1' }, item: { attrib1: 'a1' } },
+        { key: { P: 'pk2', S: 'sk2' }, item: { attrib2: 'a2' } },
       ],
       [{ P: 'pk1', S: 'sk2' }],
     );
@@ -382,7 +382,7 @@ describe('Validate Table with indexes', () => {
   });
 
   it('batchWriteParams with options', () => {
-    const params = testTable.batchWriteParams([{ P: 'pk1', S: 'sk1' }], [{ P: 'pk1', S: 'sk2' }], {
+    const params = testTable.batchWriteParams([{ key: { P: 'pk1', S: 'sk1' } }], [{ P: 'pk1', S: 'sk2' }], {
       consumed: 'TOTAL',
       metrics: 'SIZE',
     });
@@ -460,7 +460,7 @@ describe('Validate Table with indexes', () => {
 
   it('transactWriteParams', () => {
     const params = testTable.transactWriteParams({
-      check: [
+      conditionCheck: [
         { key: { P: 'pk1', S: 'sk1' }, conditions: [Condition.eq('name', 'john')] },
         { key: { P: 'pk2', S: 'sk2' }, conditions: [Condition.eq('admin', true)], returnFailure: 'ALL_OLD' },
       ],
@@ -701,7 +701,10 @@ describe('Validate Table with indexes', () => {
 
   it('batchWrite with item', async () => {
     client.batchWrite = jest.fn(() => batchRequest);
-    const results = await testTable.batchWrite([{ P: 'pk1', S: 'sk1', attrib: 'a' }], [{ P: 'pk3', S: 'sk3' }]);
+    const results = await testTable.batchWrite(
+      [{ key: { P: 'pk1', S: 'sk1' }, item: { attrib: 'a' } }],
+      [{ P: 'pk3', S: 'sk3' }],
+    );
     expect(results).toEqual({ RequestItems: {} });
     expect(client.batchWrite).toBeCalledWith({
       RequestItems: {
@@ -742,7 +745,7 @@ describe('Validate Table with indexes', () => {
   it('transactWrite with item', async () => {
     client.transactWrite = jest.fn(() => transactRequest);
     const results = await testTable.transactWrite({
-      put: [{ key: { P: 'pk1', S: 'sk1', attrib: 'a' } }],
+      put: [{ key: { P: 'pk1', S: 'sk1' }, item: { attrib: 'a' } }],
       delete: [{ key: { P: 'pk3', S: 'sk3' } }],
     });
     expect(results).toEqual({ TransactItems: {} });

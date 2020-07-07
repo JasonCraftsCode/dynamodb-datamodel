@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ScanOptions | dynamodb-datamodel - v0.2.3</title>
+	<title>KeyQuery | dynamodb-datamodel - v0.2.3</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,13 @@
 					<a href="../classes/table.html">Table</a>
 				</li>
 				<li>
-					<a href="table.scanoptions.html">ScanOptions</a>
+					<a href="../classes/table.primarykey.html">PrimaryKey</a>
+				</li>
+				<li>
+					<a href="table.primarykey.keyquery.html">KeyQuery</a>
 				</li>
 			</ul>
-			<h1>Interface ScanOptions</h1>
+			<h1>Interface KeyQuery</h1>
 		</div>
 	</div>
 </header>
@@ -68,8 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Options used in following methods: <a href="../classes/table.html#scan">Table.scan</a>, <a href="../classes/table.html#scanparams">Table.scanParams</a>,
-						<a href="../classes/index.html#scan">Index.scan</a> and <a href="../classes/index.html#scanparams">Index.scanParams</a>.</p>
+						<p>Attribute query value of the primary key for tables and indexes.</p>
 					</div>
 				</div>
 			</section>
@@ -77,12 +79,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.scaninput.html" class="tsd-signature-type">ScanInput</a><span class="tsd-signature-symbol">&gt;</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">ScanOptions</span>
-							</li>
-						</ul>
+						<span class="target">KeyQuery</span>
 					</li>
 				</ul>
 			</section>
@@ -90,84 +87,45 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.scanoptions.html#attributes" class="tsd-kind-icon">attributes</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.scanoptions.html#conditions" class="tsd-kind-icon">conditions</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.scanoptions.html#context" class="tsd-kind-icon">context</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.scanoptions.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.primarykey.keyquery.html#pk" class="tsd-kind-icon">pk</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.primarykey.keyquery.html#sk" class="tsd-kind-icon">sk</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="attributes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> attributes</h3>
-					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <a href="table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="pk" class="tsd-anchor"></a>
+					<h3>pk</h3>
+					<div class="tsd-signature tsd-kind-icon">pk<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#attributes">attributes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L994">Table.ts:994</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L858">Table.ts:858</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Expression attributes to use for resolving conditions and updates.  Will be used to generate the
-							ExpressionAttributeNames and ExpressionAttributeValues params in table operations.</p>
+							<p>Partition key query value.</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="conditions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> conditions</h3>
-					<div class="tsd-signature tsd-kind-icon">conditions<span class="tsd-signature-symbol">:</span> <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="sk" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> sk</h3>
+					<div class="tsd-signature tsd-kind-icon">sk<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol"> | </span><a href="../classes/keycondition.html#attributeresolver" class="tsd-signature-type">AttributeResolver</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#conditions">conditions</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1000">Table.ts:1000</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L863">Table.ts:863</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Array of expression condition resolvers that are joined together with AND, then used as
-							ConditionExpression or FilterExpression params in table operations.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="context" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> context</h3>
-					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#context">context</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1012">Table.ts:1012</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>User defined context that gets passed through to all Fields.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="params" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html#optional" class="tsd-signature-type">Optional</a><span class="tsd-signature-symbol">&lt;</span><a href="table.scaninput.html" class="tsd-signature-type">ScanInput</a><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#params">params</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1006">Table.ts:1006</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Params to append on to the params that get passed to dynamodb.  This does mean these params can
-							be used to override any of the values generated by Table, so just be careful on what params you pass.</p>
+							<p>Sort key query value.</p>
 						</div>
 					</div>
 				</section>
@@ -212,20 +170,85 @@
 					<li class="current tsd-kind-class">
 						<a href="../classes/table.html" class="tsd-kind-icon">Table</a>
 						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="table.scanoptions.html" class="tsd-kind-icon">Scan<wbr>Options</a>
+							<li class="current tsd-kind-class tsd-parent-kind-class">
+								<a href="../classes/table.primarykey.html" class="tsd-kind-icon">Primary<wbr>Key</a>
 								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.scanoptions.html#attributes" class="tsd-kind-icon">attributes</a>
+									<li class="current tsd-kind-interface tsd-parent-kind-class">
+										<a href="table.primarykey.keyquery.html" class="tsd-kind-icon">Key<wbr>Query</a>
+										<ul>
+											<li class=" tsd-kind-property tsd-parent-kind-interface">
+												<a href="table.primarykey.keyquery.html#pk" class="tsd-kind-icon">pk</a>
+											</li>
+											<li class=" tsd-kind-property tsd-parent-kind-interface">
+												<a href="table.primarykey.keyquery.html#sk" class="tsd-kind-icon">sk</a>
+											</li>
+										</ul>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.scanoptions.html#conditions" class="tsd-kind-icon">conditions</a>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#attributetypes" class="tsd-kind-icon">Attribute<wbr>Types</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.scanoptions.html#context" class="tsd-kind-icon">context</a>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#attributetypesmap" class="tsd-kind-icon">Attribute<wbr>Types<wbr>Map</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.scanoptions.html#params" class="tsd-kind-icon">params</a>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+										<a href="../classes/table.primarykey.html#attributetypesmapt" class="tsd-kind-icon">Attribute<wbr>Types<wbr>MapT</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#attributevalues" class="tsd-kind-icon">Attribute<wbr>Values</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#attributevaluesmap" class="tsd-kind-icon">Attribute<wbr>Values<wbr>Map</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+										<a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-kind-icon">Attribute<wbr>Values<wbr>MapT</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#keyquerymap" class="tsd-kind-icon">Key<wbr>Query<wbr>Map</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+										<a href="../classes/table.primarykey.html#keyquerymapt" class="tsd-kind-icon">Key<wbr>Query<wbr>MapT</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#keytypes" class="tsd-kind-icon">Key<wbr>Types</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#keytypesmap" class="tsd-kind-icon">Key<wbr>Types<wbr>Map</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+										<a href="../classes/table.primarykey.html#keytypesmapt" class="tsd-kind-icon">Key<wbr>Types<wbr>MapT</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#partitionbinary" class="tsd-kind-icon">Partition<wbr>Binary</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#partitionnumber" class="tsd-kind-icon">Partition<wbr>Number</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#partitionstring" class="tsd-kind-icon">Partition<wbr>String</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#sortbinary" class="tsd-kind-icon">Sort<wbr>Binary</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#sortnumber" class="tsd-kind-icon">Sort<wbr>Number</a>
+									</li>
+									<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#sortstring" class="tsd-kind-icon">Sort<wbr>String</a>
+									</li>
+									<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#binarytype" class="tsd-kind-icon">Binary<wbr>Type</a>
+									</li>
+									<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#numbertype" class="tsd-kind-icon">Number<wbr>Type</a>
+									</li>
+									<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#partitionkeytype" class="tsd-kind-icon">Partition<wbr>Key<wbr>Type</a>
+									</li>
+									<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#sortkeytype" class="tsd-kind-icon">Sort<wbr>Key<wbr>Type</a>
+									</li>
+									<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-static">
+										<a href="../classes/table.primarykey.html#stringtype" class="tsd-kind-icon">String<wbr>Type</a>
 									</li>
 								</ul>
 							</li>
