@@ -226,8 +226,6 @@ export class Table {
     return Table.addParams<DocumentClient.ScanInput>({ TableName: this.name }, options, 'filter');
   }
 
-  // TODO:
-  // Add Generics Table methods
   /**
    * Creates the params that can be used when calling [DocumentClient.batchGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property} method.
    * @param keys - Keys of items to get.

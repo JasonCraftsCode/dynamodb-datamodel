@@ -129,8 +129,8 @@ export class Update {
    * ```
    * @returns Update resolver function to delete attribute.
    */
-  static del(): Update.Resolver<Table.AttributeTypes> {
-    return (name: string, exp: Update.Expression): void => exp.addRemove(name);
+  static del(path?: string): Update.Resolver<Table.AttributeTypes> {
+    return (name: string, exp: Update.Expression): void => exp.addRemove(path ? `${name}.${exp.addPath(path)}` : name);
   }
 
   /**
@@ -339,6 +339,7 @@ export class Update {
       exp.addSet(`${name} = list_append(${l}, ${r})`);
     };
   }
+
   /**
    * Appends items to the end of an existing list attribute.
    * Supported types: list.
@@ -451,16 +452,16 @@ export class Update {
    * @param indexes - Map of indices with values to set in the list.
    * @returns Update resolver function to set values for select indices in a list based attribute.
    */
-  static setIndexes(values: { [key: number]: Update.OperandValue }): Update.Resolver<'L'> {
+  static setIndexes(values: { [key: number]: Update.OperandValue | undefined }): Update.Resolver<'L'> {
     return (name: string, exp: Update.Expression): void =>
-      Object.keys(values).forEach((key) => {
-        const value = values[Number(key)];
-        // TODO: Add support for undefined and null.
-        // if (value === undefined) return;
-        // if (value === null) exp.addRemove(`${name}[${key}]`);
-        //else
-        exp.addSet(`${name}[${key}] = ${exp.resolveValue(value, name)}`);
-      });
+      Object.keys(values).forEach((key) =>
+        exp.resolveMapValue(
+          (path: string, value: Table.AttributeValues): void =>
+            exp.addSet(`${path} = ${exp.resolveValue(value, name)}`),
+          (): string => `${name}[${key}]`,
+          values[Number(key)],
+        ),
+      );
   }
 
   /**
@@ -577,9 +578,14 @@ export class Update {
    */
   static modelMap<T>(map: Update.ResolverModelMap<T>): Update.Resolver<'M'> {
     return (name: string, exp: Update.Expression): void => {
-      Object.keys(map).forEach((key) => {
-        exp.resolveMap(map[key], `${name}.${exp.addPath(key)}`);
-      });
+      Object.keys(map).forEach((key) =>
+        exp.resolveMapValue(
+          (path: string, value: Table.AttributeValues): void =>
+            exp.resolveMap(value as Update.ResolverMapT<Table.AttributeValues>, path),
+          (): string => `${name}.${exp.addPath(key)}`,
+          map[key],
+        ),
+      );
     };
   }
 }
@@ -622,6 +628,18 @@ export namespace Update {
      * @returns Alias or expression for value to use in expression.
      */
     resolvePathValue(value: Update.OperandValue, name: string): string;
+
+    /**
+     * Resolves the key and value for a map or set array.
+     * @param fallback - The default fallback function that resolves the map value.
+     * @param getPath - Function to get the path after checking value for undefined.
+     * @param value - The value of the map key.
+     */
+    resolveMapValue(
+      fallback: (path: string, value: Table.AttributeValues) => void,
+      getPath: () => string,
+      value?: Update.OperandValue,
+    ): void;
 
     /**
      * Resolves each key of a map to an Update.Expression.
@@ -705,7 +723,7 @@ export namespace Update {
    * @param T - The model interface.
    */
   export type ResolverModelMap<T> = {
-    [key: string]: Update.ResolverModel<T>;
+    [key: string]: Update.ResolverModel<T> | null | undefined | Update.Resolver<'M'>;
   };
 
   /**
@@ -877,23 +895,35 @@ export class UpdateExpression implements Update.Expression {
   // eslint-disable-next-line tsdoc/syntax
   /** @inheritDoc {@inheritDoc (Update:namespace).Expression.resolvePathValue} */
   resolvePathValue(value: Update.OperandValue, name: string): string {
-    if (typeof value === 'string') return this.addPath(value);
-    return this.resolveValue(value, name);
+    return typeof value === 'string' ? this.addPath(value) : this.resolveValue(value, name);
+  }
+
+  // eslint-disable-next-line tsdoc/syntax
+  /** @inheritDoc {@inheritDoc (Update:namespace).Expression.resolveMapValue} */
+  resolveMapValue(
+    fallback: (path: string, value: Table.AttributeValues) => void,
+    getPath: () => string,
+    value?: Update.OperandValue,
+  ): void {
+    if (value === undefined) return;
+    const path = getPath();
+    if (typeof value === 'function') {
+      const newValue = (value as Update.OperandFunction)(path, this);
+      if (newValue !== undefined) this.addSet(`${path} = ${newValue}`);
+    } else if (value === null) this.addRemove(path);
+    else fallback(path, value);
   }
 
   // eslint-disable-next-line tsdoc/syntax
   /** @inheritDoc {@inheritDoc (Update:namespace).Expression.resolveMap} */
   resolveMap(map: Update.ResolverMap, name?: string): void {
-    Object.keys(map).forEach((key) => {
-      const value = map[key];
-      if (value === undefined) return;
-      const path = name ? `${name}.${this.addPath(key)}` : this.addPath(key);
-      if (typeof value === 'function') {
-        const newValue = (value as Update.OperandFunction)(path, this);
-        if (newValue !== undefined) this.addSet(`${path} = ${newValue}`);
-      } else if (value === null) this.addRemove(path);
-      else this.addSet(`${path} = ${this.addValue(value)}`);
-    });
+    Object.keys(map).forEach((key) =>
+      this.resolveMapValue(
+        (path: string, value: Table.AttributeValues): void => this.addSet(`${path} = ${this.addValue(value)}`),
+        (): string => (name ? `${name}.${this.addPath(key)}` : this.addPath(key)),
+        map[key],
+      ),
+    );
   }
 
   // eslint-disable-next-line tsdoc/syntax

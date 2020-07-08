@@ -942,7 +942,7 @@ export class Update {
     static arithmetic(left: Update.OperandNumber | undefined, op: '+' | '-', right: Update.OperandNumber): Update.Resolver<'N'>;
     static dec(value: Update.OperandNumber): Update.Resolver<'N'>;
     static default<T extends Table.AttributeValues>(value: T): Update.Resolver<Table.AttributeTypes>;
-    static del(): Update.Resolver<Table.AttributeTypes>;
+    static del(path?: string): Update.Resolver<Table.AttributeTypes>;
     static delIndexes(indexes: number[]): Update.Resolver<'L'>;
     static inc(value: Update.OperandNumber): Update.Resolver<'N'>;
     static join(left?: Update.OperandList, right?: Update.OperandList): Update.Resolver<'L'>;
@@ -955,7 +955,7 @@ export class Update {
     static removeFromSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'>;
     static set<T extends Table.AttributeValues>(value: Update.OperandValue<T>): Update.Resolver<Table.AttributeTypes>;
     static setIndexes(values: {
-        [key: number]: Update.OperandValue;
+        [key: number]: Update.OperandValue | undefined;
     }): Update.Resolver<'L'>;
     static sub(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'>;
 }
@@ -974,6 +974,7 @@ export namespace Update {
         addValue(value: Table.AttributeValues): string;
         getExpression(): string | void;
         resolveMap(map: Update.ResolverMap, name?: string): void;
+        resolveMapValue(fallback: (path: string, value: Table.AttributeValues) => void, getPath: () => string, value?: Update.OperandValue): void;
         resolvePathValue(value: Update.OperandValue, name: string): string;
         resolveValue(value: Update.OperandValue, name: string): string;
     }
@@ -1005,7 +1006,7 @@ export namespace Update {
         [P in keyof Table.Optional<T>]: ResolverModelValue<T[P]>;
     };
     export type ResolverModelMap<T> = {
-        [key: string]: Update.ResolverModel<T>;
+        [key: string]: Update.ResolverModel<T> | null | undefined | Update.Resolver<'M'>;
     };
     export type ResolverModelValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
     export type String = string | Update.Resolver<'S'>;
@@ -1031,6 +1032,7 @@ export class UpdateExpression implements Update.Expression {
     getExpression(): string | void;
     removeList: string[];
     resolveMap(map: Update.ResolverMap, name?: string): void;
+    resolveMapValue(fallback: (path: string, value: Table.AttributeValues) => void, getPath: () => string, value?: Update.OperandValue): void;
     resolvePathValue(value: Update.OperandValue, name: string): string;
     resolveValue(value: Update.OperandValue, name: string): string;
     setList: string[];
