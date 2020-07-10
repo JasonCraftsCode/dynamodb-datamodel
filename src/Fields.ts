@@ -1769,9 +1769,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       const action = context.action;
       if (!Table.isPutAction(action)) return;
+      const tableName = this.alias || name;
       if (this.matchOnWrite && action !== 'put-new')
-        context.conditions.push(Condition.or(Condition.notExists(name), Condition.eq(name, modelData[name] || 0)));
-      tableData[this.alias || name] = this.start;
+        context.conditions.push(
+          Condition.or(Condition.notExists(tableName), Condition.eq(tableName, modelData[name] || 0)),
+        );
+      tableData[tableName] = this.start;
     }
 
     // eslint-disable-next-line tsdoc/syntax
@@ -1782,8 +1785,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Update.ResolverMap,
       context: Fields.TableContext,
     ): void {
-      if (this.matchOnWrite) context.conditions.push(Condition.eq(name, modelData[name]));
-      tableData[this.alias || name] = Update.inc(1);
+      const tableName = this.alias || name;
+      if (this.matchOnWrite) context.conditions.push(Condition.eq(tableName, modelData[name]));
+      tableData[tableName] = Update.inc(1);
     }
   }
 }

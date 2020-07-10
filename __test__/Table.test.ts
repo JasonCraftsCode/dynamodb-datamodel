@@ -705,6 +705,7 @@ describe('Validate Table with indexes', () => {
       [{ key: { P: 'pk1', S: 'sk1' }, item: { attrib: 'a' } }],
       [{ P: 'pk3', S: 'sk3' }],
     );
+    // results.ItemCollectionMetrics['TestTable'][0].ItemCollectionKey
     expect(results).toEqual({ RequestItems: {} });
     expect(client.batchWrite).toBeCalledWith({
       RequestItems: {
@@ -748,6 +749,10 @@ describe('Validate Table with indexes', () => {
       put: [{ key: { P: 'pk1', S: 'sk1' }, item: { attrib: 'a' } }],
       delete: [{ key: { P: 'pk3', S: 'sk3' } }],
     });
+    // For both Transact and Batch the order of the table array is the order for how they appear above.
+    // could use a PutType = {type:'PUT', key: , item: } to let the user better understand the order
+    // though even that is tricky since output is organized by table.
+    // results.ItemCollectionMetrics['TestTable'][0].ItemCollectionKey['attribute'].
     expect(results).toEqual({ TransactItems: {} });
     expect(client.transactWrite).toBeCalledWith({
       TransactItems: [

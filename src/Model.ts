@@ -2,6 +2,8 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { Fields } from './Fields';
 import { Table } from './Table';
 import { Update } from './Update';
+import { BatchGet, TableResult, BatchWrite, TransactGet, TransactWrite } from './MultipleTable';
+import { Condition } from './Condition';
 
 /**
  * The Model object that wraps access to the DynamoDB table and makes it easy to map table data to
@@ -217,6 +219,138 @@ export class Model implements Model.ModelBase {
     const result = await this.table.update(tableData.key, tableData.item, options);
     const item = this.toModel(result.Attributes, context);
     return { item, result };
+  }
+
+  /**
+   *
+   * @param batchGet -
+   * @param key -
+   * @returns
+   */
+  addBatchGet(batchGet: BatchGet, key: Model.ModelCore): Model.ModelResult {
+    const context = this.getContext('get', batchGet.options);
+    const tableItem = this.toTable(key, context);
+    batchGet.addGet(this.table.name, tableItem.key);
+    return new Model.ModelResult(batchGet, this, tableItem.key, context);
+  }
+
+  /**
+   *
+   * @param batchWrite -
+   * @param key -
+   */
+  addBatchDelete(batchWrite: BatchWrite, key: Model.ModelCore): Model.ModelResult {
+    const context = this.getContext('delete', batchWrite.options);
+    const tableItem = this.toTable(key, context);
+    batchWrite.addDelete(this.table.name, tableItem.key);
+    return new Model.ModelResult(batchWrite, this, tableItem.key, context);
+  }
+
+  /**
+   *
+   * @param batchWrite -
+   * @param item -
+   */
+  addBatchPut(batchWrite: BatchWrite, item: Model.ModelData): Model.ModelResult {
+    const context = this.getContext('put', batchWrite.options);
+    const tableItem = this.toTable(item, context);
+    batchWrite.addPut(this.table.name, tableItem);
+    return new Model.ModelResult(batchWrite, this, tableItem.key, context);
+  }
+
+  /**
+   *
+   * @param transactGet -
+   * @param key -
+   * @param itemAttributes -
+   */
+  addTransactGet(transactGet: TransactGet, key: Model.ModelCore, itemAttributes?: string[]): Model.ModelResult {
+    const context = this.getContext('get', transactGet.options);
+    const tableItem = this.toTable(key, context);
+    // TODO: map itemAttributes to table 'const tableAttributes = model.toTableAttributes(itemAttributes);'
+    transactGet.addGet(this.table.name, tableItem.key, itemAttributes);
+    return new Model.ModelResult(transactGet, this, tableItem.key, context);
+  }
+
+  // NOTE: conditions need to use table attribute names
+  /**
+   *
+   * @param transactWrite -
+   * @param key -
+   * @param conditions -
+   * @param returnFailure -
+   */
+  addTransactCheckCondition(
+    transactWrite: TransactWrite,
+    key: Model.ModelCore,
+    conditions: Condition.Resolver[],
+    returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
+  ): Model.ModelResult {
+    const context = this.getContext('check', transactWrite.options);
+    context.conditions = conditions;
+    const tableItem = this.toTable(key, context);
+    transactWrite.addCheckCondition(this.table.name, tableItem.key, conditions, returnFailure);
+    return new Model.ModelResult(transactWrite, this, tableItem.key, context);
+  }
+
+  /**
+   *
+   * @param transactWrite -
+   * @param key -
+   * @param conditions -
+   * @param returnFailure -
+   */
+  addTransactDelete(
+    transactWrite: TransactWrite,
+    key: Model.ModelCore,
+    conditions?: Condition.Resolver[],
+    returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
+  ): Model.ModelResult {
+    const context = this.getContext('delete', transactWrite.options);
+    context.conditions = conditions || [];
+    const tableItem = this.toTable(key, context);
+    transactWrite.addDelete(this.table.name, tableItem.key, conditions, returnFailure);
+    return new Model.ModelResult(transactWrite, this, tableItem.key, context);
+  }
+
+  /**
+   *
+   * @param transactWrite -
+   * @param item -
+   * @param conditions -
+   * @param returnFailure -
+   */
+  addTransactPut(
+    transactWrite: TransactWrite,
+    item: Model.ModelData,
+    conditions?: Condition.Resolver[],
+    returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
+  ): Model.ModelResult {
+    const context = this.getContext('put', transactWrite.options);
+    context.conditions = conditions || [];
+    const tableItem = this.toTable(item, context);
+    transactWrite.addPut(this.table.name, tableItem.key, tableItem.item, conditions, returnFailure);
+    return new Model.ModelResult(transactWrite, this, tableItem.key, context);
+  }
+
+  /**
+   *
+   * @param transactWrite -
+   * @param item -
+   * @param conditions -
+   * @param returnFailure -
+   */
+  addTransactUpdate(
+    transactWrite: TransactWrite,
+    item: Model.ModelUpdate,
+    conditions?: Condition.Resolver[],
+    returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
+  ): Model.ModelResult {
+    const context = this.getContext('update', transactWrite.options);
+    context.conditions = conditions || [];
+    const tableItem = this.toTable(item, context);
+    transactWrite.addUpdate(this.table.name, tableItem.key, tableItem.item, conditions, returnFailure);
+    return new Model.ModelResult(transactWrite, this, tableItem.key, context);
   }
 
   /**
@@ -524,5 +658,29 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     OUTPUT extends INPUT & KEY = INPUT & KEY
   >(params: ModelParamsT<KEY, OUTPUT>): Model.ModelT<KEY, INPUT, OUTPUT> {
     return new Model(params) as Model.ModelT<KEY, INPUT, OUTPUT>;
+  }
+
+  export class ModelResult {
+    constructor(
+      private tableResult: TableResult,
+      private model: Model,
+      private key: Table.PrimaryKey.AttributeValuesMap,
+      private context: Fields.TableContext,
+    ) {}
+
+    // NOTE: get won't return a value until Batch/Transact execute is run
+    get(): { item: Model.ModelOut; tableItem: Table.AttributeValuesMap } | void {
+      const tableItem = this.tableResult.getItem(this.model.table.name, this.key);
+      if (!tableItem) return;
+      return {
+        item: this.model.toModel(tableItem, this.context),
+        tableItem,
+      };
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export interface ModelResultT<OUTPUT extends { [key: string]: any }> {
+    get(): { item: Model.ModelOutT<OUTPUT>; tableItem: Table.AttributeValuesMap } | void;
   }
 }
