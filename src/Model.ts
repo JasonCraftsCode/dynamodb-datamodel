@@ -2,7 +2,6 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { Fields } from './Fields';
 import { Table } from './Table';
 import { Update } from './Update';
-import { BatchGet, TableResult, BatchWrite, TransactGet, TransactWrite } from './MultipleTable';
 import { Condition } from './Condition';
 
 /**
@@ -227,7 +226,7 @@ export class Model implements Model.ModelBase {
    * @param key -
    * @returns
    */
-  addBatchGet(batchGet: BatchGet, key: Model.ModelCore): Model.ModelResult {
+  addBatchGet(batchGet: Table.BatchGet, key: Model.ModelCore): Model.ModelResult {
     const context = this.getContext('get', batchGet.options);
     const tableItem = this.toTable(key, context);
     batchGet.addGet(this.table.name, tableItem.key);
@@ -239,7 +238,7 @@ export class Model implements Model.ModelBase {
    * @param batchWrite -
    * @param key -
    */
-  addBatchDelete(batchWrite: BatchWrite, key: Model.ModelCore): Model.ModelResult {
+  addBatchDelete(batchWrite: Table.BatchWrite, key: Model.ModelCore): Model.ModelResult {
     const context = this.getContext('delete', batchWrite.options);
     const tableItem = this.toTable(key, context);
     batchWrite.addDelete(this.table.name, tableItem.key);
@@ -251,10 +250,10 @@ export class Model implements Model.ModelBase {
    * @param batchWrite -
    * @param item -
    */
-  addBatchPut(batchWrite: BatchWrite, item: Model.ModelData): Model.ModelResult {
+  addBatchPut(batchWrite: Table.BatchWrite, item: Model.ModelData): Model.ModelResult {
     const context = this.getContext('put', batchWrite.options);
     const tableItem = this.toTable(item, context);
-    batchWrite.addPut(this.table.name, tableItem);
+    batchWrite.addPut(this.table.name, { key: tableItem.key, item: tableItem.item });
     return new Model.ModelResult(batchWrite, this, tableItem.key, context);
   }
 
@@ -264,7 +263,7 @@ export class Model implements Model.ModelBase {
    * @param key -
    * @param itemAttributes -
    */
-  addTransactGet(transactGet: TransactGet, key: Model.ModelCore, itemAttributes?: string[]): Model.ModelResult {
+  addTransactGet(transactGet: Table.TransactGet, key: Model.ModelCore, itemAttributes?: string[]): Model.ModelResult {
     const context = this.getContext('get', transactGet.options);
     const tableItem = this.toTable(key, context);
     // TODO: map itemAttributes to table 'const tableAttributes = model.toTableAttributes(itemAttributes);'
@@ -280,8 +279,8 @@ export class Model implements Model.ModelBase {
    * @param conditions -
    * @param returnFailure -
    */
-  addTransactCheckCondition(
-    transactWrite: TransactWrite,
+  addTransactCheck(
+    transactWrite: Table.TransactWrite,
     key: Model.ModelCore,
     conditions: Condition.Resolver[],
     returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
@@ -289,7 +288,7 @@ export class Model implements Model.ModelBase {
     const context = this.getContext('check', transactWrite.options);
     context.conditions = conditions;
     const tableItem = this.toTable(key, context);
-    transactWrite.addCheckCondition(this.table.name, tableItem.key, conditions, returnFailure);
+    transactWrite.addCheck(this.table.name, tableItem.key, conditions, returnFailure);
     return new Model.ModelResult(transactWrite, this, tableItem.key, context);
   }
 
@@ -301,7 +300,7 @@ export class Model implements Model.ModelBase {
    * @param returnFailure -
    */
   addTransactDelete(
-    transactWrite: TransactWrite,
+    transactWrite: Table.TransactWrite,
     key: Model.ModelCore,
     conditions?: Condition.Resolver[],
     returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
@@ -321,7 +320,7 @@ export class Model implements Model.ModelBase {
    * @param returnFailure -
    */
   addTransactPut(
-    transactWrite: TransactWrite,
+    transactWrite: Table.TransactWrite,
     item: Model.ModelData,
     conditions?: Condition.Resolver[],
     returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
@@ -341,10 +340,10 @@ export class Model implements Model.ModelBase {
    * @param returnFailure -
    */
   addTransactUpdate(
-    transactWrite: TransactWrite,
+    transactWrite: Table.TransactWrite,
     item: Model.ModelUpdate,
     conditions?: Condition.Resolver[],
-    returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
+    returnFailure?: DocumentClient.ReturnValue,
   ): Model.ModelResult {
     const context = this.getContext('update', transactWrite.options);
     context.conditions = conditions || [];
@@ -640,6 +639,64 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Model:class).update} */
     update(data: Model.ModelUpdateT<KEY, INPUT>, options?: Table.UpdateOptions): Promise<Model.UpdateOutput<OUTPUT>>;
+
+    // Batch
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:class).addBatchGet} */
+    addBatchGet(batchGet: Table.BatchGet, key: Model.ModelCoreT<KEY>): Model.ModelResultT<OUTPUT>;
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:class).addBatchDelete} */
+    addBatchDelete(batchWrite: Table.BatchWrite, key: Model.ModelCoreT<KEY>): Model.ModelResultT<OUTPUT>;
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:class).addBatchPut} */
+    addBatchPut(batchWrite: Table.BatchWrite, item: Model.ModelCoreT<INPUT>): Model.ModelResultT<OUTPUT>;
+
+    // Transact
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:class).addTransactGet} */
+    addTransactGet(
+      transactGet: Table.TransactGet,
+      key: Model.ModelCoreT<KEY>,
+      itemAttributes?: string[],
+    ): Model.ModelResultT<OUTPUT>;
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:class).addTransactCheck} */
+    addTransactCheck(
+      transactWrite: Table.TransactWrite,
+      key: Model.ModelCoreT<KEY>,
+      conditions: Condition.Resolver[],
+      returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
+    ): Model.ModelResultT<OUTPUT>;
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:class).addTransactDelete} */
+    addTransactDelete(
+      transactWrite: Table.TransactWrite,
+      key: Model.ModelCoreT<KEY>,
+      conditions?: Condition.Resolver[],
+      returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
+    ): Model.ModelResultT<OUTPUT>;
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:class).addTransactPut} */
+    addTransactPut(
+      transactWrite: Table.TransactWrite,
+      item: Model.ModelCoreT<INPUT>,
+      conditions?: Condition.Resolver[],
+      returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
+    ): Model.ModelResultT<OUTPUT>;
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:class).addTransactUpdate} */
+    addTransactUpdate(
+      transactWrite: Table.TransactWrite,
+      item: Model.ModelUpdateT<KEY, INPUT>,
+      conditions?: Condition.Resolver[],
+      returnFailure?: DocumentClient.ReturnValue,
+    ): Model.ModelResultT<OUTPUT>;
   }
 
   /**
@@ -662,7 +719,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
 
   export class ModelResult {
     constructor(
-      private tableResult: TableResult,
+      private tableResult: Table.TableResult,
       private model: Model,
       private key: Table.PrimaryKey.AttributeValuesMap,
       private context: Fields.TableContext,
@@ -680,7 +737,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export interface ModelResultT<OUTPUT extends { [key: string]: any }> {
+  export interface ModelResultT<OUTPUT extends { [key: string]: any }> extends ModelResult {
     get(): { item: Model.ModelOutT<OUTPUT>; tableItem: Table.AttributeValuesMap } | void;
   }
 }
