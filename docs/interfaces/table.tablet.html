@@ -134,10 +134,6 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#batchget" class="tsd-kind-icon">batch<wbr>Get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#batchgetparams" class="tsd-kind-icon">batch<wbr>Get<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#batchwrite" class="tsd-kind-icon">batch<wbr>Write</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#batchwriteparams" class="tsd-kind-icon">batch<wbr>Write<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#createbinaryset" class="tsd-kind-icon">create<wbr>Binary<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#createnumberset" class="tsd-kind-icon">create<wbr>Number<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="table.tablet.html#createset" class="tsd-kind-icon">create<wbr>Set</a></li>
@@ -156,10 +152,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#queryparams" class="tsd-kind-icon">query<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#scan" class="tsd-kind-icon">scan</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#scanparams" class="tsd-kind-icon">scan<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#transactget" class="tsd-kind-icon">transact<wbr>Get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#transactgetparams" class="tsd-kind-icon">transact<wbr>Get<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#transactwrite" class="tsd-kind-icon">transact<wbr>Write</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#transactwriteparams" class="tsd-kind-icon">transact<wbr>Write<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#setbatchget" class="tsd-kind-icon">set<wbr>Batch<wbr>Get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#setbatchwrite" class="tsd-kind-icon">set<wbr>Batch<wbr>Write</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#settransactget" class="tsd-kind-icon">set<wbr>Transact<wbr>Get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#settransactwrite" class="tsd-kind-icon">set<wbr>Transact<wbr>Write</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#update" class="tsd-kind-icon">update</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="table.tablet.html#updateparams" class="tsd-kind-icon">update<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static"><a href="table.tablet.html#addbatchparams" class="tsd-kind-icon">add<wbr>Batch<wbr>Params</a></li>
@@ -217,7 +213,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#keyattributes">keyAttributes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1258">Table.ts:1258</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1136">Table.ts:1136</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -233,7 +229,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#keyschema">keySchema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1261">Table.ts:1261</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1139">Table.ts:1139</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -288,140 +284,6 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="batchget" class="tsd-anchor"></a>
-					<h3>batch<wbr>Get</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">batch<wbr>Get<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.batchgettableoptions.html" class="tsd-signature-type">BatchGetTableOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BatchGetItemOutput</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#batchget">batchGet</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1350">Table.ts:1350</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>See Generic form of <a href="../classes/table.html#batchgetparams">Table.batchGetParams</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>keys: <a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.batchgettableoptions.html" class="tsd-signature-type">BatchGetTableOptions</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BatchGetItemOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="batchgetparams" class="tsd-anchor"></a>
-					<h3>batch<wbr>Get<wbr>Params</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">batch<wbr>Get<wbr>Params<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.batchgettableoptions.html" class="tsd-signature-type">BatchGetTableOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BatchGetItemInput</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#batchgetparams">batchGetParams</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1295">Table.ts:1295</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>See Generic form of <a href="../classes/table.html#batchgetparams">Table.batchGetParams</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>keys: <a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.batchgettableoptions.html" class="tsd-signature-type">BatchGetTableOptions</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">BatchGetItemInput</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="batchwrite" class="tsd-anchor"></a>
-					<h3>batch<wbr>Write</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">batch<wbr>Write<span class="tsd-signature-symbol">(</span>putItems<span class="tsd-signature-symbol">?: </span><a href="table.putitemt.html" class="tsd-signature-type">PutItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, delKeys<span class="tsd-signature-symbol">?: </span><a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.batchwritetableoptions.html" class="tsd-signature-type">BatchWriteTableOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BatchWriteItemOutput</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#batchwrite">batchWrite</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1356">Table.ts:1356</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>See Generic form of <a href="../classes/table.html#batchwriteparams">Table.batchWriteParams</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> putItems: <a href="table.putitemt.html" class="tsd-signature-type">PutItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> delKeys: <a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.batchwritetableoptions.html" class="tsd-signature-type">BatchWriteTableOptions</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BatchWriteItemOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="batchwriteparams" class="tsd-anchor"></a>
-					<h3>batch<wbr>Write<wbr>Params</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">batch<wbr>Write<wbr>Params<span class="tsd-signature-symbol">(</span>putItems<span class="tsd-signature-symbol">?: </span><a href="table.putitemt.html" class="tsd-signature-type">PutItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, delKeys<span class="tsd-signature-symbol">?: </span><a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.batchwritetableoptions.html" class="tsd-signature-type">BatchWriteTableOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BatchWriteItemInput</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#batchwriteparams">batchWriteParams</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1301">Table.ts:1301</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>See Generic form of <a href="../classes/table.html#batchwriteparams">Table.batchWriteParams</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> putItems: <a href="table.putitemt.html" class="tsd-signature-type">PutItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> delKeys: <a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.batchwritetableoptions.html" class="tsd-signature-type">BatchWriteTableOptions</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">BatchWriteItemInput</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 					<a name="createbinaryset" class="tsd-anchor"></a>
 					<h3>create<wbr>Binary<wbr>Set</h3>
@@ -587,7 +449,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1324">Table.ts:1324</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1176">Table.ts:1176</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -619,7 +481,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#deleteparams">deleteParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1269">Table.ts:1269</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1147">Table.ts:1147</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -651,7 +513,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1321">Table.ts:1321</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1173">Table.ts:1173</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -683,7 +545,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getparams">getParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1266">Table.ts:1266</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1144">Table.ts:1144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -826,7 +688,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#put">put</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1330">Table.ts:1330</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1182">Table.ts:1182</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -861,7 +723,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#putparams">putParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1275">Table.ts:1275</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1153">Table.ts:1153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -896,7 +758,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#query">query</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1344">Table.ts:1344</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1196">Table.ts:1196</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -928,7 +790,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#queryparams">queryParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1289">Table.ts:1289</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1167">Table.ts:1167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -960,7 +822,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#scan">scan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1347">Table.ts:1347</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1199">Table.ts:1199</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -989,7 +851,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#scanparams">scanParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1292">Table.ts:1292</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1170">Table.ts:1170</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1008,136 +870,133 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="transactget" class="tsd-anchor"></a>
-					<h3>transact<wbr>Get</h3>
+					<a name="setbatchget" class="tsd-anchor"></a>
+					<h3>set<wbr>Batch<wbr>Get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">transact<wbr>Get<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">?: </span><a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, getItems<span class="tsd-signature-symbol">?: </span><a href="table.transactgetitemt.html" class="tsd-signature-type">TransactGetItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.transactgettableoptions.html" class="tsd-signature-type">TransactGetTableOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TransactGetItemsOutput</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Batch<wbr>Get<span class="tsd-signature-symbol">(</span>batchGet<span class="tsd-signature-symbol">: </span><a href="../classes/table.batchget.html" class="tsd-signature-type">BatchGet</a>, keys<span class="tsd-signature-symbol">: </span><a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#transactget">transactGet</a></p>
+								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#setbatchget">setBatchGet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1363">Table.ts:1363</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1202">Table.ts:1202</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>See Generic form of <a href="../classes/table.html#transactgetparams">Table.transactGetParams</a>.</p>
+									<p>See Generic form of <a href="../classes/table.html#setbatchget">Table.setBatchGet</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> keys: <a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>batchGet: <a href="../classes/table.batchget.html" class="tsd-signature-type">BatchGet</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> getItems: <a href="table.transactgetitemt.html" class="tsd-signature-type">TransactGetItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.transactgettableoptions.html" class="tsd-signature-type">TransactGetTableOptions</a></h5>
+									<h5>keys: <a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TransactGetItemsOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="transactgetparams" class="tsd-anchor"></a>
-					<h3>transact<wbr>Get<wbr>Params</h3>
+					<a name="setbatchwrite" class="tsd-anchor"></a>
+					<h3>set<wbr>Batch<wbr>Write</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">transact<wbr>Get<wbr>Params<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">?: </span><a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, getItems<span class="tsd-signature-symbol">?: </span><a href="table.transactgetitemt.html" class="tsd-signature-type">TransactGetItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.transactgettableoptions.html" class="tsd-signature-type">TransactGetTableOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TransactGetItemsInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Batch<wbr>Write<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="../classes/table.batchwrite.html" class="tsd-signature-type">BatchWrite</a>, putItems<span class="tsd-signature-symbol">?: </span><a href="table.putitemt.html" class="tsd-signature-type">PutItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, delKeys<span class="tsd-signature-symbol">?: </span><a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#transactgetparams">transactGetParams</a></p>
+								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#setbatchwrite">setBatchWrite</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1308">Table.ts:1308</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1205">Table.ts:1205</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>See Generic form of <a href="../classes/table.html#transactgetparams">Table.transactGetParams</a>.</p>
+									<p>See Generic form of <a href="../classes/table.html#setbatchwrite">Table.setBatchWrite</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> keys: <a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>batchWrite: <a href="../classes/table.batchwrite.html" class="tsd-signature-type">BatchWrite</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> getItems: <a href="table.transactgetitemt.html" class="tsd-signature-type">TransactGetItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> putItems: <a href="table.putitemt.html" class="tsd-signature-type">PutItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.transactgettableoptions.html" class="tsd-signature-type">TransactGetTableOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> delKeys: <a href="../classes/table.primarykey.html#attributevaluesmapt" class="tsd-signature-type">AttributeValuesMapT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TransactGetItemsInput</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="transactwrite" class="tsd-anchor"></a>
-					<h3>transact<wbr>Write</h3>
+					<a name="settransactget" class="tsd-anchor"></a>
+					<h3>set<wbr>Transact<wbr>Get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">transact<wbr>Write<span class="tsd-signature-symbol">(</span>write<span class="tsd-signature-symbol">: </span><a href="table.transactwritet.html" class="tsd-signature-type">TransactWriteT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.transactwritetableoptions.html" class="tsd-signature-type">TransactWriteTableOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TransactWriteItemsOutput</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Transact<wbr>Get<span class="tsd-signature-symbol">(</span>transactGet<span class="tsd-signature-symbol">: </span><a href="../classes/table.transactget.html" class="tsd-signature-type">TransactGet</a>, items<span class="tsd-signature-symbol">: </span><a href="table.transactgetitemt.html" class="tsd-signature-type">TransactGetItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#transactwrite-1">transactWrite</a></p>
+								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#settransactget">setTransactGet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1370">Table.ts:1370</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1212">Table.ts:1212</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>See Generic form of <a href="../classes/table.html#transactwriteparams">Table.transactWriteParams</a>.</p>
+									<p>See Generic form of <a href="../classes/table.html#settransactget">Table.setTransactGet</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>write: <a href="table.transactwritet.html" class="tsd-signature-type">TransactWriteT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>transactGet: <a href="../classes/table.transactget.html" class="tsd-signature-type">TransactGet</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.transactwritetableoptions.html" class="tsd-signature-type">TransactWriteTableOptions</a></h5>
+									<h5>items: <a href="table.transactgetitemt.html" class="tsd-signature-type">TransactGetItemT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TransactWriteItemsOutput</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="transactwriteparams" class="tsd-anchor"></a>
-					<h3>transact<wbr>Write<wbr>Params</h3>
+					<a name="settransactwrite" class="tsd-anchor"></a>
+					<h3>set<wbr>Transact<wbr>Write</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">transact<wbr>Write<wbr>Params<span class="tsd-signature-symbol">(</span>write<span class="tsd-signature-symbol">: </span><a href="table.transactwritet.html" class="tsd-signature-type">TransactWriteT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.transactwritetableoptions.html" class="tsd-signature-type">TransactWriteTableOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TransactWriteItemsInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Transact<wbr>Write<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, write<span class="tsd-signature-symbol">: </span><a href="table.transactwritedatat.html" class="tsd-signature-type">TransactWriteDataT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#transactwriteparams">transactWriteParams</a></p>
+								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#settransactwrite">setTransactWrite</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1315">Table.ts:1315</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1215">Table.ts:1215</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>See Generic form of <a href="../classes/table.html#transactwriteparams">Table.transactWriteParams</a>.</p>
+									<p>See Generic form of <a href="../classes/table.html#settransactwrite">Table.setTransactWrite</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>write: <a href="table.transactwritet.html" class="tsd-signature-type">TransactWriteT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>transactWrite: <a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.transactwritetableoptions.html" class="tsd-signature-type">TransactWriteTableOptions</a></h5>
+									<h5>write: <a href="table.transactwritedatat.html" class="tsd-signature-type">TransactWriteDataT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TransactWriteItemsInput</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1152,7 +1011,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#update">update</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1337">Table.ts:1337</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1189">Table.ts:1189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1187,7 +1046,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#updateparams">updateParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1282">Table.ts:1282</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1160">Table.ts:1160</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1222,7 +1081,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#addbatchparams">addBatchParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L577">Table.ts:577</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L447">Table.ts:447</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1282,7 +1141,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#additemattributes">addItemAttributes</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L510">Table.ts:510</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L380">Table.ts:380</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1333,7 +1192,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#addparams">addParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L535">Table.ts:535</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L405">Table.ts:405</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1390,7 +1249,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#addwriteparams">addWriteParams</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L556">Table.ts:556</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L426">Table.ts:426</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1449,7 +1308,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getkeyname">getKeyName</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L600">Table.ts:600</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L470">Table.ts:470</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1488,7 +1347,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#getputaction">getPutAction</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L488">Table.ts:488</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L358">Table.ts:358</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1520,7 +1379,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/table.html">Table</a>.<a href="../classes/table.html#isputaction">isPutAction</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L499">Table.ts:499</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L369">Table.ts:369</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1601,18 +1460,6 @@
 									<li class=" tsd-kind-get-signature tsd-parent-kind-interface tsd-is-inherited">
 										<a href="table.tablet.html#client" class="tsd-kind-icon">client</a>
 									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="table.tablet.html#batchget" class="tsd-kind-icon">batch<wbr>Get</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="table.tablet.html#batchgetparams" class="tsd-kind-icon">batch<wbr>Get<wbr>Params</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="table.tablet.html#batchwrite" class="tsd-kind-icon">batch<wbr>Write</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="table.tablet.html#batchwriteparams" class="tsd-kind-icon">batch<wbr>Write<wbr>Params</a>
-									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 										<a href="table.tablet.html#createbinaryset" class="tsd-kind-icon">create<wbr>Binary<wbr>Set</a>
 									</li>
@@ -1668,16 +1515,16 @@
 										<a href="table.tablet.html#scanparams" class="tsd-kind-icon">scan<wbr>Params</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="table.tablet.html#transactget" class="tsd-kind-icon">transact<wbr>Get</a>
+										<a href="table.tablet.html#setbatchget" class="tsd-kind-icon">set<wbr>Batch<wbr>Get</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="table.tablet.html#transactgetparams" class="tsd-kind-icon">transact<wbr>Get<wbr>Params</a>
+										<a href="table.tablet.html#setbatchwrite" class="tsd-kind-icon">set<wbr>Batch<wbr>Write</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="table.tablet.html#transactwrite" class="tsd-kind-icon">transact<wbr>Write</a>
+										<a href="table.tablet.html#settransactget" class="tsd-kind-icon">set<wbr>Transact<wbr>Get</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="table.tablet.html#transactwriteparams" class="tsd-kind-icon">transact<wbr>Write<wbr>Params</a>
+										<a href="table.tablet.html#settransactwrite" class="tsd-kind-icon">set<wbr>Transact<wbr>Write</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="table.tablet.html#update" class="tsd-kind-icon">update</a>

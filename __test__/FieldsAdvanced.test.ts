@@ -117,7 +117,7 @@ class FieldFork implements Fields.Field {
     if (fields) this.fields = fields;
   }
 
-  //** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
+  /** @inheritDoc {@inheritDoc (Fields:namespace).Field.init} */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   init(name: string, model: Model): void {
     this.fields.forEach((field) => field.init(name, model));

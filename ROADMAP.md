@@ -38,8 +38,8 @@ General hope for v1.x is to avoid breaking changes if at all possible, given the
 - [ ] Support easy to use next/prev pages for query and scan operations
 - [ ] Support access patterns for query and scan based operations on tables and indexes
 - [ ] Support projection expressions
-- [ ] Support batch read and write
-- [ ] Support transactions
+- [x] Support batch read and write
+- [x] Support transactions
 - [ ] Time to Live (TTL) support
 - [ ] Support more advanced model fields and capabilities, like compression, guid ids...
 - [ ] Support remainder (...) based fields

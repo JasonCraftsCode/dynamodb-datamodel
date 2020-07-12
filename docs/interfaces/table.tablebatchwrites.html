@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DeleteOptions | dynamodb-datamodel - v0.2.3</title>
+	<title>TableBatchWrites | dynamodb-datamodel - v0.2.3</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../classes/table.html">Table</a>
 				</li>
 				<li>
-					<a href="table.deleteoptions.html">DeleteOptions</a>
+					<a href="table.tablebatchwrites.html">TableBatchWrites</a>
 				</li>
 			</ul>
-			<h1>Interface DeleteOptions</h1>
+			<h1>Interface TableBatchWrites</h1>
 		</div>
 	</div>
 </header>
@@ -68,8 +68,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Options used in following methods:  <a href="../classes/table.html#delete">Table.delete</a>, <a href="../classes/table.html#deleteparams">Table.deleteParams</a>, <a href="../classes/model.html#delete">Model.delete</a>
-						and <a href="../classes/model.html#deleteparams">Model.deleteParams</a>.</p>
+						<p>Contains the list of items to put and delete in a batch write.</p>
 					</div>
 				</div>
 			</section>
@@ -77,12 +76,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.deleteinput.html" class="tsd-signature-type">DeleteInput</a><span class="tsd-signature-symbol">&gt;</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">DeleteOptions</span>
-							</li>
-						</ul>
+						<span class="target">TableBatchWrites</span>
 					</li>
 				</ul>
 			</section>
@@ -90,84 +84,45 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.deleteoptions.html#attributes" class="tsd-kind-icon">attributes</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.deleteoptions.html#conditions" class="tsd-kind-icon">conditions</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.deleteoptions.html#context" class="tsd-kind-icon">context</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.deleteoptions.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.tablebatchwrites.html#delkeys" class="tsd-kind-icon">del<wbr>Keys</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.tablebatchwrites.html#putitems" class="tsd-kind-icon">put<wbr>Items</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="attributes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> attributes</h3>
-					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <a href="table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="delkeys" class="tsd-anchor"></a>
+					<h3>del<wbr>Keys</h3>
+					<div class="tsd-signature tsd-kind-icon">del<wbr>Keys<span class="tsd-signature-symbol">:</span> <a href="../classes/table.primarykey.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#attributes">attributes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L863">Table.ts:863</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1370">Table.ts:1370</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Expression attributes to use for resolving conditions and updates.  Will be used to generate the
-							ExpressionAttributeNames and ExpressionAttributeValues params in table operations.</p>
+							<p>List of keys of items to delete in the batch write.</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="conditions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> conditions</h3>
-					<div class="tsd-signature tsd-kind-icon">conditions<span class="tsd-signature-symbol">:</span> <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="putitems" class="tsd-anchor"></a>
+					<h3>put<wbr>Items</h3>
+					<div class="tsd-signature tsd-kind-icon">put<wbr>Items<span class="tsd-signature-symbol">:</span> <a href="table.putitem.html" class="tsd-signature-type">PutItem</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#conditions">conditions</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L870">Table.ts:870</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L1365">Table.ts:1365</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Array of expression condition resolvers that are joined together with AND, then used as
-							ConditionExpression or FilterExpression params in table operations.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="context" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> context</h3>
-					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#context">context</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L882">Table.ts:882</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>User defined context that gets passed through to all Fields.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="params" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html#optional" class="tsd-signature-type">Optional</a><span class="tsd-signature-symbol">&lt;</span><a href="table.deleteinput.html" class="tsd-signature-type">DeleteInput</a><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#params">params</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L876">Table.ts:876</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Params to append on to the params that get passed to dynamodb.  This does mean these params can
-							be used to override any of the values generated by Table, so just be careful on what params you pass.</p>
+							<p>List of items to put in the batch write.</p>
 						</div>
 					</div>
 				</section>
@@ -213,19 +168,13 @@
 						<a href="../classes/table.html" class="tsd-kind-icon">Table</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="table.deleteoptions.html" class="tsd-kind-icon">Delete<wbr>Options</a>
+								<a href="table.tablebatchwrites.html" class="tsd-kind-icon">Table<wbr>Batch<wbr>Writes</a>
 								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.deleteoptions.html#attributes" class="tsd-kind-icon">attributes</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="table.tablebatchwrites.html#delkeys" class="tsd-kind-icon">del<wbr>Keys</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.deleteoptions.html#conditions" class="tsd-kind-icon">conditions</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.deleteoptions.html#context" class="tsd-kind-icon">context</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.deleteoptions.html#params" class="tsd-kind-icon">params</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="table.tablebatchwrites.html#putitems" class="tsd-kind-icon">put<wbr>Items</a>
 									</li>
 								</ul>
 							</li>

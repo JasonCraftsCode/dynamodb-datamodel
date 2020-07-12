@@ -1236,10 +1236,26 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     return new Table(params) as TableT<KEY, ATTRIBUTES>;
   }
 
+  /**
+   * Used by ModelResult to get the table item that will be converted to a model item.
+   */
   export interface TableResult {
+    /**
+     * Gets the table item from the result of a DocumentClient operation.
+     * @param tableName - Name of table to get item for.
+     * @param key - Key of table item to get.
+     * @returns The table item data.
+     */
     getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void;
   }
 
+  /**
+   * Compare the value of the list of keys between item1 and item2.
+   * @param keys - List of keys to compare between item1 and item2.
+   * @param item1 - Item to compare item2 against.
+   * @param item2 - Item to compare item1 against.
+   * @returns true if the value of the keys of item1 and item2 are equal.
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export function equalMap(keys: string[], item1: { [key: string]: any }, item2?: { [key: string]: any }): boolean {
     if (!item2) return false;
@@ -1259,14 +1275,23 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
     private result?: DocumentClient.BatchGetItemOutput;
 
-    /**
-     * @param client - The DocumentClient used for the batch get operations.
-     * @param options - Used in building the batchGet params.
-     */
-    constructor(public client: DocumentClient, public options: Table.BatchGetTableOptions = {}) {}
+    /** The DocumentClient used for the batch get operations. */
+    public client: DocumentClient;
+
+    /** Options used in building the batchGet params. */
+    public options: Table.BatchGetTableOptions;
 
     /**
-     *
+     * @param client - The DocumentClient used for the batch get operations.
+     * @param options - Options used in building the batchGet params.
+     */
+    constructor(client: DocumentClient, options: Table.BatchGetTableOptions = {}) {
+      this.client = client;
+      this.options = options;
+    }
+
+    /**
+     * Sets the keys for items to fetch from a specific table.
      * @param tableName - Name of table to for batch get.
      * @param keys - Keys of items to get.
      */
@@ -1275,7 +1300,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
-     *
+     * Add a get item based on key for a specific table.
      * @param tableName - Name of table to for batch get.
      * @param keys - Key of item to get.
      */
@@ -1308,10 +1333,20 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
       return this.result;
     }
 
+    /**
+     * The result from the DocumentClient.batchGet executed.
+     * @returns The output of DocumentClient.batchGet.
+     */
     getResult(): DocumentClient.BatchGetItemOutput | undefined {
       return this.result;
     }
 
+    /**
+     * Gets the table item from the DocumentClient.batchGet result.
+     * @param tableName - Name of table to get item for.
+     * @param key - Key of table item to get.
+     * @returns The table item data.
+     */
     getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void {
       const responses = this.result?.Responses?.[tableName];
       if (!responses) return;
@@ -1320,8 +1355,18 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Contains the list of items to put and delete in a batch write.
+   */
   interface TableBatchWrites {
+    /**
+     * List of items to put in the batch write.
+     */
     putItems: Table.PutItem[];
+
+    /**
+     * List of keys of items to delete in the batch write.
+     */
     delKeys: Table.PrimaryKey.AttributeValuesMap[];
   }
 
@@ -1337,13 +1382,23 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
     private result?: DocumentClient.BatchWriteItemOutput;
 
-    /**
-     * @param client - The DocumentClient used for the batch write operations.
-     * @param options - Used in building the batchWrite params.
-     */
-    constructor(public client: DocumentClient, public options: Table.BatchWriteTableOptions = {}) {}
+    /** The DocumentClient used for the batch write operations. */
+    public client: DocumentClient;
+
+    /** Options used in building the batchWrite params. */
+    public options: Table.BatchWriteTableOptions;
 
     /**
+     * @param client - The DocumentClient used for the batch write operations.
+     * @param options - Options used in building the batchWrite params.
+     */
+    constructor(client: DocumentClient, options: Table.BatchWriteTableOptions = {}) {
+      this.client = client;
+      this.options = options;
+    }
+
+    /**
+     * Sets the items to put and delete for a specific table.
      * @param tableName - Name of table to for batch write.
      * @param putItems - Items to put in the table.
      * @param delKeys - Keys of items to delete from the table.
@@ -1353,6 +1408,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
+     * Adds a put item for a specific table.
      * @param tableName - Name of table to for batch write.
      * @param item - Items to put in the table.
      */
@@ -1361,6 +1417,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
+     * Adds a delete item by key for a specific table.
      * @param tableName - Name of table to for batch write.
      * @param key - Keys of item to delete from the table.
      */
@@ -1399,10 +1456,20 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
       return this.result;
     }
 
+    /**
+     * The result from the DocumentClient.batchWrite executed.
+     * @returns The output of DocumentClient.batchWrite.
+     */
     getResult(): DocumentClient.BatchWriteItemOutput | undefined {
       return this.result;
     }
 
+    /**
+     * Gets the table item from the DocumentClient.batchWrite result.
+     * @param tableName - Name of table to get item for.
+     * @param key - Key of table item to get.
+     * @returns The table item data.
+     */
     getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void {
       const metrics = this.result?.ItemCollectionMetrics?.[tableName];
       if (!metrics) return;
@@ -1426,14 +1493,23 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     private request?: DocumentClient.TransactGetItemsInput;
     private result?: DocumentClient.TransactGetItemsOutput;
 
-    /**
-     * @param client - The DocumentClient used for the transact get operations.
-     * @param options - Used in building the transactGet params.
-     */
-    constructor(public client: DocumentClient, public options: Table.TransactGetTableOptions = {}) {}
+    /** The DocumentClient used for the transact get operations. */
+    public client: DocumentClient;
+
+    /** Options used in building the transactGet params. */
+    public options: Table.TransactGetTableOptions;
 
     /**
-     * Creates the params that can be used when calling [DocumentClient.transactGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactGet-property} method.
+     * @param client - The DocumentClient used for the transact get operations.
+     * @param options - Options used in building the transactGet params.
+     */
+    constructor(client: DocumentClient, options: Table.TransactGetTableOptions = {}) {
+      this.client = client;
+      this.options = options;
+    }
+
+    /**
+     * Sets the keys for the items to fetch for a specific table.
      * @param tableName - Name of table to for transact get.
      * @param items - Keys of items and associated attributes to get.
      */
@@ -1442,10 +1518,10 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
 
     /**
-     * Creates the params that can be used when calling [DocumentClient.transactGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactGet-property} method.
+     * Add a get item based on key for a specific table.
      * @param tableName - Name of table to for transact get.
      * @param key - Primary key of items to get.
-     * @param itemAttributes - List of attribute names to return.
+     * @param itemAttributes - List of attribute names to return, when not present all attributes will be returned.
      */
     addGet(tableName: string, key: Table.PrimaryKey.AttributeValuesMap, itemAttributes?: string[]): void {
       this.getTableReads(tableName).push({ key, itemAttributes });
@@ -1470,6 +1546,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
     /**
      * Wrapper around [DocumentClient.transactGet]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactGet-property} method.
+     * @returns Promise with the transactGet results, including responses fetched.
      */
     async execute(): Promise<DocumentClient.TransactGetItemsOutput> {
       this.request = this.getParams();
@@ -1477,10 +1554,20 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
       return this.result;
     }
 
+    /**
+     * The result from the DocumentClient.transactGet executed.
+     * @returns The output of DocumentClient.transactGet.
+     */
     getResult(): DocumentClient.TransactGetItemsOutput | undefined {
       return this.result;
     }
 
+    /**
+     * Gets the table item from the DocumentClient.transactGet result.
+     * @param tableName - Name of table to get item for.
+     * @param key - Key of table item to get.
+     * @returns The table item data.
+     */
     getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void {
       const responses = this.result?.Responses;
       if (!responses) return;
@@ -1506,15 +1593,24 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     }
     private result?: DocumentClient.TransactWriteItemsOutput;
 
-    /**
-     * @param client - The DocumentClient used for the transact write operations.
-     * @param options - Used in building the transactWrite params.
-     */
-    constructor(public client: DocumentClient, public options: Table.TransactWriteTableOptions = {}) {}
+    /** The DocumentClient used for the transact write operations. */
+    public client: DocumentClient;
+
+    /** Options used in building the transactWrite params.  */
+    public options: Table.TransactWriteTableOptions;
 
     /**
-     * Creates the params that can be used when calling  [DocumentClient.transactWrite]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactWrite-property} method.
-     * @param tableName - Name of table to for transact get.
+     * @param client - The DocumentClient used for the transact write operations.
+     * @param options - Options used in building the transactWrite params.
+     */
+    constructor(client: DocumentClient, options: Table.TransactWriteTableOptions = {}) {
+      this.client = client;
+      this.options = options;
+    }
+
+    /**
+     * Sets the items to check, delete, put and update for a specific table.
+     * @param tableName - Name of table to for transact write.
      * @param write - Set of operations to write in the transaction.
      */
     set(tableName: string, writes: Required<Table.TransactWriteData>): void {
@@ -1524,6 +1620,9 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Add check condition statement to transactWrite.
      * @param tableName - Name of table for write transaction.
+     * @param key - Key of item to used in condition check.
+     * @param conditions - List of conditions to validate when executing the transact write.
+     * @param returnFailure - Determines what to return on transaction failure.
      */
     addCheck(
       tableName: string,
@@ -1537,6 +1636,9 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Add delete statement to transact write.
      * @param tableName - Name of table for write transaction.
+     * @param key - Key of item to delete in transact write.
+     * @param conditions - List of conditions to validate when executing the transact write.
+     * @param returnFailure - Determines what to return on transaction failure.
      */
     addDelete(
       tableName: string,
@@ -1550,6 +1652,10 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Add put statement to transact write.
      * @param tableName - Name of table for write transaction.
+     * @param key - Key of item to put in transact write.
+     * @param item - Item to put in the transact write.
+     * @param conditions - List of conditions to validate when executing the transact write.
+     * @param returnFailure - Determines what to return on transaction failure.
      */
     addPut(
       tableName: string,
@@ -1564,6 +1670,10 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     /**
      * Add update statement to transact write.
      * @param tableName - Name of table for write transaction.
+     * @param key - Key of item to update in transact write.
+     * @param item - Item to update in transact write.
+     * @param conditions - List of conditions to validate when executing the transact write.
+     * @param returnFailure - Determines what to return on transaction failure.
      */
     addUpdate(
       tableName: string,
@@ -1624,16 +1734,27 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
 
     /**
      * Wrapper around [DocumentClient.transactWrite]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactWrite-property} method.
+     * @returns Promise with the batchWrite results, including responses fetched.
      */
     async execute(): Promise<DocumentClient.TransactWriteItemsOutput> {
       this.result = await this.client.transactWrite(this.getParams()).promise();
       return this.result;
     }
 
+    /**
+     * The result from the DocumentClient.transactWrite executed.
+     * @returns The output of DocumentClient.transactWrite.
+     */
     getResult(): DocumentClient.TransactWriteItemsOutput | undefined {
       return this.result;
     }
 
+    /**
+     * Gets the table item from the DocumentClient.transactWrite result.
+     * @param tableName - Name of table to get item for.
+     * @param key - Key of table item to get.
+     * @returns The table item data.
+     */
     getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void {
       const tableMetrics = this.result?.ItemCollectionMetrics?.[tableName];
       if (!tableMetrics) return;

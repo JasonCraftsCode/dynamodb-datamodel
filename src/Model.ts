@@ -221,10 +221,10 @@ export class Model implements Model.ModelBase {
   }
 
   /**
-   *
-   * @param batchGet -
-   * @param key -
-   * @returns
+   * Adds a get item by key to a batch get operation.
+   * @param batchGet - BatchGet operation to added this key to.
+   * @param key - Key of item to fetch in BatchGet.
+   * @returns Object to get the resulting item from the BatchGet result.
    */
   addBatchGet(batchGet: Table.BatchGet, key: Model.ModelCore): Model.ModelResult {
     const context = this.getContext('get', batchGet.options);
@@ -234,9 +234,10 @@ export class Model implements Model.ModelBase {
   }
 
   /**
-   *
-   * @param batchWrite -
-   * @param key -
+   * Adds a delete item by key to a batch write operation.
+   * @param batchWrite - BatchWrite operation to added this key to.
+   * @param key - Key of item to delete in BatchWrite.
+   * @returns Object to get the resulting item from the BatchWrite result.
    */
   addBatchDelete(batchWrite: Table.BatchWrite, key: Model.ModelCore): Model.ModelResult {
     const context = this.getContext('delete', batchWrite.options);
@@ -246,9 +247,10 @@ export class Model implements Model.ModelBase {
   }
 
   /**
-   *
-   * @param batchWrite -
-   * @param item -
+   * Adds a put item to a batch write operation.
+   * @param batchWrite - BatchWrite operation to added this key to.
+   * @param item - Item added to the batch write operation.
+   * @returns Object to get the resulting item from the BatchWrite result.
    */
   addBatchPut(batchWrite: Table.BatchWrite, item: Model.ModelData): Model.ModelResult {
     const context = this.getContext('put', batchWrite.options);
@@ -258,10 +260,11 @@ export class Model implements Model.ModelBase {
   }
 
   /**
-   *
-   * @param transactGet -
-   * @param key -
-   * @param itemAttributes -
+   * Adds a get item to a transact get operation.
+   * @param transactGet - TransactGet operation to added this key to.
+   * @param key - Key of item to fetch in BatchGet.
+   * @param itemAttributes - List of attributes to fetch in TransactGet, if this is empty then all item attributes are return.
+   * @returns Object to get the resulting item from the TransactGet result.
    */
   addTransactGet(transactGet: Table.TransactGet, key: Model.ModelCore, itemAttributes?: string[]): Model.ModelResult {
     const context = this.getContext('get', transactGet.options);
@@ -273,11 +276,12 @@ export class Model implements Model.ModelBase {
 
   // NOTE: conditions need to use table attribute names
   /**
-   *
-   * @param transactWrite -
-   * @param key -
-   * @param conditions -
-   * @param returnFailure -
+   * Adds an item condition check to a transact write operation.
+   * @param transactWrite - TransactWrite operation to added this item condition check to.
+   * @param key - Key of item to used in condition check.
+   * @param conditions - List of conditions to validate when executing the transact write.
+   * @param returnFailure - Determines what to return on transaction failure.
+   * @returns Object to get the resulting item from the TransactWrite result.
    */
   addTransactCheck(
     transactWrite: Table.TransactWrite,
@@ -293,11 +297,12 @@ export class Model implements Model.ModelBase {
   }
 
   /**
-   *
-   * @param transactWrite -
-   * @param key -
-   * @param conditions -
-   * @param returnFailure -
+   * Adds an item delete to a transact write operation.
+   * @param transactWrite - TransactWrite operation to added this delete item to.
+   * @param key - Key of item to delete in transact write.
+   * @param conditions - List of conditions to validate when executing the transact write.
+   * @param returnFailure - Determines what to return on transaction failure.
+   * @returns Object to get the resulting item from the TransactWrite result.
    */
   addTransactDelete(
     transactWrite: Table.TransactWrite,
@@ -313,11 +318,12 @@ export class Model implements Model.ModelBase {
   }
 
   /**
-   *
-   * @param transactWrite -
-   * @param item -
-   * @param conditions -
-   * @param returnFailure -
+   * Adds an item put to a transact write operation.
+   * @param transactWrite - TransactWrite operation to added this put item to.
+   * @param item - Item to put in the transact write.
+   * @param conditions - List of conditions to validate when executing the transact write.
+   * @param returnFailure - Determines what to return on transaction failure.
+   * @returns Object to get the resulting item from the TransactWrite result.
    */
   addTransactPut(
     transactWrite: Table.TransactWrite,
@@ -333,11 +339,12 @@ export class Model implements Model.ModelBase {
   }
 
   /**
-   *
-   * @param transactWrite -
-   * @param item -
-   * @param conditions -
-   * @param returnFailure -
+   * Adds an item update to a transact write operation.
+   * @param transactWrite - TransactWrite operation to added this update item to.
+   * @param item - Item to update in transact write.
+   * @param conditions - List of conditions to validate when executing the transact write.
+   * @param returnFailure - Determines what to return on transaction failure.
+   * @returns Object to get the resulting item from the TransactWrite result.
    */
   addTransactUpdate(
     transactWrite: Table.TransactWrite,
@@ -356,6 +363,7 @@ export class Model implements Model.ModelBase {
    * Helper method that splits the table data into a key and item.
    * @param table - Table used to determine what attributes are keys.
    * @param data - Table data to split into key and item.
+   * @returns The key, item and raw converted model data.
    */
   static splitTableData(table: Table, data: Table.AttributeValuesMap): Model.TableData {
     const key: Table.PrimaryKey.AttributeValuesMap = {};
@@ -700,12 +708,11 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   *
    * See {@link Table.createTable} reasoning for having a createTable over support 'new TableT'.
    * @param KEY - Key part of the model used for get and delete actions.
    * @param INPUT - The model input interface used for put and update.
    * @param OUTPUT - The model output interface.
-   * @param params - Options to used when creating Model
+   * @param params - Options to used when creating Model.
    */
   export function createModel<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any,
@@ -717,7 +724,17 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     return new Model(params) as Model.ModelT<KEY, INPUT, OUTPUT>;
   }
 
+  /**
+   * The object returned from model batch or transact methods that will get the
+   * table item from the results and translate it to a model item.
+   */
   export class ModelResult {
+    /**
+     * @param tableResult - he batch or transact object to get the result from.
+     * @param model - Model object used to convert the table item to a model item.
+     * @param key - Key of the item to read or write to.
+     * @param context - Context to pass to the Model.toModel method.
+     */
     constructor(
       private tableResult: Table.TableResult,
       private model: Model,
@@ -726,6 +743,10 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     ) {}
 
     // NOTE: get won't return a value until Batch/Transact execute is run
+    /**
+     * Get the model output value and the associated table item.
+     * @returns The model and table item from the result.
+     */
     get(): { item: Model.ModelOut; tableItem: Table.AttributeValuesMap } | void {
       const tableItem = this.tableResult.getItem(this.model.table.name, this.key);
       if (!tableItem) return;
@@ -736,8 +757,13 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     }
   }
 
+  /**
+   * Generic version of the {@link ModelResult} used by {@link ModelT} to allow typescript type validation.
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export interface ModelResultT<OUTPUT extends { [key: string]: any }> extends ModelResult {
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Model:namespace).ModelResult.get} */
     get(): { item: Model.ModelOutT<OUTPUT>; tableItem: Table.AttributeValuesMap } | void;
   }
 }
