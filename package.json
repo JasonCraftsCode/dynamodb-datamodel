@@ -1,6 +1,6 @@
 {
   "name": "dynamodb-datamodel",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "DynamoDB single table design based model",
   "keywords": [
     "DynamoDB",
