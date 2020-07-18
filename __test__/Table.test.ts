@@ -2,8 +2,11 @@
 import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
+import { Condition } from '../src/Condition';
+import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Table } from '../src/Table';
 import { Index } from '../src/TableIndex';
+import { Update } from '../src/Update';
 import { validateTable } from '../src/TableValidate';
 import { delay } from './testCommon';
 
@@ -241,7 +244,10 @@ describe('Validate Table with indexes', () => {
   });
 
   it('deleteParams with options', () => {
-    const params = testTable.deleteParams({ P: 'pk', S: 'sk' }, { params: { ReturnConsumedCapacity: 'TOTAL' } });
+    const params = testTable.deleteParams(
+      { P: 'pk', S: 'sk' },
+      { attributes: () => new ExpressionAttributes(), params: { ReturnConsumedCapacity: 'TOTAL' } },
+    );
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
       ReturnConsumedCapacity: 'TOTAL',
@@ -301,6 +307,49 @@ describe('Validate Table with indexes', () => {
       Key: { P: 'pk', S: 'sk' },
       ReturnValues: 'ALL_NEW',
       TableName: 'TestTable',
+    });
+  });
+  it('setBatchGet', () => {
+    const batchGet = new Table.BatchGet(testTable.client);
+    batchGet.set = jest.fn();
+    testTable.setBatchGet(batchGet, [{ P: 'pk1', S: 'sk1' }]);
+    expect(batchGet.set).toBeCalledTimes(1);
+    expect(batchGet.set).toBeCalledWith(testTable.name, [{ P: 'pk1', S: 'sk1' }], undefined);
+  });
+
+  it('setBatchWrite', () => {
+    const batchWrite = new Table.BatchWrite(testTable.client);
+    batchWrite.set = jest.fn();
+    testTable.setBatchWrite(batchWrite);
+    testTable.setBatchWrite(batchWrite, [{ key: { P: 'pk1', S: 'sk1' } }], [{ P: 'pk2', S: 'sk2' }]);
+    expect(batchWrite.set).toBeCalledTimes(2);
+    expect(batchWrite.set).toBeCalledWith(testTable.name, [{ key: { P: 'pk1', S: 'sk1' } }], [{ P: 'pk2', S: 'sk2' }]);
+  });
+
+  it('setTransactGet', () => {
+    const transactGet = new Table.TransactGet(testTable.client);
+    transactGet.set = jest.fn();
+    testTable.setTransactGet(transactGet, [{ key: { P: 'pk1', S: 'sk1' } }]);
+    expect(transactGet.set).toBeCalledTimes(1);
+    expect(transactGet.set).toBeCalledWith(testTable.name, [{ key: { P: 'pk1', S: 'sk1' } }]);
+  });
+
+  it('setTransactWrite', () => {
+    const transactWrite = new Table.TransactWrite(testTable.client);
+    transactWrite.set = jest.fn();
+    testTable.setTransactWrite(transactWrite, {});
+    testTable.setTransactWrite(transactWrite, {
+      check: [],
+      delete: [{ key: { P: 'pk1', S: 'sk1' } }],
+      put: [],
+      update: [],
+    });
+    expect(transactWrite.set).toBeCalledTimes(2);
+    expect(transactWrite.set).toBeCalledWith(testTable.name, {
+      check: [],
+      delete: [{ key: { P: 'pk1', S: 'sk1' } }],
+      put: [],
+      update: [],
     });
   });
 
@@ -395,16 +444,8 @@ describe('Validate Table with indexes', () => {
     const results = await testTable.update({ P: 'pk', S: 'sk' }, { string: 'string', number: 18, bool: true });
     expect(results).toEqual({ Attributes: {} });
     expect(client.update).toBeCalledWith({
-      ExpressionAttributeNames: {
-        '#n0': 'string',
-        '#n1': 'number',
-        '#n2': 'bool',
-      },
-      ExpressionAttributeValues: {
-        ':v0': 'string',
-        ':v1': 18,
-        ':v2': true,
-      },
+      ExpressionAttributeNames: { '#n0': 'string', '#n1': 'number', '#n2': 'bool' },
+      ExpressionAttributeValues: { ':v0': 'string', ':v1': 18, ':v2': true },
       Key: { P: 'pk', S: 'sk' },
       ReturnValues: 'ALL_NEW',
       TableName: 'TestTable',
@@ -412,4 +453,433 @@ describe('Validate Table with indexes', () => {
     });
     expect(client.update).toBeCalledTimes(1);
   });
+});
+
+function batchGetRequest(
+  output: DocumentClient.BatchGetItemOutput,
+): Request<DocumentClient.BatchGetItemOutput, AWSError> {
+  return {
+    promise() {
+      return delay(1, output);
+    },
+  } as Request<DocumentClient.BatchGetItemOutput, AWSError>;
+}
+
+describe('Validate Batch Get', () => {
+  it('set', () => {
+    const batchGet = new Table.BatchGet(client);
+    batchGet.set('testTable', [{ P: 'pk1', S: 'sk1' }]);
+    expect(batchGet.getParams()).toEqual({
+      RequestItems: { testTable: { Keys: [{ P: 'pk1', S: 'sk1' }] } },
+    });
+  });
+
+  it('set with custom attributes and itemAttributes', () => {
+    const batchGet = new Table.BatchGet(client, {
+      attributes: () => new ExpressionAttributes(),
+    });
+    batchGet.set('testTable', [{ P: 'pk1', S: 'sk1' }], {
+      itemAttributes: ['attrib1'],
+      params: { ConsistentRead: true },
+    });
+    expect(batchGet.getParams()).toEqual({
+      RequestItems: {
+        testTable: {
+          ConsistentRead: true,
+          ExpressionAttributeNames: {
+            '#n0': 'attrib1',
+          },
+          Keys: [{ P: 'pk1', S: 'sk1' }],
+          ProjectionExpression: 'attrib1',
+        },
+      },
+    });
+  });
+
+  it('addGet', () => {
+    const batchGet = new Table.BatchGet(client);
+    batchGet.addGet('testTable', { P: 'pk1', S: 'sk1' });
+    batchGet.addGet('testTable', { P: 'pk2', S: 'sk2' });
+    expect(batchGet.getParams()).toEqual({
+      RequestItems: {
+        testTable: {
+          Keys: [
+            { P: 'pk1', S: 'sk1' },
+            { P: 'pk2', S: 'sk2' },
+          ],
+        },
+      },
+    });
+  });
+
+  it('options set', () => {
+    const batchGet = new Table.BatchGet(client, {
+      consumed: 'TOTAL',
+    });
+    batchGet.addGet('testTable', { P: 'pk1', S: 'sk1' });
+    batchGet.setOptions('testTable', { itemAttributes: ['attrib1', 'attrib2'] });
+    expect(batchGet.getParams()).toEqual({
+      RequestItems: {
+        testTable: {
+          ExpressionAttributeNames: { '#n0': 'attrib1', '#n1': 'attrib2' },
+          Keys: [{ P: 'pk1', S: 'sk1' }],
+          ProjectionExpression: 'attrib1, attrib2',
+        },
+      },
+      ReturnConsumedCapacity: 'TOTAL',
+    });
+  });
+
+  it('execute', async () => {
+    const item1 = { P: 'pk1', S: 'sk1', name: 'john' };
+    const item2 = { P: 'pk2', S: 'sk2', name: 'bob' };
+    const output = { Responses: { testTable: [item1, item2] } };
+    client.batchGet = jest.fn(() => batchGetRequest(output));
+    const batchGet = new Table.BatchGet(client);
+    batchGet.set('testTable', [{ P: 'pk1', S: 'sk1' }]);
+    expect(batchGet.getItem('testTable', { P: 'pk1', S: 'sk1' })).toEqual(undefined);
+    const results = await batchGet.execute();
+    expect(results).toEqual(output);
+    expect(batchGet.getResult()).toEqual(output);
+    expect(batchGet.getItem('testTable', { P: 'pk2', S: 'sk2' })).toEqual(item2);
+    expect(batchGet.getItem('testTable2', { P: 'pk1', S: 'sk1' })).toEqual(undefined);
+    expect(client.batchGet).toBeCalledWith({
+      RequestItems: { testTable: { Keys: [{ P: 'pk1', S: 'sk1' }] } },
+    });
+    expect(client.batchGet).toBeCalledTimes(1);
+  });
+});
+
+function batchWriteRequest(
+  output: DocumentClient.BatchWriteItemOutput,
+): Request<DocumentClient.BatchWriteItemOutput, AWSError> {
+  return {
+    promise() {
+      return delay(1, output);
+    },
+  } as Request<DocumentClient.BatchWriteItemOutput, AWSError>;
+}
+describe('Validate Batch Write', () => {
+  it('set getParams', () => {
+    const batchWrite = new Table.BatchWrite(client);
+    batchWrite.set(
+      'testTable',
+      [
+        { key: { P: 'pk1', S: 'sk1' }, item: { attrib1: 'a1' } },
+        { key: { P: 'pk2', S: 'sk2' }, item: { attrib2: 'a2' } },
+      ],
+      [{ P: 'pk1', S: 'sk2' }],
+    );
+    const params = batchWrite.getParams();
+    expect(params).toEqual({
+      RequestItems: {
+        testTable: [
+          { PutRequest: { Item: { P: 'pk1', S: 'sk1', attrib1: 'a1' } } },
+          { PutRequest: { Item: { P: 'pk2', S: 'sk2', attrib2: 'a2' } } },
+          { DeleteRequest: { Key: { P: 'pk1', S: 'sk2' } } },
+        ],
+      },
+    });
+  });
+
+  it('set getParams with options', () => {
+    const batchWrite = new Table.BatchWrite(client, { consumed: 'TOTAL', metrics: 'SIZE' });
+    batchWrite.set('testTable', [{ key: { P: 'pk1', S: 'sk1' } }], [{ P: 'pk1', S: 'sk2' }]);
+    const params = batchWrite.getParams();
+    expect(params).toEqual({
+      RequestItems: {
+        testTable: [
+          { PutRequest: { Item: { P: 'pk1', S: 'sk1' } } },
+          { DeleteRequest: { Key: { P: 'pk1', S: 'sk2' } } },
+        ],
+      },
+      ReturnConsumedCapacity: 'TOTAL',
+      ReturnItemCollectionMetrics: 'SIZE',
+    });
+  });
+
+  it('set getParams with empty ', () => {
+    const batchWrite = new Table.BatchWrite(client);
+    batchWrite.set('testTable', [], []);
+    const params = batchWrite.getParams();
+    expect(params).toEqual({
+      RequestItems: {
+        testTable: [],
+      },
+    });
+  });
+
+  it('addPut', () => {
+    const batchWrite = new Table.BatchWrite(client);
+    batchWrite.addPut('testTable', { key: { P: 'pk1', S: 'sk1' }, item: { attrib1: 'a', attrib2: 'b' } });
+    expect(batchWrite.getParams()).toEqual({
+      RequestItems: {
+        testTable: [{ PutRequest: { Item: { P: 'pk1', S: 'sk1', attrib1: 'a', attrib2: 'b' } } }],
+      },
+    });
+  });
+
+  it('addDelete', () => {
+    const batchWrite = new Table.BatchWrite(client);
+    batchWrite.addDelete('testTable', { P: 'pk1', S: 'sk1' });
+    batchWrite.addDelete('testTable', { P: 'pk2', S: 'sk2' });
+    expect(batchWrite.getParams()).toEqual({
+      RequestItems: {
+        testTable: [
+          { DeleteRequest: { Key: { P: 'pk1', S: 'sk1' } } },
+          { DeleteRequest: { Key: { P: 'pk2', S: 'sk2' } } },
+        ],
+      },
+    });
+  });
+
+  it('execute', async () => {
+    const item1 = { P: 'pk1', S: 'sk1', attrib: 'a' };
+    const item2 = { P: 'pk2', S: 'sk2', attrib: 'b' };
+    const output = {
+      ItemCollectionMetrics: { testTable: [{ ItemCollectionKey: item1 }, { ItemCollectionKey: item2 }] },
+    };
+    client.batchWrite = jest.fn(() => batchWriteRequest(output));
+    const batchWrite = new Table.BatchWrite(client);
+    batchWrite.set('testTable', [{ key: { P: 'pk1', S: 'sk1' }, item: { attrib: 'a' } }], [{ P: 'pk3', S: 'sk3' }]);
+    expect(batchWrite.getItem('testTable', { P: 'pk1', S: 'sk1' })).toEqual(undefined);
+    const results = await batchWrite.execute();
+    // results.ItemCollectionMetrics['TestTable'][0].ItemCollectionKey
+    expect(results).toEqual(output);
+    expect(batchWrite.getResult()).toEqual(output);
+    expect(batchWrite.getItem('testTable', { P: 'pk2', S: 'sk2' })).toEqual(item2);
+    expect(batchWrite.getItem('testTable2', { P: 'pk1', S: 'sk1' })).toEqual(undefined);
+    expect(client.batchWrite).toBeCalledWith({
+      RequestItems: {
+        testTable: [
+          { PutRequest: { Item: { P: 'pk1', S: 'sk1', attrib: 'a' } } },
+          { DeleteRequest: { Key: { P: 'pk3', S: 'sk3' } } },
+        ],
+      },
+    });
+    expect(client.batchWrite).toBeCalledTimes(1);
+  });
+});
+
+function transactGetRequest(
+  output: DocumentClient.TransactGetItemsOutput,
+): Request<DocumentClient.TransactGetItemsOutput, AWSError> {
+  return {
+    promise() {
+      return delay(1, output);
+    },
+  } as Request<DocumentClient.TransactGetItemsOutput, AWSError>;
+}
+
+describe('Validate Transact Get', () => {
+  it('set', () => {
+    const transactGet = new Table.TransactGet(client);
+    transactGet.set('testTable', [{ key: { P: 'pk1', S: 'sk1' } }]);
+    expect(transactGet.getParams()).toEqual({
+      TransactItems: [{ Get: { Key: { P: 'pk1', S: 'sk1' }, TableName: 'testTable' } }],
+    });
+  });
+
+  it('addGet', () => {
+    const transactGet = new Table.TransactGet(client);
+    transactGet.addGet('testTable', { P: 'pk1', S: 'sk1' });
+    transactGet.addGet('testTable', { P: 'pk2', S: 'sk2' });
+    expect(transactGet.getParams()).toEqual({
+      TransactItems: [
+        { Get: { Key: { P: 'pk1', S: 'sk1' }, TableName: 'testTable' } },
+        { Get: { Key: { P: 'pk2', S: 'sk2' }, TableName: 'testTable' } },
+      ],
+    });
+  });
+
+  it('options addGet', () => {
+    const transactGet = new Table.TransactGet(client, {
+      consumed: 'TOTAL',
+      attributes: () => new ExpressionAttributes(),
+    });
+    transactGet.addGet('testTable', { P: 'pk1', S: 'sk1' });
+    expect(transactGet.getParams()).toEqual({
+      ReturnConsumedCapacity: 'TOTAL',
+      TransactItems: [{ Get: { Key: { P: 'pk1', S: 'sk1' }, TableName: 'testTable' } }],
+    });
+  });
+
+  it('execute', async () => {
+    const item1 = { P: 'pk1', S: 'sk1', name: 'john' };
+    const item2 = { P: 'pk2', S: 'sk2', name: 'bob' };
+    const output = { Responses: [{ Item: item1 }, { Item: item2 }] };
+    client.transactGet = jest.fn(() => transactGetRequest(output));
+    const transactGet = new Table.TransactGet(client);
+    expect(transactGet.getItem('testTable', { P: 'pk1', S: 'sk1' })).toEqual(undefined);
+    transactGet.set('testTable', [{ key: { P: 'pk1', S: 'sk1' } }, { key: { P: 'pk2', S: 'sk2' } }]);
+    expect(transactGet.getItem('testTable', { P: 'pk1', S: 'sk1' })).toEqual(undefined);
+    const results = await transactGet.execute();
+    expect(results).toEqual(output);
+    expect(transactGet.getResult()).toEqual(output);
+    expect(transactGet.getItem('testTable', { P: 'pk2', S: 'sk2' })).toEqual(item2);
+    expect(transactGet.getItem('testTable2', { P: 'pk1', S: 'sk1' })).toEqual(undefined);
+    expect(client.transactGet).toBeCalledWith({
+      TransactItems: [
+        { Get: { Key: { P: 'pk1', S: 'sk1' }, TableName: 'testTable' } },
+        { Get: { Key: { P: 'pk2', S: 'sk2' }, TableName: 'testTable' } },
+      ],
+    });
+    expect(client.transactGet).toBeCalledTimes(1);
+  });
+});
+
+function transactWriteRequest(
+  output: DocumentClient.TransactWriteItemsOutput,
+): Request<DocumentClient.TransactWriteItemsOutput, AWSError> {
+  return {
+    promise() {
+      return delay(1, output);
+    },
+  } as Request<DocumentClient.TransactWriteItemsOutput, AWSError>;
+}
+describe('Validate Transact Write', () => {
+  it('set getParams', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.set('testTable', {
+      check: [],
+      put: [
+        { key: { P: 'pk1', S: 'sk1' }, item: { attrib1: 'a1' } },
+        { key: { P: 'pk2', S: 'sk2' }, item: { attrib2: 'a2' } },
+      ],
+      delete: [{ key: { P: 'pk1', S: 'sk2' } }],
+      update: [],
+    });
+    const params = transactWrite.getParams();
+    expect(params).toEqual({
+      TransactItems: [
+        { Delete: { Key: { P: 'pk1', S: 'sk2' }, TableName: 'testTable' } },
+        { Put: { Item: { P: 'pk1', S: 'sk1', attrib1: 'a1' }, TableName: 'testTable' } },
+        { Put: { Item: { P: 'pk2', S: 'sk2', attrib2: 'a2' }, TableName: 'testTable' } },
+      ],
+    });
+  });
+
+  it('set getParams with options', () => {
+    const transactWrite = new Table.TransactWrite(client, { consumed: 'TOTAL', metrics: 'SIZE', token: 'abc' });
+    transactWrite.set('testTable', {
+      check: [],
+      put: [{ key: { P: 'pk1', S: 'sk1' } }],
+      delete: [{ key: { P: 'pk1', S: 'sk2' } }],
+      update: [],
+    });
+    const params = transactWrite.getParams();
+    expect(params).toEqual({
+      ClientRequestToken: 'abc',
+      ReturnConsumedCapacity: 'TOTAL',
+      ReturnItemCollectionMetrics: 'SIZE',
+      TransactItems: [
+        { Delete: { Key: { P: 'pk1', S: 'sk2' }, TableName: 'testTable' } },
+        { Put: { Item: { P: 'pk1', S: 'sk1' }, TableName: 'testTable' } },
+      ],
+    });
+  });
+
+  it('set getParams with empty ', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.set('testTable', { check: [], delete: [], put: [], update: [] });
+    const params = transactWrite.getParams();
+    expect(params).toEqual({ TransactItems: [] });
+  });
+
+  it('addCheck', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.addCheck('testTable', { P: 'pk1', S: 'sk1' }, [Condition.eq('P', 'pk1')]);
+    transactWrite.addCheck('testTable', { P: 'pk2', S: 'sk2' }, [Condition.eq('P', 'pk2')]);
+    expect(transactWrite.getParams()).toEqual({
+      TransactItems: [
+        {
+          ConditionCheck: {
+            ConditionExpression: '#n0 = :v0',
+            ExpressionAttributeNames: { '#n0': 'P' },
+            ExpressionAttributeValues: { ':v0': 'pk1' },
+            Key: { P: 'pk1', S: 'sk1' },
+            TableName: 'testTable',
+          },
+        },
+        {
+          ConditionCheck: {
+            ConditionExpression: '#n0 = :v0',
+            ExpressionAttributeNames: { '#n0': 'P' },
+            ExpressionAttributeValues: { ':v0': 'pk2' },
+            Key: { P: 'pk2', S: 'sk2' },
+            TableName: 'testTable',
+          },
+        },
+      ],
+    });
+  });
+
+  it('addPut', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.addPut('testTable', { P: 'pk1', S: 'sk1' }, { attrib1: 'a', attrib2: 'b' });
+    expect(transactWrite.getParams()).toEqual({
+      TransactItems: [{ Put: { Item: { P: 'pk1', S: 'sk1', attrib1: 'a', attrib2: 'b' }, TableName: 'testTable' } }],
+    });
+  });
+
+  it('addDelete', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.addDelete('testTable', { P: 'pk1', S: 'sk1' });
+    expect(transactWrite.getParams()).toEqual({
+      TransactItems: [{ Delete: { Key: { P: 'pk1', S: 'sk1' }, TableName: 'testTable' } }],
+    });
+  });
+
+  it('addUpdate', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.addUpdate('testTable', { P: 'pk1', S: 'sk1' }, { name: Update.inc(2) });
+    expect(transactWrite.getParams()).toEqual({
+      TransactItems: [
+        {
+          Update: {
+            ExpressionAttributeNames: { '#n0': 'name' },
+            ExpressionAttributeValues: { ':v0': 2 },
+            Key: { P: 'pk1', S: 'sk1' },
+            ReturnValuesOnConditionCheckFailure: 'ALL_NEW',
+            TableName: 'testTable',
+            UpdateExpression: 'SET #n0 = #n0 + :v0',
+          },
+        },
+      ],
+    });
+  });
+
+  it('execute', async () => {
+    const item1 = { P: 'pk1', S: 'sk1', attrib: 'a' };
+    const item2 = { P: 'pk2', S: 'sk2', attrib: 'a' };
+    const output = {
+      ItemCollectionMetrics: { testTable: [{ ItemCollectionKey: item1 }, { ItemCollectionKey: item2 }] },
+    };
+    client.transactWrite = jest.fn(() => transactWriteRequest(output));
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.set('testTable', {
+      check: [],
+      put: [{ key: { P: 'pk1', S: 'sk1' }, item: { attrib: 'a' } }],
+      delete: [{ key: { P: 'pk3', S: 'sk3' } }],
+      update: [],
+    });
+    expect(transactWrite.getItem('testTable', { P: 'pk2', S: 'sk2' })).toEqual(undefined);
+    const results = await transactWrite.execute();
+    // results.ItemCollectionMetrics['TestTable'][0].ItemCollectionKey
+    expect(results).toEqual(output);
+    expect(transactWrite.getResult()).toEqual(output);
+    expect(transactWrite.getItem('testTable2', { P: 'pk1', S: 'sk1' })).toEqual(undefined);
+    expect(transactWrite.getItem('testTable', { P: 'pk2', S: 'sk2' })).toEqual(item2);
+    expect(client.transactWrite).toBeCalledWith({
+      TransactItems: [
+        { Delete: { Key: { P: 'pk3', S: 'sk3' }, TableName: 'testTable' } },
+        { Put: { Item: { P: 'pk1', S: 'sk1', attrib: 'a' }, TableName: 'testTable' } },
+      ],
+    });
+    expect(client.transactWrite).toBeCalledTimes(1);
+  });
+});
+
+it('equalMap', () => {
+  expect(Table.equalMap(['abc', 'xyz'], { abc: '123', xyz: '987' })).toEqual(false);
 });

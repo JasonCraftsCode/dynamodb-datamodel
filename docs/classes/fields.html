@@ -184,6 +184,7 @@ expect(params).toEqual({
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="fields.html#actionscope" class="tsd-kind-icon">Action<wbr>Scope</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="fields.html#attributesschema" class="tsd-kind-icon">Attributes<wbr>Schema</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#compositeslotmap" class="tsd-kind-icon">Composite<wbr>Slot<wbr>Map</a></li>
 							</ul>
@@ -222,12 +223,38 @@ expect(params).toEqual({
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+					<a name="actionscope" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Action<wbr>Scope</h3>
+					<div class="tsd-signature tsd-kind-icon">Action<wbr>Scope<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"single"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"batch"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"transact"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L278">Fields.ts:278</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Used in TableContext to determine the scope the action is executed in.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>Action will be preformed via the single item API.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>Action will be preformed via the batch read/write API.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>TAction will be preformed via the transaction read/write API.</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 					<a name="attributesschema" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Attributes<wbr>Schema</h3>
 					<div class="tsd-signature tsd-kind-icon">Attributes<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L332">Fields.ts:332</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L345">Fields.ts:345</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -250,7 +277,7 @@ expect(params).toEqual({
 					<div class="tsd-signature tsd-kind-icon">Composite<wbr>Slot<wbr>Map&lt;T, V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1188">Fields.ts:1188</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1201">Fields.ts:1201</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1366,6 +1393,9 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/fields.updatenumberdateoptions.html" class="tsd-kind-icon">Update<wbr>Number<wbr>Date<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="fields.html#actionscope" class="tsd-kind-icon">Action<wbr>Scope</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
 								<a href="fields.html#attributesschema" class="tsd-kind-icon">Attributes<wbr>Schema</a>

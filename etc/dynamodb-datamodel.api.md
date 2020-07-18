@@ -113,6 +113,7 @@ export class Fields {
 
 // @public
 export namespace Fields {
+    export type ActionScope = 'single' | 'batch' | 'transact';
     export interface AttributeDefinition {
         type: Table.AttributeTypes;
     }
@@ -361,6 +362,7 @@ export namespace Fields {
         conditions: Condition.Resolver[];
         model: Model.ModelBase;
         options: Table.BaseOptions;
+        scope: ActionScope;
     }
     export interface TypeOptions {
         alias?: string;
@@ -477,11 +479,19 @@ export class KeyConditionExpression implements KeyCondition.Expression {
 // @public
 export class Model implements Model.ModelBase {
     constructor(params: Model.ModelParams);
+    addBatchDelete(batchWrite: Table.BatchWrite, key: Model.ModelCore): Model.ModelResult;
+    addBatchGet(batchGet: Table.BatchGet, key: Model.ModelCore): Model.ModelResult;
+    addBatchPut(batchWrite: Table.BatchWrite, item: Model.ModelData): Model.ModelResult;
+    addTransactCheck(transactWrite: Table.TransactWrite, key: Model.ModelCore, conditions: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResult;
+    addTransactDelete(transactWrite: Table.TransactWrite, key: Model.ModelCore, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResult;
+    addTransactGet(transactGet: Table.TransactGet, key: Model.ModelCore, itemAttributes?: string[]): Model.ModelResult;
+    addTransactPut(transactWrite: Table.TransactWrite, item: Model.ModelData, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResult;
+    addTransactUpdate(transactWrite: Table.TransactWrite, item: Model.ModelUpdate, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValue): Model.ModelResult;
     create(data: Model.ModelCore, options?: Table.PutOptions): Promise<Model.PutOutput>;
     delete(key: Model.ModelCore, options?: Table.DeleteOptions): Promise<Model.DeleteOutput>;
     deleteParams(key: Model.ModelCore, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
     get(key: Model.ModelCore, options?: Table.GetOptions): Promise<Model.GetOutput>;
-    getContext(action: Table.ItemActions, options: Table.BaseOptions): Fields.TableContext;
+    getContext(action: Table.ItemActions, options: Table.WriteOptions, scope?: Fields.ActionScope, conditions?: Condition.Resolver[]): Fields.TableContext;
     getParams(key: Model.ModelCore, options?: Table.GetOptions): DocumentClient.GetItemInput;
     static initSchema(schema: Model.ModelSchema, model: Model): void;
     name?: string;
@@ -541,6 +551,21 @@ export namespace Model {
     export interface ModelParamsT<KEY, OUTPUT extends KEY = KEY> extends ModelParams {
         schema: ModelSchemaT<OUTPUT>;
     }
+    export class ModelResult {
+        constructor(tableResult: Table.TableResult, model: Model, key: Table.PrimaryKey.AttributeValuesMap, context: Fields.TableContext);
+        get(): {
+            item: Model.ModelOut;
+            tableItem: Table.AttributeValuesMap;
+        } | void;
+        }
+    export interface ModelResultT<OUTPUT extends {
+        [key: string]: any;
+    }> extends ModelResult {
+        get(): {
+            item: Model.ModelOutT<OUTPUT>;
+            tableItem: Table.AttributeValuesMap;
+        } | void;
+    }
     export type ModelSchema = {
         [key: string]: Fields.Field;
     };
@@ -554,6 +579,14 @@ export namespace Model {
     }, INPUT extends {
         [key: string]: any;
     } = KEY, OUTPUT extends INPUT & KEY = INPUT & KEY> extends Model {
+        addBatchDelete(batchWrite: Table.BatchWrite, key: Model.ModelCoreT<KEY>): Model.ModelResultT<OUTPUT>;
+        addBatchGet(batchGet: Table.BatchGet, key: Model.ModelCoreT<KEY>): Model.ModelResultT<OUTPUT>;
+        addBatchPut(batchWrite: Table.BatchWrite, item: Model.ModelCoreT<INPUT>): Model.ModelResultT<OUTPUT>;
+        addTransactCheck(transactWrite: Table.TransactWrite, key: Model.ModelCoreT<KEY>, conditions: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResultT<OUTPUT>;
+        addTransactDelete(transactWrite: Table.TransactWrite, key: Model.ModelCoreT<KEY>, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResultT<OUTPUT>;
+        addTransactGet(transactGet: Table.TransactGet, key: Model.ModelCoreT<KEY>, itemAttributes?: string[]): Model.ModelResultT<OUTPUT>;
+        addTransactPut(transactWrite: Table.TransactWrite, item: Model.ModelCoreT<INPUT>, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResultT<OUTPUT>;
+        addTransactUpdate(transactWrite: Table.TransactWrite, item: Model.ModelUpdateT<KEY, INPUT>, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValue): Model.ModelResultT<OUTPUT>;
         create(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): Promise<Model.PutOutput<OUTPUT>>;
         delete(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): Promise<Model.DeleteOutput<OUTPUT>>;
         deleteParams(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
@@ -596,7 +629,23 @@ export namespace Model {
 // @public
 export class Table {
     constructor(params: Table.TableParams);
-    static addParams<T extends Table.ExpressionParams>(params: T, options: Table.BaseOptions, type: 'filter' | 'condition', addParams?: Table.AddExpressionParams): T & Table.ExpressionParams;
+    static addBatchParams(options: {
+        token?: DocumentClient.ClientRequestToken;
+        consumed?: DocumentClient.ReturnConsumedCapacity;
+        metrics?: DocumentClient.ReturnItemCollectionMetrics;
+    }, params: {
+        ClientRequestToken?: DocumentClient.ClientRequestToken;
+        ReturnConsumedCapacity?: DocumentClient.ReturnConsumedCapacity;
+        ReturnItemCollectionMetrics?: DocumentClient.ReturnItemCollectionMetrics;
+    }): void;
+    static addItemAttributes<T extends Table.ExpressionParams>(params: T, itemAttributes?: string[], attributes?: () => Table.ExpressionAttributes): T & Table.ExpressionParams;
+    static addParams<T extends Table.ExpressionParams>(params: T, options: Table.WriteOptions, type: 'filter' | 'condition', addParams?: Table.AddExpressionParams): T & Table.ExpressionParams;
+    static addWriteParams<T extends Table.ExpressionParams & {
+        ReturnValuesOnConditionCheckFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+    }>(params: T, item: {
+        conditions?: Condition.Resolver[];
+        returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+    }, addParams?: Table.AddExpressionParams): T & Table.ExpressionParams;
     get client(): DocumentClient;
     createBinarySet(list: Table.BinaryValue[], options?: DocumentClient.CreateSetOptions): Table.BinarySetValue;
     createNumberSet(list: number[], options?: DocumentClient.CreateSetOptions): Table.NumberSetValue;
@@ -622,7 +671,11 @@ export class Table {
     queryParams(key: Table.PrimaryKey.KeyQueryMap, options?: Table.QueryOptions): DocumentClient.QueryInput;
     scan(options?: Table.ScanOptions): Promise<DocumentClient.ScanOutput>;
     scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput;
-    update(key: Table.PrimaryKey.AttributeValuesMap, items?: Update.ResolverMap, options?: Table.UpdateOptions): Promise<DocumentClient.UpdateItemOutput>;
+    setBatchGet(batchGet: Table.BatchGet, keys: Table.PrimaryKey.AttributeValuesMap[], options?: Table.BatchGetTableOptions): Table.BatchGet;
+    setBatchWrite(batchWrite: Table.BatchWrite, putItems?: Table.PutItem[], delKeys?: Table.PrimaryKey.AttributeValuesMap[]): Table.BatchWrite;
+    setTransactGet(transactGet: Table.TransactGet, getItems: Table.TransactGetItem[]): Table.TransactGet;
+    setTransactWrite(transactWrite: Table.TransactWrite, write: Table.TransactWriteData): Table.TransactWrite;
+    update(key: Table.PrimaryKey.AttributeValuesMap, item?: Update.ResolverMap, options?: Table.UpdateOptions): Promise<DocumentClient.UpdateItemOutput>;
     updateParams(key: Table.PrimaryKey.AttributeValuesMap, item?: Update.ResolverMap, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
 }
 
@@ -636,22 +689,62 @@ export namespace Table {
         [key: string]: AttributeValues;
     };
     export interface BaseOptions<T = {}> {
-        attributes?: Table.ExpressionAttributes;
-        conditions?: Condition.Resolver[];
+        attributes?: () => Table.ExpressionAttributes;
         context?: any;
         params?: Optional<T>;
     }
+    export class BatchGet implements TableResult {
+        constructor(client: DocumentClient, options?: BatchGetOptions);
+        addGet(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): void;
+        client: DocumentClient;
+        execute(): Promise<DocumentClient.BatchGetItemOutput>;
+        getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void;
+        getParams(): DocumentClient.BatchGetItemInput;
+        getResult(): DocumentClient.BatchGetItemOutput | undefined;
+        options: BatchGetOptions;
+        set(tableName: string, keys: Table.PrimaryKey.AttributeValuesMap[], options?: BatchGetTableOptions): void;
+        setOptions(tableName: string, options: BatchGetTableOptions): void;
+    }
+    export interface BatchGetOptions extends BaseOptions {
+        consumed?: DocumentClient.ReturnConsumedCapacity;
+    }
+    export interface BatchGetTableInput extends Omit<DocumentClient.KeysAndAttributes, 'AttributesToGet'> {
+    }
+    export interface BatchGetTableOptions extends BaseOptions<BatchGetTableInput> {
+        itemAttributes?: string[];
+    }
+    export class BatchWrite implements TableResult {
+        constructor(client: DocumentClient, options?: Table.BatchWriteTableOptions);
+        addDelete(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): void;
+        addPut(tableName: string, item: Table.PutItem): void;
+        client: DocumentClient;
+        execute(): Promise<DocumentClient.BatchWriteItemOutput>;
+        getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void;
+        getParams(): DocumentClient.BatchWriteItemInput;
+        getResult(): DocumentClient.BatchWriteItemOutput | undefined;
+        options: Table.BatchWriteTableOptions;
+        set(tableName: string, putItems: Table.PutItem[], delKeys: Table.PrimaryKey.AttributeValuesMap[]): void;
+        }
+    export interface BatchWriteTableOptions extends BaseOptions {
+        consumed?: DocumentClient.ReturnConsumedCapacity;
+        metrics?: DocumentClient.ReturnItemCollectionMetrics;
+    }
     export type BinarySetValue = DocumentClient.BinarySet;
     export type BinaryValue = DocumentClient.binaryType;
-    export function createTable<KEY = Table.DefaultTableKey, ATTRIBUTES = KEY>(params: TableParamsT<KEY, ATTRIBUTES>): TableT<KEY, ATTRIBUTES>;
+    export function createTable<KEY = Table.DefaultTableKey, ATTRIBUTES = KEY>(params: Table.TableParamsT<KEY, ATTRIBUTES>): Table.TableT<KEY, ATTRIBUTES>;
     export interface DefaultTableKey {
         P: PrimaryKey.PartitionString;
         S?: PrimaryKey.SortString;
     }
     export interface DeleteInput extends Omit<DocumentClient.DeleteItemInput, 'Expected' | 'ConditionalOperator'> {
     }
-    export interface DeleteOptions extends BaseOptions<DeleteInput> {
+    export interface DeleteOptions extends WriteOptions<DeleteInput> {
     }
+    export function equalMap(keys: string[], item1: {
+        [key: string]: any;
+    }, item2?: {
+        [key: string]: any;
+    }): boolean;
     export type ExpressionAttributeParams = {
         ExpressionAttributeNames?: ExpressionAttributeNameMap;
         ExpressionAttributeValues?: Table.AttributeValuesMap;
@@ -667,12 +760,14 @@ export namespace Table {
         FilterExpression?: string;
         KeyConditionExpression?: string;
         UpdateExpression?: string;
+        ProjectionExpression?: string;
     } & ExpressionAttributeParams;
     export interface GetInput extends Omit<DocumentClient.GetItemInput, 'AttributesToGet'> {
     }
     export interface GetOptions extends BaseOptions<GetInput> {
+        itemAttributes?: string[];
     }
-    export type ItemActions = 'get' | 'delete' | PutItemActions | 'update';
+    export type ItemActions = 'get' | 'delete' | PutItemActions | 'update' | 'check';
     export type ListValue = AttributeValues[];
     export type MapValue = {
         [key: string]: AttributeValues;
@@ -717,6 +812,10 @@ export namespace Table {
         export type AttributeValuesMapT<T> = {
             [P in keyof Required<T>]: Extract<T[P], Table.AttributeValues>;
         };
+        export interface KeyQuery {
+            pk: Table.AttributeValues;
+            sk?: Table.AttributeValues | KeyCondition.AttributeResolver;
+        }
         export type KeyQueryMap = {
             [key: string]: AttributeValues | KeyCondition.AttributeResolver;
         };
@@ -768,18 +867,28 @@ export namespace Table {
     export type ProjectionType = 'ALL' | 'KEYS_ONLY' | 'INCLUDE';
     export interface PutInput extends Omit<DocumentClient.PutItemInput, 'Expected' | 'ConditionalOperator'> {
     }
+    export interface PutItem {
+        item?: Table.AttributeValuesMap;
+        key: Table.PrimaryKey.AttributeValuesMap;
+    }
     export type PutItemActions = 'put' | 'put-new' | 'put-replace';
-    export interface PutOptions extends BaseOptions<PutInput> {
+    export interface PutItemT<KEY> extends PutItem {
+        item?: Table.AttributeValuesMap;
+        key: Table.PrimaryKey.AttributeValuesMapT<KEY>;
+    }
+    export interface PutOptions extends WriteOptions<PutInput> {
         writeOptions?: PutWriteOptions;
     }
     export type PutWriteOptions = 'Always' | 'Exists' | 'NotExists';
     export interface QueryInput extends Omit<DocumentClient.QueryInput, 'AttributesToGet' | 'KeyConditions' | 'QueryFilter' | 'ConditionalOperator'> {
     }
     export interface QueryOptions extends BaseOptions<QueryInput> {
+        itemAttributes?: string[];
     }
     export interface ScanInput extends Omit<DocumentClient.ScanInput, 'AttributesToGet' | 'ScanFilter' | 'ConditionalOperator'> {
     }
     export interface ScanOptions extends BaseOptions<ScanInput> {
+        itemAttributes?: string[];
     }
     export type StringSetValue = DocumentClient.StringSet;
     export interface TableParams {
@@ -793,25 +902,124 @@ export namespace Table {
         keyAttributes: PrimaryKey.AttributeTypesMapT<ATTRIBUTES>;
         keySchema: PrimaryKey.KeyTypesMapT<KEY>;
     }
-    export interface TableT<KEY = DefaultTableKey, ATTRIBUTES = KEY> extends Table {
-        delete(key: PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.DeleteOptions): Promise<DocumentClient.DeleteItemOutput>;
-        deleteParams(key: PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
-        get(key: PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.GetOptions): Promise<DocumentClient.GetItemOutput>;
-        getParams(key: PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.GetOptions): Table.GetInput;
-        keyAttributes: PrimaryKey.AttributeTypesMapT<ATTRIBUTES>;
-        keySchema: PrimaryKey.KeyTypesMapT<KEY>;
-        put(key: PrimaryKey.AttributeValuesMapT<KEY>, item?: Table.AttributeValuesMap, options?: Table.PutOptions): Promise<DocumentClient.PutItemOutput>;
-        putParams(key: PrimaryKey.AttributeValuesMapT<KEY>, item?: Table.AttributeValuesMap, options?: Table.PutOptions): DocumentClient.PutItemInput;
-        query(key: PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput>;
-        queryParams(key: PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): DocumentClient.QueryInput;
-        scan(options?: ScanOptions): Promise<DocumentClient.ScanOutput>;
+    export interface TableResult {
+        getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void;
+    }
+    export interface TableT<KEY = Table.DefaultTableKey, ATTRIBUTES = KEY> extends Table {
+        delete(key: Table.PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.DeleteOptions): Promise<DocumentClient.DeleteItemOutput>;
+        deleteParams(key: Table.PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
+        get(key: Table.PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.GetOptions): Promise<DocumentClient.GetItemOutput>;
+        getParams(key: Table.PrimaryKey.AttributeValuesMapT<KEY>, options?: Table.GetOptions): DocumentClient.GetItemInput;
+        keyAttributes: Table.PrimaryKey.AttributeTypesMapT<ATTRIBUTES>;
+        keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>;
+        put(key: Table.PrimaryKey.AttributeValuesMapT<KEY>, item?: Table.AttributeValuesMap, options?: Table.PutOptions): Promise<DocumentClient.PutItemOutput>;
+        putParams(key: Table.PrimaryKey.AttributeValuesMapT<KEY>, item?: Table.AttributeValuesMap, options?: Table.PutOptions): DocumentClient.PutItemInput;
+        query(key: Table.PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): Promise<DocumentClient.QueryOutput>;
+        queryParams(key: Table.PrimaryKey.KeyQueryMapT<KEY>, options?: Table.QueryOptions): DocumentClient.QueryInput;
+        scan(options?: Table.ScanOptions): Promise<DocumentClient.ScanOutput>;
         scanParams(options?: Table.ScanOptions): DocumentClient.ScanInput;
-        update(key: PrimaryKey.AttributeValuesMapT<KEY>, item?: Update.ResolverMap, options?: UpdateOptions): Promise<DocumentClient.UpdateItemOutput>;
-        updateParams(key: PrimaryKey.AttributeValuesMapT<KEY>, item?: Update.ResolverMap, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
+        setBatchGet(batchGet: Table.BatchGet, keys: Table.PrimaryKey.AttributeValuesMapT<KEY>[]): Table.BatchGet;
+        setBatchWrite(batchWrite: Table.BatchWrite, putItems?: Table.PutItemT<KEY>[], delKeys?: PrimaryKey.AttributeValuesMapT<KEY>[]): Table.BatchWrite;
+        setTransactGet(transactGet: Table.TransactGet, items: Table.TransactGetItemT<KEY>[]): Table.TransactGet;
+        setTransactWrite(transactWrite: Table.TransactWrite, write: Table.TransactWriteDataT<KEY>): Table.TransactWrite;
+        update(key: Table.PrimaryKey.AttributeValuesMapT<KEY>, item?: Update.ResolverMap, options?: Table.UpdateOptions): Promise<DocumentClient.UpdateItemOutput>;
+        updateParams(key: Table.PrimaryKey.AttributeValuesMapT<KEY>, item?: Update.ResolverMap, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
+    }
+    export class TransactGet implements TableResult {
+        constructor(client: DocumentClient, options?: Table.TransactGetTableOptions);
+        addGet(tableName: string, key: Table.PrimaryKey.AttributeValuesMap, itemAttributes?: string[]): void;
+        client: DocumentClient;
+        execute(): Promise<DocumentClient.TransactGetItemsOutput>;
+        getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void;
+        getParams(): DocumentClient.TransactGetItemsInput;
+        getResult(): DocumentClient.TransactGetItemsOutput | undefined;
+        options: Table.TransactGetTableOptions;
+        set(tableName: string, items: Table.TransactGetItem[]): void;
+    }
+    export interface TransactGetItem {
+        itemAttributes?: string[];
+        key: Table.PrimaryKey.AttributeValuesMap;
+    }
+    export interface TransactGetItemT<KEY> extends TransactGetItem {
+        itemAttributes?: string[];
+        key: Table.PrimaryKey.AttributeValuesMapT<KEY>;
+    }
+    export interface TransactGetTableOptions extends BaseOptions {
+        consumed?: DocumentClient.ReturnConsumedCapacity;
+    }
+    export class TransactWrite implements TableResult {
+        constructor(client: DocumentClient, options?: Table.TransactWriteTableOptions);
+        addCheck(tableName: string, key: Table.PrimaryKey.AttributeValuesMap, conditions: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): void;
+        addDelete(tableName: string, key: Table.PrimaryKey.AttributeValuesMap, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): void;
+        addPut(tableName: string, key: Table.PrimaryKey.AttributeValuesMap, item?: Table.AttributeValuesMap, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): void;
+        addUpdate(tableName: string, key: Table.PrimaryKey.AttributeValuesMap, item?: Update.ResolverMap, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValue): void;
+        client: DocumentClient;
+        execute(): Promise<DocumentClient.TransactWriteItemsOutput>;
+        getItem(tableName: string, key: Table.PrimaryKey.AttributeValuesMap): Table.AttributeValuesMap | void;
+        getParams(): DocumentClient.TransactWriteItemsInput;
+        getResult(): DocumentClient.TransactWriteItemsOutput | undefined;
+        options: Table.TransactWriteTableOptions;
+        set(tableName: string, writes: Required<Table.TransactWriteData>): void;
+        }
+    export interface TransactWriteData {
+        check?: {
+            key: Table.PrimaryKey.AttributeValuesMap;
+            conditions: Condition.Resolver[];
+            returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+        }[];
+        delete?: {
+            key: Table.PrimaryKey.AttributeValuesMap;
+            conditions?: Condition.Resolver[];
+            returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+        }[];
+        put?: {
+            key: Table.PrimaryKey.AttributeValuesMap;
+            item?: Table.AttributeValuesMap;
+            conditions?: Condition.Resolver[];
+            returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+        }[];
+        update?: {
+            key: Table.PrimaryKey.AttributeValuesMap;
+            item?: Update.ResolverMap;
+            conditions?: Condition.Resolver[];
+            returnFailure?: DocumentClient.ReturnValue;
+        }[];
+    }
+    export interface TransactWriteDataT<KEY> extends TransactWriteData {
+        check?: {
+            key: Table.PrimaryKey.AttributeValuesMapT<KEY>;
+            conditions: Condition.Resolver[];
+            returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+        }[];
+        delete?: {
+            key: Table.PrimaryKey.AttributeValuesMapT<KEY>;
+            conditions?: Condition.Resolver[];
+            returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+        }[];
+        put?: {
+            key: Table.PrimaryKey.AttributeValuesMapT<KEY>;
+            item?: Table.AttributeValuesMap;
+            conditions?: Condition.Resolver[];
+            returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+        }[];
+        update?: {
+            key: Table.PrimaryKey.AttributeValuesMapT<KEY>;
+            item?: Update.ResolverMap;
+            conditions?: Condition.Resolver[];
+            returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
+        }[];
+    }
+    export interface TransactWriteTableOptions extends BaseOptions {
+        consumed?: DocumentClient.ReturnConsumedCapacity;
+        metrics?: DocumentClient.ReturnItemCollectionMetrics;
+        token?: DocumentClient.ClientRequestToken;
     }
     export interface UpdateInput extends Omit<DocumentClient.UpdateItemInput, 'AttributeUpdates' | 'Expected' | 'ConditionalOperator'> {
     }
-    export interface UpdateOptions extends BaseOptions<UpdateInput> {
+    export interface UpdateOptions extends WriteOptions<UpdateInput> {
+    }
+    export interface WriteOptions<T = {}> extends BaseOptions<T> {
+        conditions?: Condition.Resolver[];
     }
 }
 
@@ -823,7 +1031,7 @@ export class Update {
     static arithmetic(left: Update.OperandNumber | undefined, op: '+' | '-', right: Update.OperandNumber): Update.Resolver<'N'>;
     static dec(value: Update.OperandNumber): Update.Resolver<'N'>;
     static default<T extends Table.AttributeValues>(value: T): Update.Resolver<Table.AttributeTypes>;
-    static del(): Update.Resolver<Table.AttributeTypes>;
+    static del(path?: string): Update.Resolver<Table.AttributeTypes>;
     static delIndexes(indexes: number[]): Update.Resolver<'L'>;
     static inc(value: Update.OperandNumber): Update.Resolver<'N'>;
     static join(left?: Update.OperandList, right?: Update.OperandList): Update.Resolver<'L'>;
@@ -836,7 +1044,7 @@ export class Update {
     static removeFromSet(value: Table.AttributeSetValues): Update.Resolver<'SS' | 'NS' | 'BS'>;
     static set<T extends Table.AttributeValues>(value: Update.OperandValue<T>): Update.Resolver<Table.AttributeTypes>;
     static setIndexes(values: {
-        [key: number]: Update.OperandValue;
+        [key: number]: Update.OperandValue | undefined;
     }): Update.Resolver<'L'>;
     static sub(left: Update.OperandNumber, right: Update.OperandNumber): Update.Resolver<'N'>;
 }
@@ -855,6 +1063,7 @@ export namespace Update {
         addValue(value: Table.AttributeValues): string;
         getExpression(): string | void;
         resolveMap(map: Update.ResolverMap, name?: string): void;
+        resolveMapValue(fallback: (path: string, value: Table.AttributeValues) => void, getPath: () => string, value?: Update.OperandValue): void;
         resolvePathValue(value: Update.OperandValue, name: string): string;
         resolveValue(value: Update.OperandValue, name: string): string;
     }
@@ -886,7 +1095,7 @@ export namespace Update {
         [P in keyof Table.Optional<T>]: ResolverModelValue<T[P]>;
     };
     export type ResolverModelMap<T> = {
-        [key: string]: Update.ResolverModel<T>;
+        [key: string]: Update.ResolverModel<T> | null | undefined | Update.Resolver<'M'>;
     };
     export type ResolverModelValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
     export type String = string | Update.Resolver<'S'>;
@@ -912,6 +1121,7 @@ export class UpdateExpression implements Update.Expression {
     getExpression(): string | void;
     removeList: string[];
     resolveMap(map: Update.ResolverMap, name?: string): void;
+    resolveMapValue(fallback: (path: string, value: Table.AttributeValues) => void, getPath: () => string, value?: Update.OperandValue): void;
     resolvePathValue(value: Update.OperandValue, name: string): string;
     resolveValue(value: Update.OperandValue, name: string): string;
     setList: string[];

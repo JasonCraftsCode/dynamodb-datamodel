@@ -228,13 +228,25 @@ const userModel = Model.createModel<UserKey, UserInputModel, UserOutputModel>({
 describe('Validate Model with Table and Indexes', () => {
   it('Model.getContext with empty options to return with conditions', () => {
     const context = userModel.getContext('put', {});
-    expect(context).toEqual({ action: 'put', conditions: [], model: userModel, options: { conditions: [] } });
+    expect(context).toEqual({
+      action: 'put',
+      scope: 'single',
+      conditions: [],
+      model: userModel,
+      options: { conditions: [] },
+    });
   });
 
   it('Model.getContext with exiting options.conditions', () => {
-    const options: Table.BaseOptions = { conditions: [Condition.eq('path', 'value')] };
+    const options: Table.WriteOptions = { conditions: [Condition.eq('path', 'value')] };
     const context = userModel.getContext('put', options);
-    expect(context).toEqual({ action: 'put', conditions: options.conditions, model: userModel, options });
+    expect(context).toEqual({
+      action: 'put',
+      scope: 'single',
+      conditions: options.conditions,
+      model: userModel,
+      options,
+    });
   });
 
   describe('model params', () => {
@@ -734,5 +746,110 @@ describe('Validate Model with Table and Indexes', () => {
       });
       expect(client.update).toBeCalledTimes(1);
     });
+  });
+
+  it('Model.addBatchGet with execute and ModelResult', () => {
+    const tableItem = { P: 'pk1', S: 'sk1', name: 'john' };
+    const batchGet = new Table.BatchGet(client);
+    batchGet.addGet = jest.fn();
+    batchGet.getItem = jest.fn((): void | Table.AttributeValuesMap => tableItem);
+    const result = userModel.addBatchGet(batchGet, { id: 'pk.sk' });
+    const item = result.get();
+    expect(item).toEqual({
+      item: { id: 'pk1.sk1', name: 'john' },
+      tableItem: { P: 'pk1', S: 'sk1', name: 'john' },
+    });
+    expect(batchGet.getItem).toBeCalledTimes(1);
+    expect(batchGet.getItem).toBeCalledWith(userModel.table.name, { P: 'pk', S: 'sk' });
+  });
+
+  it('Model.addBatchGet', () => {
+    const batchGet = new Table.BatchGet(client);
+    batchGet.addGet = jest.fn();
+    const result = userModel.addBatchGet(batchGet, { id: 'pk.sk' });
+    expect(batchGet.addGet).toBeCalledTimes(1);
+    expect(batchGet.addGet).toBeCalledWith(userModel.table.name, { P: 'pk', S: 'sk' });
+    expect(result).toBeDefined();
+    expect(result.get()).toBeUndefined();
+  });
+
+  it('Model.addBatchDelete', () => {
+    const batchWrite = new Table.BatchWrite(client);
+    batchWrite.addDelete = jest.fn();
+    const result = userModel.addBatchDelete(batchWrite, { id: 'pk.sk' });
+    expect(batchWrite.addDelete).toBeCalledTimes(1);
+    expect(batchWrite.addDelete).toBeCalledWith(userModel.table.name, { P: 'pk', S: 'sk' });
+    expect(result).toBeDefined();
+  });
+  it('Model.addBatchPut', () => {
+    const batchWrite = new Table.BatchWrite(client);
+    batchWrite.addPut = jest.fn();
+    const result = userModel.addBatchPut(batchWrite, { id: 'pk.sk', name: 'bob', adult: true });
+    expect(batchWrite.addPut).toBeCalledTimes(1);
+    expect(batchWrite.addPut).toBeCalledWith(userModel.table.name, {
+      item: {
+        adult: true,
+        created: 1585563302,
+        name: 'bob',
+        nickname: 'none',
+        rev: 1,
+      },
+      key: { P: 'pk', S: 'sk' },
+    });
+    expect(result).toBeDefined();
+  });
+  it('Model.addTransactGet', () => {
+    const transactGet = new Table.TransactGet(client);
+    transactGet.addGet = jest.fn();
+    const result = userModel.addTransactGet(transactGet, { id: 'pk.sk' });
+    expect(transactGet.addGet).toBeCalledTimes(1);
+    expect(transactGet.addGet).toBeCalledWith(userModel.table.name, { P: 'pk', S: 'sk' }, undefined);
+    expect(result).toBeDefined();
+  });
+
+  it('Model.addTransactCheck', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.addCheck = jest.fn();
+    const conditions = [Condition.eq('lock', false)];
+    const result = userModel.addTransactCheck(transactWrite, { id: 'pk.sk' }, conditions);
+    expect(transactWrite.addCheck).toBeCalledTimes(1);
+    expect(transactWrite.addCheck).toBeCalledWith(userModel.table.name, { P: 'pk', S: 'sk' }, conditions, undefined);
+    expect(result).toBeDefined();
+  });
+  it('Model.addTransactDelete', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.addDelete = jest.fn();
+    const result = userModel.addTransactDelete(transactWrite, { id: 'pk.sk' });
+    expect(transactWrite.addDelete).toBeCalledTimes(1);
+    expect(transactWrite.addDelete).toBeCalledWith(userModel.table.name, { P: 'pk', S: 'sk' }, [], undefined);
+    expect(result).toBeDefined();
+  });
+  it('Model.addTransactPut', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.addPut = jest.fn();
+    const result = userModel.addTransactPut(transactWrite, { id: 'pk.sk', name: 'bob', adult: true });
+    expect(transactWrite.addPut).toBeCalledTimes(1);
+    expect(transactWrite.addPut).toBeCalledWith(
+      userModel.table.name,
+      { P: 'pk', S: 'sk' },
+      { adult: true, created: 1585563302, name: 'bob', nickname: 'none', rev: 1 },
+      [],
+      undefined,
+    );
+    expect(result).toBeDefined();
+  });
+  it('Model.addTransactUpdate', () => {
+    const transactWrite = new Table.TransactWrite(client);
+    transactWrite.addUpdate = jest.fn();
+    const result = userModel.addTransactUpdate(transactWrite, { id: 'pk.sk' });
+    expect(transactWrite.addUpdate).toBeCalledTimes(1);
+    expect(transactWrite.addUpdate).toBeCalledWith(
+      userModel.table.name,
+      { P: 'pk', S: 'sk' },
+      { nickname: 'none' },
+      [],
+      undefined,
+    );
+    expect(result).toBeDefined();
   });
 });

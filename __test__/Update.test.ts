@@ -145,13 +145,14 @@ describe('Validate UpdateExpression.buildExpression', () => {
       }),
       testDel: Update.del(),
       testFunction: Update.set(Update.path('testFunc1')),
+      testDelPath: Update.del('l1.l2'),
     };
     const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
-      'SET #n0 = :v0, #n1 = :v1, #n2 = :v2, #n3 = :v3, #n4 = :v4, #n5 = :v5, #n6 = :v6, #n7 = :v7, #n8 = :v8, #n10 = #n11 REMOVE #n9',
+      'SET #n0 = :v0, #n1 = :v1, #n2 = :v2, #n3 = :v3, #n4 = :v4, #n5 = :v5, #n6 = :v6, #n7 = :v7, #n8 = :v8, #n10 = #n11 REMOVE #n9, #n12.#n13.#n14',
     );
     expect({ remove: exp.removeList, set: exp.setList }).toEqual({
-      remove: ['#n9'],
+      remove: ['#n9', '#n12.#n13.#n14'],
       set: [
         '#n0 = :v0',
         '#n1 = :v1',
@@ -178,6 +179,9 @@ describe('Validate UpdateExpression.buildExpression', () => {
       '#n9': 'testDel',
       '#n10': 'testFunction',
       '#n11': 'testFunc1',
+      '#n12': 'testDelPath',
+      '#n13': 'l1',
+      '#n14': 'l2',
     });
     expect(exp.attributes.getValues()).toEqual({
       ':v0': 'string',
@@ -590,10 +594,13 @@ describe('Validate UpdateExpression.buildExpression', () => {
           l1String: 'l1 string',
           l1Number: Update.inc(3),
         },
+        id2: null,
+        id3: undefined,
+        id4: Update.del(),
       }),
     };
     const update = UpdateExpression.buildExpression(input, exp);
-    expect(update).toEqual('SET #n0.#n1.#n2 = :v0, #n0.#n1.#n3 = #n0.#n1.#n3 + :v1');
+    expect(update).toEqual('SET #n0.#n1.#n2 = :v0, #n0.#n1.#n3 = #n0.#n1.#n3 + :v1 REMOVE #n0.#n4, #n0.#n5');
     expect({ set: exp.setList }).toEqual({
       set: ['#n0.#n1.#n2 = :v0', '#n0.#n1.#n3 = #n0.#n1.#n3 + :v1'],
     });
@@ -602,6 +609,8 @@ describe('Validate UpdateExpression.buildExpression', () => {
       '#n1': 'id1',
       '#n2': 'l1String',
       '#n3': 'l1Number',
+      '#n4': 'id2',
+      '#n5': 'id4',
     });
     expect(exp.attributes.getValues()).toEqual({
       ':v0': 'l1 string',
@@ -649,6 +658,9 @@ describe('Validate UpdateExpression.buildExpression', () => {
           1: 'list string',
           3: 5,
           6: true,
+          8: null,
+          9: undefined,
+          12: Update.del(),
         }),
         l1Map: Update.map({
           l2String: 'l2 string',
@@ -666,7 +678,7 @@ describe('Validate UpdateExpression.buildExpression', () => {
     };
     const update = UpdateExpression.buildExpression(input, exp);
     expect(update).toEqual(
-      'SET #n0.#n1 = #n2.#n3, #n0.#n4 = if_not_exists(#n0.#n4, :v0), #n0.#n5 = #n0.#n5 + :v1, #n0.#n6 = #n0.#n6 - :v2, #n0.#n7 = #n2.#n8 + :v3, #n0.#n9 = :v4 - #n10.#n8, #n0.#n11 = list_append(#n0.#n11, :v5), #n0.#n12 = list_append(:v6, #n0.#n12), #n0.#n13 = list_append(#n10.#n14, :v7), #n0.#n16[1] = :v8, #n0.#n16[3] = :v9, #n0.#n16[6] = :v10, #n0.#n17.#n18 = :v11, #n0.#n17.#n19 = #n2.#n3, #n0.#n17.#n20 = #n0.#n17.#n20 + :v12, #n0.#n17.#n21 = :v13, #n0.#n17.#n22 = :v14 REMOVE #n0.#n15[1], #n0.#n15[3], #n0.#n15[6], #n0.#n17.#n23, #n0.#n24, #n0.#n25 ADD #n0.#n26 :v15 DELETE #n0.#n27 :v16',
+      'SET #n0.#n1 = #n2.#n3, #n0.#n4 = if_not_exists(#n0.#n4, :v0), #n0.#n5 = #n0.#n5 + :v1, #n0.#n6 = #n0.#n6 - :v2, #n0.#n7 = #n2.#n8 + :v3, #n0.#n9 = :v4 - #n10.#n8, #n0.#n11 = list_append(#n0.#n11, :v5), #n0.#n12 = list_append(:v6, #n0.#n12), #n0.#n13 = list_append(#n10.#n14, :v7), #n0.#n16[1] = :v8, #n0.#n16[3] = :v9, #n0.#n16[6] = :v10, #n0.#n17.#n18 = :v11, #n0.#n17.#n19 = #n2.#n3, #n0.#n17.#n20 = #n0.#n17.#n20 + :v12, #n0.#n17.#n21 = :v13, #n0.#n17.#n22 = :v14 REMOVE #n0.#n15[1], #n0.#n15[3], #n0.#n15[6], #n0.#n16[8], #n0.#n16[12], #n0.#n17.#n23, #n0.#n24, #n0.#n25 ADD #n0.#n26 :v15 DELETE #n0.#n27 :v16',
     );
     expect({
       add: exp.addList,
@@ -676,7 +688,16 @@ describe('Validate UpdateExpression.buildExpression', () => {
     }).toEqual({
       add: ['#n0.#n26 :v15'],
       del: ['#n0.#n27 :v16'],
-      remove: ['#n0.#n15[1]', '#n0.#n15[3]', '#n0.#n15[6]', '#n0.#n17.#n23', '#n0.#n24', '#n0.#n25'],
+      remove: [
+        '#n0.#n15[1]',
+        '#n0.#n15[3]',
+        '#n0.#n15[6]',
+        '#n0.#n16[8]',
+        '#n0.#n16[12]',
+        '#n0.#n17.#n23',
+        '#n0.#n24',
+        '#n0.#n25',
+      ],
       set: [
         '#n0.#n1 = #n2.#n3',
         '#n0.#n4 = if_not_exists(#n0.#n4, :v0)',

@@ -270,6 +270,14 @@ export class Fields {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
+   * Used in TableContext to determine the scope the action is executed in.
+   * @param single - Action will be preformed via the single item API.
+   * @param batch - Action will be preformed via the batch read/write API.
+   * @param transact - TAction will be preformed via the transaction read/write API.
+   */
+  export type ActionScope = 'single' | 'batch' | 'transact';
+
+  /**
    * Context object passed to {@link Field.toTable} and {@link Field.toTableUpdate} to allow the fields to know
    */
   export interface TableContext {
@@ -277,6 +285,11 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * Type of action that will be run after all field's {@link Field.toTable} or {@link Field.toTableUpdate} are called.
      */
     action: Table.ItemActions;
+
+    /**
+     * The scope the action is executed in.
+     */
+    scope: ActionScope;
 
     /**
      * Array of conditions to resolve and joined with AND conditions, then set as the ConditionExpression
@@ -1769,9 +1782,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       const action = context.action;
       if (!Table.isPutAction(action)) return;
+      const tableName = this.alias || name;
       if (this.matchOnWrite && action !== 'put-new')
-        context.conditions.push(Condition.or(Condition.notExists(name), Condition.eq(name, modelData[name] || 0)));
-      tableData[this.alias || name] = this.start;
+        context.conditions.push(
+          Condition.or(Condition.notExists(tableName), Condition.eq(tableName, modelData[name] || 0)),
+        );
+      tableData[tableName] = this.start;
     }
 
     // eslint-disable-next-line tsdoc/syntax
@@ -1782,8 +1798,9 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Update.ResolverMap,
       context: Fields.TableContext,
     ): void {
-      if (this.matchOnWrite) context.conditions.push(Condition.eq(name, modelData[name]));
-      tableData[this.alias || name] = Update.inc(1);
+      const tableName = this.alias || name;
+      if (this.matchOnWrite) context.conditions.push(Condition.eq(tableName, modelData[name]));
+      tableData[tableName] = Update.inc(1);
     }
   }
 }

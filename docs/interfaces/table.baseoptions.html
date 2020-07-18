@@ -90,19 +90,28 @@
 								<a href="table.getoptions.html" class="tsd-signature-type">GetOptions</a>
 							</li>
 							<li>
-								<a href="table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a>
-							</li>
-							<li>
-								<a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a>
-							</li>
-							<li>
-								<a href="table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a>
+								<a href="table.writeoptions.html" class="tsd-signature-type">WriteOptions</a>
 							</li>
 							<li>
 								<a href="table.queryoptions.html" class="tsd-signature-type">QueryOptions</a>
 							</li>
 							<li>
 								<a href="table.scanoptions.html" class="tsd-signature-type">ScanOptions</a>
+							</li>
+							<li>
+								<a href="table.batchgetoptions.html" class="tsd-signature-type">BatchGetOptions</a>
+							</li>
+							<li>
+								<a href="table.batchgettableoptions.html" class="tsd-signature-type">BatchGetTableOptions</a>
+							</li>
+							<li>
+								<a href="table.batchwritetableoptions.html" class="tsd-signature-type">BatchWriteTableOptions</a>
+							</li>
+							<li>
+								<a href="table.transactgettableoptions.html" class="tsd-signature-type">TransactGetTableOptions</a>
+							</li>
+							<li>
+								<a href="table.transactwritetableoptions.html" class="tsd-signature-type">TransactWriteTableOptions</a>
 							</li>
 						</ul>
 					</li>
@@ -116,7 +125,6 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.baseoptions.html#attributes" class="tsd-kind-icon">attributes</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.baseoptions.html#conditions" class="tsd-kind-icon">conditions</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.baseoptions.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.baseoptions.html#params" class="tsd-kind-icon">params</a></li>
 							</ul>
@@ -129,10 +137,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="attributes" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> attributes</h3>
-					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <a href="table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a></div>
+					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L719">Table.ts:719</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L825">Table.ts:825</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -143,28 +151,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="conditions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> conditions</h3>
-					<div class="tsd-signature tsd-kind-icon">conditions<span class="tsd-signature-symbol">:</span> <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L725">Table.ts:725</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Array of expression condition resolvers that are joined together with AND, then used as
-							ConditionExpression or FilterExpression params in table operations.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="context" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> context</h3>
 					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L737">Table.ts:737</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L835">Table.ts:835</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -179,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html#optional" class="tsd-signature-type">Optional</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L731">Table.ts:731</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L831">Table.ts:831</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -235,9 +227,6 @@
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="table.baseoptions.html#attributes" class="tsd-kind-icon">attributes</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="table.baseoptions.html#conditions" class="tsd-kind-icon">conditions</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="table.baseoptions.html#context" class="tsd-kind-icon">context</a>

@@ -6,14 +6,9 @@
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.options": {},
-  "cSpell.words": [
-    "Birdland",
-    "keyof",
-    "prepend",
-    "tsdoc",
-    "unscoped"
-  ],
+  "cSpell.words": ["Birdland", "keyof", "prepend", "tsdoc", "unscoped"],
   "files.associations": {
     "api-extractor.json": "jsonc"
-  }
+  },
+  "auto-close-tag.activationOnLanguage": ["html", "xml", "javascript", "javascriptreact", "typescriptreact"]
 }
