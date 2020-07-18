@@ -76,7 +76,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-symbol">{}</span>
+						<a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.batchgettableinput.html" class="tsd-signature-type">BatchGetTableInput</a><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">BatchGetTableOptions</span>
@@ -92,8 +92,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.batchgettableoptions.html#consumed" class="tsd-kind-icon">consumed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.batchgettableoptions.html#attributes" class="tsd-kind-icon">attributes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.batchgettableoptions.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.batchgettableoptions.html#itemattributes" class="tsd-kind-icon">item<wbr>Attributes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.batchgettableoptions.html#params" class="tsd-kind-icon">params</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,18 +103,36 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="consumed" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> consumed</h3>
-					<div class="tsd-signature tsd-kind-icon">consumed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DocumentClient.ReturnConsumedCapacity</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="attributes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> attributes</h3>
+					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#attributes">attributes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L957">Table.ts:957</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L825">Table.ts:825</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Returns the ConsumedCapacity for the table operation.</p>
+							<p>Expression attributes to use for resolving conditions and updates.  Will be used to generate the
+							ExpressionAttributeNames and ExpressionAttributeValues params in table operations.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="context" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> context</h3>
+					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#context">context</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L835">Table.ts:835</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>User defined context that gets passed through to all Fields.</p>
 						</div>
 					</div>
 				</section>
@@ -122,12 +142,29 @@
 					<div class="tsd-signature tsd-kind-icon">item<wbr>Attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L954">Table.ts:954</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L918">Table.ts:918</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>List of attributes to return from table for operation.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="params" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> params</h3>
+					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html#optional" class="tsd-signature-type">Optional</a><span class="tsd-signature-symbol">&lt;</span><a href="table.batchgettableinput.html" class="tsd-signature-type">BatchGetTableInput</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#params">params</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L831">Table.ts:831</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Params to append on to the params that get passed to dynamodb.  This does mean these params can
+							be used to override any of the values generated by Table, so just be careful on what params you pass.</p>
 						</div>
 					</div>
 				</section>
@@ -175,11 +212,17 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="table.batchgettableoptions.html" class="tsd-kind-icon">Batch<wbr>Get<wbr>Table<wbr>Options</a>
 								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="table.batchgettableoptions.html#consumed" class="tsd-kind-icon">consumed</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.batchgettableoptions.html#attributes" class="tsd-kind-icon">attributes</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.batchgettableoptions.html#context" class="tsd-kind-icon">context</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="table.batchgettableoptions.html#itemattributes" class="tsd-kind-icon">item<wbr>Attributes</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.batchgettableoptions.html#params" class="tsd-kind-icon">params</a>
 									</li>
 								</ul>
 							</li>

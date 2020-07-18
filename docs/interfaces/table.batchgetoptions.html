@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>UpdateNumberDateOptions | dynamodb-datamodel - v0.2.3</title>
+	<title>BatchGetOptions | dynamodb-datamodel - v0.2.3</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,13 +52,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/fields.html">Fields</a>
+					<a href="../classes/table.html">Table</a>
 				</li>
 				<li>
-					<a href="fields.updatenumberdateoptions.html">UpdateNumberDateOptions</a>
+					<a href="table.batchgetoptions.html">BatchGetOptions</a>
 				</li>
 			</ul>
-			<h1>Interface UpdateNumberDateOptions</h1>
+			<h1>Interface BatchGetOptions&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -68,15 +68,28 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Options used when creating <a href="../classes/fields.fieldupdatednumberdate.html">FieldUpdatedNumberDate</a></p>
+						<p>Options used in following methods: {@link Table.batchGet}, {@link Table.batchGetParams}.</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">UpdateNumberDateOptions</span>
+						<a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">BatchGetOptions</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -87,10 +100,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.updatenumberdateoptions.html#alias" class="tsd-kind-icon">alias</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.updatenumberdateoptions.html#now" class="tsd-kind-icon">now</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.updatenumberdateoptions.html#tomodeldefaultalias" class="tsd-kind-icon">to<wbr>Model<wbr>Default<wbr>Alias</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="fields.updatenumberdateoptions.html#writeonput" class="tsd-kind-icon">write<wbr>OnPut</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.batchgetoptions.html#attributes" class="tsd-kind-icon">attributes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.batchgetoptions.html#consumed" class="tsd-kind-icon">consumed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.batchgetoptions.html#context" class="tsd-kind-icon">context</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.batchgetoptions.html#params" class="tsd-kind-icon">params</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,63 +111,68 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="alias" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> alias</h3>
-					<div class="tsd-signature tsd-kind-icon">alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="attributes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> attributes</h3>
+					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#attributes">attributes</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1615">Fields.ts:1615</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L825">Table.ts:825</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Table attribute to map this Model property to.</p>
+							<p>Expression attributes to use for resolving conditions and updates.  Will be used to generate the
+							ExpressionAttributeNames and ExpressionAttributeValues params in table operations.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="now" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> now</h3>
-					<div class="tsd-signature tsd-kind-icon">now<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">)</span></div>
+					<a name="consumed" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> consumed</h3>
+					<div class="tsd-signature tsd-kind-icon">consumed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DocumentClient.ReturnConsumedCapacity</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1620">Fields.ts:1620</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L912">Table.ts:912</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Function to get the current date.</p>
+							<p>Returns the ConsumedCapacity for the table operation.</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="tomodeldefaultalias" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> to<wbr>Model<wbr>Default<wbr>Alias</h3>
-					<div class="tsd-signature tsd-kind-icon">to<wbr>Model<wbr>Default<wbr>Alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="context" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> context</h3>
+					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#context">context</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1630">Fields.ts:1630</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L835">Table.ts:835</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Table attribute to use in toModel when value is not present.</p>
+							<p>User defined context that gets passed through to all Fields.</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="writeonput" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> write<wbr>OnPut</h3>
-					<div class="tsd-signature tsd-kind-icon">write<wbr>OnPut<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="params" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> params</h3>
+					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html#optional" class="tsd-signature-type">Optional</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#params">params</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1625">Fields.ts:1625</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L831">Table.ts:831</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Sets the updated date when item it put.</p>
+							<p>Params to append on to the params that get passed to dynamodb.  This does mean these params can
+							be used to override any of the values generated by Table, so just be careful on what params you pass.</p>
 						</div>
 					</div>
 				</section>
@@ -179,32 +197,9 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="../classes/fields.html" class="tsd-kind-icon">Fields</a>
-						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="fields.updatenumberdateoptions.html" class="tsd-kind-icon">Update<wbr>Number<wbr>Date<wbr>Options</a>
-								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="fields.updatenumberdateoptions.html#alias" class="tsd-kind-icon">alias</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="fields.updatenumberdateoptions.html#now" class="tsd-kind-icon">now</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="fields.updatenumberdateoptions.html#tomodeldefaultalias" class="tsd-kind-icon">to<wbr>Model<wbr>Default<wbr>Alias</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="fields.updatenumberdateoptions.html#writeonput" class="tsd-kind-icon">write<wbr>OnPut</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/index.html" class="tsd-kind-icon">Index</a>
 					</li>
@@ -217,9 +212,32 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/model.html" class="tsd-kind-icon">Model</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="../classes/table.html" class="tsd-kind-icon">Table</a>
+						<ul>
+							<li class="current tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="table.batchgetoptions.html" class="tsd-kind-icon">Batch<wbr>Get<wbr>Options</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.batchgetoptions.html#attributes" class="tsd-kind-icon">attributes</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="table.batchgetoptions.html#consumed" class="tsd-kind-icon">consumed</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.batchgetoptions.html#context" class="tsd-kind-icon">context</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="table.batchgetoptions.html#params" class="tsd-kind-icon">params</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/update.html" class="tsd-kind-icon">Update</a>
 					</li>

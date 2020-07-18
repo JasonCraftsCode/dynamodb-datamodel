@@ -228,13 +228,25 @@ const userModel = Model.createModel<UserKey, UserInputModel, UserOutputModel>({
 describe('Validate Model with Table and Indexes', () => {
   it('Model.getContext with empty options to return with conditions', () => {
     const context = userModel.getContext('put', {});
-    expect(context).toEqual({ action: 'put', conditions: [], model: userModel, options: { conditions: [] } });
+    expect(context).toEqual({
+      action: 'put',
+      scope: 'single',
+      conditions: [],
+      model: userModel,
+      options: { conditions: [] },
+    });
   });
 
   it('Model.getContext with exiting options.conditions', () => {
-    const options: Table.BaseOptions = { conditions: [Condition.eq('path', 'value')] };
+    const options: Table.WriteOptions = { conditions: [Condition.eq('path', 'value')] };
     const context = userModel.getContext('put', options);
-    expect(context).toEqual({ action: 'put', conditions: options.conditions, model: userModel, options });
+    expect(context).toEqual({
+      action: 'put',
+      scope: 'single',
+      conditions: options.conditions,
+      model: userModel,
+      options,
+    });
   });
 
   describe('model params', () => {
@@ -809,7 +821,7 @@ describe('Validate Model with Table and Indexes', () => {
     transactWrite.addDelete = jest.fn();
     const result = userModel.addTransactDelete(transactWrite, { id: 'pk.sk' });
     expect(transactWrite.addDelete).toBeCalledTimes(1);
-    expect(transactWrite.addDelete).toBeCalledWith(userModel.table.name, { P: 'pk', S: 'sk' }, undefined, undefined);
+    expect(transactWrite.addDelete).toBeCalledWith(userModel.table.name, { P: 'pk', S: 'sk' }, [], undefined);
     expect(result).toBeDefined();
   });
   it('Model.addTransactPut', () => {
@@ -821,7 +833,7 @@ describe('Validate Model with Table and Indexes', () => {
       userModel.table.name,
       { P: 'pk', S: 'sk' },
       { adult: true, created: 1585563302, name: 'bob', nickname: 'none', rev: 1 },
-      undefined,
+      [],
       undefined,
     );
     expect(result).toBeDefined();
@@ -835,7 +847,7 @@ describe('Validate Model with Table and Indexes', () => {
       userModel.table.name,
       { P: 'pk', S: 'sk' },
       { nickname: 'none' },
-      undefined,
+      [],
       undefined,
     );
     expect(result).toBeDefined();

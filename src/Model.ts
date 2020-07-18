@@ -91,9 +91,15 @@ export class Model implements Model.ModelBase {
    * @param action - Type of table item action is currently executing.
    * @param options - Options used when reading or writing to the table.
    */
-  getContext(action: Table.ItemActions, options: Table.BaseOptions): Fields.TableContext {
-    if (!options.conditions) options.conditions = [];
-    return { action, conditions: options.conditions, options, model: this };
+  getContext(
+    action: Table.ItemActions,
+    options: Table.WriteOptions,
+    scope: Fields.ActionScope = 'single',
+    conditions?: Condition.Resolver[],
+  ): Fields.TableContext {
+    const optionsCopy: Table.WriteOptions = Object.assign({}, options);
+    optionsCopy.conditions = conditions ? [...conditions] : options.conditions ? [...options.conditions] : [];
+    return { action, scope, conditions: optionsCopy.conditions, options: optionsCopy, model: this };
   }
 
   /**
@@ -103,8 +109,9 @@ export class Model implements Model.ModelBase {
    * @returns Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}.
    */
   getParams(key: Model.ModelCore, options: Table.GetOptions = {}): DocumentClient.GetItemInput {
-    const tableData = this.toTable(key, this.getContext('get', options));
-    return this.table.getParams(tableData.key, options);
+    const context = this.getContext('get', options);
+    const tableData = this.toTable(key, context);
+    return this.table.getParams(tableData.key, context.options);
   }
 
   /**
@@ -114,8 +121,9 @@ export class Model implements Model.ModelBase {
    * @returns Input params for [DocumentClient.delete]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property}.
    */
   deleteParams(key: Model.ModelCore, options: Table.DeleteOptions = {}): DocumentClient.DeleteItemInput {
-    const tableData = this.toTable(key, this.getContext('delete', options));
-    return this.table.deleteParams(tableData.key, options);
+    const context = this.getContext('delete', options);
+    const tableData = this.toTable(key, context);
+    return this.table.deleteParams(tableData.key, context.options);
   }
 
   /**
@@ -125,9 +133,9 @@ export class Model implements Model.ModelBase {
    * @returns Input params for [DocumentClient.put]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property}.
    */
   putParams(item: Model.ModelCore, options: Table.PutOptions = {}): DocumentClient.PutItemInput {
-    const action = Table.getPutAction(options.writeOptions);
-    const tableData = this.toTable(item, this.getContext(action, options));
-    return this.table.putParams(tableData.key, tableData.item, options);
+    const context = this.getContext(Table.getPutAction(options.writeOptions), options);
+    const tableData = this.toTable(item, context);
+    return this.table.putParams(tableData.key, tableData.item, context.options);
   }
 
   /**
@@ -137,8 +145,9 @@ export class Model implements Model.ModelBase {
    * @returns Input params for [DocumentClient.update]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property}.
    */
   updateParams(item: Model.ModelUpdate, options: Table.UpdateOptions = {}): DocumentClient.UpdateItemInput {
-    const tableData = this.toTableUpdate(item, this.getContext('update', options));
-    return this.table.updateParams(tableData.key, tableData.item, options);
+    const context = this.getContext('update', options);
+    const tableData = this.toTableUpdate(item, context);
+    return this.table.updateParams(tableData.key, tableData.item, context.options);
   }
 
   /**
@@ -151,7 +160,7 @@ export class Model implements Model.ModelBase {
   async get(key: Model.ModelCore, options: Table.GetOptions = {}): Promise<Model.GetOutput> {
     const context = this.getContext('get', options);
     const tableData = this.toTable(key, context);
-    const result = await this.table.get(tableData.key, options);
+    const result = await this.table.get(tableData.key, context.options);
     const item = this.toModel(result.Item, context);
     return { item, result };
   }
@@ -166,7 +175,7 @@ export class Model implements Model.ModelBase {
   async delete(key: Model.ModelCore, options: Table.DeleteOptions = {}): Promise<Model.DeleteOutput> {
     const context = this.getContext('delete', options);
     const tableData = this.toTable(key, context);
-    const result = await this.table.delete(tableData.key, options);
+    const result = await this.table.delete(tableData.key, context.options);
     const item = this.toModel(result.Attributes, context);
     return { item, result };
   }
@@ -200,7 +209,7 @@ export class Model implements Model.ModelBase {
     const action = Table.getPutAction(options.writeOptions);
     const context = this.getContext(action, options);
     const tableData = this.toTable(data, context);
-    const result = await this.table.put(tableData.key, tableData.item, options);
+    const result = await this.table.put(tableData.key, tableData.item, context.options);
     const item = this.toModel(tableData.data, context);
     return { item, result };
   }
@@ -215,7 +224,7 @@ export class Model implements Model.ModelBase {
   async update(data: Model.ModelUpdate, options: Table.UpdateOptions = {}): Promise<Model.UpdateOutput> {
     const context = this.getContext('update', options);
     const tableData = this.toTableUpdate(data, context);
-    const result = await this.table.update(tableData.key, tableData.item, options);
+    const result = await this.table.update(tableData.key, tableData.item, context.options);
     const item = this.toModel(result.Attributes, context);
     return { item, result };
   }
@@ -227,7 +236,7 @@ export class Model implements Model.ModelBase {
    * @returns Object to get the resulting item from the BatchGet result.
    */
   addBatchGet(batchGet: Table.BatchGet, key: Model.ModelCore): Model.ModelResult {
-    const context = this.getContext('get', batchGet.options);
+    const context = this.getContext('get', batchGet.options, 'batch');
     const tableItem = this.toTable(key, context);
     batchGet.addGet(this.table.name, tableItem.key);
     return new Model.ModelResult(batchGet, this, tableItem.key, context);
@@ -240,7 +249,7 @@ export class Model implements Model.ModelBase {
    * @returns Object to get the resulting item from the BatchWrite result.
    */
   addBatchDelete(batchWrite: Table.BatchWrite, key: Model.ModelCore): Model.ModelResult {
-    const context = this.getContext('delete', batchWrite.options);
+    const context = this.getContext('delete', batchWrite.options, 'batch');
     const tableItem = this.toTable(key, context);
     batchWrite.addDelete(this.table.name, tableItem.key);
     return new Model.ModelResult(batchWrite, this, tableItem.key, context);
@@ -253,7 +262,7 @@ export class Model implements Model.ModelBase {
    * @returns Object to get the resulting item from the BatchWrite result.
    */
   addBatchPut(batchWrite: Table.BatchWrite, item: Model.ModelData): Model.ModelResult {
-    const context = this.getContext('put', batchWrite.options);
+    const context = this.getContext('put', batchWrite.options, 'batch');
     const tableItem = this.toTable(item, context);
     batchWrite.addPut(this.table.name, { key: tableItem.key, item: tableItem.item });
     return new Model.ModelResult(batchWrite, this, tableItem.key, context);
@@ -267,7 +276,7 @@ export class Model implements Model.ModelBase {
    * @returns Object to get the resulting item from the TransactGet result.
    */
   addTransactGet(transactGet: Table.TransactGet, key: Model.ModelCore, itemAttributes?: string[]): Model.ModelResult {
-    const context = this.getContext('get', transactGet.options);
+    const context = this.getContext('get', transactGet.options, 'transact');
     const tableItem = this.toTable(key, context);
     // TODO: map itemAttributes to table 'const tableAttributes = model.toTableAttributes(itemAttributes);'
     transactGet.addGet(this.table.name, tableItem.key, itemAttributes);
@@ -289,10 +298,9 @@ export class Model implements Model.ModelBase {
     conditions: Condition.Resolver[],
     returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
   ): Model.ModelResult {
-    const context = this.getContext('check', transactWrite.options);
-    context.conditions = conditions;
+    const context = this.getContext('check', transactWrite.options, 'transact', conditions);
     const tableItem = this.toTable(key, context);
-    transactWrite.addCheck(this.table.name, tableItem.key, conditions, returnFailure);
+    transactWrite.addCheck(this.table.name, tableItem.key, context.conditions, returnFailure);
     return new Model.ModelResult(transactWrite, this, tableItem.key, context);
   }
 
@@ -310,10 +318,9 @@ export class Model implements Model.ModelBase {
     conditions?: Condition.Resolver[],
     returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
   ): Model.ModelResult {
-    const context = this.getContext('delete', transactWrite.options);
-    context.conditions = conditions || [];
+    const context = this.getContext('delete', transactWrite.options, 'transact', conditions);
     const tableItem = this.toTable(key, context);
-    transactWrite.addDelete(this.table.name, tableItem.key, conditions, returnFailure);
+    transactWrite.addDelete(this.table.name, tableItem.key, context.conditions, returnFailure);
     return new Model.ModelResult(transactWrite, this, tableItem.key, context);
   }
 
@@ -331,10 +338,9 @@ export class Model implements Model.ModelBase {
     conditions?: Condition.Resolver[],
     returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure,
   ): Model.ModelResult {
-    const context = this.getContext('put', transactWrite.options);
-    context.conditions = conditions || [];
+    const context = this.getContext('put', transactWrite.options, 'transact', conditions);
     const tableItem = this.toTable(item, context);
-    transactWrite.addPut(this.table.name, tableItem.key, tableItem.item, conditions, returnFailure);
+    transactWrite.addPut(this.table.name, tableItem.key, tableItem.item, context.conditions, returnFailure);
     return new Model.ModelResult(transactWrite, this, tableItem.key, context);
   }
 
@@ -352,10 +358,9 @@ export class Model implements Model.ModelBase {
     conditions?: Condition.Resolver[],
     returnFailure?: DocumentClient.ReturnValue,
   ): Model.ModelResult {
-    const context = this.getContext('update', transactWrite.options);
-    context.conditions = conditions || [];
+    const context = this.getContext('update', transactWrite.options, 'transact', conditions);
     const tableItem = this.toTable(item, context);
-    transactWrite.addUpdate(this.table.name, tableItem.key, tableItem.item, conditions, returnFailure);
+    transactWrite.addUpdate(this.table.name, tableItem.key, tableItem.item, context.conditions, returnFailure);
     return new Model.ModelResult(transactWrite, this, tableItem.key, context);
   }
 

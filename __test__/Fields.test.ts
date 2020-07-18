@@ -7,9 +7,10 @@ import { Update } from '../src/Update';
 import { buildUpdateParams } from './testCommon';
 
 const model = { name: 'MyModel' } as Model;
-function getTableContext(action: Table.ItemActions): Fields.TableContext {
+function getTableContext(action: Table.ItemActions, scope: Fields.ActionScope = 'single'): Fields.TableContext {
   return {
-    action: action,
+    action,
+    scope,
     conditions: [],
     model,
     options: {} as Table.BaseOptions,

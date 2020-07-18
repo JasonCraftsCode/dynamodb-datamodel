@@ -40,6 +40,9 @@ General hope for v1.x is to avoid breaking changes if at all possible, given the
 - [ ] Support projection expressions
 - [x] Support batch read and write
 - [x] Support transactions
+- [ ] Add a toModel and toTable order of field processing
+- [ ] Consider adding support for writing conditions and itemAttributes with model names and convert to table names.
+  - To do this we would need to either pass in a converter or wrap ExpressionAttributes
 - [ ] Time to Live (TTL) support
 - [ ] Support more advanced model fields and capabilities, like compression, guid ids...
 - [ ] Support remainder (...) based fields
@@ -127,3 +130,31 @@ return {items, result, next(limit:number) => { this.getTopics(orgId, created, {s
 - Synthesize DynamoDb errors to test that code handles various errors correctly
 - Graphql support (like adaptors for pagination, common mappings, errors, ...)
 - Adapters for other NoSql Databases
+
+// TODO: Could have Batch and Transact methods be part of a multi-table object. The methods could take
+// an array of data (or methods) that could be produced by table or model objects. But there is still
+// the issue of mapping table data to model data and also finding the matching output item, especially across
+// different tables (yes, single-table-design is top priority, but if we can easily build support for multi-table
+// implementations we should do that).
+// The biggest down side is that we can't express the action in a single method, which has two options:
+// - have Table/Model methods output data that then the Batch/Transact method will turn into its format.
+// - Missing:
+// - passing batch/transact context and options down to Table or Method.
+// - easy way to get the model item that is fetch.
+// - have Table/Model methods output a callback function that then resolves the
+// - Fixes: passing batch/transact context and options to Table or Method.
+// - still has problem with getting model item, though the Table/Model methods could have out params
+// that returns a method to get the that data once executed. or could output an object that has
+// a resolve (or getParams) method and a method to find and map data results. Though how that
+// is implemented isn't straight forward since user would either need to pass in the result or
+// the resolve method would need to modify some shared state after the action is executed
+// - one tricky issue is that we would want the output of the Table/Model to only be used with
+// the associated batch/transact operation at TS compile time. Though if "resolver" object is returned
+// with two methods that have different names or params, then that would work.
+// Down side of batch/transact objects with Table/Model "add/set" methods is that
+
+// TODO: to support a "next" function we'll need our own "Output" object that has a next function
+// along with the output/result data
+// Another options is to have a queryNext method which also takes an QueryOutput.
+// Would be nice to support an async iteration model. Or an async forEach as each
+// page comes in.

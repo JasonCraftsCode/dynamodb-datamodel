@@ -2,11 +2,13 @@
 import { AWSError, Request } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
+import { Condition } from '../src/Condition';
+import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Table } from '../src/Table';
 import { Index } from '../src/TableIndex';
+import { Update } from '../src/Update';
 import { validateTable } from '../src/TableValidate';
 import { delay } from './testCommon';
-import { Condition, Update } from '../src';
 
 const client = new DocumentClient({ convertEmptyValues: true });
 const request = {
@@ -242,7 +244,10 @@ describe('Validate Table with indexes', () => {
   });
 
   it('deleteParams with options', () => {
-    const params = testTable.deleteParams({ P: 'pk', S: 'sk' }, { params: { ReturnConsumedCapacity: 'TOTAL' } });
+    const params = testTable.deleteParams(
+      { P: 'pk', S: 'sk' },
+      { attributes: () => new ExpressionAttributes(), params: { ReturnConsumedCapacity: 'TOTAL' } },
+    );
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
       ReturnConsumedCapacity: 'TOTAL',
@@ -309,7 +314,7 @@ describe('Validate Table with indexes', () => {
     batchGet.set = jest.fn();
     testTable.setBatchGet(batchGet, [{ P: 'pk1', S: 'sk1' }]);
     expect(batchGet.set).toBeCalledTimes(1);
-    expect(batchGet.set).toBeCalledWith(testTable.name, [{ P: 'pk1', S: 'sk1' }]);
+    expect(batchGet.set).toBeCalledWith(testTable.name, [{ P: 'pk1', S: 'sk1' }], undefined);
   });
 
   it('setBatchWrite', () => {
@@ -469,6 +474,28 @@ describe('Validate Batch Get', () => {
     });
   });
 
+  it('set with custom attributes and itemAttributes', () => {
+    const batchGet = new Table.BatchGet(client, {
+      attributes: () => new ExpressionAttributes(),
+    });
+    batchGet.set('testTable', [{ P: 'pk1', S: 'sk1' }], {
+      itemAttributes: ['attrib1'],
+      params: { ConsistentRead: true },
+    });
+    expect(batchGet.getParams()).toEqual({
+      RequestItems: {
+        testTable: {
+          ConsistentRead: true,
+          ExpressionAttributeNames: {
+            '#n0': 'attrib1',
+          },
+          Keys: [{ P: 'pk1', S: 'sk1' }],
+          ProjectionExpression: 'attrib1',
+        },
+      },
+    });
+  });
+
   it('addGet', () => {
     const batchGet = new Table.BatchGet(client);
     batchGet.addGet('testTable', { P: 'pk1', S: 'sk1' });
@@ -488,9 +515,9 @@ describe('Validate Batch Get', () => {
   it('options set', () => {
     const batchGet = new Table.BatchGet(client, {
       consumed: 'TOTAL',
-      itemAttributes: ['attrib1', 'attrib2'],
     });
     batchGet.addGet('testTable', { P: 'pk1', S: 'sk1' });
+    batchGet.setOptions('testTable', { itemAttributes: ['attrib1', 'attrib2'] });
     expect(batchGet.getParams()).toEqual({
       RequestItems: {
         testTable: {
@@ -666,7 +693,10 @@ describe('Validate Transact Get', () => {
   });
 
   it('options addGet', () => {
-    const transactGet = new Table.TransactGet(client, { consumed: 'TOTAL' });
+    const transactGet = new Table.TransactGet(client, {
+      consumed: 'TOTAL',
+      attributes: () => new ExpressionAttributes(),
+    });
     transactGet.addGet('testTable', { P: 'pk1', S: 'sk1' });
     expect(transactGet.getParams()).toEqual({
       ReturnConsumedCapacity: 'TOTAL',
