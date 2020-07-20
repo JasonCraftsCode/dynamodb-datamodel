@@ -17,6 +17,8 @@ const request = {
   },
 } as Request<DocumentClient.GetItemOutput, AWSError>;
 
+const context = { data: true };
+
 it('Validate Table exports', () => {
   expect(typeof Table.createTable).toBe('function');
   expect(typeof Index.createIndex).toBe('function');
@@ -88,6 +90,38 @@ describe('Validate Simple Table', () => {
     });
   });
 
+  it('queryParams with options', () => {
+    const params = testTable.queryParams(
+      { P: 'abc' },
+      {
+        filters: [Condition.eq('P', 'xyz')],
+        context: context,
+        attributes: () => new ExpressionAttributes(),
+        itemAttributes: ['attrib1', 'attrib2'],
+        params: {
+          Limit: 5,
+          ConsistentRead: true,
+          ExclusiveStartKey: { P: 'abc' },
+          Select: 'SPECIFIC_ATTRIBUTES',
+          ScanIndexForward: true,
+        },
+      },
+    );
+    expect(params).toEqual({
+      ConsistentRead: true,
+      ExclusiveStartKey: { P: 'abc' },
+      ExpressionAttributeNames: { '#n0': 'P', '#n1': 'attrib1', '#n2': 'attrib2' },
+      ExpressionAttributeValues: { ':v0': 'xyz', ':v1': 'abc' },
+      FilterExpression: '#n0 = :v0',
+      KeyConditionExpression: '#n0 = :v1',
+      Limit: 5,
+      ProjectionExpression: 'attrib1, attrib2',
+      ScanIndexForward: true,
+      Select: 'SPECIFIC_ATTRIBUTES',
+      TableName: 'TestTable',
+    });
+  });
+
   it('query', async () => {
     client.query = jest.fn(() => request);
     const results = await testTable.query({ P: 'xyz' });
@@ -105,6 +139,38 @@ describe('Validate Simple Table', () => {
     const params = testTable.scanParams();
     expect(params).toEqual({
       TableName: 'TestTable',
+    });
+  });
+
+  it('scanParams with options', () => {
+    const params = testTable.scanParams({
+      attributes: () => new ExpressionAttributes(),
+      context,
+      filters: [Condition.beginsWith('attrib', 'abc')],
+      itemAttributes: ['attrib1', 'attrib2'],
+      params: {
+        ConsistentRead: true,
+        ExclusiveStartKey: { P: 'abc' },
+        Limit: 10,
+        Select: 'SPECIFIC_ATTRIBUTES',
+        ReturnConsumedCapacity: 'INDEXES',
+        Segment: 1,
+        TotalSegments: 2,
+      },
+    });
+    expect(params).toEqual({
+      ConsistentRead: true,
+      ExclusiveStartKey: { P: 'abc' },
+      ExpressionAttributeNames: { '#n0': 'attrib', '#n1': 'attrib1', '#n2': 'attrib2' },
+      ExpressionAttributeValues: { ':v0': 'abc' },
+      FilterExpression: 'begins_with(#n0, :v0)',
+      Limit: 10,
+      ProjectionExpression: 'attrib1, attrib2',
+      ReturnConsumedCapacity: 'INDEXES',
+      Segment: 1,
+      Select: 'SPECIFIC_ATTRIBUTES',
+      TableName: 'TestTable',
+      TotalSegments: 2,
     });
   });
 
@@ -227,9 +293,19 @@ describe('Validate Table with indexes', () => {
   });
 
   it('getParams with options', () => {
-    const params = testTable.getParams({ P: 'pk', S: 'sk' }, { params: { ReturnConsumedCapacity: 'TOTAL' } });
+    const params = testTable.getParams(
+      { P: 'pk', S: 'sk' },
+      {
+        attributes: () => new ExpressionAttributes(),
+        context,
+        itemAttributes: ['attrib1', 'attrib2'],
+        params: { ReturnConsumedCapacity: 'TOTAL' },
+      },
+    );
     expect(params).toEqual({
+      ExpressionAttributeNames: { '#n0': 'attrib1', '#n1': 'attrib2' },
       Key: { P: 'pk', S: 'sk' },
+      ProjectionExpression: 'attrib1, attrib2',
       ReturnConsumedCapacity: 'TOTAL',
       TableName: 'TestTable',
     });
@@ -246,11 +322,21 @@ describe('Validate Table with indexes', () => {
   it('deleteParams with options', () => {
     const params = testTable.deleteParams(
       { P: 'pk', S: 'sk' },
-      { attributes: () => new ExpressionAttributes(), params: { ReturnConsumedCapacity: 'TOTAL' } },
+      {
+        attributes: () => new ExpressionAttributes(),
+        conditions: [Condition.between('attrib', '1', '9')],
+        context,
+        params: { ReturnConsumedCapacity: 'TOTAL', ReturnValues: 'ALL_OLD', ReturnItemCollectionMetrics: 'SIZE' },
+      },
     );
     expect(params).toEqual({
+      ConditionExpression: '#n0 BETWEEN :v0 AND :v1',
+      ExpressionAttributeNames: { '#n0': 'attrib' },
+      ExpressionAttributeValues: { ':v0': '1', ':v1': '9' },
       Key: { P: 'pk', S: 'sk' },
       ReturnConsumedCapacity: 'TOTAL',
+      ReturnItemCollectionMetrics: 'SIZE',
+      ReturnValues: 'ALL_OLD',
       TableName: 'TestTable',
     });
   });
@@ -289,24 +375,56 @@ describe('Validate Table with indexes', () => {
     });
   });
 
-  it('updateParams', () => {
-    const params = testTable.updateParams({ P: 'pk', S: 'sk' }, undefined, {
-      params: { ReturnConsumedCapacity: 'TOTAL' },
+  it('putParams with options', () => {
+    const params = testTable.putParams(
+      { P: 'pk', S: 'sk' },
+      { attrib: 'string' },
+      {
+        attributes: () => new ExpressionAttributes(),
+        conditions: [Condition.lt('ver', 4)],
+        context,
+        params: { ReturnConsumedCapacity: 'TOTAL', ReturnItemCollectionMetrics: 'SIZE', ReturnValues: 'ALL_OLD' },
+      },
+    );
+    expect(params).toEqual({
+      ConditionExpression: '#n0 < :v0',
+      ExpressionAttributeNames: { '#n0': 'ver' },
+      ExpressionAttributeValues: { ':v0': 4 },
+      Item: { P: 'pk', S: 'sk', attrib: 'string' },
+      TableName: 'TestTable',
     });
+  });
+
+  it('updateParams', () => {
+    const params = testTable.updateParams({ P: 'pk', S: 'sk' });
     expect(params).toEqual({
       Key: { P: 'pk', S: 'sk' },
-      ReturnConsumedCapacity: 'TOTAL',
       ReturnValues: 'ALL_NEW',
       TableName: 'TestTable',
     });
   });
 
   it('updateParams with options', () => {
-    const params = testTable.updateParams({ P: 'pk', S: 'sk' });
+    const params = testTable.updateParams(
+      { P: 'pk', S: 'sk' },
+      { attrib: 'test' },
+      {
+        attributes: () => new ExpressionAttributes(),
+        conditions: [Condition.ge('ge', 6)],
+        context,
+        params: { ReturnValues: 'ALL_OLD', ReturnItemCollectionMetrics: 'SIZE', ReturnConsumedCapacity: 'TOTAL' },
+      },
+    );
     expect(params).toEqual({
+      ConditionExpression: '#n0 >= :v0',
+      ExpressionAttributeNames: { '#n0': 'ge', '#n1': 'attrib' },
+      ExpressionAttributeValues: { ':v0': 6, ':v1': 'test' },
       Key: { P: 'pk', S: 'sk' },
-      ReturnValues: 'ALL_NEW',
+      ReturnConsumedCapacity: 'TOTAL',
+      ReturnItemCollectionMetrics: 'SIZE',
+      ReturnValues: 'ALL_OLD',
       TableName: 'TestTable',
+      UpdateExpression: 'SET #n1 = :v1',
     });
   });
   it('setBatchGet', () => {

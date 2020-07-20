@@ -84,7 +84,7 @@
 <span class="hljs-keyword">const</span> condition = and(eq(<span class="hljs-string">'first'</span>, <span class="hljs-string">'john'</span>), eq(<span class="hljs-string">'last'</span>, <span class="hljs-string">'smith'</span>), ne(<span class="hljs-string">'first'</span>, path(<span class="hljs-string">'nickname'</span>)));
 
 <span class="hljs-comment">// Table params generate for condition</span>
-expect(Table.addParams({}, { conditions: [condition] }, <span class="hljs-string">'condition'</span>)).toEqual({
+expect(Table.addParams({}, { conditions: [condition] })).toEqual({
   ConditionExpression: <span class="hljs-string">'(#n0 = :v0 AND #n1 = :v1 AND #n0 &lt;&gt; #n2)'</span>,
   ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'first'</span>, <span class="hljs-string">'#n1'</span>: <span class="hljs-string">'last'</span>, <span class="hljs-string">'#n2'</span>: <span class="hljs-string">'nickname'</span> },
   ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-string">'john'</span>, <span class="hljs-string">':v1'</span>: <span class="hljs-string">'smith'</span> },

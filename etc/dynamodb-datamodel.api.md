@@ -638,8 +638,8 @@ export class Table {
         ReturnConsumedCapacity?: DocumentClient.ReturnConsumedCapacity;
         ReturnItemCollectionMetrics?: DocumentClient.ReturnItemCollectionMetrics;
     }): void;
-    static addItemAttributes<T extends Table.ExpressionParams>(params: T, itemAttributes?: string[], attributes?: () => Table.ExpressionAttributes): T & Table.ExpressionParams;
-    static addParams<T extends Table.ExpressionParams>(params: T, options: Table.WriteOptions, type: 'filter' | 'condition', addParams?: Table.AddExpressionParams): T & Table.ExpressionParams;
+    static addItemAttributes<T extends Table.ExpressionParams>(params: T, attributes: Table.ExpressionAttributes, itemAttributes?: string[]): void;
+    static addParams<T extends Table.ExpressionParams>(params: T, options: Table.AddParamsOptions, addParams?: Table.AddExpressionParams, getAttributes?: () => Table.ExpressionAttributes): T & Table.ExpressionParams;
     static addWriteParams<T extends Table.ExpressionParams & {
         ReturnValuesOnConditionCheckFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
     }>(params: T, item: {
@@ -682,6 +682,11 @@ export class Table {
 // @public
 export namespace Table {
     export type AddExpressionParams = (params: ExpressionParams, attributes: ExpressionAttributes) => void;
+    export interface AddParamsOptions extends BaseOptions {
+        conditions?: Condition.Resolver[];
+        filters?: Condition.Resolver[];
+        itemAttributes?: string[];
+    }
     export type AttributeSetValues = StringSetValue | NumberSetValue | BinarySetValue;
     export type AttributeTypes = 'B' | 'N' | 'S' | 'BOOL' | 'NULL' | 'L' | 'M' | 'BS' | 'NS' | 'SS';
     export type AttributeValues = null | string | number | boolean | BinaryValue | AttributeSetValues | MapValue | ListValue;
@@ -883,11 +888,13 @@ export namespace Table {
     export interface QueryInput extends Omit<DocumentClient.QueryInput, 'AttributesToGet' | 'KeyConditions' | 'QueryFilter' | 'ConditionalOperator'> {
     }
     export interface QueryOptions extends BaseOptions<QueryInput> {
+        filters?: Condition.Resolver[];
         itemAttributes?: string[];
     }
     export interface ScanInput extends Omit<DocumentClient.ScanInput, 'AttributesToGet' | 'ScanFilter' | 'ConditionalOperator'> {
     }
     export interface ScanOptions extends BaseOptions<ScanInput> {
+        filters?: Condition.Resolver[];
         itemAttributes?: string[];
     }
     export type StringSetValue = DocumentClient.StringSet;

@@ -12,7 +12,7 @@ const filter = or(
   ),
 );
 
-const params = Table.addParams({}, { conditions: [filter] }, 'filter');
+const params = Table.addParams({}, { filters: [filter] });
 expect(params.FilterExpression).toEqual(
   '(#n0 > :v0 OR (#n1 = :v1 AND size(#n2) > :v2 AND (contains(#n2, :v3) OR contains(#n2, :v4) OR contains(#n2, :v5))))',
 );

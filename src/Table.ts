@@ -131,8 +131,7 @@ export class Table {
    * @returns Input params for [DocumentClient.get]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property}.
    */
   getParams(key: Table.PrimaryKey.AttributeValuesMap, options: Table.GetOptions = {}): Table.GetInput {
-    const params = { TableName: this.name, Key: key };
-    return options.params ? Object.assign(params, options.params) : params;
+    return Table.addParams<Table.GetInput>({ TableName: this.name, Key: key }, options);
   }
 
   /**
@@ -145,7 +144,7 @@ export class Table {
     key: Table.PrimaryKey.AttributeValuesMap,
     options: Table.DeleteOptions = {},
   ): DocumentClient.DeleteItemInput {
-    return Table.addParams<DocumentClient.DeleteItemInput>({ TableName: this.name, Key: key }, options, 'condition');
+    return Table.addParams<DocumentClient.DeleteItemInput>({ TableName: this.name, Key: key }, options);
   }
 
   /**
@@ -176,7 +175,6 @@ export class Table {
     return Table.addParams<DocumentClient.PutItemInput>(
       { TableName: this.name, Item: item ? Object.assign(Object.assign({}, key), item) : key },
       { attributes: options.attributes, conditions },
-      'condition',
     );
   }
 
@@ -197,7 +195,6 @@ export class Table {
     return Table.addParams<DocumentClient.UpdateItemInput>(
       { TableName: this.name, Key: key, ReturnValues: 'ALL_NEW' },
       options,
-      'condition',
       (params, attributes) => UpdateExpression.addParams(params, attributes, item),
     );
   }
@@ -209,11 +206,8 @@ export class Table {
    * @returns Input params for [DocumentClient.query]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property}.
    */
   queryParams(key: Table.PrimaryKey.KeyQueryMap, options: Table.QueryOptions = {}): DocumentClient.QueryInput {
-    return Table.addParams<DocumentClient.QueryInput>(
-      { TableName: this.name },
-      options,
-      'filter',
-      (params, attributes) => KeyConditionExpression.addParams(params, attributes, key),
+    return Table.addParams<DocumentClient.QueryInput>({ TableName: this.name }, options, (params, attributes) =>
+      KeyConditionExpression.addParams(params, attributes, key),
     );
   }
 
@@ -223,7 +217,7 @@ export class Table {
    * @returns Input params for [DocumentClient.scan]{@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property} method.
    */
   scanParams(options: Table.ScanOptions = {}): DocumentClient.ScanInput {
-    return Table.addParams<DocumentClient.ScanInput>({ TableName: this.name }, options, 'filter');
+    return Table.addParams<DocumentClient.ScanInput>({ TableName: this.name }, options);
   }
 
   /**
@@ -388,18 +382,13 @@ export class Table {
    */
   static addItemAttributes<T extends Table.ExpressionParams>(
     params: T,
+    attributes: Table.ExpressionAttributes,
     itemAttributes?: string[],
-    attributes?: () => Table.ExpressionAttributes,
-  ): T & Table.ExpressionParams {
+  ): void {
     if (itemAttributes && itemAttributes.length > 0) {
-      const exp = attributes ? attributes() : new ExpressionAttributes();
-      itemAttributes.forEach((value) => exp.addPath(value));
-      return Object.assign(params, {
-        ProjectionExpression: itemAttributes.join(', '),
-        ExpressionAttributeNames: exp.getPaths(),
-      });
+      itemAttributes.forEach((value) => attributes.addPath(value));
+      params.ProjectionExpression = itemAttributes.join(', ');
     }
-    return params;
   }
 
   /**
@@ -407,18 +396,23 @@ export class Table {
    * @param T - Type of table action input params
    * @param params - The params object to add expression properties to.
    * @param options - Options used to build params.
-   * @param type - The type of expression to set either 'filter' or 'condition',
    * @param addParam - Function to add additional expression params.
    * @returns Params object that was passed in with expression added.
    */
   static addParams<T extends Table.ExpressionParams>(
     params: T,
-    options: Table.WriteOptions,
-    type: 'filter' | 'condition',
+    options: Table.AddParamsOptions,
     addParams?: Table.AddExpressionParams,
+    getAttributes?: () => Table.ExpressionAttributes,
   ): T & Table.ExpressionParams {
-    const attributes = options.attributes ? options.attributes() : new ExpressionAttributes();
-    ConditionExpression.addParams(params, attributes, type, options.conditions);
+    const attributes = options.attributes
+      ? options.attributes()
+      : getAttributes
+      ? getAttributes()
+      : new ExpressionAttributes();
+    ConditionExpression.addParams(params, attributes, 'condition', options.conditions);
+    ConditionExpression.addParams(params, attributes, 'filter', options.filters);
+    Table.addItemAttributes(params, attributes, options.itemAttributes);
     if (addParams) addParams(params, attributes);
     ExpressionAttributes.addParams(params, attributes);
     return options.params ? Object.assign(params, options.params) : params;
@@ -445,7 +439,7 @@ export class Table {
     addParams?: Table.AddExpressionParams,
   ): T & Table.ExpressionParams {
     if (item.returnFailure) params.ReturnValuesOnConditionCheckFailure = item.returnFailure;
-    return Table.addParams(params, item, 'condition', addParams);
+    return Table.addParams(params, item, addParams);
   }
 
   /**
@@ -836,7 +830,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Options used in following methods:  {@link Table.get}, {@link Table.getParams},
+   * Options used in the following methods: {@link Table.get}, {@link Table.getParams},
    * {@link Model.get} and {@link Model.getParams}.
    */
   export interface GetOptions extends BaseOptions<GetInput> {
@@ -855,7 +849,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Options used in following methods:  {@link Table.delete}, {@link Table.deleteParams}, {@link Model.delete}
+   * Options used in the following methods: {@link Table.delete}, {@link Table.deleteParams}, {@link Model.delete}
    * and {@link Model.deleteParams}.
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -882,43 +876,55 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
   }
 
   /**
-   * Options used in following methods:  {@link Table.update}, {@link Table.updateParams},
+   * Options used in the following methods:  {@link Table.update}, {@link Table.updateParams},
    * {@link Model.update} and {@link Model.updateParams}.
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface UpdateOptions extends WriteOptions<UpdateInput> {}
 
   /**
-   * Options used in following methods: {@link Table.query}, {@link Table.queryParams},
+   * Options used in the following methods: {@link Table.query}, {@link Table.queryParams},
    * {@link Index.query} and {@link Index.queryParams}.
    */
   export interface QueryOptions extends BaseOptions<QueryInput> {
     /** List of attributes to return from table for operation. */
     itemAttributes?: string[];
+
+    /**
+     * Filter conditions for filtering out items after the query but before returning.
+     * Note: Items filtered out still consume read capacity.
+     */
+    filters?: Condition.Resolver[];
   }
 
   /**
-   * Options used in following methods: {@link Table.scan}, {@link Table.scanParams},
+   * Options used in the following methods: {@link Table.scan}, {@link Table.scanParams},
    * {@link Index.scan} and {@link Index.scanParams}.
    */
   export interface ScanOptions extends BaseOptions<ScanInput> {
     /** List of attributes to return from table for operation. */
     itemAttributes?: string[];
+
+    /**
+     * Filter conditions for filtering out items after the query but before returning.
+     * Note: Items filtered out still consume read capacity.
+     */
+    filters?: Condition.Resolver[];
   }
 
-  /** Options used in following methods: {@link Table.batchGet}, {@link Table.batchGetParams}. */
+  /** Options used in the following methods: {@link Table.batchGet}, {@link Table.batchGetParams}. */
   export interface BatchGetOptions extends BaseOptions {
     /** Returns the ConsumedCapacity for the table operation. */
     consumed?: DocumentClient.ReturnConsumedCapacity;
   }
 
-  /** Options used in following methods: {@link Table.batchGet}, {@link Table.batchGetParams}. */
+  /** Options used in the following methods: {@link Table.batchGet}, {@link Table.batchGetParams}. */
   export interface BatchGetTableOptions extends BaseOptions<BatchGetTableInput> {
     /** List of attributes to return from table for operation. */
     itemAttributes?: string[];
   }
 
-  /** Options used in following methods: {@link Table.batchWrite}, {@link Table.batchWriteParams}. */
+  /** Options used in the following methods: {@link Table.batchWrite}, {@link Table.batchWriteParams}. */
   export interface BatchWriteTableOptions extends BaseOptions {
     /** Returns the ConsumedCapacity for the table operation. */
     consumed?: DocumentClient.ReturnConsumedCapacity;
@@ -927,7 +933,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     metrics?: DocumentClient.ReturnItemCollectionMetrics;
   }
 
-  /** Options used in following methods: {@link Table.transactGet}, {@link Table.transactGetParams}. */
+  /** Options used in the following methods: {@link Table.transactGet}, {@link Table.transactGetParams}. */
   export interface TransactGetTableOptions extends BaseOptions {
     /** Returns the ConsumedCapacity for the table operation. */
     consumed?: DocumentClient.ReturnConsumedCapacity;
@@ -951,7 +957,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
     itemAttributes?: string[];
   }
 
-  /** Options used in following methods: {@link Table.transactWrite}, {@link Table.transactWriteParams}. */
+  /** Options used in the following methods: {@link Table.transactWrite}, {@link Table.transactWriteParams}. */
   export interface TransactWriteTableOptions extends BaseOptions {
     /** Token to use for the transact request. */
     token?: DocumentClient.ClientRequestToken;
@@ -994,6 +1000,24 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
       conditions?: Condition.Resolver[];
       returnFailure?: DocumentClient.ReturnValue;
     }[];
+  }
+
+  /** Options used in the following methods: {@link Table.addParams}. */
+  export interface AddParamsOptions extends BaseOptions {
+    /** List of attributes to return from table for operation. */
+    itemAttributes?: string[];
+
+    /**
+     * Array of expression condition resolvers that are joined together with AND, then used as
+     * ConditionExpression or FilterExpression params in table operations.
+     */
+    conditions?: Condition.Resolver[];
+
+    /**
+     * Filter conditions for filtering out items after the query but before returning.
+     * Note: Items filter out still consume read capacity.
+     */
+    filters?: Condition.Resolver[];
   }
 
   /** Default and Example table primary key with a generalized compact format. */
@@ -1282,12 +1306,12 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
       Table.addBatchParams(this.options, params);
       Object.keys(this.reads).forEach((name) => {
         const { keys, options } = this.reads[name];
-        const tableParams = Table.addItemAttributes<Table.BatchGetTableInput>(
+        params.RequestItems[name] = Table.addParams<Table.BatchGetTableInput>(
           { Keys: keys },
-          options?.itemAttributes,
-          options?.attributes || this.options.attributes,
+          options || {},
+          undefined,
+          this.options.attributes,
         );
-        params.RequestItems[name] = options?.params ? Object.assign(tableParams, options.params) : tableParams;
       });
       return params;
     }
@@ -1495,13 +1519,7 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
       Table.addBatchParams(this.options, params);
       Object.keys(this.reads).forEach((name) =>
         this.reads[name].forEach((item) =>
-          items.push({
-            Get: Table.addItemAttributes<DocumentClient.Get>(
-              { Key: item.key, TableName: name },
-              item.itemAttributes,
-              this.options.attributes,
-            ),
-          }),
+          items.push({ Get: Table.addParams<DocumentClient.Get>({ Key: item.key, TableName: name }, this.options) }),
         ),
       );
       return params;
