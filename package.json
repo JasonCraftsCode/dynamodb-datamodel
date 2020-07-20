@@ -65,7 +65,7 @@
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.18.0",
-    "eslint-plugin-jsdoc": "^29.2.0",
+    "eslint-plugin-jsdoc": "^30.0.3",
     "eslint-plugin-prefer-arrow": "^1.2.1",
     "eslint-plugin-tsdoc": "^0.2.5",
     "jest": "^26.1.0",
