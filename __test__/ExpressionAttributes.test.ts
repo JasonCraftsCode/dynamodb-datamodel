@@ -11,7 +11,7 @@ it('Validate ExpressionAttributes exports', () => {
   expect(typeof ExpressionAttributes).toBe('function');
 });
 
-it('Validate isValidAttributeName ', () => {
+it('Validate isValidAttributeName', () => {
   expect(ExpressionAttributes.isValidAttributeName('a')).toBeTruthy();
   expect(ExpressionAttributes.isValidAttributeName('a0')).toBeTruthy();
   expect(ExpressionAttributes.isValidAttributeName('0')).toBeFalsy();

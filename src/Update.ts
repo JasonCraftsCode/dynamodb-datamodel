@@ -738,7 +738,7 @@ export namespace Update {
    * Type used for general update methods
    */
   export type OperandValue<T extends Table.AttributeValues = Table.AttributeValues> =
-    | Table.AttributeValues
+    | T
     | OperandFunction;
 
   /**

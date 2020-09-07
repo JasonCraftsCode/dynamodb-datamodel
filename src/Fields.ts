@@ -535,9 +535,8 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * Base class for model property fields.
    * @param V - Type this field represents used in Condition methods.
-   * @param T - Type name for the Condition.Resolver for automatic type checking.
    */
-  export class FieldExpression<V, T extends Table.AttributeTypes> extends FieldBase<V> {
+  export class FieldExpression<V> extends FieldBase<V> {
     /**
      * Helper method that just calls {@link Condition.path} with tableName() as value param.
      * See {@link Condition.path} for more info and examples.
@@ -638,7 +637,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * See {@link Fields.string} for details.
    */
-  export class FieldString extends FieldExpression<string, 'S'> {
+  export class FieldString extends FieldExpression<string> {
     /**
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
@@ -667,12 +666,12 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * See {@link Fields.number} for details.
    */
-  export class FieldNumber extends FieldExpression<number, 'N'> {}
+  export class FieldNumber extends FieldExpression<number> {}
 
   /**
    * See {@link Fields.binary} for details.
    */
-  export class FieldBinary extends FieldExpression<Table.BinaryValue, 'B'> {
+  export class FieldBinary extends FieldExpression<Table.BinaryValue> {
     /**
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
@@ -685,17 +684,17 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * See {@link Fields.boolean} for details.
    */
-  export class FieldBoolean extends FieldExpression<boolean, 'BOOL'> {}
+  export class FieldBoolean extends FieldExpression<boolean> {}
 
   /**
    * See {@link Fields.null} for details.
    */
-  export class FieldNull extends FieldExpression<null, 'NULL'> {}
+  export class FieldNull extends FieldExpression<null> {}
 
   /**
    *  Generic set property field is base class for {@link FieldStringSet}, {@link FieldStringSet}, and {@link FieldStringSet}.
    */
-  export class FieldSet<V, T extends 'BS' | 'NS' | 'SS'> extends FieldExpression<V, T> {
+  export class FieldSet<V> extends FieldExpression<V> {
     /**
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
@@ -716,22 +715,22 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * See {@link Fields.stringSet} for details.
    */
-  export class FieldStringSet extends FieldSet<Table.StringSetValue, 'SS'> {}
+  export class FieldStringSet extends FieldSet<Table.StringSetValue> {}
 
   /**
    * See {@link Fields.numberSet} for details.
    */
-  export class FieldNumberSet extends FieldSet<Table.NumberSetValue, 'NS'> {}
+  export class FieldNumberSet extends FieldSet<Table.NumberSetValue> {}
 
   /**
    * See {@link Fields.binarySet} for details.
    */
-  export class FieldBinarySet extends FieldSet<Table.BinarySetValue, 'BS'> {}
+  export class FieldBinarySet extends FieldSet<Table.BinarySetValue> {}
 
   /**
    * See {@link Fields.list} for details.
    */
-  export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[], 'L'> {
+  export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[]> {
     /**
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
@@ -783,7 +782,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * See {@link Fields.map} for details.
    */
-  export class FieldMap<V extends Table.AttributeValues> extends FieldExpression<{ [key: string]: V }, 'M'> {
+  export class FieldMap<V extends Table.AttributeValues> extends FieldExpression<{ [key: string]: V }> {
     /**
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
@@ -892,7 +891,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    * See {@link Fields.model} for details.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export class FieldModel<V extends { [key: string]: any }> extends FieldExpression<V, 'M'> {
+  export class FieldModel<V extends { [key: string]: any }> extends FieldExpression<V> {
     /**
      * Model schema to use for writing to this field
      */

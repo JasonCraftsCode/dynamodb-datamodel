@@ -475,7 +475,7 @@ describe('Validate Model with Table and Indexes', () => {
       expect(client.get).toBeCalledTimes(1);
     });
 
-    it('Model.get no Item expect results undefined ', async () => {
+    it('Model.get no Item expect results undefined', async () => {
       client.get = jest.fn(() => request({}));
       const results = await userModel.get({ id: 'id1' });
       expect(results.item).toEqual({});

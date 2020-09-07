@@ -716,7 +716,7 @@ describe('Validate Batch Write', () => {
     });
   });
 
-  it('set getParams with empty ', () => {
+  it('set getParams with empty', () => {
     const batchWrite = new Table.BatchWrite(client);
     batchWrite.set('testTable', [], []);
     const params = batchWrite.getParams();
@@ -897,7 +897,7 @@ describe('Validate Transact Write', () => {
     });
   });
 
-  it('set getParams with empty ', () => {
+  it('set getParams with empty', () => {
     const transactWrite = new Table.TransactWrite(client);
     transactWrite.set('testTable', { check: [], delete: [], put: [], update: [] });
     const params = transactWrite.getParams();
