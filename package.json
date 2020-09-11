@@ -69,7 +69,7 @@
     "eslint-plugin-prefer-arrow": "^1.2.2",
     "eslint-plugin-tsdoc": "^0.2.7",
     "jest": "^26.4.2",
-    "npm-check-updates": "^8.1.1",
+    "npm-check-updates": "^9.0.0",
     "prettier": "^2.1.1",
     "ts-jest": "^26.3.0",
     "ts-node": "^9.0.0",
