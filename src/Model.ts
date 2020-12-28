@@ -79,10 +79,7 @@ export class Model implements Model.ModelBase {
    */
   toTableUpdate(data: Model.ModelUpdate, context: Fields.TableContext): Model.TableUpdateData {
     const tableData: Table.AttributeValuesMap = {};
-    Object.keys(this.schema).forEach((key) => {
-      const field = this.schema[key];
-      if (field.toTableUpdate) field.toTableUpdate(key, data, tableData, context);
-    });
+    Object.keys(this.schema).forEach((key) => this.schema[key].toTableUpdate(key, data, tableData, context));
     return Model.splitTableData(this.table, tableData);
   }
 

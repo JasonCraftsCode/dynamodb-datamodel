@@ -63,7 +63,7 @@ export class Fields {
    * @param options - Options to initialize field with.
    * @returns New FieldStringSet object.
    */
-  static stringSet(options?: Fields.BaseOptions<Table.StringSetValue>): Fields.FieldStringSet {
+  static stringSet(options?: Fields.SetOptions<Table.StringSetValue | string[]>): Fields.FieldStringSet {
     return new Fields.FieldStringSet(options);
   }
 
@@ -72,7 +72,7 @@ export class Fields {
    * @param options - Options to initialize field with.
    * @returns New FieldNumberSet object.
    */
-  static numberSet(options?: Fields.BaseOptions<Table.NumberSetValue>): Fields.FieldNumberSet {
+  static numberSet(options?: Fields.SetOptions<Table.NumberSetValue | number[]>): Fields.FieldNumberSet {
     return new Fields.FieldNumberSet(options);
   }
 
@@ -81,7 +81,7 @@ export class Fields {
    * @param options - Options to initialize field with.
    * @returns New FieldBinarySet object.
    */
-  static binarySet(options?: Fields.BaseOptions<Table.BinarySetValue>): Fields.FieldBinarySet {
+  static binarySet(options?: Fields.SetOptions<Table.BinarySetValue | Table.BinaryValue[]>): Fields.FieldBinarySet {
     return new Fields.FieldBinarySet(options);
   }
 
@@ -392,7 +392,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
      * @param tableData - Data object for the table that this method will append to.
      * @param context - Current context this method is being called in.
      */
-    toTableUpdate?(
+    toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.ResolverMap,
@@ -483,7 +483,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
 
     // eslint-disable-next-line tsdoc/syntax
     /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
-    toTableUpdate?(
+    toTableUpdate(
       name: string,
       modelData: Model.ModelUpdate,
       tableData: Update.ResolverMap,
@@ -691,10 +691,71 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
    */
   export class FieldNull extends FieldExpression<null> {}
 
+  export interface SetOptions<V> extends BaseOptions<V> {
+    /**
+     * Defines the schema for the list type.
+     */
+    useArrays?: boolean;
+  }
+
   /**
    *  Generic set property field is base class for {@link FieldStringSet}, {@link FieldStringSet}, and {@link FieldStringSet}.
    */
   export class FieldSet<V> extends FieldExpression<V> {
+    useArrays?: boolean;
+
+    /**
+     * Initialize the Field.
+     * @param options - Options to initialize FieldBase with.
+     */
+    constructor(options: SetOptions<V> = {}) {
+      super(options) /* istanbul ignore next: needed for ts with es5 */;
+      this.useArrays = options.useArrays !== undefined ? options.useArrays : true;
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
+    toModel(
+      name: string,
+      tableData: Table.AttributeValuesMap,
+      modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: ModelContext,
+    ): void {
+      const value = tableData[this.alias || name];
+      if (value !== undefined) modelData[name] = this.useArrays ? (value as Table.AttributeSetValues).values : value;
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
+    toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: TableContext,
+    ): void {
+      let value = (modelData[name] as unknown) as V | undefined;
+      if (value === undefined) value = this.getDefault(name, modelData, context);
+      if (value !== undefined)
+        tableData[this.alias || name] =
+          this.useArrays && Array.isArray(value) ? context.model.table.createSet(value) : value;
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.ResolverMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: TableContext,
+    ): void {
+      const value = modelData[name];
+      if (value !== undefined)
+        tableData[this.alias || name] =
+          this.useArrays && Array.isArray(value) ? context.model.table.createSet(value) : value;
+    }
+
     /**
      * Helper method that just calls {@link Condition.size} with tableName() as path param.
      * See {@link Condition.size} for more info and examples.
@@ -715,17 +776,17 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
   /**
    * See {@link Fields.stringSet} for details.
    */
-  export class FieldStringSet extends FieldSet<Table.StringSetValue> {}
+  export class FieldStringSet extends FieldSet<Table.StringSetValue | string[]> {}
 
   /**
    * See {@link Fields.numberSet} for details.
    */
-  export class FieldNumberSet extends FieldSet<Table.NumberSetValue> {}
+  export class FieldNumberSet extends FieldSet<Table.NumberSetValue | number[]> {}
 
   /**
    * See {@link Fields.binarySet} for details.
    */
-  export class FieldBinarySet extends FieldSet<Table.BinarySetValue> {}
+  export class FieldBinarySet extends FieldSet<Table.BinarySetValue | Table.BinaryValue[]> {}
 
   /**
    * See {@link Fields.list} for details.
@@ -776,6 +837,69 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     init(name: string, model: Model): void {
       super.init(name, model);
       Model.initSchema(this.schema, model);
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
+    toModel(
+      name: string,
+      tableData: Table.AttributeValuesMap,
+      modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: ModelContext,
+    ): void {
+      const value = tableData[this.alias || name] as V[];
+      if (value !== undefined) {
+        const modelValue: V[] = [];
+        value.forEach((next) => {
+          const nextData = {} as V;
+          Object.keys(this.schema).forEach((key) => this.schema[key].toModel(key, next, nextData, context));
+          modelValue.push(nextData);
+        });
+        modelData[name] = modelValue;
+      }
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
+    toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: TableContext,
+    ): void {
+      let value = modelData[name] as V[] | undefined;
+      if (value === undefined) value = this.getDefault(name, modelData, context);
+      if (value !== undefined) {
+        const tableValue: V[] = [];
+        value.forEach((next) => {
+          const nextData = {} as V;
+          Object.keys(this.schema).forEach((key) => this.schema[key].toTable(key, next, nextData, context));
+          tableValue.push(nextData);
+        });
+        tableData[this.alias || name] = tableValue;
+      }
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.ResolverMap,
+      context: TableContext,
+    ): void {
+      const value = modelData[name] as V[];
+      if (typeof value === 'function') tableData[this.alias || name] = value;
+      else if (value !== undefined) {
+        const tableValue: V[] = [];
+        value.forEach((next) => {
+          const nextData = {} as V;
+          Object.keys(this.schema).forEach((key) => this.schema[key].toTableUpdate(key, next, nextData, context));
+          tableValue.push(nextData);
+        });
+        tableData[this.alias || name] = tableValue;
+      }
     }
   }
 
@@ -853,6 +977,72 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       Model.initSchema(this.schema, model);
     }
 
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
+    toModel(
+      name: string,
+      tableData: Table.AttributeValuesMap,
+      modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: ModelContext,
+    ): void {
+      const value = tableData[this.alias || name] as { [key: string]: V };
+      if (value !== undefined) {
+        const modelValue: { [key: string]: V } = {};
+        Object.keys(value).forEach((valueKey) => {
+          const nextData = {} as V;
+          Object.keys(this.schema).forEach((key) => this.schema[key].toModel(key, value[valueKey], nextData, context));
+          modelValue[valueKey] = nextData;
+        });
+        modelData[name] = modelValue;
+      }
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
+    toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: TableContext,
+    ): void {
+      let value = modelData[name] as { [key: string]: V } | undefined;
+      if (value === undefined) value = this.getDefault(name, modelData, context);
+      if (value !== undefined) {
+        const tableValue: { [key: string]: V } = {};
+        Object.keys(value).forEach((valueKey) => {
+          const nextData = {} as V;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          Object.keys(this.schema).forEach((key) => this.schema[key].toTable(key, value![valueKey], nextData, context));
+          tableValue[valueKey] = nextData;
+        });
+        tableData[this.alias || name] = tableValue;
+      }
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.ResolverMap,
+      context: TableContext,
+    ): void {
+      const value = modelData[name] as { [key: string]: V };
+      if (typeof value === 'function') tableData[this.alias || name] = value;
+      else if (value !== undefined) {
+        const tableValue: { [key: string]: V } = {};
+        Object.keys(value).forEach((valueKey) => {
+          const nextData = {} as V;
+          Object.keys(this.schema).forEach((key) =>
+            this.schema[key].toTableUpdate(key, value[valueKey], nextData, context),
+          );
+          tableValue[valueKey] = nextData;
+        });
+        tableData[this.alias || name] = tableValue;
+      }
+    }
+
     /**
      * Used to create nested
      * ```typescript
@@ -913,6 +1103,58 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     init(name: string, model: Model): void {
       super.init(name, model);
       Model.initSchema(this.schema, model);
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toModel} */
+    toModel(
+      name: string,
+      tableData: Table.AttributeValuesMap,
+      modelData: Model.ModelData,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: ModelContext,
+    ): void {
+      const value = tableData[this.alias || name] as V;
+      if (value !== undefined) {
+        const nextData = {} as V;
+        Object.keys(this.schema).forEach((key) => this.schema[key].toModel(key, value, nextData, context));
+        modelData[name] = nextData;
+      }
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTable} */
+    toTable(
+      name: string,
+      modelData: Model.ModelData,
+      tableData: Table.AttributeValuesMap,
+      context: TableContext,
+    ): void {
+      let value = modelData[name] as V | undefined;
+      if (value === undefined) value = this.getDefault(name, modelData, context);
+      if (value !== undefined) {
+        const nextData = {} as V;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        Object.keys(this.schema).forEach((key) => this.schema[key].toTable(key, value!, nextData, context));
+        tableData[this.alias || name] = nextData;
+      }
+    }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      name: string,
+      modelData: Model.ModelUpdate,
+      tableData: Update.ResolverMap,
+      context: TableContext,
+    ): void {
+      const value = modelData[name] as V;
+      if (typeof value === 'function') tableData[this.alias || name] = value;
+      else if (value !== undefined) {
+        const nextData = {} as V;
+        Object.keys(this.schema).forEach((key) => this.schema[key].toTableUpdate(key, value, nextData, context));
+        tableData[this.alias || name] = nextData;
+      }
     }
 
     /**
@@ -1001,6 +1243,21 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       context: TableContext,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ): void {}
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    toTableUpdate(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      name: string,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      modelData: Model.ModelUpdate,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      tableData: Update.ResolverMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: Fields.TableContext,
       // eslint-disable-next-line @typescript-eslint/no-empty-function
     ): void {}
   }
@@ -1407,6 +1664,20 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       if (Table.isPutAction(context.action) && context.model.name) tableData[this.alias || name] = context.model.name;
     }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      name: string,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      modelData: Model.ModelUpdate,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      tableData: Update.ResolverMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: Fields.TableContext,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ): void {}
   }
 
   /**
@@ -1482,6 +1753,20 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
     ): void {
       if (Table.isPutAction(context.action)) tableData[this.alias || name] = toEpochSec(this.now());
     }
+
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      name: string,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      modelData: Model.ModelUpdate,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      tableData: Update.ResolverMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: Fields.TableContext,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ): void {}
   }
 
   /**
@@ -1600,8 +1885,19 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       if (Table.isPutAction(context.action)) tableData[this.alias || name] = toEpochSec(this.now());
     }
 
-    /** toTableUpdate not supported by FieldCreatedNumberDate */
-    toTableUpdate = undefined;
+    // eslint-disable-next-line tsdoc/syntax
+    /** @inheritDoc {@inheritDoc (Fields:namespace).Field.toTableUpdate} */
+    toTableUpdate(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      name: string,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      modelData: Model.ModelUpdate,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      tableData: Update.ResolverMap,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      context: Fields.TableContext,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+    ): void {}
   }
 
   /**

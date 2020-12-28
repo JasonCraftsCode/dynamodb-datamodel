@@ -85,7 +85,7 @@ export class ExpressionAttributes implements Table.ExpressionAttributes {
 // @public
 export class Fields {
     static binary(options?: Fields.BaseOptions<Table.BinaryValue>): Fields.FieldBinary;
-    static binarySet(options?: Fields.BaseOptions<Table.BinarySetValue>): Fields.FieldBinarySet;
+    static binarySet(options?: Fields.SetOptions<Table.BinarySetValue | Table.BinaryValue[]>): Fields.FieldBinarySet;
     static boolean(options?: Fields.BaseOptions<boolean>): Fields.FieldBoolean;
     static composite(options: Fields.CompositeOptions): Fields.FieldComposite;
     static compositeNamed<T extends {
@@ -101,11 +101,11 @@ export class Fields {
     static modelList<V>(options: Fields.ModelListOptions<V>): Fields.FieldModelList<V>;
     static modelMap<V>(options: Fields.ModelMapOptions<V>): Fields.FieldModelMap<V>;
     static number(options?: Fields.BaseOptions<number>): Fields.FieldNumber;
-    static numberSet(options?: Fields.BaseOptions<Table.NumberSetValue>): Fields.FieldNumberSet;
+    static numberSet(options?: Fields.SetOptions<Table.NumberSetValue | number[]>): Fields.FieldNumberSet;
     static revision(options?: Fields.RevisionOptions): Fields.FieldRevision;
     static split(options: Fields.SplitOptions): Fields.FieldSplit;
     static string(options?: Fields.BaseOptions<string>): Fields.FieldString;
-    static stringSet(options?: Fields.BaseOptions<Table.StringSetValue>): Fields.FieldStringSet;
+    static stringSet(options?: Fields.SetOptions<Table.StringSetValue | string[]>): Fields.FieldStringSet;
     static type(options?: Fields.TypeOptions): Fields.FieldType;
     static updatedDate(options?: Fields.UpdateDateOptions): Fields.FieldUpdatedDate;
     static updatedNumberDate(options?: Fields.UpdateNumberDateOptions): Fields.FieldUpdatedNumberDate;
@@ -149,7 +149,7 @@ export namespace Fields {
         init(name: string, model: Model): void;
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
-        toTableUpdate?(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldBase<V> implements Field {
         constructor(options?: BaseOptions<V>);
@@ -161,7 +161,7 @@ export namespace Fields {
         tableName(): string;
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
-        toTableUpdate?(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export namespace FieldBase {
         export type DefaultFunction<T> = (name: string, modelData: Model.ModelData, context: TableContext) => T;
@@ -169,7 +169,7 @@ export namespace Fields {
     export class FieldBinary extends FieldExpression<Table.BinaryValue> {
         size(): Condition.ValueResolver;
     }
-    export class FieldBinarySet extends FieldSet<Table.BinarySetValue> {
+    export class FieldBinarySet extends FieldSet<Table.BinarySetValue | Table.BinaryValue[]> {
     }
     export class FieldBoolean extends FieldExpression<boolean> {
     }
@@ -206,12 +206,13 @@ export namespace Fields {
         now: () => Date;
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldCreatedNumberDate extends FieldNumber {
         constructor(options?: CreatedDateOptions);
         now: () => Date;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
-        toTableUpdate: undefined;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldDate extends FieldBase<Date> {
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
@@ -236,6 +237,7 @@ export namespace Fields {
         init(name: string, model: Model): void;
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[]> {
         size(): Condition.ValueResolver;
@@ -252,6 +254,9 @@ export namespace Fields {
         init(name: string, model: Model): void;
         schema: Model.ModelSchemaT<V>;
         size(): Condition.ValueResolver;
+        toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldModelList<V extends {
         [key: string]: any;
@@ -259,6 +264,9 @@ export namespace Fields {
         constructor(options: ModelListOptions<V>);
         init(name: string, model: Model): void;
         schema: Model.ModelSchemaT<V>;
+        toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldModelMap<V extends {
         [key: string]: any;
@@ -266,12 +274,15 @@ export namespace Fields {
         constructor(options: ModelMapOptions<V>);
         init(name: string, model: Model): void;
         schema: Model.ModelSchemaT<V>;
+        toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldNull extends FieldExpression<null> {
     }
     export class FieldNumber extends FieldExpression<number> {
     }
-    export class FieldNumberSet extends FieldSet<Table.NumberSetValue> {
+    export class FieldNumberSet extends FieldSet<Table.NumberSetValue | number[]> {
     }
     export class FieldRevision implements Fields.Field {
         constructor(options?: RevisionOptions);
@@ -285,8 +296,14 @@ export namespace Fields {
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldSet<V> extends FieldExpression<V> {
+        constructor(options?: SetOptions<V>);
         contains(value: string): Condition.Resolver;
         size(): Condition.ValueResolver;
+        toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
+        // (undocumented)
+        useArrays?: boolean;
     }
     export class FieldSplit implements Field {
         constructor(options: SplitOptions);
@@ -303,7 +320,7 @@ export namespace Fields {
         contains(value: string): Condition.Resolver;
         size(): Condition.ValueResolver;
     }
-    export class FieldStringSet extends FieldSet<Table.StringSetValue> {
+    export class FieldStringSet extends FieldSet<Table.StringSetValue | string[]> {
     }
     export class FieldType implements Field {
         constructor(options?: TypeOptions);
@@ -312,6 +329,7 @@ export namespace Fields {
         name?: string;
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldUpdatedDate implements Fields.Field {
         constructor(options?: UpdateDateOptions);
@@ -352,6 +370,10 @@ export namespace Fields {
         alias?: string;
         matchOnWrite?: boolean;
         start?: number;
+    }
+    // (undocumented)
+    export interface SetOptions<V> extends BaseOptions<V> {
+        useArrays?: boolean;
     }
     export interface SplitOptions {
         aliases: string[];
@@ -1059,7 +1081,7 @@ export class Update {
 // @public
 export namespace Update {
     export type Binary = Table.BinaryValue | Update.Resolver<'B'>;
-    export type BinarySet = Table.BinarySetValue | Update.Resolver<'BS'>;
+    export type BinarySet = Table.BinaryValue[] | Table.BinarySetValue | Update.Resolver<'BS'>;
     export type Boolean = boolean | Update.Resolver<'BOOL'>;
     export interface Expression {
         addAdd(value: string): void;
@@ -1088,7 +1110,7 @@ export namespace Update {
     };
     export type Null = null | Update.Resolver<'NULL'>;
     export type Number = number | Update.Resolver<'N'>;
-    export type NumberSet = Table.NumberSetValue | Update.Resolver<'NS'>;
+    export type NumberSet = number[] | Table.NumberSetValue | Update.Resolver<'NS'>;
     export type OperandFunction = (name: string, exp: Update.Expression) => string;
     export type OperandList<T extends Table.AttributeValues = Table.AttributeValues> = OperandValue<string | T[]>;
     export type OperandNumber = OperandValue<string | number>;
@@ -1106,7 +1128,7 @@ export namespace Update {
     };
     export type ResolverModelValue<T> = Extract<T, Table.AttributeValues | Update.Resolver<Table.AttributeTypes>> | null;
     export type String = string | Update.Resolver<'S'>;
-    export type StringSet = Table.StringSetValue | Update.Resolver<'SS'>;
+    export type StringSet = string[] | Table.StringSetValue | Update.Resolver<'SS'>;
 }
 
 // @public

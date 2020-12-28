@@ -174,6 +174,7 @@ expect(params).toEqual({
 								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modelmapoptions.html" class="tsd-kind-icon">Model<wbr>Map<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modeloptions.html" class="tsd-kind-icon">Model<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.revisionoptions.html" class="tsd-kind-icon">Revision<wbr>Options</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.setoptions.html" class="tsd-kind-icon">Set<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.splitoptions.html" class="tsd-kind-icon">Split<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.tablecontext.html" class="tsd-kind-icon">Table<wbr>Context</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.typeoptions.html" class="tsd-kind-icon">Type<wbr>Options</a></li>
@@ -277,7 +278,7 @@ expect(params).toEqual({
 					<div class="tsd-signature tsd-kind-icon">Composite<wbr>Slot<wbr>Map&lt;T, V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1200">Fields.ts:1200</a></li>
+							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1457">Fields.ts:1457</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -334,7 +335,7 @@ expect(params).toEqual({
 					<a name="binaryset" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> binary<wbr>Set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">binary<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#binarysetvalue" class="tsd-signature-type">BinarySetValue</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldbinaryset.html" class="tsd-signature-type">FieldBinarySet</a></li>
+						<li class="tsd-signature tsd-kind-icon">binary<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#binarysetvalue" class="tsd-signature-type">BinarySetValue</a><span class="tsd-signature-symbol"> | </span><a href="table.html#binaryvalue" class="tsd-signature-type">BinaryValue</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldbinaryset.html" class="tsd-signature-type">FieldBinarySet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -351,7 +352,7 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#binarysetvalue" class="tsd-signature-type">BinarySetValue</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#binarysetvalue" class="tsd-signature-type">BinarySetValue</a><span class="tsd-signature-symbol"> | </span><a href="table.html#binaryvalue" class="tsd-signature-type">BinaryValue</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
@@ -921,7 +922,7 @@ expect(params).toEqual({
 					<a name="numberset" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> number<wbr>Set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">number<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#numbersetvalue" class="tsd-signature-type">NumberSetValue</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldnumberset.html" class="tsd-signature-type">FieldNumberSet</a></li>
+						<li class="tsd-signature tsd-kind-icon">number<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#numbersetvalue" class="tsd-signature-type">NumberSetValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldnumberset.html" class="tsd-signature-type">FieldNumberSet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -938,7 +939,7 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#numbersetvalue" class="tsd-signature-type">NumberSetValue</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#numbersetvalue" class="tsd-signature-type">NumberSetValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
@@ -1080,7 +1081,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="stringset" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> string<wbr>Set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">string<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#stringsetvalue" class="tsd-signature-type">StringSetValue</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldstringset.html" class="tsd-signature-type">FieldStringSet</a></li>
+						<li class="tsd-signature tsd-kind-icon">string<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#stringsetvalue" class="tsd-signature-type">StringSetValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldstringset.html" class="tsd-signature-type">FieldStringSet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1097,7 +1098,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#stringsetvalue" class="tsd-signature-type">StringSetValue</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#stringsetvalue" class="tsd-signature-type">StringSetValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
@@ -1378,6 +1379,9 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/fields.revisionoptions.html" class="tsd-kind-icon">Revision<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="../interfaces/fields.setoptions.html" class="tsd-kind-icon">Set<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/fields.splitoptions.html" class="tsd-kind-icon">Split<wbr>Options</a>

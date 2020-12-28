@@ -737,9 +737,7 @@ export namespace Update {
   /**
    * Type used for general update methods
    */
-  export type OperandValue<T extends Table.AttributeValues = Table.AttributeValues> =
-    | T
-    | OperandFunction;
+  export type OperandValue<T extends Table.AttributeValues = Table.AttributeValues> = T | OperandFunction;
 
   /**
    * Type used for number based update methods.
@@ -779,17 +777,17 @@ export namespace Update {
   /**
    * String Set specific update resolver, used to define properties in Model interfaces.
    */
-  export type StringSet = Table.StringSetValue | Update.Resolver<'SS'>;
+  export type StringSet = string[] | Table.StringSetValue | Update.Resolver<'SS'>;
 
   /**
    * Number Set specific update resolver, used to define properties in Model interfaces.
    */
-  export type NumberSet = Table.NumberSetValue | Update.Resolver<'NS'>;
+  export type NumberSet = number[] | Table.NumberSetValue | Update.Resolver<'NS'>;
 
   /**
    * Binary Set specific update resolver, used to define properties in Model interfaces.
    */
-  export type BinarySet = Table.BinarySetValue | Update.Resolver<'BS'>;
+  export type BinarySet = Table.BinaryValue[] | Table.BinarySetValue | Update.Resolver<'BS'>;
 
   /**
    * Wrapper to remove recursive types so model interface properties get output with correct type.

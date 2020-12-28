@@ -1,3 +1,4 @@
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { ConditionExpression } from '../src/Condition';
 import { ExpressionAttributes } from '../src/ExpressionAttributes';
 import { Fields } from '../src/Fields';
@@ -6,7 +7,17 @@ import { Table } from '../src/Table';
 import { Update } from '../src/Update';
 import { buildUpdateParams } from './testCommon';
 
-const model = { name: 'MyModel' } as Model;
+const client = new DocumentClient({ convertEmptyValues: true });
+
+const table = {
+  createSet(
+    list: string[] | number[] | Table.BinaryValue[],
+    options?: DocumentClient.CreateSetOptions,
+  ): Table.AttributeSetValues {
+    return client.createSet(list, options);
+  },
+};
+const model = { name: 'MyModel', table } as Model;
 function getTableContext(action: Table.ItemActions, scope: Fields.ActionScope = 'single'): Fields.TableContext {
   return {
     action,
@@ -34,7 +45,7 @@ interface ChildModel {
 }
 
 const childSchema = {
-  name: Fields.string(),
+  name: Fields.string({ alias: 'n' }),
   age: Fields.number(),
   adult: Fields.boolean(),
 };
@@ -46,7 +57,7 @@ interface SpouseModel {
 }
 
 const spouseSchema = {
-  name: Fields.string(),
+  name: Fields.string({ alias: 'n' }),
   age: Fields.number(),
   married: Fields.boolean(),
 };
@@ -60,10 +71,12 @@ enum Role {
 
 interface GroupModel {
   role: Role;
+  name: Update.String;
 }
 
 const groupSchema = {
-  role: Fields.number(),
+  role: Fields.number({ alias: 'r' }),
+  name: Fields.string(),
 };
 
 describe('When FieldBase', () => {
@@ -205,6 +218,9 @@ describe('When FieldSet', () => {
   const field = Fields.stringSet();
   field.init('set', model);
 
+  const fieldNoArray = Fields.stringSet({ useArrays: false });
+  fieldNoArray.init('setNoArray', model);
+
   it('expect numberSet returns correct type', () => {
     const field1 = Fields.numberSet();
     expect(field1.name).toBeUndefined();
@@ -227,6 +243,60 @@ describe('When FieldSet', () => {
   it('expect contains returns condition expression', () => {
     const exp = createConditionExpression();
     expect(field.contains('xyz')(exp, 'BOOL')).toEqual('contains(#n0, :v0)');
+  });
+
+  it('expect stringSet toModel', () => {
+    const data: Model.ModelData = {};
+    field.toModel('set', { set: client.createSet(['abc', 'def']) }, data, modelContext);
+    expect(data).toEqual({ set: ['abc', 'def'] });
+  });
+
+  it('expect array stringSet toTable', () => {
+    const data: Table.AttributeValuesMap = {};
+    field.toTable('set', { set: ['abc', 'def'] }, data, tableContext);
+    expect(data).toEqual({ set: client.createSet(['abc', 'def']) });
+  });
+
+  it('expect array stringSet toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    field.toTableUpdate('set', { set: ['abc', 'def'] }, data, tableContext);
+    expect(data).toEqual({ set: client.createSet(['abc', 'def']) });
+  });
+
+  it('expect createSet stringSet toTable', () => {
+    const data: Table.AttributeValuesMap = {};
+    field.toTable('set', { set: client.createSet(['abc', 'def']) }, data, tableContext);
+    expect(data).toEqual({ set: client.createSet(['abc', 'def']) });
+  });
+
+  it('expect createSet stringSet toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    field.toTableUpdate('set', { set: client.createSet(['abc', 'def']) }, data, tableContext);
+    expect(data).toEqual({ set: client.createSet(['abc', 'def']) });
+  });
+
+  it('expect no array stringSet toModel', () => {
+    const data: Model.ModelData = {};
+    fieldNoArray.toModel('set', { set: client.createSet(['abc', 'def']) }, data, modelContext);
+    expect(data).toEqual({ set: client.createSet(['abc', 'def']) });
+  });
+
+  it('expect no array stringSet toTable', () => {
+    const data: Table.AttributeValuesMap = {};
+    fieldNoArray.toTable('set', { set: ['abc', 'def'] }, data, tableContext);
+    expect(data).toEqual({ set: ['abc', 'def'] });
+  });
+
+  it('expect no array stringSet toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    fieldNoArray.toTableUpdate('set', { set: ['abc', 'def'] }, data, tableContext);
+    expect(data).toEqual({ set: ['abc', 'def'] });
+  });
+
+  it('FieldSet default function expects to be set', () => {
+    const defaultField = Fields.stringSet({ default: ['abc', 'def'] });
+    defaultField.init('set', model);
+    expect(defaultField.getDefault('set', {} as Model.ModelData, {} as Fields.TableContext)).toEqual(['abc', 'def']);
   });
 });
 
@@ -259,6 +329,35 @@ describe('When FieldModelList', () => {
     const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
+
+  it('expect modelList toModel', () => {
+    const data: Model.ModelData = {};
+    const child = { n: 'child', age: 5, adult: false };
+    field.toModel('children', { children: [child] }, data, modelContext);
+    expect(data).toEqual({ children: [{ name: 'child', age: 5, adult: false }] });
+  });
+
+  it('expect modelList toTable', () => {
+    const data: Table.AttributeValuesMap = {};
+    const child: ChildModel = { name: 'child', age: 5, adult: false };
+    field.toTable('children', { children: [child] }, data, tableContext);
+    expect(data).toEqual({ children: [{ n: 'child', age: 5, adult: false }] });
+  });
+
+  it('expect modelList toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    const child: ChildModel = { name: 'child', age: 5, adult: false };
+    field.toTableUpdate('children', { children: [child] }, data, tableContext);
+    expect(data).toEqual({ children: [{ n: 'child', age: 5, adult: false }] });
+  });
+
+  it('expect modelList with function toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const update = () => {};
+    field.toTableUpdate('children', { children: update }, data, tableContext);
+    expect(typeof data.children).toEqual('function');
+  });
 });
 
 describe('When FieldMap', () => {
@@ -279,13 +378,43 @@ describe('When FieldMap', () => {
 describe('When FieldModelMap', () => {
   const field = Fields.modelMap<GroupModel>({ schema: groupSchema });
   field.init('groups', model);
+
   it('expect size returns condition expression', () => {
     const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
   });
+
+  it('expect modelMap toModel', () => {
+    const data: Model.ModelData = {};
+    const group = { r: Role.Guest, name: 'guest' };
+    field.toModel('groups', { groups: { abc: group } }, data, modelContext);
+    expect(data).toEqual({ groups: { abc: { role: Role.Guest, name: 'guest' } } });
+  });
+
+  it('expect modelMap toTable', () => {
+    const data: Table.AttributeValuesMap = {};
+    const group: GroupModel = { role: Role.Admin, name: 'admin' };
+    field.toTable('groups', { groups: { def: group } }, data, tableContext);
+    expect(data).toEqual({ groups: { def: { r: Role.Admin, name: 'admin' } } });
+  });
+
+  it('expect modelMap toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    const group: GroupModel = { role: Role.Leader, name: 'leader' };
+    field.toTableUpdate('groups', { groups: { hij: group } }, data, tableContext);
+    expect(data).toEqual({ groups: { hij: { r: Role.Leader, name: 'leader' } } });
+  });
+
+  it('expect modelMap with function toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const update = () => {};
+    field.toTableUpdate('groups', { groups: update }, data, tableContext);
+    expect(typeof data.groups).toEqual('function');
+  });
 });
 
-describe('When FieldObject', () => {
+describe('When FieldModel', () => {
   const field = Fields.model<SpouseModel>({ schema: spouseSchema });
   field.init('spouse', model);
 
@@ -297,6 +426,40 @@ describe('When FieldObject', () => {
   it('expect size returns condition expression', () => {
     const exp = createConditionExpression();
     expect(field.size()(exp, 'S')).toEqual('size(#n0)');
+  });
+
+  /*
+    name: string;
+  age: number;
+  married: boolean;
+  */
+  it('expect modelMap toModel', () => {
+    const data: Model.ModelData = {};
+    const spouse = { n: 'wife', age: 42, married: false };
+    field.toModel('spouse', { spouse }, data, modelContext);
+    expect(data).toEqual({ spouse: { name: 'wife', age: 42, married: false } });
+  });
+
+  it('expect modelMap toTable', () => {
+    const data: Table.AttributeValuesMap = {};
+    const spouse: SpouseModel = { name: 'wife', age: 42, married: false };
+    field.toTable('spouse', { spouse }, data, tableContext);
+    expect(data).toEqual({ spouse: { n: 'wife', age: 42, married: false } });
+  });
+
+  it('expect modelMap toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    const spouse: SpouseModel = { name: 'wife', age: 42, married: false };
+    field.toTableUpdate('spouse', { spouse }, data, tableContext);
+    expect(data).toEqual({ spouse: { n: 'wife', age: 42, married: false } });
+  });
+
+  it('expect modelMap with function toTableUpdate', () => {
+    const data: Table.AttributeValuesMap = {};
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const update = () => {};
+    field.toTableUpdate('spouse', { spouse: update }, data, tableContext);
+    expect(typeof data.spouse).toEqual('function');
   });
 });
 
@@ -734,6 +897,12 @@ describe('When FieldSplit', () => {
       const data: Model.ModelData = {};
       field.toModel('createdOn', { addOn: 1585664302000 }, data, modelContext);
       expect(data).toEqual({ createdOn: new Date(1585664302000000) });
+    });
+
+    it('toTableUpdate expect no data', () => {
+      const data: Table.AttributeValuesMap = {};
+      field.toTableUpdate('createdOn', { createdOn: 1585664302000 }, data, tableContext);
+      expect(data).toEqual({});
     });
   });
 

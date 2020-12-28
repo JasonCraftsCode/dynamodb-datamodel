@@ -10,6 +10,7 @@ import { Update } from '../src/Update';
 import { delay } from './testCommon';
 
 const client = new DocumentClient({ convertEmptyValues: true });
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const request = (out: any): Request<DocumentClient.GetItemOutput, AWSError> => {
   return {
@@ -161,8 +162,8 @@ interface ApiUserModel {
   revision: number;
   adult: boolean;
   photo?: Table.BinaryValue;
-  interests?: Table.StringSetValue;
-  modified?: Table.NumberSetValue;
+  interests?: Update.StringSet;
+  modified?: Update.NumberSet;
   spouse?: SpouseModelOutput;
   children?: ChildModelOutput[];
   groups?: { [key: string]: GroupModelOutput };
@@ -570,8 +571,8 @@ describe('Validate Model with Table and Indexes', () => {
           group3: { role: 1 },
         },
         id: 'id1.id2',
-        interests: table.createStringSet(['basketball', 'soccer', 'football']),
-        modified: table.createNumberSet([1585553302, 1585563302]),
+        interests: ['basketball', 'soccer', 'football'],
+        modified: [1585553302, 1585563302],
         name: 'name1',
         photo: Buffer.from('Photo Buffer'),
         revision: 1,

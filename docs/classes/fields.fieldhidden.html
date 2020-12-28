@@ -97,6 +97,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldhidden.html#init" class="tsd-kind-icon">init</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldhidden.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldhidden.html#totable" class="tsd-kind-icon">to<wbr>Table</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fields.fieldhidden.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,7 +116,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L977">Fields.ts:977</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1219">Fields.ts:1219</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -147,7 +148,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#tomodel">toModel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L981">Fields.ts:981</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1223">Fields.ts:1223</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,7 +187,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totable">toTable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L995">Fields.ts:995</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1237">Fields.ts:1237</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -205,6 +206,46 @@
 								</li>
 								<li>
 									<h5>tableData: <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
+								</li>
+								<li>
+									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="totableupdate" class="tsd-anchor"></a>
+					<h3>to<wbr>Table<wbr>Update</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modelData<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, tableData<span class="tsd-signature-symbol">: </span><a href="update.html#resolvermap" class="tsd-signature-type">ResolverMap</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/fields.field.html">Field</a>.<a href="../interfaces/fields.field.html#totableupdate">toTableUpdate</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1252">Fields.ts:1252</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Method called <strong>before</strong> calling into the table object to update the table.  This method will convert the model data
+									into table data and append read or write conditions.</p>
+								</div>
+								<p>Note: Several Fields will just call toTable from toTableUpdate if they don&#39;t support any special update syntax.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>modelData: <a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a></h5>
+								</li>
+								<li>
+									<h5>tableData: <a href="update.html#resolvermap" class="tsd-signature-type">ResolverMap</a></h5>
 								</li>
 								<li>
 									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
@@ -251,6 +292,9 @@
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
 										<a href="fields.fieldhidden.html#totable" class="tsd-kind-icon">to<wbr>Table</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-class">
+										<a href="fields.fieldhidden.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a>
 									</li>
 								</ul>
 							</li>
