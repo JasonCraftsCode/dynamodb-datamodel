@@ -147,8 +147,9 @@ export class Index {
  * Is also a namespace for scoping Index based interfaces and types.
  * @public
  */
+/* istanbul ignore next: needed for ts with es5 */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
-export namespace Index /* istanbul ignore next: needed for ts with es5 */ {
+export namespace Index {
   /**
    * Type of secondary index.
    */

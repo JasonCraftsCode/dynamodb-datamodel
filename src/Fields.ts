@@ -267,8 +267,9 @@ export class Fields {
  * Is also a namespace for scoping Condition based interfaces and types.
  * @public
  * */
+/* istanbul ignore next: needed for ts with es5 */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
-export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
+export namespace Fields {
   /**
    * Used in TableContext to determine the scope the action is executed in.
    * @param single - Action will be preformed via the single item API.
@@ -476,7 +477,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       context: TableContext,
     ): void {
-      let value = (modelData[name] as unknown) as V | undefined;
+      let value = modelData[name] as unknown as V | undefined;
       if (value === undefined) value = this.getDefault(name, modelData, context);
       if (value !== undefined) tableData[this.alias || name] = value;
     }
@@ -734,7 +735,7 @@ export namespace Fields /* istanbul ignore next: needed for ts with es5 */ {
       tableData: Table.AttributeValuesMap,
       context: TableContext,
     ): void {
-      let value = (modelData[name] as unknown) as V | undefined;
+      let value = modelData[name] as unknown as V | undefined;
       if (value === undefined) value = this.getDefault(name, modelData, context);
       if (value !== undefined)
         tableData[this.alias || name] =

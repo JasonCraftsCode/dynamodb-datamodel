@@ -429,7 +429,7 @@ export class Table {
   static addWriteParams<
     T extends Table.ExpressionParams & {
       ReturnValuesOnConditionCheckFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure;
-    }
+    },
   >(
     params: T,
     item: {
@@ -481,8 +481,9 @@ export class Table {
  * Is also a namespace for scoping Table based interfaces and types.
  * @public
  */
+/* istanbul ignore next: needed for ts with es5 */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
-export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
+export namespace Table {
   /**
    * TypeScript utility type that constructs a type consisting of all properties of T set to optional.
    * Does the opposite of [Required]{@link https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredt}.
@@ -1245,9 +1246,10 @@ export namespace Table /* istanbul ignore next: needed for ts with es5 */ {
         options?: BatchGetTableOptions;
       };
     } = {};
-    private getTableReads(
-      name: string,
-    ): { keys: Table.PrimaryKey.AttributeValuesMap[]; options?: BatchGetTableOptions } {
+    private getTableReads(name: string): {
+      keys: Table.PrimaryKey.AttributeValuesMap[];
+      options?: BatchGetTableOptions;
+    } {
       const keys = this.reads[name];
       if (keys) return keys;
       return (this.reads[name] = { keys: [] });

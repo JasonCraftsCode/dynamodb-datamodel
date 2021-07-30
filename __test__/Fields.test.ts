@@ -27,7 +27,7 @@ function getTableContext(action: Table.ItemActions, scope: Fields.ActionScope = 
     options: {} as Table.BaseOptions,
   } as Fields.TableContext;
 }
-const modelContext = ({ model } as unknown) as Fields.ModelContext;
+const modelContext = { model } as unknown as Fields.ModelContext;
 const tableContext = getTableContext('get');
 const putTableContext = getTableContext('put');
 const putNewTableContext = getTableContext('put-new');

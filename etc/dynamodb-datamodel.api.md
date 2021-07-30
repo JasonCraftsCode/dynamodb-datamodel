@@ -59,7 +59,9 @@ export class ConditionExpression implements Condition.Expression {
     attributes: Table.ExpressionAttributes;
     static buildExpression(conditions: Condition.Resolver[], exp: Condition.Expression): string;
     static isResolver(value: Condition.Path | Condition.Value): value is Condition.ValueResolver;
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     resolvePath(path: Condition.Path): string;
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     resolveValues(values: Condition.Value[]): string[];
 }
 
@@ -156,11 +158,15 @@ export namespace Fields {
         alias?: string;
         default?: V | FieldBase.DefaultFunction<V>;
         getDefault(name: string, modelData: Model.ModelData, context: TableContext): V | undefined;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         init(name: string, model: Model): void;
         name?: string;
         tableName(): string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export namespace FieldBase {
@@ -190,33 +196,46 @@ export namespace Fields {
     export class FieldCompositeSlot implements Field {
         constructor(composite: FieldComposite, slot: number, slots: FieldCompositeSlot[]);
         composite: FieldComposite;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         init(name: string, model: Model): void;
         name?: string;
         slot: number;
         slots: FieldCompositeSlot[];
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldCreatedDate implements Fields.Field {
         constructor(options?: CreatedDateOptions);
         alias?: string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         init(name: string, model: Model): void;
         name?: string;
         now: () => Date;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldCreatedNumberDate extends FieldNumber {
         constructor(options?: CreatedDateOptions);
         now: () => Date;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldDate extends FieldBase<Date> {
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldExpression<V> extends FieldBase<V> {
@@ -234,9 +253,13 @@ export namespace Fields {
         type(type: Table.AttributeTypes): Condition.Resolver;
     }
     export class FieldHidden implements Fields.Field {
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         init(name: string, model: Model): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldList<V extends Table.AttributeValues> extends FieldExpression<V[]> {
@@ -254,8 +277,11 @@ export namespace Fields {
         init(name: string, model: Model): void;
         schema: Model.ModelSchemaT<V>;
         size(): Condition.ValueResolver;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldModelList<V extends {
@@ -264,8 +290,11 @@ export namespace Fields {
         constructor(options: ModelListOptions<V>);
         init(name: string, model: Model): void;
         schema: Model.ModelSchemaT<V>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldModelMap<V extends {
@@ -274,8 +303,11 @@ export namespace Fields {
         constructor(options: ModelMapOptions<V>);
         init(name: string, model: Model): void;
         schema: Model.ModelSchemaT<V>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldNull extends FieldExpression<null> {
@@ -287,20 +319,27 @@ export namespace Fields {
     export class FieldRevision implements Fields.Field {
         constructor(options?: RevisionOptions);
         alias?: string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         init(name: string, model: Model): void;
         matchOnWrite?: boolean;
         name?: string;
         start: number;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldSet<V> extends FieldExpression<V> {
         constructor(options?: SetOptions<V>);
         contains(value: string): Condition.Resolver;
         size(): Condition.ValueResolver;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
         // (undocumented)
         useArrays?: boolean;
@@ -309,10 +348,14 @@ export namespace Fields {
         constructor(options: SplitOptions);
         aliases: string[];
         delimiter: string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         init(name: string, model: Model): void;
         name?: string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: TableContext): void;
     }
     export class FieldString extends FieldExpression<string> {
@@ -325,28 +368,39 @@ export namespace Fields {
     export class FieldType implements Field {
         constructor(options?: TypeOptions);
         alias?: string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         init(name: string, model: Model): void;
         name?: string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldUpdatedDate implements Fields.Field {
         constructor(options?: UpdateDateOptions);
         alias?: string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         init(name: string, model: Model): void;
         name?: string;
         now: () => Date;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
     }
     export class FieldUpdatedNumberDate extends FieldNumber {
         constructor(options?: UpdateNumberDateOptions);
         now: () => Date;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(name: string, tableData: Table.AttributeValuesMap, modelData: Model.ModelData, context: Fields.ModelContext): void;
         toModelDefaultAlias?: string;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(name: string, modelData: Model.ModelData, tableData: Table.AttributeValuesMap, context: Fields.TableContext): void;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(name: string, modelData: Model.ModelUpdate, tableData: Update.ResolverMap, context: Fields.TableContext): void;
         writeOnPut?: boolean;
     }
@@ -486,6 +540,7 @@ export namespace KeyCondition {
 // @public
 export class KeyConditionExpression implements KeyCondition.Expression {
     constructor(attributes: Table.ExpressionAttributes);
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     addCondition(condition: string): void;
     static addParams(params: {
         KeyConditionExpression?: string;
@@ -495,6 +550,7 @@ export class KeyConditionExpression implements KeyCondition.Expression {
     attributes: Table.ExpressionAttributes;
     static buildExpression(key: Table.PrimaryKey.KeyQueryMap, exp: KeyCondition.Expression): string | void;
     conditions: string[];
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     getExpression(): string | void;
 }
 
@@ -579,10 +635,11 @@ export namespace Model {
             item: Model.ModelOut;
             tableItem: Table.AttributeValuesMap;
         } | void;
-        }
+    }
     export interface ModelResultT<OUTPUT extends {
         [key: string]: any;
     }> extends ModelResult {
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         get(): {
             item: Model.ModelOutT<OUTPUT>;
             tableItem: Table.AttributeValuesMap;
@@ -601,27 +658,48 @@ export namespace Model {
     }, INPUT extends {
         [key: string]: any;
     } = KEY, OUTPUT extends INPUT & KEY = INPUT & KEY> extends Model {
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         addBatchDelete(batchWrite: Table.BatchWrite, key: Model.ModelCoreT<KEY>): Model.ModelResultT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         addBatchGet(batchGet: Table.BatchGet, key: Model.ModelCoreT<KEY>): Model.ModelResultT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         addBatchPut(batchWrite: Table.BatchWrite, item: Model.ModelCoreT<INPUT>): Model.ModelResultT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         addTransactCheck(transactWrite: Table.TransactWrite, key: Model.ModelCoreT<KEY>, conditions: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResultT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         addTransactDelete(transactWrite: Table.TransactWrite, key: Model.ModelCoreT<KEY>, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResultT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         addTransactGet(transactGet: Table.TransactGet, key: Model.ModelCoreT<KEY>, itemAttributes?: string[]): Model.ModelResultT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         addTransactPut(transactWrite: Table.TransactWrite, item: Model.ModelCoreT<INPUT>, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValuesOnConditionCheckFailure): Model.ModelResultT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         addTransactUpdate(transactWrite: Table.TransactWrite, item: Model.ModelUpdateT<KEY, INPUT>, conditions?: Condition.Resolver[], returnFailure?: DocumentClient.ReturnValue): Model.ModelResultT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         create(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): Promise<Model.PutOutput<OUTPUT>>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         delete(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): Promise<Model.DeleteOutput<OUTPUT>>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         deleteParams(key: Model.ModelCoreT<KEY>, options?: Table.DeleteOptions): DocumentClient.DeleteItemInput;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         get(key: Model.ModelCoreT<KEY>, options?: Table.GetOptions): Promise<Model.GetOutput<OUTPUT>>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         getParams(key: Model.ModelCoreT<KEY>, options?: Table.GetOptions): DocumentClient.GetItemInput;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         put(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): Promise<Model.PutOutput<OUTPUT>>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         putParams(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): DocumentClient.PutItemInput;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         replace(data: Model.ModelCoreT<INPUT>, options?: Table.PutOptions): Promise<Model.PutOutput<OUTPUT>>;
         schema: Model.ModelSchemaT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toModel(data: Table.AttributeValuesMap): Model.ModelOutT<OUTPUT>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTable(data: Model.ModelCoreT<INPUT>): Model.TableData;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         toTableUpdate(data: Model.ModelUpdateT<KEY, INPUT>): Model.TableUpdateData;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         update(data: Model.ModelUpdateT<KEY, INPUT>, options?: Table.UpdateOptions): Promise<Model.UpdateOutput<OUTPUT>>;
+        // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
         updateParams(data: Model.ModelUpdateT<KEY, INPUT>, options?: Table.UpdateOptions): DocumentClient.UpdateItemInput;
     }
     export type ModelType = number | string | boolean | null | object;
@@ -751,7 +829,7 @@ export namespace Table {
         getResult(): DocumentClient.BatchWriteItemOutput | undefined;
         options: Table.BatchWriteTableOptions;
         set(tableName: string, putItems: Table.PutItem[], delKeys: Table.PrimaryKey.AttributeValuesMap[]): void;
-        }
+    }
     export interface BatchWriteTableOptions extends BaseOptions {
         consumed?: DocumentClient.ReturnConsumedCapacity;
         metrics?: DocumentClient.ReturnItemCollectionMetrics;
@@ -989,7 +1067,7 @@ export namespace Table {
         getResult(): DocumentClient.TransactWriteItemsOutput | undefined;
         options: Table.TransactWriteTableOptions;
         set(tableName: string, writes: Required<Table.TransactWriteData>): void;
-        }
+    }
     export interface TransactWriteData {
         check?: {
             key: Table.PrimaryKey.AttributeValuesMap;
@@ -1134,24 +1212,33 @@ export namespace Update {
 // @public
 export class UpdateExpression implements Update.Expression {
     constructor(attributes: Table.ExpressionAttributes);
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     addAdd(value: string): void;
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     addDelete(value: string): void;
     addList: string[];
     static addParams(params: {
         UpdateExpression?: string;
     }, attributes: Table.ExpressionAttributes, updateMap?: Update.ResolverMap): void;
     addPath(name: string): string;
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     addRemove(value: string): void;
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     addSet(value: string): void;
     addValue(value: Table.AttributeValues): string;
     attributes: Table.ExpressionAttributes;
     static buildExpression(updateMap: Update.ResolverMap, exp: Update.Expression): string | void;
     deleteList: string[];
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     getExpression(): string | void;
     removeList: string[];
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     resolveMap(map: Update.ResolverMap, name?: string): void;
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     resolveMapValue(fallback: (path: string, value: Table.AttributeValues) => void, getPath: () => string, value?: Update.OperandValue): void;
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     resolvePathValue(value: Update.OperandValue, name: string): string;
+    // Warning: (tsdoc-inline-tag-missing-braces) The TSDoc tag "@inheritDoc" is an inline tag; it must be enclosed in "{ }" braces
     resolveValue(value: Update.OperandValue, name: string): string;
     setList: string[];
 }
@@ -1164,7 +1251,6 @@ export function validateIndexes(indexes: Index[]): void;
 
 // @public
 export function validateTable<KEY, ATTRIBUTES>(table: Table.TableT<KEY, ATTRIBUTES>): void;
-
 
 // (No @packageDocumentation comment for this package)
 

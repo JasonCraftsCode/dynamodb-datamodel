@@ -393,8 +393,9 @@ export class Model implements Model.ModelBase {
  * Is also a namespace for scoping Model based interfaces and types.
  * @public
  * */
+/* istanbul ignore next: needed for ts with es5 */
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
-export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
+export namespace Model {
   /**
    * Interface used in {@link Field.init}.
    */
@@ -591,7 +592,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     KEY extends { [key: string]: any },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any,
     INPUT extends { [key: string]: any } = KEY,
-    OUTPUT extends INPUT & KEY = INPUT & KEY
+    OUTPUT extends INPUT & KEY = INPUT & KEY,
   > extends Model {
     /**
      * Schema to use for mapping data between the model and table data.
@@ -721,7 +722,7 @@ export namespace Model /* istanbul ignore next: needed for ts with es5 */ {
     KEY extends { [key: string]: any },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any,
     INPUT extends { [key: string]: any } = KEY,
-    OUTPUT extends INPUT & KEY = INPUT & KEY
+    OUTPUT extends INPUT & KEY = INPUT & KEY,
   >(params: ModelParamsT<KEY, OUTPUT>): Model.ModelT<KEY, INPUT, OUTPUT> {
     return new Model(params) as Model.ModelT<KEY, INPUT, OUTPUT>;
   }

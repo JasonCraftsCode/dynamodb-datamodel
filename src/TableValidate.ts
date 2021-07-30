@@ -52,7 +52,7 @@ export function validateKeySchema<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   KEY extends { [index: string]: any },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ATTRIBUTES extends { [index: string]: any } = KEY
+  ATTRIBUTES extends { [index: string]: any } = KEY,
 >(
   keySchema: Table.PrimaryKey.KeyTypesMapT<KEY>,
   keyAttributes: Table.PrimaryKey.AttributeTypesMapT<ATTRIBUTES>,

@@ -234,10 +234,7 @@ function TestIndex<KEY>(
 describe('When global index', () => {
   const testTable = Table.createTable<SimpleTableKey, SimpleKeyAttributes>(testTableParams);
 
-  function ProjectionIndex(projection: {
-    type: Table.ProjectionType;
-    attributes?: string[];
-  }): Index.IndexT<{
+  function ProjectionIndex(projection: { type: Table.ProjectionType; attributes?: string[] }): Index.IndexT<{
     G0P: Table.PrimaryKey.PartitionString;
   }> {
     return Index.createIndex<{
@@ -253,7 +250,7 @@ describe('When global index', () => {
 
   it('missing name expect throw', () => {
     const gsi = ProjectionIndex({ type: 'ALL' });
-    gsi.name = (undefined as unknown) as string;
+    gsi.name = undefined as unknown as string;
     expect(() => validateIndex(gsi)).toThrowError(new Error('Secondary index must have a name'));
   });
 
