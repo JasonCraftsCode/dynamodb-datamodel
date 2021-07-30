@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>TransactGetTableOptions | dynamodb-datamodel - v0.2.7</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for dynamodb-datamodel - v0.2.7">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -49,16 +50,16 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">dynamodb-datamodel - v0.2.7</a>
 				</li>
 				<li>
-					<a href="../classes/table.html">Table</a>
+					<a href="../modules/Table.html">Table</a>
 				</li>
 				<li>
-					<a href="table.transactgettableoptions.html">TransactGetTableOptions</a>
+					<a href="Table.TransactGetTableOptions.html">TransactGetTableOptions</a>
 				</li>
 			</ul>
-			<h1>Interface TransactGetTableOptions&lt;T&gt;</h1>
+			<h1>Interface TransactGetTableOptions</h1>
 		</div>
 	</div>
 </header>
@@ -72,19 +73,11 @@
 					</div>
 				</div>
 			</section>
-			<section class="tsd-panel tsd-type-parameters">
-				<h3>Type parameters</h3>
-				<ul class="tsd-type-parameters">
-					<li>
-						<h4>T</h4>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="table.baseoptions.html" class="tsd-signature-type">BaseOptions</a>
+						<a href="Table.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">TransactGetTableOptions</span>
@@ -100,10 +93,15 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.transactgettableoptions.html#attributes" class="tsd-kind-icon">attributes</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="table.transactgettableoptions.html#consumed" class="tsd-kind-icon">consumed</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.transactgettableoptions.html#context" class="tsd-kind-icon">context</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="table.transactgettableoptions.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Table.TransactGetTableOptions.html#consumed" class="tsd-kind-icon">consumed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="Table.TransactGetTableOptions.html#context" class="tsd-kind-icon">context</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="Table.TransactGetTableOptions.html#params" class="tsd-kind-icon">params</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="Table.TransactGetTableOptions.html#attributes" class="tsd-kind-icon">attributes</a></li>
 							</ul>
 						</section>
 					</div>
@@ -111,27 +109,10 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="attributes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> attributes</h3>
-					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="table.expressionattributes.html" class="tsd-signature-type">ExpressionAttributes</a><span class="tsd-signature-symbol">)</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#attributes">attributes</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L820">Table.ts:820</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Expression attributes to use for resolving conditions and updates.  Will be used to generate the
-							ExpressionAttributeNames and ExpressionAttributeValues params in table operations.</p>
-						</div>
-					</div>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="consumed" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> consumed</h3>
-					<div class="tsd-signature tsd-kind-icon">consumed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DocumentClient.ReturnConsumedCapacity</span></div>
+					<div class="tsd-signature tsd-kind-icon">consumed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L940">Table.ts:940</a></li>
@@ -148,7 +129,7 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> context</h3>
 					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#context">context</a></p>
+						<p>Inherited from <a href="Table.BaseOptions.html">BaseOptions</a>.<a href="Table.BaseOptions.html#context">context</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L830">Table.ts:830</a></li>
 						</ul>
@@ -162,9 +143,9 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="params" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html#optional" class="tsd-signature-type">Optional</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="../modules/Table.html#Optional" class="tsd-signature-type" data-tsd-kind="Type alias">Optional</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="table.baseoptions.html">BaseOptions</a>.<a href="table.baseoptions.html#params">params</a></p>
+						<p>Inherited from <a href="Table.BaseOptions.html">BaseOptions</a>.<a href="Table.BaseOptions.html#params">params</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L826">Table.ts:826</a></li>
 						</ul>
@@ -177,82 +158,92 @@
 					</div>
 				</section>
 			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="attributes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> attributes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Table.ExpressionAttributes.html" class="tsd-signature-type" data-tsd-kind="Interface">ExpressionAttributes</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="Table.BaseOptions.html">BaseOptions</a>.<a href="Table.BaseOptions.html#attributes">attributes</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Table.ts#L820">Table.ts:820</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Expression attributes to use for resolving conditions and updates.  Will be used to generate the
+									ExpressionAttributeNames and ExpressionAttributeValues params in table operations.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="Table.ExpressionAttributes.html" class="tsd-signature-type" data-tsd-kind="Interface">ExpressionAttributes</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Condition.html">Condition</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Fields.html">Fields</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+						<a href="../modules/Fields.FieldBase.html">Fields.<wbr>Field<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Index.html">Index</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/KeyCondition.html">Key<wbr>Condition</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Model.html">Model</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="../modules/Table.html">Table</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+						<a href="../modules/Table.PrimaryKey.html">Table.<wbr>Primary<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Update.html">Update</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/condition.html" class="tsd-kind-icon">Condition</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/conditionexpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/fields.html" class="tsd-kind-icon">Fields</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/index.html" class="tsd-kind-icon">Index</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/keycondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/keyconditionexpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/model.html" class="tsd-kind-icon">Model</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="../classes/table.html" class="tsd-kind-icon">Table</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="Table.TransactGetTableOptions.html" class="tsd-kind-icon">Transact<wbr>Get<wbr>Table<wbr>Options</a>
 						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="table.transactgettableoptions.html" class="tsd-kind-icon">Transact<wbr>Get<wbr>Table<wbr>Options</a>
-								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.transactgettableoptions.html#attributes" class="tsd-kind-icon">attributes</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="table.transactgettableoptions.html#consumed" class="tsd-kind-icon">consumed</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.transactgettableoptions.html#context" class="tsd-kind-icon">context</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="table.transactgettableoptions.html#params" class="tsd-kind-icon">params</a>
-									</li>
-								</ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="Table.TransactGetTableOptions.html#consumed" class="tsd-kind-icon">consumed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="Table.TransactGetTableOptions.html#context" class="tsd-kind-icon">context</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="Table.TransactGetTableOptions.html#params" class="tsd-kind-icon">params</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+								<a href="Table.TransactGetTableOptions.html#attributes" class="tsd-kind-icon">attributes</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/update.html" class="tsd-kind-icon">Update</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/updateexpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindex" class="tsd-kind-icon">validate<wbr>Index</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#validatetable" class="tsd-kind-icon">validate<wbr>Table</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -263,57 +254,16 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 		</div>
 	</div>
@@ -323,6 +273,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

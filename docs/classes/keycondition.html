@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>KeyCondition | dynamodb-datamodel - v0.2.7</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for dynamodb-datamodel - v0.2.7">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -49,10 +50,10 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">dynamodb-datamodel - v0.2.7</a>
 				</li>
 				<li>
-					<a href="keycondition.html">KeyCondition</a>
+					<a href="KeyCondition.html">KeyCondition</a>
 				</li>
 			</ul>
 			<h1>Class KeyCondition</h1>
@@ -66,32 +67,32 @@
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Set of helper methods to build KeyConditionExpressions used in DynamoDB query and scan operations.
-							All of the condition based methods return a <a href="keycondition.html#resolver">KeyCondition.Resolver</a> function in the form of
+							All of the condition based methods return a <a href="../modules/KeyCondition.html#Resolver">KeyCondition.Resolver</a> function in the form of
 							&#39;( name: string, exp: KeyCondition.Expression, type?: T,): string&#39; this allow key conditions to be
-							composed together and even extended in a very simple way.
-						Is also a namespace for scoping KeyCondition based interfaces and types.</p>
+						composed together and even extended in a very simple way.</p>
 					</div>
 					<p>See <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.KeyConditionExpressions" class="external">Key Condition Expression</a>
 					for details on how each of the below key comparison operations and functions work.</p>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
 						<dd><p><a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/KeyCondition.ts" class="external">examples/KeyCondition.ts</a>, (imports: <a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts" class="external">examples/Table.ts</a>)</p>
-							<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { KeyCondition } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
-<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+							<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">KeyCondition</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dynamodb-datamodel&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">table</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./Table&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// Use KeyCondition to query the table with primary key of 'P-GUID' and sort key between (and including) 'a' and 'z'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'P-GUID'</span>,
-  S: KeyCondition.between(<span class="hljs-string">'a'</span>, <span class="hljs-string">'z'</span>),
-};
-<span class="hljs-keyword">const</span> params = table.queryParams(key);
+<span style="color: #008000">// Use KeyCondition to query the table with primary key of &#039;P-GUID&#039; and sort key between (and including) &#039;a&#039; and &#039;z&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-GUID&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">between</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;a&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;z&#039;</span><span style="color: #000000">),</span>
+<span style="color: #000000">};</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">params</span><span style="color: #000000"> = </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">queryParams</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
 
-expect(params).toEqual({
-  ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'P'</span>, <span class="hljs-string">'#n1'</span>: <span class="hljs-string">'S'</span> },
-  ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-string">'P-GUID'</span>, <span class="hljs-string">':v1'</span>: <span class="hljs-string">'a'</span>, <span class="hljs-string">':v2'</span>: <span class="hljs-string">'z'</span> },
-  KeyConditionExpression: <span class="hljs-string">'#n0 = :v0 AND #n1 BETWEEN :v1 AND :v2'</span>,
-  TableName: <span class="hljs-string">'ExampleTable'</span>,
-});
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">params</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">ExpressionAttributeNames:</span><span style="color: #000000"> { </span><span style="color: #A31515">&#039;#n0&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;#n1&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;S&#039;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">ExpressionAttributeValues:</span><span style="color: #000000"> { </span><span style="color: #A31515">&#039;:v0&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-GUID&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;:v1&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;a&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;:v2&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;z&#039;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">KeyConditionExpression:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;#n0 = :v0 AND #n1 BETWEEN :v1 AND :v2&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">TableName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleTable&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
+
 </code></pre>
 						</dd>
 					</dl>
@@ -110,205 +111,51 @@ expect(params).toEqual({
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/keycondition.expression.html" class="tsd-kind-icon">Expression</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#attributeresolver" class="tsd-kind-icon">Attribute<wbr>Resolver</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#binaryresolver" class="tsd-kind-icon">Binary<wbr>Resolver</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#compareoperators" class="tsd-kind-icon">Compare<wbr>Operators</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#numberresolver" class="tsd-kind-icon">Number<wbr>Resolver</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#operators" class="tsd-kind-icon">Operators</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#resolver" class="tsd-kind-icon">Resolver</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#stringresolver" class="tsd-kind-icon">String<wbr>Resolver</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="KeyCondition.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="keycondition.html#beginswith" class="tsd-kind-icon">begins<wbr>With</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#between" class="tsd-kind-icon">between</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#compare" class="tsd-kind-icon">compare</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#eq" class="tsd-kind-icon">eq</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#ge" class="tsd-kind-icon">ge</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#gt" class="tsd-kind-icon">gt</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#le" class="tsd-kind-icon">le</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="keycondition.html#lt" class="tsd-kind-icon">lt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="KeyCondition.html#beginsWith" class="tsd-kind-icon">begins<wbr>With</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="KeyCondition.html#between" class="tsd-kind-icon">between</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="KeyCondition.html#compare" class="tsd-kind-icon">compare</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="KeyCondition.html#eq" class="tsd-kind-icon">eq</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="KeyCondition.html#ge" class="tsd-kind-icon">ge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="KeyCondition.html#gt" class="tsd-kind-icon">gt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="KeyCondition.html#le" class="tsd-kind-icon">le</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="KeyCondition.html#lt" class="tsd-kind-icon">lt</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="attributeresolver" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Attribute<wbr>Resolver</h3>
-					<div class="tsd-signature tsd-kind-icon">Attribute<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#stringresolver" class="tsd-signature-type">StringResolver</a><span class="tsd-signature-symbol"> | </span><a href="keycondition.html#numberresolver" class="tsd-signature-type">NumberResolver</a><span class="tsd-signature-symbol"> | </span><a href="keycondition.html#binaryresolver" class="tsd-signature-type">BinaryResolver</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/KeyCondition.ts#L252">KeyCondition.ts:252</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Support key condition resolvers.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="binaryresolver" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Binary<wbr>Resolver</h3>
-					<div class="tsd-signature tsd-kind-icon">Binary<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"B"</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/KeyCondition.ts#L247">KeyCondition.ts:247</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Binary key condition resolver.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="compareoperators" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Compare<wbr>Operators</h3>
-					<div class="tsd-signature tsd-kind-icon">Compare<wbr>Operators<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&lt;&#x3D;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"&gt;&#x3D;"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/KeyCondition.ts#L189">KeyCondition.ts:189</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Supported compare based operators for conditions expressions.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="numberresolver" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Number<wbr>Resolver</h3>
-					<div class="tsd-signature tsd-kind-icon">Number<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"N"</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/KeyCondition.ts#L242">KeyCondition.ts:242</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Number key condition resolver.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="operators" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Operators</h3>
-					<div class="tsd-signature tsd-kind-icon">Operators<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#compareoperators" class="tsd-signature-type">CompareOperators</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BETWEEN"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"begins_with"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/KeyCondition.ts#L194">KeyCondition.ts:194</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Support operators and functions for condition expressions.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="resolver" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Resolver</h3>
-					<div class="tsd-signature tsd-kind-icon">Resolver&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/KeyCondition.ts#L232">KeyCondition.ts:232</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Resolver function is return by most of the above KeyConditions methods.  Returning a function allows key conditions
-								to easily be composable and extensible.  This allows consumers to create higher level key conditions that are composed
-							of the above primitive key conditions or support any new primitives that AWS would add in the future.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>Name of the primary key attribute to resolve.</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>Object to get path and value aliases and store conditions array.</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>Param to enforce type safety for conditions that only work on certain types.</p>
-							</dd>
-						</dl>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>T</h4>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The type used for the value param.</p>
-								</div>
-							</div>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Key<wbr>Condition<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="KeyCondition.html" class="tsd-signature-type" data-tsd-kind="Class">KeyCondition</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="KeyCondition.html" class="tsd-signature-type" data-tsd-kind="Class">KeyCondition</a></h4>
 						</li>
 					</ul>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, exp<span class="tsd-signature-symbol">: </span><a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a>, type<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>name: <span class="tsd-signature-type">string</span></h5>
-											</li>
-											<li>
-												<h5>exp: <a href="../interfaces/keycondition.expression.html" class="tsd-signature-type">Expression</a></h5>
-											</li>
-											<li>
-												<h5><span class="tsd-flag ts-flagOptional">Optional</span> type: <a href="" class="tsd-signature-type">T</a></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="stringresolver" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> String<wbr>Resolver</h3>
-					<div class="tsd-signature tsd-kind-icon">String<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"S"</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/KeyCondition.ts#L237">KeyCondition.ts:237</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>String key condition resolver.</p>
-						</div>
-					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="beginswith" class="tsd-anchor"></a>
+					<a name="beginsWith" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> begins<wbr>With</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">begins<wbr>With<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">begins<wbr>With<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -324,12 +171,13 @@ expect(params).toEqual({
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND begins_with(#n1, :v1)'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.beginsWith(<span class="hljs-string">'a'</span>)
-}
-<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									<dd><pre><code class="language-typescript"><span style="color: #008000">// Expands to: &#039;#n0 = :v0 AND begins_with(#n1, :v1)&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;guid&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">beginsWith</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;a&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">query</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
+</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -342,7 +190,7 @@ expect(params).toEqual({
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
@@ -351,7 +199,7 @@ expect(params).toEqual({
 					<a name="between" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> between</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">between&lt;T&gt;<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">between&lt;T&gt;<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -366,19 +214,20 @@ expect(params).toEqual({
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 BETWEEN :v1 AND :v2'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.between(<span class="hljs-string">'a'</span>, <span class="hljs-string">'z'</span>)
-}
-<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									<dd><pre><code class="language-typescript"><span style="color: #008000">// Expands to: &#039;#n0 = :v0 AND #n1 BETWEEN :v1 AND :v2&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;guid&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">between</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;a&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;z&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">query</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
+</code></pre>
 									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>The type used for the from and to param.</p>
 									</div>
@@ -399,7 +248,7 @@ expect(params).toEqual({
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
@@ -408,7 +257,7 @@ expect(params).toEqual({
 					<a name="compare" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> compare</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">compare&lt;T&gt;<span class="tsd-signature-symbol">(</span>op<span class="tsd-signature-symbol">: </span><a href="keycondition.html#compareoperators" class="tsd-signature-type">CompareOperators</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">compare&lt;T&gt;<span class="tsd-signature-symbol">(</span>op<span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#CompareOperators" class="tsd-signature-type" data-tsd-kind="Type alias">CompareOperators</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -423,19 +272,20 @@ expect(params).toEqual({
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &gt;= :v1'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.compare(<span class="hljs-string">'&gt;='</span>, <span class="hljs-string">'value'</span>)
-}
-<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									<dd><pre><code class="language-typescript"><span style="color: #008000">// Expands to: &#039;#n0 = :v0 AND #n1 &gt;= :v1&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;guid&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">compare</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;&gt;=&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">query</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
+</code></pre>
 									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>The type used for the value param.</p>
 									</div>
@@ -444,7 +294,7 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>op: <a href="keycondition.html#compareoperators" class="tsd-signature-type">CompareOperators</a></h5>
+									<h5>op: <a href="../modules/KeyCondition.html#CompareOperators" class="tsd-signature-type" data-tsd-kind="Type alias">CompareOperators</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Compare operation to use: =, &lt;, &lt;=. &gt; or &gt;=.</p>
 									</div>
@@ -456,7 +306,7 @@ expect(params).toEqual({
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
@@ -465,7 +315,7 @@ expect(params).toEqual({
 					<a name="eq" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> eq</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">eq&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">eq&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -480,19 +330,20 @@ expect(params).toEqual({
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 = :v1'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.eq(<span class="hljs-string">'value'</span>)
-}
-<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									<dd><pre><code class="language-typescript"><span style="color: #008000">// Expands to: &#039;#n0 = :v0 AND #n1 = :v1&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;guid&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">eq</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">query</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
+</code></pre>
 									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>The type used for the value param.</p>
 									</div>
@@ -507,7 +358,7 @@ expect(params).toEqual({
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
@@ -516,7 +367,7 @@ expect(params).toEqual({
 					<a name="ge" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> ge</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">ge&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">ge&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -531,19 +382,20 @@ expect(params).toEqual({
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &gt;= :v1'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.ge(<span class="hljs-string">'value'</span>)
-}
-<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									<dd><pre><code class="language-typescript"><span style="color: #008000">// Expands to: &#039;#n0 = :v0 AND #n1 &gt;= :v1&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;guid&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">ge</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">query</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
+</code></pre>
 									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>The type used for the value param.</p>
 									</div>
@@ -558,7 +410,7 @@ expect(params).toEqual({
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
@@ -567,7 +419,7 @@ expect(params).toEqual({
 					<a name="gt" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> gt</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">gt&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">gt&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -582,19 +434,20 @@ expect(params).toEqual({
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &gt; :v1'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.gt(<span class="hljs-string">'value'</span>)
-}
-<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									<dd><pre><code class="language-typescript"><span style="color: #008000">// Expands to: &#039;#n0 = :v0 AND #n1 &gt; :v1&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;guid&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">gt</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">query</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
+</code></pre>
 									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>The type used for the value param.</p>
 									</div>
@@ -609,7 +462,7 @@ expect(params).toEqual({
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
@@ -618,7 +471,7 @@ expect(params).toEqual({
 					<a name="le" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> le</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">le&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">le&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -633,19 +486,20 @@ expect(params).toEqual({
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &lt;= :v1'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.le(<span class="hljs-string">'value'</span>)
-}
-<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									<dd><pre><code class="language-typescript"><span style="color: #008000">// Expands to: &#039;#n0 = :v0 AND #n1 &lt;= :v1&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;guid&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">le</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">query</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
+</code></pre>
 									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>The type used for the value param.</p>
 									</div>
@@ -660,7 +514,7 @@ expect(params).toEqual({
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
@@ -669,7 +523,7 @@ expect(params).toEqual({
 					<a name="lt" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> lt</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">lt&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></li>
+						<li class="tsd-signature tsd-kind-icon">lt&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -684,19 +538,20 @@ expect(params).toEqual({
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
-									<dd><pre><code class="language-typescript"><span class="hljs-comment">// Expands to: '#n0 = :v0 AND #n1 &lt; :v1'</span>
-<span class="hljs-keyword">const</span> key = {
-  P: <span class="hljs-string">'guid'</span>,
-  S: KeyCondition.lt(<span class="hljs-string">'value'</span>)
-}
-<span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> table.query(key);</code></pre>
+									<dd><pre><code class="language-typescript"><span style="color: #008000">// Expands to: &#039;#n0 = :v0 AND #n1 &lt; :v1&#039;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;guid&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #001080">KeyCondition</span><span style="color: #000000">.</span><span style="color: #795E26">lt</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">query</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">);</span>
+</code></pre>
 									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>The type used for the value param.</p>
 									</div>
@@ -711,7 +566,7 @@ expect(params).toEqual({
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="keycondition.html#resolver" class="tsd-signature-type">Resolver</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/KeyCondition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.PrimaryKey.html#AttributeTypes" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Resolver to use when generate key condition expression.</p>
 						</li>
 					</ul>
@@ -721,108 +576,87 @@ expect(params).toEqual({
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="condition.html" class="tsd-kind-icon">Condition</a>
+						<a href="Condition.html" class="tsd-kind-icon">Condition</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="conditionexpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
+						<a href="ConditionExpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
+						<a href="ExpressionAttributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="fields.html" class="tsd-kind-icon">Fields</a>
+						<a href="Fields.html" class="tsd-kind-icon">Fields</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="index.html" class="tsd-kind-icon">Index</a>
+						<a href="Index.html" class="tsd-kind-icon">Index</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="keycondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
+						<a href="KeyCondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
 						<ul>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/keycondition.expression.html" class="tsd-kind-icon">Expression</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#attributeresolver" class="tsd-kind-icon">Attribute<wbr>Resolver</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#binaryresolver" class="tsd-kind-icon">Binary<wbr>Resolver</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#compareoperators" class="tsd-kind-icon">Compare<wbr>Operators</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#numberresolver" class="tsd-kind-icon">Number<wbr>Resolver</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#operators" class="tsd-kind-icon">Operators</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#resolver" class="tsd-kind-icon">Resolver</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#stringresolver" class="tsd-kind-icon">String<wbr>Resolver</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="KeyCondition.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="keycondition.html#beginswith" class="tsd-kind-icon">begins<wbr>With</a>
+								<a href="KeyCondition.html#beginsWith" class="tsd-kind-icon">begins<wbr>With</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#between" class="tsd-kind-icon">between</a>
+								<a href="KeyCondition.html#between" class="tsd-kind-icon">between</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#compare" class="tsd-kind-icon">compare</a>
+								<a href="KeyCondition.html#compare" class="tsd-kind-icon">compare</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#eq" class="tsd-kind-icon">eq</a>
+								<a href="KeyCondition.html#eq" class="tsd-kind-icon">eq</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#ge" class="tsd-kind-icon">ge</a>
+								<a href="KeyCondition.html#ge" class="tsd-kind-icon">ge</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#gt" class="tsd-kind-icon">gt</a>
+								<a href="KeyCondition.html#gt" class="tsd-kind-icon">gt</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#le" class="tsd-kind-icon">le</a>
+								<a href="KeyCondition.html#le" class="tsd-kind-icon">le</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="keycondition.html#lt" class="tsd-kind-icon">lt</a>
+								<a href="KeyCondition.html#lt" class="tsd-kind-icon">lt</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class">
-						<a href="keyconditionexpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
+						<a href="KeyConditionExpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="model.html" class="tsd-kind-icon">Model</a>
+						<a href="Model.html" class="tsd-kind-icon">Model</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="table.html" class="tsd-kind-icon">Table</a>
+						<a href="Table.html" class="tsd-kind-icon">Table</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="update.html" class="tsd-kind-icon">Update</a>
+						<a href="Update.html" class="tsd-kind-icon">Update</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="updateexpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
+						<a href="UpdateExpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindex" class="tsd-kind-icon">validate<wbr>Index</a>
+						<a href="../modules.html#validateIndex" class="tsd-kind-icon">validate<wbr>Index</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
+						<a href="../modules.html#validateIndexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#validatetable" class="tsd-kind-icon">validate<wbr>Table</a>
+						<a href="../modules.html#validateTable" class="tsd-kind-icon">validate<wbr>Table</a>
 					</li>
 				</ul>
 			</nav>
@@ -834,57 +668,13 @@ expect(params).toEqual({
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
@@ -894,6 +684,5 @@ expect(params).toEqual({
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

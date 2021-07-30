@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Model | dynamodb-datamodel - v0.2.7</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for dynamodb-datamodel - v0.2.7">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -49,10 +50,10 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">dynamodb-datamodel - v0.2.7</a>
 				</li>
 				<li>
-					<a href="model.html">Model</a>
+					<a href="Model.html">Model</a>
 				</li>
 			</ul>
 			<h1>Class Model</h1>
@@ -66,44 +67,44 @@
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>The Model object that wraps access to the DynamoDB table and makes it easy to map table data to
-							and from model data.
-						Is also a namespace for scoping Model based interfaces and types.</p>
+						and from model data.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
 						<dd><p><a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Model.ts" class="external">examples/Model.ts</a> (imports: <a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts" class="external">examples/Table.ts</a>)</p>
-							<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
-<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+							<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Fields</span><span style="color: #000000">, </span><span style="color: #001080">Model</span><span style="color: #000000">, </span><span style="color: #001080">Table</span><span style="color: #000000">, </span><span style="color: #001080">Update</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dynamodb-datamodel&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">table</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./Table&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelKey {
-  id: <span class="hljs-built_in">string</span>;
-}
-<span class="hljs-comment">// Use Update.* types to support type checking when using Model.update.</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
-  name: Update.String;
-  age?: Update.Number;
-  children?: Update.List&lt;{ name: <span class="hljs-built_in">string</span>; age: <span class="hljs-built_in">number</span> }&gt;;
-  sports?: Update.StringSet;
-}
+<span style="color: #008000">// (TypeScript) Define model key and item interface.</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+<span style="color: #008000">// Use Update.* types to support type checking when using Model.update.</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelItem</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">name</span><span style="color: #000000">: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">String</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">age</span><span style="color: #000000">?: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">Number</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">children</span><span style="color: #000000">?: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">List</span><span style="color: #000000">&lt;{ </span><span style="color: #001080">name</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">; </span><span style="color: #001080">age</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000"> }&gt;;</span>
+<span style="color: #000000">  </span><span style="color: #001080">sports</span><span style="color: #000000">?: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">StringSet</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-comment">// Define the schema using Fields</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
-  schema: {
-    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
-    name: Fields.string(),
-    age: Fields.number(),
-    children: Fields.list(),
-    sports: Fields.stringSet(),
-  },
-  table: table <span class="hljs-keyword">as</span> Table,
-});
+<span style="color: #008000">// Define the schema using Fields</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #001080">Model</span><span style="color: #000000">.</span><span style="color: #795E26">createModel</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ModelKey</span><span style="color: #000000">, </span><span style="color: #267F99">ModelItem</span><span style="color: #000000">&gt;({</span>
+<span style="color: #000000">  </span><span style="color: #001080">schema:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">split</span><span style="color: #000000">({ </span><span style="color: #001080">aliases:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;P&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;S&#039;</span><span style="color: #000000">] }),</span>
+<span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">string</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #001080">age:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">number</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #001080">children:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">list</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #001080">sports:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">stringSet</span><span style="color: #000000">(),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">table:</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">Table</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
-<span class="hljs-keyword">const</span> params = model.getParams({ id: <span class="hljs-string">'P-1.S-1'</span> });
+<span style="color: #008000">// Generate params to pass to DocumentClient or call the action method</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">params</span><span style="color: #000000"> = </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">getParams</span><span style="color: #000000">({ </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1.S-1&#039;</span><span style="color: #000000"> });</span>
 
-<span class="hljs-comment">// (jest) output of getParams</span>
-expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> }, TableName: <span class="hljs-string">'ExampleTable'</span> });
+<span style="color: #008000">// (jest) output of getParams</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">params</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">({ </span><span style="color: #001080">Key:</span><span style="color: #000000"> { </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1&#039;</span><span style="color: #000000">, </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;S-1&#039;</span><span style="color: #000000"> }, </span><span style="color: #001080">TableName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleTable&#039;</span><span style="color: #000000"> });</span>
+
 </code></pre>
 						</dd>
 					</dl>
@@ -116,7 +117,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 						<span class="target">Model</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="../interfaces/model.modelt.html" class="tsd-signature-type">ModelT</a>
+								<a href="../interfaces/Model.ModelT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelT</a>
 							</li>
 						</ul>
 					</li>
@@ -125,7 +126,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/model.modelbase.html" class="tsd-signature-type">ModelBase</a></li>
+					<li><a href="../interfaces/Model.ModelBase.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelBase</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -133,345 +134,49 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Classes</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="model.modelresult.html" class="tsd-kind-icon">Model<wbr>Result</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/model.baseoutput.html" class="tsd-kind-icon">Base<wbr>Output</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/model.deleteoutput.html" class="tsd-kind-icon">Delete<wbr>Output</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/model.getoutput.html" class="tsd-kind-icon">Get<wbr>Output</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/model.modelbase.html" class="tsd-kind-icon">Model<wbr>Base</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/model.modelparams.html" class="tsd-kind-icon">Model<wbr>Params</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/model.modelparamst.html" class="tsd-kind-icon">Model<wbr>ParamsT</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/model.modelresultt.html" class="tsd-kind-icon">Model<wbr>ResultT</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/model.modelt.html" class="tsd-kind-icon">ModelT</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/model.putoutput.html" class="tsd-kind-icon">Put<wbr>Output</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/model.tabledata.html" class="tsd-kind-icon">Table<wbr>Data</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/model.tableupdatedata.html" class="tsd-kind-icon">Table<wbr>Update<wbr>Data</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/model.updateoutput.html" class="tsd-kind-icon">Update<wbr>Output</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="model.html#modelcore" class="tsd-kind-icon">Model<wbr>Core</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="model.html#modelcoret" class="tsd-kind-icon">Model<wbr>CoreT</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="model.html#modeldata" class="tsd-kind-icon">Model<wbr>Data</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="model.html#modelout" class="tsd-kind-icon">Model<wbr>Out</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="model.html#modeloutt" class="tsd-kind-icon">Model<wbr>OutT</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="model.html#modelschema" class="tsd-kind-icon">Model<wbr>Schema</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="model.html#modelschemat" class="tsd-kind-icon">Model<wbr>SchemaT</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="model.html#modeltype" class="tsd-kind-icon">Model<wbr>Type</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="model.html#modelupdate" class="tsd-kind-icon">Model<wbr>Update</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="model.html#modelupdatet" class="tsd-kind-icon">Model<wbr>UpdateT</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="model.html#modelupdatevalue" class="tsd-kind-icon">Model<wbr>Update<wbr>Value</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="model.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="Model.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="model.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="model.html#schema" class="tsd-kind-icon">schema</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="model.html#table" class="tsd-kind-icon">table</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="Model.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="Model.html#schema" class="tsd-kind-icon">schema</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="Model.html#table" class="tsd-kind-icon">table</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#addbatchdelete" class="tsd-kind-icon">add<wbr>Batch<wbr>Delete</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#addbatchget" class="tsd-kind-icon">add<wbr>Batch<wbr>Get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#addbatchput" class="tsd-kind-icon">add<wbr>Batch<wbr>Put</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#addtransactcheck" class="tsd-kind-icon">add<wbr>Transact<wbr>Check</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#addtransactdelete" class="tsd-kind-icon">add<wbr>Transact<wbr>Delete</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#addtransactget" class="tsd-kind-icon">add<wbr>Transact<wbr>Get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#addtransactput" class="tsd-kind-icon">add<wbr>Transact<wbr>Put</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#addtransactupdate" class="tsd-kind-icon">add<wbr>Transact<wbr>Update</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#create" class="tsd-kind-icon">create</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#delete" class="tsd-kind-icon">delete</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#deleteparams" class="tsd-kind-icon">delete<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#get" class="tsd-kind-icon">get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#getparams" class="tsd-kind-icon">get<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#put" class="tsd-kind-icon">put</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#putparams" class="tsd-kind-icon">put<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#replace" class="tsd-kind-icon">replace</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#totable" class="tsd-kind-icon">to<wbr>Table</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#update" class="tsd-kind-icon">update</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="model.html#updateparams" class="tsd-kind-icon">update<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="model.html#createmodel" class="tsd-kind-icon">create<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="model.html#initschema" class="tsd-kind-icon">init<wbr>Schema</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="model.html#splittabledata" class="tsd-kind-icon">split<wbr>Table<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#addBatchDelete" class="tsd-kind-icon">add<wbr>Batch<wbr>Delete</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#addBatchGet" class="tsd-kind-icon">add<wbr>Batch<wbr>Get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#addBatchPut" class="tsd-kind-icon">add<wbr>Batch<wbr>Put</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#addTransactCheck" class="tsd-kind-icon">add<wbr>Transact<wbr>Check</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#addTransactDelete" class="tsd-kind-icon">add<wbr>Transact<wbr>Delete</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#addTransactGet" class="tsd-kind-icon">add<wbr>Transact<wbr>Get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#addTransactPut" class="tsd-kind-icon">add<wbr>Transact<wbr>Put</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#addTransactUpdate" class="tsd-kind-icon">add<wbr>Transact<wbr>Update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#create" class="tsd-kind-icon">create</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#delete" class="tsd-kind-icon">delete</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#deleteParams" class="tsd-kind-icon">delete<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#getContext" class="tsd-kind-icon">get<wbr>Context</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#getParams" class="tsd-kind-icon">get<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#put" class="tsd-kind-icon">put</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#putParams" class="tsd-kind-icon">put<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#replace" class="tsd-kind-icon">replace</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#toModel" class="tsd-kind-icon">to<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#toTable" class="tsd-kind-icon">to<wbr>Table</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#toTableUpdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#update" class="tsd-kind-icon">update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Model.html#updateParams" class="tsd-kind-icon">update<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Model.html#initSchema" class="tsd-kind-icon">init<wbr>Schema</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Model.html#splitTableData" class="tsd-kind-icon">split<wbr>Table<wbr>Data</a></li>
 							</ul>
 						</section>
 					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="modelcore" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>Core</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>Core<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L487">Model.ts:487</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Model input type used in most Model methods.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="model.html#modeltype" class="tsd-signature-type">ModelType</a></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="modelcoret" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>CoreT</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>CoreT&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L551">Model.ts:551</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Model input type used in most ModelT methods.</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>T</h4>
-						</li>
-					</ul>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="modeldata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>Data</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L428">Model.ts:428</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Item data supported by the Model.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="model.html#modeltype" class="tsd-signature-type">ModelType</a></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="modelout" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>Out</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>Out<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L492">Model.ts:492</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Model output type used in most Model methods.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="model.html#modeltype" class="tsd-signature-type">ModelType</a></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="modeloutt" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>OutT</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>OutT&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L559">Model.ts:559</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Model output type used in most ModelT methods.</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>T</h4>
-						</li>
-					</ul>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="modelschema" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>Schema</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L482">Model.ts:482</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Type for the Model schema which contains a Field for each Model property.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/fields.field.html" class="tsd-signature-type">Field</a></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="modelschemat" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>SchemaT</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>SchemaT&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L544">Model.ts:544</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Type for the ModelT schema which contains a Field for each Model property.</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
-						</li>
-					</ul>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="modeltype" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>Type</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L423">Model.ts:423</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Types supported by the Model.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="modelupdate" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>Update</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L497">Model.ts:497</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Model input type used for update Model methods.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="model.html#modelupdatevalue" class="tsd-signature-type">ModelUpdateValue</a><span class="tsd-signature-symbol">&lt;</span><a href="model.html#modeltype" class="tsd-signature-type">ModelType</a><span class="tsd-signature-symbol">&gt;</span></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="modelupdatet" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>UpdateT</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>UpdateT&lt;KEY, INPUT&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">KEY</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L567">Model.ts:567</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Model input type used for update Model methods.</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>KEY</h4>
-						</li>
-						<li>
-							<h4>INPUT</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="modelupdatevalue" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Model<wbr>Update<wbr>Value</h3>
-					<div class="tsd-signature tsd-kind-icon">Model<wbr>Update<wbr>Value&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><a href="model.html#modeltype" class="tsd-signature-type">ModelType</a><span class="tsd-signature-symbol"> | </span><a href="update.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributetypes" class="tsd-signature-type">AttributeTypes</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L477">Model.ts:477</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Model property value used for item updates.</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>T</h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -480,13 +185,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.modelparams.html" class="tsd-signature-type">ModelParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.html" class="tsd-signature-type">Model</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/Model.ModelParams.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.html" class="tsd-signature-type" data-tsd-kind="Class">Model</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L32">Model.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L38">Model.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -497,7 +202,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <a href="../interfaces/model.modelparams.html" class="tsd-signature-type">ModelParams</a></h5>
+									<h5>params: <a href="../interfaces/Model.ModelParams.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelParams</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>Params to initialize this class with.</p>
@@ -505,7 +210,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.html" class="tsd-signature-type">Model</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.html" class="tsd-signature-type" data-tsd-kind="Class">Model</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -515,9 +220,9 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="name" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/model.modelbase.html">ModelBase</a>.<a href="../interfaces/model.modelbase.html#name">name</a></p>
+						<p>Implementation of <a href="../interfaces/Model.ModelBase.html">ModelBase</a>.<a href="../interfaces/Model.ModelBase.html#name">name</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L22">Model.ts:22</a></li>
 						</ul>
@@ -531,9 +236,9 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="schema" class="tsd-anchor"></a>
 					<h3>schema</h3>
-					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="model.html#modelschema" class="tsd-signature-type">ModelSchema</a></div>
+					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="../modules/Model.html#ModelSchema" class="tsd-signature-type" data-tsd-kind="Type alias">ModelSchema</a></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/model.modelbase.html">ModelBase</a>.<a href="../interfaces/model.modelbase.html#schema">schema</a></p>
+						<p>Implementation of <a href="../interfaces/Model.ModelBase.html">ModelBase</a>.<a href="../interfaces/Model.ModelBase.html#schema">schema</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L27">Model.ts:27</a></li>
 						</ul>
@@ -547,9 +252,9 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="table" class="tsd-anchor"></a>
 					<h3>table</h3>
-					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="table.html" class="tsd-signature-type">Table</a></div>
+					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="Table.html" class="tsd-signature-type" data-tsd-kind="Class">Table</a></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/model.modelbase.html">ModelBase</a>.<a href="../interfaces/model.modelbase.html#table">table</a></p>
+						<p>Implementation of <a href="../interfaces/Model.ModelBase.html">ModelBase</a>.<a href="../interfaces/Model.ModelBase.html#table">table</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L32">Model.ts:32</a></li>
 						</ul>
@@ -564,10 +269,10 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addbatchdelete" class="tsd-anchor"></a>
+					<a name="addBatchDelete" class="tsd-anchor"></a>
 					<h3>add<wbr>Batch<wbr>Delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Delete<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="table.batchwrite.html" class="tsd-signature-type">BatchWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Delete<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="Table.BatchWrite.html" class="tsd-signature-type" data-tsd-kind="Class">BatchWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -584,28 +289,28 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>batchWrite: <a href="table.batchwrite.html" class="tsd-signature-type">BatchWrite</a></h5>
+									<h5>batchWrite: <a href="Table.BatchWrite.html" class="tsd-signature-type" data-tsd-kind="Class">BatchWrite</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>BatchWrite operation to added this key to.</p>
 									</div>
 								</li>
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Key of item to delete in BatchWrite.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></h4>
 							<p>Object to get the resulting item from the BatchWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addbatchget" class="tsd-anchor"></a>
+					<a name="addBatchGet" class="tsd-anchor"></a>
 					<h3>add<wbr>Batch<wbr>Get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Get<span class="tsd-signature-symbol">(</span>batchGet<span class="tsd-signature-symbol">: </span><a href="table.batchget.html" class="tsd-signature-type">BatchGet</a>, key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Get<span class="tsd-signature-symbol">(</span>batchGet<span class="tsd-signature-symbol">: </span><a href="Table.BatchGet.html" class="tsd-signature-type" data-tsd-kind="Class">BatchGet</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -622,28 +327,28 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>batchGet: <a href="table.batchget.html" class="tsd-signature-type">BatchGet</a></h5>
+									<h5>batchGet: <a href="Table.BatchGet.html" class="tsd-signature-type" data-tsd-kind="Class">BatchGet</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>BatchGet operation to added this key to.</p>
 									</div>
 								</li>
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Key of item to fetch in BatchGet.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></h4>
 							<p>Object to get the resulting item from the BatchGet result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addbatchput" class="tsd-anchor"></a>
+					<a name="addBatchPut" class="tsd-anchor"></a>
 					<h3>add<wbr>Batch<wbr>Put</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Put<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="table.batchwrite.html" class="tsd-signature-type">BatchWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Put<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="Table.BatchWrite.html" class="tsd-signature-type" data-tsd-kind="Class">BatchWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -660,28 +365,28 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>batchWrite: <a href="table.batchwrite.html" class="tsd-signature-type">BatchWrite</a></h5>
+									<h5>batchWrite: <a href="Table.BatchWrite.html" class="tsd-signature-type" data-tsd-kind="Class">BatchWrite</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>BatchWrite operation to added this key to.</p>
 									</div>
 								</li>
 								<li>
-									<h5>item: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
+									<h5>item: <a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Item added to the batch write operation.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></h4>
 							<p>Object to get the resulting item from the BatchWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addtransactcheck" class="tsd-anchor"></a>
+					<a name="addTransactCheck" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Check</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Check<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, conditions<span class="tsd-signature-symbol">: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Check<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, conditions<span class="tsd-signature-symbol">: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -698,40 +403,40 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactWrite: <a href="table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
+									<h5>transactWrite: <a href="Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>TransactWrite operation to added this item condition check to.</p>
 									</div>
 								</li>
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Key of item to used in condition check.</p>
 									</div>
 								</li>
 								<li>
-									<h5>conditions: <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>List of conditions to validate when executing the transact write.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Determines what to return on transaction failure.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></h4>
 							<p>Object to get the resulting item from the TransactWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addtransactdelete" class="tsd-anchor"></a>
+					<a name="addTransactDelete" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Delete<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Delete<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -748,40 +453,40 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactWrite: <a href="table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
+									<h5>transactWrite: <a href="Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>TransactWrite operation to added this delete item to.</p>
 									</div>
 								</li>
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Key of item to delete in transact write.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>List of conditions to validate when executing the transact write.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Determines what to return on transaction failure.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></h4>
 							<p>Object to get the resulting item from the TransactWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addtransactget" class="tsd-anchor"></a>
+					<a name="addTransactGet" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Get<span class="tsd-signature-symbol">(</span>transactGet<span class="tsd-signature-symbol">: </span><a href="table.transactget.html" class="tsd-signature-type">TransactGet</a>, key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, itemAttributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Get<span class="tsd-signature-symbol">(</span>transactGet<span class="tsd-signature-symbol">: </span><a href="Table.TransactGet.html" class="tsd-signature-type" data-tsd-kind="Class">TransactGet</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, itemAttributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -798,13 +503,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactGet: <a href="table.transactget.html" class="tsd-signature-type">TransactGet</a></h5>
+									<h5>transactGet: <a href="Table.TransactGet.html" class="tsd-signature-type" data-tsd-kind="Class">TransactGet</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>TransactGet operation to added this key to.</p>
 									</div>
 								</li>
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Key of item to fetch in BatchGet.</p>
 									</div>
@@ -816,16 +521,16 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></h4>
 							<p>Object to get the resulting item from the TransactGet result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addtransactput" class="tsd-anchor"></a>
+					<a name="addTransactPut" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Put</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Put<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Put<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -842,40 +547,40 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactWrite: <a href="table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
+									<h5>transactWrite: <a href="Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>TransactWrite operation to added this put item to.</p>
 									</div>
 								</li>
 								<li>
-									<h5>item: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
+									<h5>item: <a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Item to put in the transact write.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>List of conditions to validate when executing the transact write.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Determines what to return on transaction failure.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></h4>
 							<p>Object to get the resulting item from the TransactWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="addtransactupdate" class="tsd-anchor"></a>
+					<a name="addTransactUpdate" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Update<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">DocumentClient.ReturnValue</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Update<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -892,31 +597,31 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactWrite: <a href="table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
+									<h5>transactWrite: <a href="Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>TransactWrite operation to added this update item to.</p>
 									</div>
 								</li>
 								<li>
-									<h5>item: <a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a></h5>
+									<h5>item: <a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Item to update in transact write.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>List of conditions to validate when executing the transact write.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">DocumentClient.ReturnValue</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Determines what to return on transaction failure.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresult.html" class="tsd-signature-type">ModelResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResult.html" class="tsd-signature-type" data-tsd-kind="Class">ModelResult</a></h4>
 							<p>Object to get the resulting item from the TransactWrite result.</p>
 						</li>
 					</ul>
@@ -925,7 +630,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="create" class="tsd-anchor"></a>
 					<h3>create</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -937,19 +642,19 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Adds the model item to the table and ensures it doesn&#39;t already exists.
-									See <a href="model.html#put">put</a> for params details.</p>
+									See <a href="Model.html#put">put</a> for params details.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>data: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -957,7 +662,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="delete" class="tsd-anchor"></a>
 					<h3>delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.deleteoutput.html" class="tsd-signature-type">DeleteOutput</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.DeleteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.DeleteOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -975,28 +680,28 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model key of item to delete.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.DeleteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Additional optional options to use for delete.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.deleteoutput.html" class="tsd-signature-type">DeleteOutput</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.DeleteOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>An async promise that contains the model data and the table delete result object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="deleteparams" class="tsd-anchor"></a>
+					<a name="deleteParams" class="tsd-anchor"></a>
 					<h3>delete<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Params<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DeleteItemInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Params<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.DeleteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DeleteItemInput</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1013,13 +718,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model key of the item to delete.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.DeleteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Additional optional options to use for delete.</p>
 									</div>
@@ -1034,7 +739,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="get" class="tsd-anchor"></a>
 					<h3>get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.getoptions.html" class="tsd-signature-type">GetOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.getoutput.html" class="tsd-signature-type">GetOutput</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.GetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.GetOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1052,28 +757,28 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model key of item to get.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.getoptions.html" class="tsd-signature-type">GetOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.GetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Additional optional options to use for get.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.getoutput.html" class="tsd-signature-type">GetOutput</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.GetOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>An async promise that contains the model data and the table get result object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getcontext" class="tsd-anchor"></a>
+					<a name="getContext" class="tsd-anchor"></a>
 					<h3>get<wbr>Context</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Context<span class="tsd-signature-symbol">(</span>action<span class="tsd-signature-symbol">: </span><a href="table.html#itemactions" class="tsd-signature-type">ItemActions</a>, options<span class="tsd-signature-symbol">: </span><a href="../interfaces/table.writeoptions.html" class="tsd-signature-type">WriteOptions</a>, scope<span class="tsd-signature-symbol">?: </span><a href="fields.html#actionscope" class="tsd-signature-type">ActionScope</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Context<span class="tsd-signature-symbol">(</span>action<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#ItemActions" class="tsd-signature-type" data-tsd-kind="Type alias">ItemActions</a>, options<span class="tsd-signature-symbol">: </span><a href="../interfaces/Table.WriteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">WriteOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span>, scope<span class="tsd-signature-symbol">?: </span><a href="../modules/Fields.html#ActionScope" class="tsd-signature-type" data-tsd-kind="Type alias">ActionScope</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1084,39 +789,39 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Generate the context used in <a href="model.html#tomodel">toModel</a>, <a href="model.html#totable">toTable</a> and <a href="model.html#totableupdate">toTableUpdate</a>.</p>
+									<p>Generate the context used in <a href="Model.html#toModel">toModel</a>, <a href="Model.html#toTable">toTable</a> and <a href="Model.html#toTableUpdate">toTableUpdate</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>action: <a href="table.html#itemactions" class="tsd-signature-type">ItemActions</a></h5>
+									<h5>action: <a href="../modules/Table.html#ItemActions" class="tsd-signature-type" data-tsd-kind="Type alias">ItemActions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Type of table item action is currently executing.</p>
 									</div>
 								</li>
 								<li>
-									<h5>options: <a href="../interfaces/table.writeoptions.html" class="tsd-signature-type">WriteOptions</a></h5>
+									<h5>options: <a href="../interfaces/Table.WriteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">WriteOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options used when reading or writing to the table.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> scope: <a href="fields.html#actionscope" class="tsd-signature-type">ActionScope</a><span class="tsd-signature-symbol"> = &quot;single&quot;</span></h5>
+									<h5>scope: <a href="../modules/Fields.html#ActionScope" class="tsd-signature-type" data-tsd-kind="Type alias">ActionScope</a><span class="tsd-signature-symbol"> = &#x27;single&#x27;</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getparams" class="tsd-anchor"></a>
+					<a name="getParams" class="tsd-anchor"></a>
 					<h3>get<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Params<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.getoptions.html" class="tsd-signature-type">GetOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GetItemInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Params<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.GetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GetItemInput</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1133,13 +838,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model key of the item to get.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.getoptions.html" class="tsd-signature-type">GetOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.GetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Additional optional options to use for get.</p>
 									</div>
@@ -1154,7 +859,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="put" class="tsd-anchor"></a>
 					<h3>put</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">put<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">put<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1172,25 +877,25 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>data: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Additional optional options to use for put.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>An async promise that contains the model data and the table put result object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="putparams" class="tsd-anchor"></a>
+					<a name="putParams" class="tsd-anchor"></a>
 					<h3>put<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">put<wbr>Params<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PutItemInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">put<wbr>Params<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PutItemInput</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1207,13 +912,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>item: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>item: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model item data to put.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Additional optional options to use for put.</p>
 									</div>
@@ -1228,7 +933,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="replace" class="tsd-anchor"></a>
 					<h3>replace</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1240,27 +945,27 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Replaces the model item in the table only if it already exists.
-									See <a href="model.html#put">put</a> for details.</p>
+									See <a href="Model.html#put">put</a> for details.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="model.html#modelcore" class="tsd-signature-type">ModelCore</a></h5>
+									<h5>data: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="tomodel" class="tsd-anchor"></a>
+					<a name="toModel" class="tsd-anchor"></a>
 					<h3>to<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modelcontext.html" class="tsd-signature-type">ModelContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.html#modelout" class="tsd-signature-type">ModelOut</a></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../modules/Table.html#AttributeValuesMap" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValuesMap</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.ModelContext.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1278,28 +983,28 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<h5>data: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../modules/Table.html#AttributeValuesMap" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValuesMap</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Table item data to convert to model data.</p>
 									</div>
 								</li>
 								<li>
-									<h5>context: <a href="../interfaces/fields.modelcontext.html" class="tsd-signature-type">ModelContext</a></h5>
+									<h5>context: <a href="../interfaces/Fields.ModelContext.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelContext</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Context used for converting table to model data, passed to each field object.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.html#modelout" class="tsd-signature-type">ModelOut</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a></h4>
 							<p>Model data converted from the table data.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="totable" class="tsd-anchor"></a>
+					<a name="toTable" class="tsd-anchor"></a>
 					<h3>to<wbr>Table</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="model.html#modeldata" class="tsd-signature-type">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/model.tabledata.html" class="tsd-signature-type">TableData</a></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/Model.TableData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableData</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1317,28 +1022,28 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="model.html#modeldata" class="tsd-signature-type">ModelData</a></h5>
+									<h5>data: <a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model data to convert to table data.</p>
 									</div>
 								</li>
 								<li>
-									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
+									<h5>context: <a href="../interfaces/Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Context used for converting model to table data, passed to each field object.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/model.tabledata.html" class="tsd-signature-type">TableData</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/Model.TableData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableData</a></h4>
 							<p>Table data converted from the model data.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="totableupdate" class="tsd-anchor"></a>
+					<a name="toTableUpdate" class="tsd-anchor"></a>
 					<h3>to<wbr>Table<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/model.tableupdatedata.html" class="tsd-signature-type">TableUpdateData</a></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a>, context<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/Model.TableUpdateData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableUpdateData</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1349,26 +1054,26 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Converts model update data to table update data, similar to <a href="model.html#totable">toTable</a> but since table updates
+									<p>Converts model update data to table update data, similar to <a href="Model.html#toTable">toTable</a> but since table updates
 									supports attribute based update expressions updates are handled differently then other actions.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a></h5>
+									<h5>data: <a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model update data to convert to table update data.</p>
 									</div>
 								</li>
 								<li>
-									<h5>context: <a href="../interfaces/fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h5>
+									<h5>context: <a href="../interfaces/Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Context used for converting model to table data, passed to each field object.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/model.tableupdatedata.html" class="tsd-signature-type">TableUpdateData</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/Model.TableUpdateData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableUpdateData</a></h4>
 							<p>Table data converted from the model data.</p>
 						</li>
 					</ul>
@@ -1377,7 +1082,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="update" class="tsd-anchor"></a>
 					<h3>update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.updateoutput.html" class="tsd-signature-type">UpdateOutput</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.UpdateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.UpdateOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1395,25 +1100,25 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a></h5>
+									<h5>data: <a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.UpdateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Additional optional options to use for update.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/model.updateoutput.html" class="tsd-signature-type">UpdateOutput</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Model.UpdateOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOutput</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Model.html#ModelOut" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOut</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>An async promise that contains the model data and the table update result object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="updateparams" class="tsd-anchor"></a>
+					<a name="updateParams" class="tsd-anchor"></a>
 					<h3>update<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Params<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UpdateItemInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Params<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Table.UpdateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UpdateItemInput</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1430,13 +1135,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>item: <a href="model.html#modelupdate" class="tsd-signature-type">ModelUpdate</a></h5>
+									<h5>item: <a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model item data or update resolver to update.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../interfaces/Table.UpdateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Additional optional options to use for update.</p>
 									</div>
@@ -1447,63 +1152,11 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="createmodel" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> create<wbr>Model</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Model&lt;KEY, INPUT, OUTPUT&gt;<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/model.modelparamst.html" class="tsd-signature-type">ModelParamsT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/model.modelt.html" class="tsd-signature-type">ModelT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L720">Model.ts:720</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>See <a href="table.html#createtable">Table.createTable</a> reasoning for having a createTable over support &#39;new TableT&#39;.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>KEY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
-									<div class="tsd-comment tsd-typography">
-										<p>Key part of the model used for get and delete actions.</p>
-									</div>
-								</li>
-								<li>
-									<h4>INPUT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
-									<div class="tsd-comment tsd-typography">
-										<p>The model input interface used for put and update.</p>
-									</div>
-								</li>
-								<li>
-									<h4>OUTPUT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">KEY</span></h4>
-									<div class="tsd-comment tsd-typography">
-										<p>The model output interface.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>params: <a href="../interfaces/model.modelparamst.html" class="tsd-signature-type">ModelParamsT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Options to used when creating Model.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/model.modelt.html" class="tsd-signature-type">ModelT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="initschema" class="tsd-anchor"></a>
+					<a name="initSchema" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> init<wbr>Schema</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">init<wbr>Schema<span class="tsd-signature-symbol">(</span>schema<span class="tsd-signature-symbol">: </span><a href="model.html#modelschema" class="tsd-signature-type">ModelSchema</a>, model<span class="tsd-signature-symbol">: </span><a href="model.html" class="tsd-signature-type">Model</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">init<wbr>Schema<span class="tsd-signature-symbol">(</span>schema<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelSchema" class="tsd-signature-type" data-tsd-kind="Type alias">ModelSchema</a>, model<span class="tsd-signature-symbol">: </span><a href="Model.html" class="tsd-signature-type" data-tsd-kind="Class">Model</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1520,13 +1173,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>schema: <a href="model.html#modelschema" class="tsd-signature-type">ModelSchema</a></h5>
+									<h5>schema: <a href="../modules/Model.html#ModelSchema" class="tsd-signature-type" data-tsd-kind="Type alias">ModelSchema</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model schema to initialize.</p>
 									</div>
 								</li>
 								<li>
-									<h5>model: <a href="model.html" class="tsd-signature-type">Model</a></h5>
+									<h5>model: <a href="Model.html" class="tsd-signature-type" data-tsd-kind="Class">Model</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model to use when initialize each field in the schema.</p>
 									</div>
@@ -1537,10 +1190,10 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="splittabledata" class="tsd-anchor"></a>
+					<a name="splitTableData" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> split<wbr>Table<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">split<wbr>Table<wbr>Data<span class="tsd-signature-symbol">(</span>table<span class="tsd-signature-symbol">: </span><a href="table.html" class="tsd-signature-type">Table</a>, data<span class="tsd-signature-symbol">: </span><a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/model.tabledata.html" class="tsd-signature-type">TableData</a></li>
+						<li class="tsd-signature tsd-kind-icon">split<wbr>Table<wbr>Data<span class="tsd-signature-symbol">(</span>table<span class="tsd-signature-symbol">: </span><a href="Table.html" class="tsd-signature-type" data-tsd-kind="Class">Table</a>, data<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#AttributeValuesMap" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValuesMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/Model.TableData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableData</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1557,19 +1210,19 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>table: <a href="table.html" class="tsd-signature-type">Table</a></h5>
+									<h5>table: <a href="Table.html" class="tsd-signature-type" data-tsd-kind="Class">Table</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Table used to determine what attributes are keys.</p>
 									</div>
 								</li>
 								<li>
-									<h5>data: <a href="table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
+									<h5>data: <a href="../modules/Table.html#AttributeValuesMap" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValuesMap</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Table data to split into key and item.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/model.tabledata.html" class="tsd-signature-type">TableData</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/Model.TableData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableData</a></h4>
 							<p>The key, item and raw converted model data.</p>
 						</li>
 					</ul>
@@ -1579,219 +1232,144 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="condition.html" class="tsd-kind-icon">Condition</a>
+						<a href="Condition.html" class="tsd-kind-icon">Condition</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="conditionexpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
+						<a href="ConditionExpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
+						<a href="ExpressionAttributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="fields.html" class="tsd-kind-icon">Fields</a>
+						<a href="Fields.html" class="tsd-kind-icon">Fields</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="index.html" class="tsd-kind-icon">Index</a>
+						<a href="Index.html" class="tsd-kind-icon">Index</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="keycondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
+						<a href="KeyCondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="keyconditionexpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
+						<a href="KeyConditionExpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="model.html" class="tsd-kind-icon">Model</a>
+						<a href="Model.html" class="tsd-kind-icon">Model</a>
 						<ul>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="model.modelresult.html" class="tsd-kind-icon">Model<wbr>Result</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/model.baseoutput.html" class="tsd-kind-icon">Base<wbr>Output</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/model.deleteoutput.html" class="tsd-kind-icon">Delete<wbr>Output</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/model.getoutput.html" class="tsd-kind-icon">Get<wbr>Output</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/model.modelbase.html" class="tsd-kind-icon">Model<wbr>Base</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/model.modelparams.html" class="tsd-kind-icon">Model<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/model.modelparamst.html" class="tsd-kind-icon">Model<wbr>ParamsT</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/model.modelresultt.html" class="tsd-kind-icon">Model<wbr>ResultT</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/model.modelt.html" class="tsd-kind-icon">ModelT</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/model.putoutput.html" class="tsd-kind-icon">Put<wbr>Output</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/model.tabledata.html" class="tsd-kind-icon">Table<wbr>Data</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/model.tableupdatedata.html" class="tsd-kind-icon">Table<wbr>Update<wbr>Data</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/model.updateoutput.html" class="tsd-kind-icon">Update<wbr>Output</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="model.html#modelcore" class="tsd-kind-icon">Model<wbr>Core</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="model.html#modelcoret" class="tsd-kind-icon">Model<wbr>CoreT</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="model.html#modeldata" class="tsd-kind-icon">Model<wbr>Data</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="model.html#modelout" class="tsd-kind-icon">Model<wbr>Out</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="model.html#modeloutt" class="tsd-kind-icon">Model<wbr>OutT</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="model.html#modelschema" class="tsd-kind-icon">Model<wbr>Schema</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="model.html#modelschemat" class="tsd-kind-icon">Model<wbr>SchemaT</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="model.html#modeltype" class="tsd-kind-icon">Model<wbr>Type</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="model.html#modelupdate" class="tsd-kind-icon">Model<wbr>Update</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="model.html#modelupdatet" class="tsd-kind-icon">Model<wbr>UpdateT</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="model.html#modelupdatevalue" class="tsd-kind-icon">Model<wbr>Update<wbr>Value</a>
-							</li>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="model.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="Model.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="model.html#name" class="tsd-kind-icon">name</a>
+								<a href="Model.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="model.html#schema" class="tsd-kind-icon">schema</a>
+								<a href="Model.html#schema" class="tsd-kind-icon">schema</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="model.html#table" class="tsd-kind-icon">table</a>
+								<a href="Model.html#table" class="tsd-kind-icon">table</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#addbatchdelete" class="tsd-kind-icon">add<wbr>Batch<wbr>Delete</a>
+								<a href="Model.html#addBatchDelete" class="tsd-kind-icon">add<wbr>Batch<wbr>Delete</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#addbatchget" class="tsd-kind-icon">add<wbr>Batch<wbr>Get</a>
+								<a href="Model.html#addBatchGet" class="tsd-kind-icon">add<wbr>Batch<wbr>Get</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#addbatchput" class="tsd-kind-icon">add<wbr>Batch<wbr>Put</a>
+								<a href="Model.html#addBatchPut" class="tsd-kind-icon">add<wbr>Batch<wbr>Put</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#addtransactcheck" class="tsd-kind-icon">add<wbr>Transact<wbr>Check</a>
+								<a href="Model.html#addTransactCheck" class="tsd-kind-icon">add<wbr>Transact<wbr>Check</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#addtransactdelete" class="tsd-kind-icon">add<wbr>Transact<wbr>Delete</a>
+								<a href="Model.html#addTransactDelete" class="tsd-kind-icon">add<wbr>Transact<wbr>Delete</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#addtransactget" class="tsd-kind-icon">add<wbr>Transact<wbr>Get</a>
+								<a href="Model.html#addTransactGet" class="tsd-kind-icon">add<wbr>Transact<wbr>Get</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#addtransactput" class="tsd-kind-icon">add<wbr>Transact<wbr>Put</a>
+								<a href="Model.html#addTransactPut" class="tsd-kind-icon">add<wbr>Transact<wbr>Put</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#addtransactupdate" class="tsd-kind-icon">add<wbr>Transact<wbr>Update</a>
+								<a href="Model.html#addTransactUpdate" class="tsd-kind-icon">add<wbr>Transact<wbr>Update</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#create" class="tsd-kind-icon">create</a>
+								<a href="Model.html#create" class="tsd-kind-icon">create</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#delete" class="tsd-kind-icon">delete</a>
+								<a href="Model.html#delete" class="tsd-kind-icon">delete</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#deleteparams" class="tsd-kind-icon">delete<wbr>Params</a>
+								<a href="Model.html#deleteParams" class="tsd-kind-icon">delete<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#get" class="tsd-kind-icon">get</a>
+								<a href="Model.html#get" class="tsd-kind-icon">get</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a>
+								<a href="Model.html#getContext" class="tsd-kind-icon">get<wbr>Context</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#getparams" class="tsd-kind-icon">get<wbr>Params</a>
+								<a href="Model.html#getParams" class="tsd-kind-icon">get<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#put" class="tsd-kind-icon">put</a>
+								<a href="Model.html#put" class="tsd-kind-icon">put</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#putparams" class="tsd-kind-icon">put<wbr>Params</a>
+								<a href="Model.html#putParams" class="tsd-kind-icon">put<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#replace" class="tsd-kind-icon">replace</a>
+								<a href="Model.html#replace" class="tsd-kind-icon">replace</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a>
+								<a href="Model.html#toModel" class="tsd-kind-icon">to<wbr>Model</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#totable" class="tsd-kind-icon">to<wbr>Table</a>
+								<a href="Model.html#toTable" class="tsd-kind-icon">to<wbr>Table</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a>
+								<a href="Model.html#toTableUpdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#update" class="tsd-kind-icon">update</a>
+								<a href="Model.html#update" class="tsd-kind-icon">update</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="model.html#updateparams" class="tsd-kind-icon">update<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="model.html#createmodel" class="tsd-kind-icon">create<wbr>Model</a>
+								<a href="Model.html#updateParams" class="tsd-kind-icon">update<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="model.html#initschema" class="tsd-kind-icon">init<wbr>Schema</a>
+								<a href="Model.html#initSchema" class="tsd-kind-icon">init<wbr>Schema</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="model.html#splittabledata" class="tsd-kind-icon">split<wbr>Table<wbr>Data</a>
+								<a href="Model.html#splitTableData" class="tsd-kind-icon">split<wbr>Table<wbr>Data</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class">
-						<a href="table.html" class="tsd-kind-icon">Table</a>
+						<a href="Table.html" class="tsd-kind-icon">Table</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="update.html" class="tsd-kind-icon">Update</a>
+						<a href="Update.html" class="tsd-kind-icon">Update</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="updateexpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
+						<a href="UpdateExpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindex" class="tsd-kind-icon">validate<wbr>Index</a>
+						<a href="../modules.html#validateIndex" class="tsd-kind-icon">validate<wbr>Index</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
+						<a href="../modules.html#validateIndexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#validatetable" class="tsd-kind-icon">validate<wbr>Table</a>
+						<a href="../modules.html#validateTable" class="tsd-kind-icon">validate<wbr>Table</a>
 					</li>
 				</ul>
 			</nav>
@@ -1803,57 +1381,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
@@ -1863,6 +1397,5 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

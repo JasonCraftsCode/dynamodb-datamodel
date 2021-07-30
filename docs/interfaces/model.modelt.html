@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>ModelT | dynamodb-datamodel - v0.2.7</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for dynamodb-datamodel - v0.2.7">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -49,13 +50,13 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">dynamodb-datamodel - v0.2.7</a>
 				</li>
 				<li>
-					<a href="../classes/model.html">Model</a>
+					<a href="../modules/Model.html">Model</a>
 				</li>
 				<li>
-					<a href="model.modelt.html">ModelT</a>
+					<a href="Model.ModelT.html">ModelT</a>
 				</li>
 			</ul>
 			<h1>Interface ModelT&lt;KEY, INPUT, OUTPUT&gt;</h1>
@@ -68,7 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Generic version of Model, see <a href="../classes/model.html">Model</a> for more details.</p>
+						<p>Generic version of Model, see <a href="../classes/Model.html">Model</a> for more details.</p>
 					</div>
 				</div>
 			</section>
@@ -84,7 +85,7 @@
 						</div>
 					</li>
 					<li>
-						<h4>INPUT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
+						<h4>INPUT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span> = <span class="tsd-signature-type">KEY</span></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>The model input interface used for put and update.</p>
@@ -92,7 +93,7 @@
 						</div>
 					</li>
 					<li>
-						<h4>OUTPUT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">KEY</span></h4>
+						<h4>OUTPUT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">KEY</span> = <span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">KEY</span></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>The model output interface.</p>
@@ -105,7 +106,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="../classes/model.html" class="tsd-signature-type">Model</a>
+						<a href="../classes/Model.html" class="tsd-signature-type" data-tsd-kind="Class">Model</a>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">ModelT</span>
@@ -114,97 +115,46 @@
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="model.modelbase.html" class="tsd-signature-type">ModelBase</a></li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelt.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelt.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#schema" class="tsd-kind-icon">schema</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelt.html#table" class="tsd-kind-icon">table</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="Model.ModelT.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#schema" class="tsd-kind-icon">schema</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="Model.ModelT.html#table" class="tsd-kind-icon">table</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#addbatchdelete" class="tsd-kind-icon">add<wbr>Batch<wbr>Delete</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#addbatchget" class="tsd-kind-icon">add<wbr>Batch<wbr>Get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#addbatchput" class="tsd-kind-icon">add<wbr>Batch<wbr>Put</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#addtransactcheck" class="tsd-kind-icon">add<wbr>Transact<wbr>Check</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#addtransactdelete" class="tsd-kind-icon">add<wbr>Transact<wbr>Delete</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#addtransactget" class="tsd-kind-icon">add<wbr>Transact<wbr>Get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#addtransactput" class="tsd-kind-icon">add<wbr>Transact<wbr>Put</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#addtransactupdate" class="tsd-kind-icon">add<wbr>Transact<wbr>Update</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#create" class="tsd-kind-icon">create</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#delete" class="tsd-kind-icon">delete</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#deleteparams" class="tsd-kind-icon">delete<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#get" class="tsd-kind-icon">get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="model.modelt.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#getparams" class="tsd-kind-icon">get<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#put" class="tsd-kind-icon">put</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#putparams" class="tsd-kind-icon">put<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#replace" class="tsd-kind-icon">replace</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#totable" class="tsd-kind-icon">to<wbr>Table</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#update" class="tsd-kind-icon">update</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="model.modelt.html#updateparams" class="tsd-kind-icon">update<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static"><a href="model.modelt.html#initschema" class="tsd-kind-icon">init<wbr>Schema</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static"><a href="model.modelt.html#splittabledata" class="tsd-kind-icon">split<wbr>Table<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#addBatchDelete" class="tsd-kind-icon">add<wbr>Batch<wbr>Delete</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#addBatchGet" class="tsd-kind-icon">add<wbr>Batch<wbr>Get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#addBatchPut" class="tsd-kind-icon">add<wbr>Batch<wbr>Put</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#addTransactCheck" class="tsd-kind-icon">add<wbr>Transact<wbr>Check</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#addTransactDelete" class="tsd-kind-icon">add<wbr>Transact<wbr>Delete</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#addTransactGet" class="tsd-kind-icon">add<wbr>Transact<wbr>Get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#addTransactPut" class="tsd-kind-icon">add<wbr>Transact<wbr>Put</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#addTransactUpdate" class="tsd-kind-icon">add<wbr>Transact<wbr>Update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#create" class="tsd-kind-icon">create</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#delete" class="tsd-kind-icon">delete</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#deleteParams" class="tsd-kind-icon">delete<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="Model.ModelT.html#getContext" class="tsd-kind-icon">get<wbr>Context</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#getParams" class="tsd-kind-icon">get<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#put" class="tsd-kind-icon">put</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#putParams" class="tsd-kind-icon">put<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#replace" class="tsd-kind-icon">replace</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#toModel" class="tsd-kind-icon">to<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#toTable" class="tsd-kind-icon">to<wbr>Table</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#toTableUpdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#update" class="tsd-kind-icon">update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="Model.ModelT.html#updateParams" class="tsd-kind-icon">update<wbr>Params</a></li>
 							</ul>
 						</section>
 					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>ModelT<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="model.modelparams.html" class="tsd-signature-type">ModelParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelt.html" class="tsd-signature-type">ModelT</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#constructor">constructor</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L32">Model.ts:32</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Initialize this class with params.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>params: <a href="model.modelparams.html" class="tsd-signature-type">ModelParams</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>Params to initialize this class with.</p>
-										</div>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelt.html" class="tsd-signature-type">ModelT</a></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -212,9 +162,9 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="name" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#name">name</a></p>
+						<p>Inherited from <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#name">name</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L22">Model.ts:22</a></li>
 						</ul>
@@ -228,9 +178,9 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="schema" class="tsd-anchor"></a>
 					<h3>schema</h3>
-					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="../classes/model.html#modelschemat" class="tsd-signature-type">ModelSchemaT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <a href="../modules/Model.html#ModelSchemaT" class="tsd-signature-type" data-tsd-kind="Type alias">ModelSchemaT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#schema">schema</a></p>
+						<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#schema">schema</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L600">Model.ts:600</a></li>
 						</ul>
@@ -244,9 +194,9 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="table" class="tsd-anchor"></a>
 					<h3>table</h3>
-					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="../classes/table.html" class="tsd-signature-type">Table</a></div>
+					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="../classes/Table.html" class="tsd-signature-type" data-tsd-kind="Class">Table</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#table">table</a></p>
+						<p>Inherited from <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#table">table</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L32">Model.ts:32</a></li>
 						</ul>
@@ -261,301 +211,368 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="addbatchdelete" class="tsd-anchor"></a>
+					<a name="addBatchDelete" class="tsd-anchor"></a>
 					<h3>add<wbr>Batch<wbr>Delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Delete<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="../classes/table.batchwrite.html" class="tsd-signature-type">BatchWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Delete<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="../classes/Table.BatchWrite.html" class="tsd-signature-type" data-tsd-kind="Class">BatchWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#addbatchdelete">addBatchDelete</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#addBatchDelete">addBatchDelete</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L661">Model.ts:661</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).addBatchDelete}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds a delete item by key to a batch write operation.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>batchWrite: <a href="../classes/table.batchwrite.html" class="tsd-signature-type">BatchWrite</a></h5>
+									<h5>batchWrite: <a href="../classes/Table.BatchWrite.html" class="tsd-signature-type" data-tsd-kind="Class">BatchWrite</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>BatchWrite operation to added this key to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key of item to delete in BatchWrite.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Object to get the resulting item from the BatchWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="addbatchget" class="tsd-anchor"></a>
+					<a name="addBatchGet" class="tsd-anchor"></a>
 					<h3>add<wbr>Batch<wbr>Get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Get<span class="tsd-signature-symbol">(</span>batchGet<span class="tsd-signature-symbol">: </span><a href="../classes/table.batchget.html" class="tsd-signature-type">BatchGet</a>, key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Get<span class="tsd-signature-symbol">(</span>batchGet<span class="tsd-signature-symbol">: </span><a href="../classes/Table.BatchGet.html" class="tsd-signature-type" data-tsd-kind="Class">BatchGet</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#addbatchget">addBatchGet</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#addBatchGet">addBatchGet</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L657">Model.ts:657</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).addBatchGet}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds a get item by key to a batch get operation.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>batchGet: <a href="../classes/table.batchget.html" class="tsd-signature-type">BatchGet</a></h5>
+									<h5>batchGet: <a href="../classes/Table.BatchGet.html" class="tsd-signature-type" data-tsd-kind="Class">BatchGet</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>BatchGet operation to added this key to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key of item to fetch in BatchGet.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Object to get the resulting item from the BatchGet result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="addbatchput" class="tsd-anchor"></a>
+					<a name="addBatchPut" class="tsd-anchor"></a>
 					<h3>add<wbr>Batch<wbr>Put</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Put<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="../classes/table.batchwrite.html" class="tsd-signature-type">BatchWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Batch<wbr>Put<span class="tsd-signature-symbol">(</span>batchWrite<span class="tsd-signature-symbol">: </span><a href="../classes/Table.BatchWrite.html" class="tsd-signature-type" data-tsd-kind="Class">BatchWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#addbatchput">addBatchPut</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#addBatchPut">addBatchPut</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L665">Model.ts:665</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).addBatchPut}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds a put item to a batch write operation.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>batchWrite: <a href="../classes/table.batchwrite.html" class="tsd-signature-type">BatchWrite</a></h5>
+									<h5>batchWrite: <a href="../classes/Table.BatchWrite.html" class="tsd-signature-type" data-tsd-kind="Class">BatchWrite</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>BatchWrite operation to added this key to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>item: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>item: <a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Item added to the batch write operation.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Object to get the resulting item from the BatchWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="addtransactcheck" class="tsd-anchor"></a>
+					<a name="addTransactCheck" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Check</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Check<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, conditions<span class="tsd-signature-symbol">: </span><a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Check<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, conditions<span class="tsd-signature-symbol">: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#addtransactcheck">addTransactCheck</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#addTransactCheck">addTransactCheck</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L678">Model.ts:678</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).addTransactCheck}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds an item condition check to a transact write operation.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactWrite: <a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
+									<h5>transactWrite: <a href="../classes/Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>TransactWrite operation to added this item condition check to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key of item to used in condition check.</p>
+									</div>
 								</li>
 								<li>
-									<h5>conditions: <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>List of conditions to validate when executing the transact write.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Determines what to return on transaction failure.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Object to get the resulting item from the TransactWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="addtransactdelete" class="tsd-anchor"></a>
+					<a name="addTransactDelete" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Delete<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, conditions<span class="tsd-signature-symbol">?: </span><a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Delete<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#addtransactdelete">addTransactDelete</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#addTransactDelete">addTransactDelete</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L687">Model.ts:687</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).addTransactDelete}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds an item delete to a transact write operation.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactWrite: <a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
+									<h5>transactWrite: <a href="../classes/Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>TransactWrite operation to added this delete item to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key of item to delete in transact write.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>List of conditions to validate when executing the transact write.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Determines what to return on transaction failure.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Object to get the resulting item from the TransactWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="addtransactget" class="tsd-anchor"></a>
+					<a name="addTransactGet" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Get<span class="tsd-signature-symbol">(</span>transactGet<span class="tsd-signature-symbol">: </span><a href="../classes/table.transactget.html" class="tsd-signature-type">TransactGet</a>, key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, itemAttributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Get<span class="tsd-signature-symbol">(</span>transactGet<span class="tsd-signature-symbol">: </span><a href="../classes/Table.TransactGet.html" class="tsd-signature-type" data-tsd-kind="Class">TransactGet</a>, key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, itemAttributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#addtransactget">addTransactGet</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#addTransactGet">addTransactGet</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L670">Model.ts:670</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).addTransactGet}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds a get item to a transact get operation.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactGet: <a href="../classes/table.transactget.html" class="tsd-signature-type">TransactGet</a></h5>
+									<h5>transactGet: <a href="../classes/Table.TransactGet.html" class="tsd-signature-type" data-tsd-kind="Class">TransactGet</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>TransactGet operation to added this key to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key of item to fetch in BatchGet.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> itemAttributes: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>List of attributes to fetch in TransactGet, if this is empty then all item attributes are return.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Object to get the resulting item from the TransactGet result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="addtransactput" class="tsd-anchor"></a>
+					<a name="addTransactPut" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Put</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Put<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span>, conditions<span class="tsd-signature-symbol">?: </span><a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Put<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#addtransactput">addTransactPut</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#addTransactPut">addTransactPut</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L696">Model.ts:696</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).addTransactPut}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds an item put to a transact write operation.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactWrite: <a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
+									<h5>transactWrite: <a href="../classes/Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>TransactWrite operation to added this put item to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>item: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>item: <a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Item to put in the transact write.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>List of conditions to validate when executing the transact write.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">DocumentClient.ReturnValuesOnConditionCheckFailure</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Determines what to return on transaction failure.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Object to get the resulting item from the TransactWrite result.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="addtransactupdate" class="tsd-anchor"></a>
+					<a name="addTransactUpdate" class="tsd-anchor"></a>
 					<h3>add<wbr>Transact<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Update<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelupdatet" class="tsd-signature-type">ModelUpdateT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span>, conditions<span class="tsd-signature-symbol">?: </span><a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">DocumentClient.ReturnValue</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Transact<wbr>Update<span class="tsd-signature-symbol">(</span>transactWrite<span class="tsd-signature-symbol">: </span><a href="../classes/Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a>, item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span>, returnFailure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#addtransactupdate">addTransactUpdate</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#addTransactUpdate">addTransactUpdate</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L705">Model.ts:705</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).addTransactUpdate}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds an item update to a transact write operation.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transactWrite: <a href="../classes/table.transactwrite.html" class="tsd-signature-type">TransactWrite</a></h5>
+									<h5>transactWrite: <a href="../classes/Table.TransactWrite.html" class="tsd-signature-type" data-tsd-kind="Class">TransactWrite</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>TransactWrite operation to added this update item to.</p>
+									</div>
 								</li>
 								<li>
-									<h5>item: <a href="../classes/model.html#modelupdatet" class="tsd-signature-type">ModelUpdateT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>item: <a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Item to update in transact write.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>List of conditions to validate when executing the transact write.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">DocumentClient.ReturnValue</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> returnFailure: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Determines what to return on transaction failure.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.modelresultt.html" class="tsd-signature-type">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.ModelResultT.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelResultT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Object to get the resulting item from the TransactWrite result.</p>
 						</li>
 					</ul>
 				</section>
@@ -563,33 +580,32 @@
 					<a name="create" class="tsd-anchor"></a>
 					<h3>create</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#create">create</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#create">create</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L640">Model.ts:640</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).create}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Adds the model item to the table and ensures it doesn&#39;t already exists.
+									See <a href="Model.ModelT.html#put">put</a> for params details.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>data: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a></h5>
+									<h5>options: <a href="Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -597,67 +613,78 @@
 					<a name="delete" class="tsd-anchor"></a>
 					<h3>delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.deleteoutput.html" class="tsd-signature-type">DeleteOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.DeleteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.DeleteOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#delete">delete</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#delete">delete</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L636">Model.ts:636</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).delete}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Wrapper method for <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property" class="external">DocumentClient.delete</a> method.
+									That uses the model as input and output.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model key of item to delete.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a></h5>
+									<h5>options: <a href="Table.DeleteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional optional options to use for delete.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.deleteoutput.html" class="tsd-signature-type">DeleteOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.DeleteOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>An async promise that contains the model data and the table delete result object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="deleteparams" class="tsd-anchor"></a>
+					<a name="deleteParams" class="tsd-anchor"></a>
 					<h3>delete<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Params<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DeleteItemInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Params<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.DeleteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DeleteItemInput</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#deleteparams">deleteParams</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#deleteParams">deleteParams</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L620">Model.ts:620</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).deleteParams}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Creates the params that can be used when calling <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property" class="external">DocumentClient.delete</a>.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model key of the item to delete.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.deleteoptions.html" class="tsd-signature-type">DeleteOptions</a></h5>
+									<h5>options: <a href="Table.DeleteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">DeleteOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional optional options to use for delete.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">DeleteItemInput</span></h4>
+							<p>Input params for <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property" class="external">DocumentClient.delete</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -665,111 +692,122 @@
 					<a name="get" class="tsd-anchor"></a>
 					<h3>get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.getoptions.html" class="tsd-signature-type">GetOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.getoutput.html" class="tsd-signature-type">GetOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.GetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.GetOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#get">get</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#get">get</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L632">Model.ts:632</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).get}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Wrapper method for <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property" class="external">DocumentClient.get</a> method.
+									That uses the model as input and output.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model key of item to get.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.getoptions.html" class="tsd-signature-type">GetOptions</a></h5>
+									<h5>options: <a href="Table.GetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional optional options to use for get.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.getoutput.html" class="tsd-signature-type">GetOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.GetOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>An async promise that contains the model data and the table get result object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-					<a name="getcontext" class="tsd-anchor"></a>
+					<a name="getContext" class="tsd-anchor"></a>
 					<h3>get<wbr>Context</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Context<span class="tsd-signature-symbol">(</span>action<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#itemactions" class="tsd-signature-type">ItemActions</a>, options<span class="tsd-signature-symbol">: </span><a href="table.writeoptions.html" class="tsd-signature-type">WriteOptions</a>, scope<span class="tsd-signature-symbol">?: </span><a href="../classes/fields.html#actionscope" class="tsd-signature-type">ActionScope</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.tablecontext.html" class="tsd-signature-type">TableContext</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Context<span class="tsd-signature-symbol">(</span>action<span class="tsd-signature-symbol">: </span><a href="../modules/Table.html#ItemActions" class="tsd-signature-type" data-tsd-kind="Type alias">ItemActions</a>, options<span class="tsd-signature-symbol">: </span><a href="Table.WriteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">WriteOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span>, scope<span class="tsd-signature-symbol">?: </span><a href="../modules/Fields.html#ActionScope" class="tsd-signature-type" data-tsd-kind="Type alias">ActionScope</a>, conditions<span class="tsd-signature-symbol">?: </span><a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#getcontext">getContext</a></p>
+								<p>Inherited from <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#getContext">getContext</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L91">Model.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Generate the context used in <a href="model.modelt.html#tomodel">toModel</a>, <a href="model.modelt.html#totable">toTable</a> and <a href="model.modelt.html#totableupdate">toTableUpdate</a>.</p>
+									<p>Generate the context used in <a href="Model.ModelT.html#toModel">toModel</a>, <a href="Model.ModelT.html#toTable">toTable</a> and <a href="Model.ModelT.html#toTableUpdate">toTableUpdate</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>action: <a href="../classes/table.html#itemactions" class="tsd-signature-type">ItemActions</a></h5>
+									<h5>action: <a href="../modules/Table.html#ItemActions" class="tsd-signature-type" data-tsd-kind="Type alias">ItemActions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Type of table item action is currently executing.</p>
 									</div>
 								</li>
 								<li>
-									<h5>options: <a href="table.writeoptions.html" class="tsd-signature-type">WriteOptions</a></h5>
+									<h5>options: <a href="Table.WriteOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">WriteOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options used when reading or writing to the table.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> scope: <a href="../classes/fields.html#actionscope" class="tsd-signature-type">ActionScope</a><span class="tsd-signature-symbol"> = &quot;single&quot;</span></h5>
+									<h5>scope: <a href="../modules/Fields.html#ActionScope" class="tsd-signature-type" data-tsd-kind="Type alias">ActionScope</a><span class="tsd-signature-symbol"> = &#x27;single&#x27;</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../classes/condition.html#resolver" class="tsd-signature-type">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> conditions: <a href="../modules/Condition.html#Resolver" class="tsd-signature-type" data-tsd-kind="Type alias">Resolver</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.tablecontext.html" class="tsd-signature-type">TableContext</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="getparams" class="tsd-anchor"></a>
+					<a name="getParams" class="tsd-anchor"></a>
 					<h3>get<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Params<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.getoptions.html" class="tsd-signature-type">GetOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GetItemInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Params<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.GetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GetItemInput</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#getparams">getParams</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#getParams">getParams</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L616">Model.ts:616</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).getParams}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Creates the params that can be used when calling <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property" class="external">DocumentClient.get</a>.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>key: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model key of the item to get.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.getoptions.html" class="tsd-signature-type">GetOptions</a></h5>
+									<h5>options: <a href="Table.GetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">GetOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional optional options to use for get.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">GetItemInput</span></h4>
+							<p>Input params for <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property" class="external">DocumentClient.get</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -777,67 +815,75 @@
 					<a name="put" class="tsd-anchor"></a>
 					<h3>put</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">put<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">put<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#put">put</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#put">put</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L648">Model.ts:648</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).put}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Wrapper method for <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property" class="external">DocumentClient.put</a> method.
+									That uses the model as input and output.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>data: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a></h5>
+									<h5>options: <a href="Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional optional options to use for put.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>An async promise that contains the model data and the table put result object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="putparams" class="tsd-anchor"></a>
+					<a name="putParams" class="tsd-anchor"></a>
 					<h3>put<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">put<wbr>Params<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PutItemInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">put<wbr>Params<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PutItemInput</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#putparams">putParams</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#putParams">putParams</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L624">Model.ts:624</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).putParams}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Creates the params that can be used when calling <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property" class="external">DocumentClient.put</a>.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>item: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model item data to put.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a></h5>
+									<h5>options: <a href="Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional optional options to use for put.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">PutItemInput</span></h4>
+							<p>Input params for <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property" class="external">DocumentClient.put</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -845,126 +891,152 @@
 					<a name="replace" class="tsd-anchor"></a>
 					<h3>replace</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">replace<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#replace">replace</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#replace">replace</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L644">Model.ts:644</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).replace}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Replaces the model item in the table only if it already exists.
+									See <a href="Model.ModelT.html#put">put</a> for details.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>data: <a href="../modules/Model.html#ModelCore" class="tsd-signature-type" data-tsd-kind="Type alias">ModelCore</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.putoptions.html" class="tsd-signature-type">PutOptions</a></h5>
+									<h5>options: <a href="Table.PutOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.putoutput.html" class="tsd-signature-type">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.PutOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">PutOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="tomodel" class="tsd-anchor"></a>
+					<a name="toModel" class="tsd-anchor"></a>
 					<h3>to<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modeloutt" class="tsd-signature-type">ModelOutT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Model<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../modules/Table.html#AttributeValuesMap" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValuesMap</a>, context<span class="tsd-signature-symbol">: </span><a href="Fields.ModelContext.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelOutT" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOutT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#tomodel">toModel</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#toModel">toModel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L604">Model.ts:604</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).toModel}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Converts table item data to model data.  Method called from the in the model methods after reading or
+									writing data to the table to convert the item and attribute output to model properties.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
+									<h5>data: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../modules/Table.html#AttributeValuesMap" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValuesMap</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Table item data to convert to model data.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="Fields.ModelContext.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Context used for converting table to model data, passed to each field object.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/model.html#modeloutt" class="tsd-signature-type">ModelOutT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/Model.html#ModelOutT" class="tsd-signature-type" data-tsd-kind="Type alias">ModelOutT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Model data converted from the table data.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="totable" class="tsd-anchor"></a>
+					<a name="toTable" class="tsd-anchor"></a>
 					<h3>to<wbr>Table</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.tabledata.html" class="tsd-signature-type">TableData</a></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a>, context<span class="tsd-signature-symbol">: </span><a href="Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.TableData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableData</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#totable">toTable</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#toTable">toTable</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L608">Model.ts:608</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).toTable}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Converts model data to table data.  Methods called called from the model methods before reading or
+									writing data to the table, to convert the model data to the table data.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/model.html#modelcoret" class="tsd-signature-type">ModelCoreT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>data: <a href="../modules/Model.html#ModelData" class="tsd-signature-type" data-tsd-kind="Type alias">ModelData</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model data to convert to table data.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Context used for converting model to table data, passed to each field object.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.tabledata.html" class="tsd-signature-type">TableData</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.TableData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableData</a></h4>
+							<p>Table data converted from the model data.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="totableupdate" class="tsd-anchor"></a>
+					<a name="toTableUpdate" class="tsd-anchor"></a>
 					<h3>to<wbr>Table<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelupdatet" class="tsd-signature-type">ModelUpdateT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.tableupdatedata.html" class="tsd-signature-type">TableUpdateData</a></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Table<wbr>Update<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a>, context<span class="tsd-signature-symbol">: </span><a href="Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Model.TableUpdateData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableUpdateData</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#totableupdate">toTableUpdate</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#toTableUpdate">toTableUpdate</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L612">Model.ts:612</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).toTableUpdate}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Converts model update data to table update data, similar to <a href="Model.ModelT.html#toTable">toTable</a> but since table updates
+									supports attribute based update expressions updates are handled differently then other actions.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/model.html#modelupdatet" class="tsd-signature-type">ModelUpdateT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>data: <a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model update data to convert to table update data.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="Fields.TableContext.html" class="tsd-signature-type" data-tsd-kind="Interface">TableContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Context used for converting model to table data, passed to each field object.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.tableupdatedata.html" class="tsd-signature-type">TableUpdateData</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Model.TableUpdateData.html" class="tsd-signature-type" data-tsd-kind="Interface">TableUpdateData</a></h4>
+							<p>Table data converted from the model data.</p>
 						</li>
 					</ul>
 				</section>
@@ -972,144 +1044,75 @@
 					<a name="update" class="tsd-anchor"></a>
 					<h3>update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelupdatet" class="tsd-signature-type">ModelUpdateT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.updateoutput.html" class="tsd-signature-type">UpdateOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.UpdateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.UpdateOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#update">update</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#update">update</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L652">Model.ts:652</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).update}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Wrapper method for <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property" class="external">DocumentClient.update</a> method.
+									That uses the model as input and output.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/model.html#modelupdatet" class="tsd-signature-type">ModelUpdateT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>data: <a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a></h5>
+									<h5>options: <a href="Table.UpdateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional optional options to use for update.</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="model.updateoutput.html" class="tsd-signature-type">UpdateOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Model.UpdateOutput.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOutput</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OUTPUT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>An async promise that contains the model data and the table update result object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="updateparams" class="tsd-anchor"></a>
+					<a name="updateParams" class="tsd-anchor"></a>
 					<h3>update<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Params<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelupdatet" class="tsd-signature-type">ModelUpdateT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><a href="table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UpdateItemInput</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Params<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a>, options<span class="tsd-signature-symbol">?: </span><a href="Table.UpdateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UpdateItemInput</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#updateparams">updateParams</a></p>
+								<p>Overrides <a href="../classes/Model.html">Model</a>.<a href="../classes/Model.html#updateParams">updateParams</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L628">Model.ts:628</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>inheritdoc</dt>
-									<dd><p>{@inheritDoc (Model:class).updateParams}</p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Creates the params that can be used when calling <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property" class="external">DocumentClient.update</a>.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <a href="../classes/model.html#modelupdatet" class="tsd-signature-type">ModelUpdateT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">KEY</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">INPUT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>item: <a href="../modules/Model.html#ModelUpdate" class="tsd-signature-type" data-tsd-kind="Type alias">ModelUpdate</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model item data or update resolver to update.</p>
+									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="table.updateoptions.html" class="tsd-signature-type">UpdateOptions</a></h5>
+									<h5>options: <a href="Table.UpdateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional optional options to use for update.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">UpdateItemInput</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
-					<a name="initschema" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> init<wbr>Schema</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">init<wbr>Schema<span class="tsd-signature-symbol">(</span>schema<span class="tsd-signature-symbol">: </span><a href="../classes/model.html#modelschema" class="tsd-signature-type">ModelSchema</a>, model<span class="tsd-signature-symbol">: </span><a href="../classes/model.html" class="tsd-signature-type">Model</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#initschema">initSchema</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L387">Model.ts:387</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Initializes each field in the schema with the model and associated property name.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>schema: <a href="../classes/model.html#modelschema" class="tsd-signature-type">ModelSchema</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Model schema to initialize.</p>
-									</div>
-								</li>
-								<li>
-									<h5>model: <a href="../classes/model.html" class="tsd-signature-type">Model</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Model to use when initialize each field in the schema.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
-					<a name="splittabledata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> split<wbr>Table<wbr>Data</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">split<wbr>Table<wbr>Data<span class="tsd-signature-symbol">(</span>table<span class="tsd-signature-symbol">: </span><a href="../classes/table.html" class="tsd-signature-type">Table</a>, data<span class="tsd-signature-symbol">: </span><a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="model.tabledata.html" class="tsd-signature-type">TableData</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="../classes/model.html">Model</a>.<a href="../classes/model.html#splittabledata">splitTableData</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Model.ts#L370">Model.ts:370</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Helper method that splits the table data into a key and item.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>table: <a href="../classes/table.html" class="tsd-signature-type">Table</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Table used to determine what attributes are keys.</p>
-									</div>
-								</li>
-								<li>
-									<h5>data: <a href="../classes/table.html#attributevaluesmap" class="tsd-signature-type">AttributeValuesMap</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Table data to split into key and item.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="model.tabledata.html" class="tsd-signature-type">TableData</a></h4>
-							<p>The key, item and raw converted model data.</p>
+							<p>Input params for <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property" class="external">DocumentClient.update</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -1118,149 +1121,195 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Condition.html">Condition</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Fields.html">Fields</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+						<a href="../modules/Fields.FieldBase.html">Fields.<wbr>Field<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Index.html">Index</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/KeyCondition.html">Key<wbr>Condition</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="../modules/Model.html">Model</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Table.html">Table</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-parent-kind-namespace">
+						<a href="../modules/Table.PrimaryKey.html">Table.<wbr>Primary<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/Update.html">Update</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/condition.html" class="tsd-kind-icon">Condition</a>
+					<li class=" tsd-kind-class tsd-parent-kind-namespace">
+						<a href="../classes/Model.ModelResult.html" class="tsd-kind-icon">Model<wbr>Result</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/conditionexpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Model.BaseOutput.html" class="tsd-kind-icon">Base<wbr>Output</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Model.DeleteOutput.html" class="tsd-kind-icon">Delete<wbr>Output</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/fields.html" class="tsd-kind-icon">Fields</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Model.GetOutput.html" class="tsd-kind-icon">Get<wbr>Output</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/index.html" class="tsd-kind-icon">Index</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="Model.ModelBase.html" class="tsd-kind-icon">Model<wbr>Base</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/keycondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="Model.ModelParams.html" class="tsd-kind-icon">Model<wbr>Params</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/keyconditionexpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Model.ModelParamsT.html" class="tsd-kind-icon">Model<wbr>ParamsT</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Model.ModelResultT.html" class="tsd-kind-icon">Model<wbr>ResultT</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="../classes/model.html" class="tsd-kind-icon">Model</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Model.ModelT.html" class="tsd-kind-icon">ModelT</a>
 						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="model.modelt.html" class="tsd-kind-icon">ModelT</a>
-								<ul>
-									<li class=" tsd-kind-constructor tsd-parent-kind-interface tsd-is-inherited">
-										<a href="model.modelt.html#constructor" class="tsd-kind-icon">constructor</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="model.modelt.html#name" class="tsd-kind-icon">name</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#schema" class="tsd-kind-icon">schema</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="model.modelt.html#table" class="tsd-kind-icon">table</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#addbatchdelete" class="tsd-kind-icon">add<wbr>Batch<wbr>Delete</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#addbatchget" class="tsd-kind-icon">add<wbr>Batch<wbr>Get</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#addbatchput" class="tsd-kind-icon">add<wbr>Batch<wbr>Put</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#addtransactcheck" class="tsd-kind-icon">add<wbr>Transact<wbr>Check</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#addtransactdelete" class="tsd-kind-icon">add<wbr>Transact<wbr>Delete</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#addtransactget" class="tsd-kind-icon">add<wbr>Transact<wbr>Get</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#addtransactput" class="tsd-kind-icon">add<wbr>Transact<wbr>Put</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#addtransactupdate" class="tsd-kind-icon">add<wbr>Transact<wbr>Update</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#create" class="tsd-kind-icon">create</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#delete" class="tsd-kind-icon">delete</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#deleteparams" class="tsd-kind-icon">delete<wbr>Params</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#get" class="tsd-kind-icon">get</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-										<a href="model.modelt.html#getcontext" class="tsd-kind-icon">get<wbr>Context</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#getparams" class="tsd-kind-icon">get<wbr>Params</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#put" class="tsd-kind-icon">put</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#putparams" class="tsd-kind-icon">put<wbr>Params</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#replace" class="tsd-kind-icon">replace</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#tomodel" class="tsd-kind-icon">to<wbr>Model</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#totable" class="tsd-kind-icon">to<wbr>Table</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#totableupdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#update" class="tsd-kind-icon">update</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-										<a href="model.modelt.html#updateparams" class="tsd-kind-icon">update<wbr>Params</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
-										<a href="model.modelt.html#initschema" class="tsd-kind-icon">init<wbr>Schema</a>
-									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
-										<a href="model.modelt.html#splittabledata" class="tsd-kind-icon">split<wbr>Table<wbr>Data</a>
-									</li>
-								</ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="Model.ModelT.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#schema" class="tsd-kind-icon">schema</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="Model.ModelT.html#table" class="tsd-kind-icon">table</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#addBatchDelete" class="tsd-kind-icon">add<wbr>Batch<wbr>Delete</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#addBatchGet" class="tsd-kind-icon">add<wbr>Batch<wbr>Get</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#addBatchPut" class="tsd-kind-icon">add<wbr>Batch<wbr>Put</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#addTransactCheck" class="tsd-kind-icon">add<wbr>Transact<wbr>Check</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#addTransactDelete" class="tsd-kind-icon">add<wbr>Transact<wbr>Delete</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#addTransactGet" class="tsd-kind-icon">add<wbr>Transact<wbr>Get</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#addTransactPut" class="tsd-kind-icon">add<wbr>Transact<wbr>Put</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#addTransactUpdate" class="tsd-kind-icon">add<wbr>Transact<wbr>Update</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#create" class="tsd-kind-icon">create</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#delete" class="tsd-kind-icon">delete</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#deleteParams" class="tsd-kind-icon">delete<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#get" class="tsd-kind-icon">get</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+								<a href="Model.ModelT.html#getContext" class="tsd-kind-icon">get<wbr>Context</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#getParams" class="tsd-kind-icon">get<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#put" class="tsd-kind-icon">put</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#putParams" class="tsd-kind-icon">put<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#replace" class="tsd-kind-icon">replace</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#toModel" class="tsd-kind-icon">to<wbr>Model</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#toTable" class="tsd-kind-icon">to<wbr>Table</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#toTableUpdate" class="tsd-kind-icon">to<wbr>Table<wbr>Update</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#update" class="tsd-kind-icon">update</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="Model.ModelT.html#updateParams" class="tsd-kind-icon">update<wbr>Params</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/table.html" class="tsd-kind-icon">Table</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Model.PutOutput.html" class="tsd-kind-icon">Put<wbr>Output</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/update.html" class="tsd-kind-icon">Update</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="Model.TableData.html" class="tsd-kind-icon">Table<wbr>Data</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/updateexpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="Model.TableUpdateData.html" class="tsd-kind-icon">Table<wbr>Update<wbr>Data</a>
 					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindex" class="tsd-kind-icon">validate<wbr>Index</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Model.UpdateOutput.html" class="tsd-kind-icon">Update<wbr>Output</a>
 					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/Model.html#ModelCore" class="tsd-kind-icon">Model<wbr>Core</a>
 					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#validatetable" class="tsd-kind-icon">validate<wbr>Table</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/Model.html#ModelCoreT" class="tsd-kind-icon">Model<wbr>CoreT</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/Model.html#ModelData" class="tsd-kind-icon">Model<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/Model.html#ModelOut" class="tsd-kind-icon">Model<wbr>Out</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/Model.html#ModelOutT" class="tsd-kind-icon">Model<wbr>OutT</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/Model.html#ModelSchema" class="tsd-kind-icon">Model<wbr>Schema</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/Model.html#ModelSchemaT" class="tsd-kind-icon">Model<wbr>SchemaT</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/Model.html#ModelType" class="tsd-kind-icon">Model<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/Model.html#ModelUpdate" class="tsd-kind-icon">Model<wbr>Update</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/Model.html#ModelUpdateT" class="tsd-kind-icon">Model<wbr>UpdateT</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/Model.html#ModelUpdateValue" class="tsd-kind-icon">Model<wbr>Update<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/Model.html#createModel" class="tsd-kind-icon">create<wbr>Model</a>
 					</li>
 				</ul>
 			</nav>
@@ -1272,57 +1321,17 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
@@ -1332,6 +1341,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

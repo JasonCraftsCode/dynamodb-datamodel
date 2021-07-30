@@ -27,15 +27,13 @@
   "exclude": ["/node_modules/", "/coverage/", "/dist/"],
   "typedocOptions": {
     "excludeExternals": true,
-    "excludeNotExported": true,
+    "excludeInternal": true,
     "excludePrivate": true,
     "includeVersion": true,
-    "inputFiles": "./src/index.ts",
-    "mode": "library", // requires: npm add -D typedoc@0.17.0-3 --save-exact
+    "entryPoints": "./src/index.ts",
     "out": "docs",
     "theme": "default",
     "gitRevision": "main",
     "includes": "./examples/"
-    // "toc": ["Table", "Model"]
   }
 }

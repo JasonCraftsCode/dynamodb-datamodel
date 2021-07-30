@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Fields | dynamodb-datamodel - v0.2.7</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for dynamodb-datamodel - v0.2.7">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -49,10 +50,10 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">dynamodb-datamodel - v0.2.7</a>
 				</li>
 				<li>
-					<a href="fields.html">Fields</a>
+					<a href="Fields.html">Fields</a>
 				</li>
 			</ul>
 			<h1>Class Fields</h1>
@@ -65,51 +66,51 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Collection of functions for constructing a Model schema with Field objects and the Field classes.
-						Is also a namespace for scoping Condition based interfaces and types.</p>
+						<p>Collection of functions for constructing a Model schema with Field objects and the Field classes.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
 						<dd><p><a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.ts" class="external">examples/Fields.ts</a>, (imports: <a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts" class="external">examples/Table.ts</a>)</p>
-							<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
-<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+							<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Fields</span><span style="color: #000000">, </span><span style="color: #001080">Model</span><span style="color: #000000">, </span><span style="color: #001080">Table</span><span style="color: #000000">, </span><span style="color: #001080">Update</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dynamodb-datamodel&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">table</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./Table&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelKey {
-  id: <span class="hljs-built_in">string</span>;
-}
-<span class="hljs-comment">// Use Update types so model.update will have some type safety.</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
-  name: Update.String;
-  age?: Update.Number;
-  children?: Update.List&lt;{ name: <span class="hljs-built_in">string</span>; age: <span class="hljs-built_in">number</span> }&gt;;
-  sports?: Update.StringSet;
-}
+<span style="color: #008000">// (TypeScript) Define model key and item interface.</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+<span style="color: #008000">// Use Update types so model.update will have some type safety.</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelItem</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">name</span><span style="color: #000000">: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">String</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">age</span><span style="color: #000000">?: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">Number</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">children</span><span style="color: #000000">?: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">List</span><span style="color: #000000">&lt;{ </span><span style="color: #001080">name</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">; </span><span style="color: #001080">age</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000"> }&gt;;</span>
+<span style="color: #000000">  </span><span style="color: #001080">sports</span><span style="color: #000000">?: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">StringSet</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-comment">// Define the schema using Fields</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
-  schema: {
-    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
-    name: Fields.string(),
-    age: Fields.number(),
-    children: Fields.list(),
-    sports: Fields.stringSet(),
-  },
-  table: table <span class="hljs-keyword">as</span> Table,
-});
+<span style="color: #008000">// Define the schema using Fields</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #001080">Model</span><span style="color: #000000">.</span><span style="color: #795E26">createModel</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ModelKey</span><span style="color: #000000">, </span><span style="color: #267F99">ModelItem</span><span style="color: #000000">&gt;({</span>
+<span style="color: #000000">  </span><span style="color: #001080">schema:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">split</span><span style="color: #000000">({ </span><span style="color: #001080">aliases:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;P&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;S&#039;</span><span style="color: #000000">] }),</span>
+<span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">string</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #001080">age:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">number</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #001080">children:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">list</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #001080">sports:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">stringSet</span><span style="color: #000000">(),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">table:</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">Table</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
-<span class="hljs-keyword">const</span> params = model.updateParams({ id: <span class="hljs-string">'P-1.S-1'</span>, age: Update.inc(<span class="hljs-number">1</span>) });
+<span style="color: #008000">// Generate params to pass to DocumentClient or call the action method</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">params</span><span style="color: #000000"> = </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">updateParams</span><span style="color: #000000">({ </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1.S-1&#039;</span><span style="color: #000000">, </span><span style="color: #001080">age:</span><span style="color: #000000"> </span><span style="color: #001080">Update</span><span style="color: #000000">.</span><span style="color: #795E26">inc</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">) });</span>
 
-<span class="hljs-comment">// (jest) output of updateParams</span>
-expect(params).toEqual({
-  ExpressionAttributeNames: { <span class="hljs-string">'#n0'</span>: <span class="hljs-string">'age'</span> },
-  ExpressionAttributeValues: { <span class="hljs-string">':v0'</span>: <span class="hljs-number">1</span> },
-  Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> },
-  TableName: <span class="hljs-string">'ExampleTable'</span>,
-  ReturnValues: <span class="hljs-string">'ALL_NEW'</span>,
-  UpdateExpression: <span class="hljs-string">'SET #n0 = #n0 + :v0'</span>,
-});
+<span style="color: #008000">// (jest) output of updateParams</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">params</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">ExpressionAttributeNames:</span><span style="color: #000000"> { </span><span style="color: #A31515">&#039;#n0&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;age&#039;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">ExpressionAttributeValues:</span><span style="color: #000000"> { </span><span style="color: #A31515">&#039;:v0&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">Key:</span><span style="color: #000000"> { </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1&#039;</span><span style="color: #000000">, </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;S-1&#039;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">TableName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleTable&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">ReturnValues:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ALL_NEW&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">UpdateExpression:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;SET #n0 = #n0 + :v0&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
+
 </code></pre>
 						</dd>
 					</dl>
@@ -128,171 +129,55 @@ expect(params).toEqual({
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Classes</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldbase.html" class="tsd-kind-icon">Field<wbr>Base</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldbinary.html" class="tsd-kind-icon">Field<wbr>Binary</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldbinaryset.html" class="tsd-kind-icon">Field<wbr>Binary<wbr>Set</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldboolean.html" class="tsd-kind-icon">Field<wbr>Boolean</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldcomposite.html" class="tsd-kind-icon">Field<wbr>Composite</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldcompositenamed.html" class="tsd-kind-icon">Field<wbr>Composite<wbr>Named</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldcompositeslot.html" class="tsd-kind-icon">Field<wbr>Composite<wbr>Slot</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldcreateddate.html" class="tsd-kind-icon">Field<wbr>Created<wbr>Date</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldcreatednumberdate.html" class="tsd-kind-icon">Field<wbr>Created<wbr>Number<wbr>Date</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fielddate.html" class="tsd-kind-icon">Field<wbr>Date</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldexpression.html" class="tsd-kind-icon">Field<wbr>Expression</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldhidden.html" class="tsd-kind-icon">Field<wbr>Hidden</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldlist.html" class="tsd-kind-icon">Field<wbr>List</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmap.html" class="tsd-kind-icon">Field<wbr>Map</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmodel.html" class="tsd-kind-icon">Field<wbr>Model</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmodellist.html" class="tsd-kind-icon">Field<wbr>Model<wbr>List</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldmodelmap.html" class="tsd-kind-icon">Field<wbr>Model<wbr>Map</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnull.html" class="tsd-kind-icon">Field<wbr>Null</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnumber.html" class="tsd-kind-icon">Field<wbr>Number</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldnumberset.html" class="tsd-kind-icon">Field<wbr>Number<wbr>Set</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldrevision.html" class="tsd-kind-icon">Field<wbr>Revision</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter"><a href="fields.fieldset.html" class="tsd-kind-icon">Field<wbr>Set</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldsplit.html" class="tsd-kind-icon">Field<wbr>Split</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldstring.html" class="tsd-kind-icon">Field<wbr>String</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldstringset.html" class="tsd-kind-icon">Field<wbr>String<wbr>Set</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldtype.html" class="tsd-kind-icon">Field<wbr>Type</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldupdateddate.html" class="tsd-kind-icon">Field<wbr>Updated<wbr>Date</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-class"><a href="fields.fieldupdatednumberdate.html" class="tsd-kind-icon">Field<wbr>Updated<wbr>Number<wbr>Date</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.attributedefinition.html" class="tsd-kind-icon">Attribute<wbr>Definition</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.baseoptions.html" class="tsd-kind-icon">Base<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.compositenamedoptions.html" class="tsd-kind-icon">Composite<wbr>Named<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.compositeoptions.html" class="tsd-kind-icon">Composite<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.createddateoptions.html" class="tsd-kind-icon">Created<wbr>Date<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.field.html" class="tsd-kind-icon">Field</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.modelcontext.html" class="tsd-kind-icon">Model<wbr>Context</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modellistoptions.html" class="tsd-kind-icon">Model<wbr>List<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modelmapoptions.html" class="tsd-kind-icon">Model<wbr>Map<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.modeloptions.html" class="tsd-kind-icon">Model<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.revisionoptions.html" class="tsd-kind-icon">Revision<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/fields.setoptions.html" class="tsd-kind-icon">Set<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.splitoptions.html" class="tsd-kind-icon">Split<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.tablecontext.html" class="tsd-kind-icon">Table<wbr>Context</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.typeoptions.html" class="tsd-kind-icon">Type<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.updatedateoptions.html" class="tsd-kind-icon">Update<wbr>Date<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/fields.updatenumberdateoptions.html" class="tsd-kind-icon">Update<wbr>Number<wbr>Date<wbr>Options</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="fields.html#actionscope" class="tsd-kind-icon">Action<wbr>Scope</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="fields.html#attributesschema" class="tsd-kind-icon">Attributes<wbr>Schema</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#compositeslotmap" class="tsd-kind-icon">Composite<wbr>Slot<wbr>Map</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="Fields.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#binary" class="tsd-kind-icon">binary</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#binaryset" class="tsd-kind-icon">binary<wbr>Set</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#boolean" class="tsd-kind-icon">boolean</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#composite" class="tsd-kind-icon">composite</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#compositenamed" class="tsd-kind-icon">composite<wbr>Named</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#createddate" class="tsd-kind-icon">created<wbr>Date</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#creatednumberdate" class="tsd-kind-icon">created<wbr>Number<wbr>Date</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#date" class="tsd-kind-icon">date</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#hidden" class="tsd-kind-icon">hidden</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#list" class="tsd-kind-icon">list</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#map" class="tsd-kind-icon">map</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#modellist" class="tsd-kind-icon">model<wbr>List</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="fields.html#modelmap" class="tsd-kind-icon">model<wbr>Map</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#number" class="tsd-kind-icon">number</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#numberset" class="tsd-kind-icon">number<wbr>Set</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#revision" class="tsd-kind-icon">revision</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#split" class="tsd-kind-icon">split</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#string" class="tsd-kind-icon">string</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#stringset" class="tsd-kind-icon">string<wbr>Set</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#updateddate" class="tsd-kind-icon">updated<wbr>Date</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="fields.html#updatednumberdate" class="tsd-kind-icon">updated<wbr>Number<wbr>Date</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#binary" class="tsd-kind-icon">binary</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#binarySet" class="tsd-kind-icon">binary<wbr>Set</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#boolean" class="tsd-kind-icon">boolean</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#composite" class="tsd-kind-icon">composite</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="Fields.html#compositeNamed" class="tsd-kind-icon">composite<wbr>Named</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#createdDate" class="tsd-kind-icon">created<wbr>Date</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#createdNumberDate" class="tsd-kind-icon">created<wbr>Number<wbr>Date</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#date" class="tsd-kind-icon">date</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#hidden" class="tsd-kind-icon">hidden</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#list" class="tsd-kind-icon">list</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#map" class="tsd-kind-icon">map</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="Fields.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="Fields.html#modelList" class="tsd-kind-icon">model<wbr>List</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="Fields.html#modelMap" class="tsd-kind-icon">model<wbr>Map</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#number" class="tsd-kind-icon">number</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#numberSet" class="tsd-kind-icon">number<wbr>Set</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#revision" class="tsd-kind-icon">revision</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#split" class="tsd-kind-icon">split</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#string" class="tsd-kind-icon">string</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#stringSet" class="tsd-kind-icon">string<wbr>Set</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#updatedDate" class="tsd-kind-icon">updated<wbr>Date</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="Fields.html#updatedNumberDate" class="tsd-kind-icon">updated<wbr>Number<wbr>Date</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="actionscope" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Action<wbr>Scope</h3>
-					<div class="tsd-signature tsd-kind-icon">Action<wbr>Scope<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"single"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"batch"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"transact"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L279">Fields.ts:279</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Used in TableContext to determine the scope the action is executed in.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>Action will be preformed via the single item API.</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>Action will be preformed via the batch read/write API.</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>TAction will be preformed via the transaction read/write API.</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="attributesschema" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Attributes<wbr>Schema</h3>
-					<div class="tsd-signature tsd-kind-icon">Attributes<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L346">Fields.ts:346</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Defines the set of table attributes that are used by a field.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/fields.attributedefinition.html" class="tsd-signature-type">AttributeDefinition</a></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="compositeslotmap" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Composite<wbr>Slot<wbr>Map</h3>
-					<div class="tsd-signature tsd-kind-icon">Composite<wbr>Slot<wbr>Map&lt;T, V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/JasonCraftsCode/dynamodb-datamodel/blob/main/src/Fields.ts#L1458">Fields.ts:1458</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Defines the map for the named slots for a composite named field.</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
-						</li>
-						<li>
-							<h4>V<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></h4>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Fields<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.html" class="tsd-signature-type" data-tsd-kind="Class">Fields</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.html" class="tsd-signature-type" data-tsd-kind="Class">Fields</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -303,7 +188,7 @@ expect(params).toEqual({
 					<a name="binary" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> binary</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">binary<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#binaryvalue" class="tsd-signature-type">BinaryValue</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldbinary.html" class="tsd-signature-type">FieldBinary</a></li>
+						<li class="tsd-signature tsd-kind-icon">binary<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">binaryType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldBinary.html" class="tsd-signature-type" data-tsd-kind="Class">FieldBinary</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -314,28 +199,28 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a binary field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a binary field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#binaryvalue" class="tsd-signature-type">BinaryValue</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">binaryType</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldbinary.html" class="tsd-signature-type">FieldBinary</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldBinary.html" class="tsd-signature-type" data-tsd-kind="Class">FieldBinary</a></h4>
 							<p>New FieldBinary object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="binaryset" class="tsd-anchor"></a>
+					<a name="binarySet" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> binary<wbr>Set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">binary<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#binarysetvalue" class="tsd-signature-type">BinarySetValue</a><span class="tsd-signature-symbol"> | </span><a href="table.html#binaryvalue" class="tsd-signature-type">BinaryValue</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldbinaryset.html" class="tsd-signature-type">FieldBinarySet</a></li>
+						<li class="tsd-signature tsd-kind-icon">binary<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.SetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BinarySet</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">binaryType</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldBinarySet.html" class="tsd-signature-type" data-tsd-kind="Class">FieldBinarySet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -346,19 +231,19 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a binary set field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a binary set field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#binarysetvalue" class="tsd-signature-type">BinarySetValue</a><span class="tsd-signature-symbol"> | </span><a href="table.html#binaryvalue" class="tsd-signature-type">BinaryValue</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.SetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BinarySet</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">binaryType</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldbinaryset.html" class="tsd-signature-type">FieldBinarySet</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldBinarySet.html" class="tsd-signature-type" data-tsd-kind="Class">FieldBinarySet</a></h4>
 							<p>New FieldBinarySet object.</p>
 						</li>
 					</ul>
@@ -367,7 +252,7 @@ expect(params).toEqual({
 					<a name="boolean" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> boolean</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">boolean<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldboolean.html" class="tsd-signature-type">FieldBoolean</a></li>
+						<li class="tsd-signature tsd-kind-icon">boolean<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldBoolean.html" class="tsd-signature-type" data-tsd-kind="Class">FieldBoolean</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -378,19 +263,19 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a boolean field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a boolean field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldboolean.html" class="tsd-signature-type">FieldBoolean</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldBoolean.html" class="tsd-signature-type" data-tsd-kind="Class">FieldBoolean</a></h4>
 							<p>New FieldBoolean object.</p>
 						</li>
 					</ul>
@@ -399,7 +284,7 @@ expect(params).toEqual({
 					<a name="composite" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> composite</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">composite<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.compositeoptions.html" class="tsd-signature-type">CompositeOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcomposite.html" class="tsd-signature-type">FieldComposite</a></li>
+						<li class="tsd-signature tsd-kind-icon">composite<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.CompositeOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">CompositeOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldComposite.html" class="tsd-signature-type" data-tsd-kind="Class">FieldComposite</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -410,58 +295,59 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates an indices based slots composite field object which can then return FieldCompositeSlot by index to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates an indices based slots composite field object which can then return FieldCompositeSlot by index to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><p><a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.composite.ts" class="external">examples/Fields.composite.ts</a>, (imports: <a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts" class="external">examples/Table.ts</a>)</p>
-										<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
-<span class="hljs-keyword">import</span> { table, gsi0 } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+										<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Fields</span><span style="color: #000000">, </span><span style="color: #001080">Model</span><span style="color: #000000">, </span><span style="color: #001080">Table</span><span style="color: #000000">, </span><span style="color: #001080">Update</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dynamodb-datamodel&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">table</span><span style="color: #000000">, </span><span style="color: #001080">gsi0</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./Table&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
-<span class="hljs-keyword">interface</span> ModelKey {
-  id: <span class="hljs-built_in">string</span>;
-}
-<span class="hljs-comment">// street, city, state and country only support simple set updates since they are part of a composite key</span>
-<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
-  neighborhood: <span class="hljs-built_in">string</span>;
-  city: <span class="hljs-built_in">string</span>;
-  state: <span class="hljs-built_in">string</span>;
-  country: <span class="hljs-built_in">string</span>;
-  region: Update.String;
-}
+<span style="color: #008000">// (TypeScript) Define model key and item interface.</span>
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+<span style="color: #008000">// street, city, state and country only support simple set updates since they are part of a composite key</span>
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelItem</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">neighborhood</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">city</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">state</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">country</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">region</span><span style="color: #000000">: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">String</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-comment">// Create composite slots to use in model schema below.</span>
-<span class="hljs-keyword">const</span> location = Fields.composite({ alias: gsi0.getSortKey(), count: <span class="hljs-number">4</span>, delimiter: <span class="hljs-string">';'</span> });
-<span class="hljs-keyword">const</span> locSlots = location.createSlots();
+<span style="color: #008000">// Create composite slots to use in model schema below.</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">location</span><span style="color: #000000"> = </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">composite</span><span style="color: #000000">({ </span><span style="color: #001080">alias:</span><span style="color: #000000"> </span><span style="color: #001080">gsi0</span><span style="color: #000000">.</span><span style="color: #795E26">getSortKey</span><span style="color: #000000">(), </span><span style="color: #001080">count:</span><span style="color: #000000"> </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #001080">delimiter:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;;&#039;</span><span style="color: #000000"> });</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">locSlots</span><span style="color: #000000"> = </span><span style="color: #001080">location</span><span style="color: #000000">.</span><span style="color: #795E26">createSlots</span><span style="color: #000000">();</span>
 
-<span class="hljs-comment">// Define the schema using Fields</span>
-<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
-  schema: {
-    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
-    neighborhood: locSlots[<span class="hljs-number">3</span>],
-    city: locSlots[<span class="hljs-number">2</span>],
-    state: locSlots[<span class="hljs-number">1</span>],
-    country: locSlots[<span class="hljs-number">0</span>],
-    region: Fields.string({ alias: gsi0.getPartitionKey() }),
-  },
-  table: table <span class="hljs-keyword">as</span> Table,
-});
+<span style="color: #008000">// Define the schema using Fields</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #001080">Model</span><span style="color: #000000">.</span><span style="color: #795E26">createModel</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ModelKey</span><span style="color: #000000">, </span><span style="color: #267F99">ModelItem</span><span style="color: #000000">&gt;({</span>
+<span style="color: #000000">  </span><span style="color: #001080">schema:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">split</span><span style="color: #000000">({ </span><span style="color: #001080">aliases:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;P&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;S&#039;</span><span style="color: #000000">] }),</span>
+<span style="color: #000000">    </span><span style="color: #001080">neighborhood:</span><span style="color: #000000"> </span><span style="color: #001080">locSlots</span><span style="color: #000000">[</span><span style="color: #098658">3</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">city:</span><span style="color: #000000"> </span><span style="color: #001080">locSlots</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">state:</span><span style="color: #000000"> </span><span style="color: #001080">locSlots</span><span style="color: #000000">[</span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">country:</span><span style="color: #000000"> </span><span style="color: #001080">locSlots</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">region:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">string</span><span style="color: #000000">({ </span><span style="color: #001080">alias:</span><span style="color: #000000"> </span><span style="color: #001080">gsi0</span><span style="color: #000000">.</span><span style="color: #795E26">getPartitionKey</span><span style="color: #000000">() }),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">table:</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">Table</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-keyword">const</span> params = model.putParams({
-  id: <span class="hljs-string">'p1.s2'</span>,
-  neighborhood: <span class="hljs-string">'Birdland'</span>,
-  city: <span class="hljs-string">'Cupertino'</span>,
-  state: <span class="hljs-string">'CA'</span>,
-  country: <span class="hljs-string">'USA'</span>,
-  region: <span class="hljs-string">'NorthAmerica'</span>,
-});
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">params</span><span style="color: #000000"> = </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">putParams</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;p1.s2&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">neighborhood:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Birdland&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">city:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Cupertino&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">state:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;CA&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">country:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;USA&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">region:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;NorthAmerica&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// test: value to expect</span>
-expect(params).toEqual({
-  Item: { G0P: <span class="hljs-string">'NorthAmerica'</span>, G0S: <span class="hljs-string">'USA;CA;Cupertino;Birdland'</span>, P: <span class="hljs-string">'p1'</span>, S: <span class="hljs-string">'s2'</span> },
-  TableName: <span class="hljs-string">'ExampleTable'</span>,
-});
+<span style="color: #008000">// test: value to expect</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">params</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">Item:</span><span style="color: #000000"> { </span><span style="color: #001080">G0P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;NorthAmerica&#039;</span><span style="color: #000000">, </span><span style="color: #001080">G0S:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;USA;CA;Cupertino;Birdland&#039;</span><span style="color: #000000">, </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;p1&#039;</span><span style="color: #000000">, </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;s2&#039;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">TableName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleTable&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
+
 </code></pre>
 									</dd>
 								</dl>
@@ -469,22 +355,22 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/fields.compositeoptions.html" class="tsd-signature-type">CompositeOptions</a></h5>
+									<h5>options: <a href="../interfaces/Fields.CompositeOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">CompositeOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcomposite.html" class="tsd-signature-type">FieldComposite</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldComposite.html" class="tsd-signature-type" data-tsd-kind="Class">FieldComposite</a></h4>
 							<p>New composite object with array field slots.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="compositenamed" class="tsd-anchor"></a>
+					<a name="compositeNamed" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> composite<wbr>Named</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">composite<wbr>Named&lt;T&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.compositenamedoptions.html" class="tsd-signature-type">CompositeNamedOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcompositenamed.html" class="tsd-signature-type">FieldCompositeNamed</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">composite<wbr>Named&lt;T&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.CompositeNamedOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">CompositeNamedOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldCompositeNamed.html" class="tsd-signature-type" data-tsd-kind="Class">FieldCompositeNamed</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -495,64 +381,65 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates an name based slots composite field object which can then return FieldCompositeSlot by name to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates an name based slots composite field object which can then return FieldCompositeSlot by name to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><p><a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.compositeNamed.ts" class="external">examples/Fields.compositeNamed.ts</a>, (imports: <a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts" class="external">examples/Table.ts</a>)</p>
-										<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
-<span class="hljs-keyword">import</span> { table, gsi0 } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+										<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Fields</span><span style="color: #000000">, </span><span style="color: #001080">Model</span><span style="color: #000000">, </span><span style="color: #001080">Table</span><span style="color: #000000">, </span><span style="color: #001080">Update</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dynamodb-datamodel&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">table</span><span style="color: #000000">, </span><span style="color: #001080">gsi0</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./Table&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// Create composite slots to use in model schema below.</span>
-<span class="hljs-keyword">const</span> locMap = { neighborhood: <span class="hljs-number">3</span>, city: <span class="hljs-number">2</span>, state: <span class="hljs-number">1</span>, country: <span class="hljs-number">0</span> };
-<span class="hljs-keyword">const</span> location = Fields.compositeNamed({
-  alias: gsi0.getSortKey(),
-  map: locMap,
-  delimiter: <span class="hljs-string">';'</span>,
-});
+<span style="color: #008000">// Create composite slots to use in model schema below.</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">locMap</span><span style="color: #000000"> = { </span><span style="color: #001080">neighborhood:</span><span style="color: #000000"> </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #001080">city:</span><span style="color: #000000"> </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #001080">state:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #001080">country:</span><span style="color: #000000"> </span><span style="color: #098658">0</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">location</span><span style="color: #000000"> = </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">compositeNamed</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">alias:</span><span style="color: #000000"> </span><span style="color: #001080">gsi0</span><span style="color: #000000">.</span><span style="color: #795E26">getSortKey</span><span style="color: #000000">(),</span>
+<span style="color: #000000">  </span><span style="color: #001080">map:</span><span style="color: #000000"> </span><span style="color: #001080">locMap</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">delimiter:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;;&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-keyword">interface</span> ModelIdKey {
-  id: <span class="hljs-built_in">string</span>;
-}
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelIdKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-comment">// neighborhood, city, state and country only support simple set updates since they are part of a composite key</span>
-<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelIdKey {
-  neighborhood: <span class="hljs-built_in">string</span>;
-  city: <span class="hljs-built_in">string</span>;
-  state: <span class="hljs-built_in">string</span>;
-  country: <span class="hljs-built_in">string</span>;
-  region: Update.String;
-}
+<span style="color: #008000">// neighborhood, city, state and country only support simple set updates since they are part of a composite key</span>
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelItem</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ModelIdKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">neighborhood</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">city</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">state</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">country</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #001080">region</span><span style="color: #000000">: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">String</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> locSlots = location.createNamedSlots();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">locSlots</span><span style="color: #000000"> = </span><span style="color: #001080">location</span><span style="color: #000000">.</span><span style="color: #795E26">createNamedSlots</span><span style="color: #000000">();</span>
 
-<span class="hljs-comment">// Define the schema using Fields</span>
-<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelIdKey, ModelItem&gt;({
-  schema: {
-    id: Fields.split({ aliases: [table.getPartitionKey(), table.getSortKey()] }),
-    neighborhood: locSlots.neighborhood,
-    city: locSlots.city,
-    state: locSlots.state,
-    country: locSlots.country,
-    region: Fields.string({ alias: gsi0.getPartitionKey() }),
-  },
-  table: table <span class="hljs-keyword">as</span> Table,
-});
+<span style="color: #008000">// Define the schema using Fields</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #001080">Model</span><span style="color: #000000">.</span><span style="color: #795E26">createModel</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ModelIdKey</span><span style="color: #000000">, </span><span style="color: #267F99">ModelItem</span><span style="color: #000000">&gt;({</span>
+<span style="color: #000000">  </span><span style="color: #001080">schema:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">split</span><span style="color: #000000">({ </span><span style="color: #001080">aliases:</span><span style="color: #000000"> [</span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">getPartitionKey</span><span style="color: #000000">(), </span><span style="color: #001080">table</span><span style="color: #000000">.</span><span style="color: #795E26">getSortKey</span><span style="color: #000000">()] }),</span>
+<span style="color: #000000">    </span><span style="color: #001080">neighborhood:</span><span style="color: #000000"> </span><span style="color: #001080">locSlots</span><span style="color: #000000">.</span><span style="color: #001080">neighborhood</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">city:</span><span style="color: #000000"> </span><span style="color: #001080">locSlots</span><span style="color: #000000">.</span><span style="color: #001080">city</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">state:</span><span style="color: #000000"> </span><span style="color: #001080">locSlots</span><span style="color: #000000">.</span><span style="color: #001080">state</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">country:</span><span style="color: #000000"> </span><span style="color: #001080">locSlots</span><span style="color: #000000">.</span><span style="color: #001080">country</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">region:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">string</span><span style="color: #000000">({ </span><span style="color: #001080">alias:</span><span style="color: #000000"> </span><span style="color: #001080">gsi0</span><span style="color: #000000">.</span><span style="color: #795E26">getPartitionKey</span><span style="color: #000000">() }),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">table:</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">Table</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-keyword">const</span> params = model.putParams({
-  id: <span class="hljs-string">'P-1.S-2'</span>,
-  neighborhood: <span class="hljs-string">'Birdland'</span>,
-  city: <span class="hljs-string">'Cupertino'</span>,
-  state: <span class="hljs-string">'CA'</span>,
-  country: <span class="hljs-string">'USA'</span>,
-  region: <span class="hljs-string">'NorthAmerica'</span>,
-});
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">params</span><span style="color: #000000"> = </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">putParams</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1.S-2&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">neighborhood:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Birdland&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">city:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Cupertino&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">state:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;CA&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">country:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;USA&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">region:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;NorthAmerica&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// test: value to expect</span>
-expect(params).toEqual({
-  Item: { G0P: <span class="hljs-string">'NorthAmerica'</span>, G0S: <span class="hljs-string">'USA;CA;Cupertino;Birdland'</span>, P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-2'</span> },
-  TableName: <span class="hljs-string">'ExampleTable'</span>,
-});
+<span style="color: #008000">// test: value to expect</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">params</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">Item:</span><span style="color: #000000"> { </span><span style="color: #001080">G0P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;NorthAmerica&#039;</span><span style="color: #000000">, </span><span style="color: #001080">G0S:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;USA;CA;Cupertino;Birdland&#039;</span><span style="color: #000000">, </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1&#039;</span><span style="color: #000000">, </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;S-2&#039;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">  </span><span style="color: #001080">TableName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleTable&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
+
 </code></pre>
 									</dd>
 								</dl>
@@ -569,22 +456,22 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/fields.compositenamedoptions.html" class="tsd-signature-type">CompositeNamedOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>options: <a href="../interfaces/Fields.CompositeNamedOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">CompositeNamedOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcompositenamed.html" class="tsd-signature-type">FieldCompositeNamed</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldCompositeNamed.html" class="tsd-signature-type" data-tsd-kind="Class">FieldCompositeNamed</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New composite object with named field slots.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="createddate" class="tsd-anchor"></a>
+					<a name="createdDate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> created<wbr>Date</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">created<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.createddateoptions.html" class="tsd-signature-type">CreatedDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcreateddate.html" class="tsd-signature-type">FieldCreatedDate</a></li>
+						<li class="tsd-signature tsd-kind-icon">created<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.CreatedDateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">CreatedDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldCreatedDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldCreatedDate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -601,22 +488,22 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.createddateoptions.html" class="tsd-signature-type">CreatedDateOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.CreatedDateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">CreatedDateOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcreateddate.html" class="tsd-signature-type">FieldCreatedDate</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldCreatedDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldCreatedDate</a></h4>
 							<p>New FieldCreatedDate object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="creatednumberdate" class="tsd-anchor"></a>
+					<a name="createdNumberDate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> created<wbr>Number<wbr>Date</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">created<wbr>Number<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.createddateoptions.html" class="tsd-signature-type">CreatedDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldcreatednumberdate.html" class="tsd-signature-type">FieldCreatedNumberDate</a></li>
+						<li class="tsd-signature tsd-kind-icon">created<wbr>Number<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.CreatedDateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">CreatedDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldCreatedNumberDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldCreatedNumberDate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -633,13 +520,13 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.createddateoptions.html" class="tsd-signature-type">CreatedDateOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.CreatedDateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">CreatedDateOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldcreatednumberdate.html" class="tsd-signature-type">FieldCreatedNumberDate</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldCreatedNumberDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldCreatedNumberDate</a></h4>
 							<p>New FieldCreatedNumberDate object.</p>
 						</li>
 					</ul>
@@ -648,7 +535,7 @@ expect(params).toEqual({
 					<a name="date" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> date</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fielddate.html" class="tsd-signature-type">FieldDate</a></li>
+						<li class="tsd-signature tsd-kind-icon">date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldDate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -659,19 +546,19 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a date field object to use in a <a href="model.html#schema">Model.schema</a>, stored as a number in the table.</p>
+									<p>Creates a date field object to use in a <a href="Model.html#schema">Model.schema</a>, stored as a number in the table.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fielddate.html" class="tsd-signature-type">FieldDate</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldDate</a></h4>
 							<p>New FieldDate object.</p>
 						</li>
 					</ul>
@@ -680,7 +567,7 @@ expect(params).toEqual({
 					<a name="hidden" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> hidden</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">hidden<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldhidden.html" class="tsd-signature-type">FieldHidden</a></li>
+						<li class="tsd-signature tsd-kind-icon">hidden<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldHidden.html" class="tsd-signature-type" data-tsd-kind="Class">FieldHidden</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -691,10 +578,10 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a hidden field object to use in a <a href="model.html#schema">Model.schema</a>, which doesn&#39;t get set in the table.</p>
+									<p>Creates a hidden field object to use in a <a href="Model.html#schema">Model.schema</a>, which doesn&#39;t get set in the table.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldhidden.html" class="tsd-signature-type">FieldHidden</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldHidden.html" class="tsd-signature-type" data-tsd-kind="Class">FieldHidden</a></h4>
 							<p>New FieldHidden object.</p>
 						</li>
 					</ul>
@@ -703,7 +590,7 @@ expect(params).toEqual({
 					<a name="list" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> list</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">list<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#listvalue" class="tsd-signature-type">ListValue</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldlist.html" class="tsd-signature-type">FieldList</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.html#ListValue" class="tsd-signature-type" data-tsd-kind="Type alias">ListValue</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldList.html" class="tsd-signature-type" data-tsd-kind="Class">FieldList</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -714,19 +601,19 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a list field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a list field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#listvalue" class="tsd-signature-type">ListValue</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.html#ListValue" class="tsd-signature-type" data-tsd-kind="Type alias">ListValue</a><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldlist.html" class="tsd-signature-type">FieldList</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldList.html" class="tsd-signature-type" data-tsd-kind="Class">FieldList</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New FieldList object.</p>
 						</li>
 					</ul>
@@ -735,7 +622,7 @@ expect(params).toEqual({
 					<a name="map" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> map</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#mapvalue" class="tsd-signature-type">MapValue</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldmap.html" class="tsd-signature-type">FieldMap</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.html#MapValue" class="tsd-signature-type" data-tsd-kind="Type alias">MapValue</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldMap.html" class="tsd-signature-type" data-tsd-kind="Class">FieldMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -746,19 +633,19 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a map field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a map field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#mapvalue" class="tsd-signature-type">MapValue</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.html#MapValue" class="tsd-signature-type" data-tsd-kind="Type alias">MapValue</a><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmap.html" class="tsd-signature-type">FieldMap</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#attributevalues" class="tsd-signature-type">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldMap.html" class="tsd-signature-type" data-tsd-kind="Class">FieldMap</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules/Table.html#AttributeValues" class="tsd-signature-type" data-tsd-kind="Type alias">AttributeValues</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New FieldMap object.</p>
 						</li>
 					</ul>
@@ -767,7 +654,7 @@ expect(params).toEqual({
 					<a name="model" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">model&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modeloptions.html" class="tsd-signature-type">ModelOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldmodel.html" class="tsd-signature-type">FieldModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">model&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.ModelOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldModel.html" class="tsd-signature-type" data-tsd-kind="Class">FieldModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -778,7 +665,7 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a schema based map field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a schema based map field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -793,22 +680,22 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/fields.modeloptions.html" class="tsd-signature-type">ModelOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>options: <a href="../interfaces/Fields.ModelOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodel.html" class="tsd-signature-type">FieldModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldModel.html" class="tsd-signature-type" data-tsd-kind="Class">FieldModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New FieldModel<V> object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="modellist" class="tsd-anchor"></a>
+					<a name="modelList" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> model<wbr>List</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">model<wbr>List&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modellistoptions.html" class="tsd-signature-type">ModelListOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldmodellist.html" class="tsd-signature-type">FieldModelList</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">model<wbr>List&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.ModelListOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelListOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldModelList.html" class="tsd-signature-type" data-tsd-kind="Class">FieldModelList</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -819,7 +706,7 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a schema based list field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a schema based list field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -834,22 +721,22 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/fields.modellistoptions.html" class="tsd-signature-type">ModelListOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>options: <a href="../interfaces/Fields.ModelListOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelListOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodellist.html" class="tsd-signature-type">FieldModelList</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldModelList.html" class="tsd-signature-type" data-tsd-kind="Class">FieldModelList</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New FieldModelList<V> object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-					<a name="modelmap" class="tsd-anchor"></a>
+					<a name="modelMap" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> model<wbr>Map</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">model<wbr>Map&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.modelmapoptions.html" class="tsd-signature-type">ModelMapOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldmodelmap.html" class="tsd-signature-type">FieldModelMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">model<wbr>Map&lt;V&gt;<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.ModelMapOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelMapOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldModelMap.html" class="tsd-signature-type" data-tsd-kind="Class">FieldModelMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -860,7 +747,7 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a schema based map field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a schema based map field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -875,13 +762,13 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/fields.modelmapoptions.html" class="tsd-signature-type">ModelMapOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>options: <a href="../interfaces/Fields.ModelMapOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">ModelMapOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldmodelmap.html" class="tsd-signature-type">FieldModelMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldModelMap.html" class="tsd-signature-type" data-tsd-kind="Class">FieldModelMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>New FieldModelMap<V> object.</p>
 						</li>
 					</ul>
@@ -890,7 +777,7 @@ expect(params).toEqual({
 					<a name="number" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> number</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">number<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldnumber.html" class="tsd-signature-type">FieldNumber</a></li>
+						<li class="tsd-signature tsd-kind-icon">number<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldNumber.html" class="tsd-signature-type" data-tsd-kind="Class">FieldNumber</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -901,28 +788,28 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a number field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a number field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldnumber.html" class="tsd-signature-type">FieldNumber</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldNumber.html" class="tsd-signature-type" data-tsd-kind="Class">FieldNumber</a></h4>
 							<p>New FieldNumber object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="numberset" class="tsd-anchor"></a>
+					<a name="numberSet" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> number<wbr>Set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">number<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#numbersetvalue" class="tsd-signature-type">NumberSetValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldnumberset.html" class="tsd-signature-type">FieldNumberSet</a></li>
+						<li class="tsd-signature tsd-kind-icon">number<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.SetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NumberSet</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldNumberSet.html" class="tsd-signature-type" data-tsd-kind="Class">FieldNumberSet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -933,19 +820,19 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a number set field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a number set field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#numbersetvalue" class="tsd-signature-type">NumberSetValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.SetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NumberSet</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldnumberset.html" class="tsd-signature-type">FieldNumberSet</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldNumberSet.html" class="tsd-signature-type" data-tsd-kind="Class">FieldNumberSet</a></h4>
 							<p>New FieldNumberSet object.</p>
 						</li>
 					</ul>
@@ -954,7 +841,7 @@ expect(params).toEqual({
 					<a name="revision" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> revision</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">revision<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.revisionoptions.html" class="tsd-signature-type">RevisionOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldrevision.html" class="tsd-signature-type">FieldRevision</a></li>
+						<li class="tsd-signature tsd-kind-icon">revision<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.RevisionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RevisionOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldRevision.html" class="tsd-signature-type" data-tsd-kind="Class">FieldRevision</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -972,13 +859,13 @@ expect(params).toEqual({
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.revisionoptions.html" class="tsd-signature-type">RevisionOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.RevisionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RevisionOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldrevision.html" class="tsd-signature-type">FieldRevision</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldRevision.html" class="tsd-signature-type" data-tsd-kind="Class">FieldRevision</a></h4>
 							<p>New FieldRevision object.</p>
 						</li>
 					</ul>
@@ -987,7 +874,7 @@ expect(params).toEqual({
 					<a name="split" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> split</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">split<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/fields.splitoptions.html" class="tsd-signature-type">SplitOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldsplit.html" class="tsd-signature-type">FieldSplit</a></li>
+						<li class="tsd-signature tsd-kind-icon">split<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/Fields.SplitOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SplitOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldSplit.html" class="tsd-signature-type" data-tsd-kind="Class">FieldSplit</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -998,7 +885,7 @@ expect(params).toEqual({
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a split field object to use in a <a href="model.html#schema">Model.schema</a>. which can be used to split a model property into two or more
+									<p>Creates a split field object to use in a <a href="Model.html#schema">Model.schema</a>. which can be used to split a model property into two or more
 										table attributes.  This is commonly used as an model id property which gets slit into the table&#39;s partition and sort keys.
 										Example: Model schema contains &#39;id: Fields.split({ aliases: [&#39;P&#39;,&#39;S&#39;] })&#39; and when id = &#39;guid.date&#39; the field will split the id value
 									in to the table primary key of { P: &#39;guid&#39;, S: &#39;date&#39; }</p>
@@ -1006,27 +893,28 @@ expect(params).toEqual({
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><p><a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.split.ts" class="external">examples/Fields.split.ts</a>, (imports: <a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts" class="external">examples/Table.ts</a>)</p>
-										<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
-<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+										<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Fields</span><span style="color: #000000">, </span><span style="color: #001080">Model</span><span style="color: #000000">, </span><span style="color: #001080">Table</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dynamodb-datamodel&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">table</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./Table&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
-<span class="hljs-keyword">interface</span> ModelKey {
-  id: <span class="hljs-built_in">string</span>;
-}
+<span style="color: #008000">// (TypeScript) Define model key and item interface.</span>
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-comment">// Define the schema using Fields</span>
-<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey&gt;({
-  schema: {
-    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
-  },
-  table: table <span class="hljs-keyword">as</span> Table,
-});
+<span style="color: #008000">// Define the schema using Fields</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #001080">Model</span><span style="color: #000000">.</span><span style="color: #795E26">createModel</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ModelKey</span><span style="color: #000000">&gt;({</span>
+<span style="color: #000000">  </span><span style="color: #001080">schema:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">split</span><span style="color: #000000">({ </span><span style="color: #001080">aliases:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;P&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;S&#039;</span><span style="color: #000000">] }),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">table:</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">Table</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
-<span class="hljs-keyword">const</span> params = model.getParams({ id: <span class="hljs-string">'P-1.S-1'</span> });
+<span style="color: #008000">// Generate params to pass to DocumentClient or call the action method</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">params</span><span style="color: #000000"> = </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">getParams</span><span style="color: #000000">({ </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1.S-1&#039;</span><span style="color: #000000"> });</span>
 
-<span class="hljs-comment">// (jest) output of getParams</span>
-expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span> }, TableName: <span class="hljs-string">'ExampleTable'</span> });
+<span style="color: #008000">// (jest) output of getParams</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">params</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">({ </span><span style="color: #001080">Key:</span><span style="color: #000000"> { </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1&#039;</span><span style="color: #000000">, </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;S-1&#039;</span><span style="color: #000000"> }, </span><span style="color: #001080">TableName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleTable&#039;</span><span style="color: #000000"> });</span>
+
 </code></pre>
 									</dd>
 								</dl>
@@ -1034,13 +922,13 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/fields.splitoptions.html" class="tsd-signature-type">SplitOptions</a></h5>
+									<h5>options: <a href="../interfaces/Fields.SplitOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SplitOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldsplit.html" class="tsd-signature-type">FieldSplit</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldSplit.html" class="tsd-signature-type" data-tsd-kind="Class">FieldSplit</a></h4>
 							<p>New FieldSplit object.</p>
 						</li>
 					</ul>
@@ -1049,7 +937,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="string" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> string</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">string<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldstring.html" class="tsd-signature-type">FieldString</a></li>
+						<li class="tsd-signature tsd-kind-icon">string<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldString.html" class="tsd-signature-type" data-tsd-kind="Class">FieldString</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1060,28 +948,28 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a string field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a string field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.baseoptions.html" class="tsd-signature-type">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.BaseOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">BaseOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldstring.html" class="tsd-signature-type">FieldString</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldString.html" class="tsd-signature-type" data-tsd-kind="Class">FieldString</a></h4>
 							<p>New FieldString object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="stringset" class="tsd-anchor"></a>
+					<a name="stringSet" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> string<wbr>Set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">string<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#stringsetvalue" class="tsd-signature-type">StringSetValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldstringset.html" class="tsd-signature-type">FieldStringSet</a></li>
+						<li class="tsd-signature tsd-kind-icon">string<wbr>Set<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.SetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StringSet</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldStringSet.html" class="tsd-signature-type" data-tsd-kind="Class">FieldStringSet</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1092,19 +980,19 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a string set field object to use in a <a href="model.html#schema">Model.schema</a>.</p>
+									<p>Creates a string set field object to use in a <a href="Model.html#schema">Model.schema</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.setoptions.html" class="tsd-signature-type">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><a href="table.html#stringsetvalue" class="tsd-signature-type">StringSetValue</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.SetOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SetOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StringSet</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldstringset.html" class="tsd-signature-type">FieldStringSet</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldStringSet.html" class="tsd-signature-type" data-tsd-kind="Class">FieldStringSet</a></h4>
 							<p>New FieldStringSet object.</p>
 						</li>
 					</ul>
@@ -1113,7 +1001,7 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 					<a name="type" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> type</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.typeoptions.html" class="tsd-signature-type">TypeOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldtype.html" class="tsd-signature-type">FieldType</a></li>
+						<li class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.TypeOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">TypeOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldType.html" class="tsd-signature-type" data-tsd-kind="Class">FieldType</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1129,32 +1017,33 @@ expect(params).toEqual({ Key: { P: <span class="hljs-string">'P-1'</span>, S: <s
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><p><a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Fields.type.ts" class="external">examples/Fields.type.ts</a>, (imports: <a href="https://github.com/jasoncraftscode/dynamodb-datamodel/tree/main/examples/Table.ts" class="external">examples/Table.ts</a>)</p>
-										<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Fields, Model, Table, Update } <span class="hljs-keyword">from</span> <span class="hljs-string">'dynamodb-datamodel'</span>;
-<span class="hljs-keyword">import</span> { table } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Table'</span>;
+										<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Fields</span><span style="color: #000000">, </span><span style="color: #001080">Model</span><span style="color: #000000">, </span><span style="color: #001080">Table</span><span style="color: #000000">, </span><span style="color: #001080">Update</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dynamodb-datamodel&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">table</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./Table&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// (TypeScript) Define model key and item interface.</span>
-<span class="hljs-keyword">interface</span> ModelKey {
-  id: <span class="hljs-built_in">string</span>;
-}
-<span class="hljs-keyword">interface</span> ModelItem <span class="hljs-keyword">extends</span> ModelKey {
-  typename?: Update.String;
-}
+<span style="color: #008000">// (TypeScript) Define model key and item interface.</span>
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ModelItem</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ModelKey</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">typename</span><span style="color: #000000">?: </span><span style="color: #267F99">Update</span><span style="color: #000000">.</span><span style="color: #267F99">String</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-comment">// Define the schema using Fields</span>
-<span class="hljs-keyword">const</span> model = Model.createModel&lt;ModelKey, ModelItem&gt;({
-  name: <span class="hljs-string">'ExampleModel'</span>,
-  schema: {
-    id: Fields.split({ aliases: [<span class="hljs-string">'P'</span>, <span class="hljs-string">'S'</span>] }),
-    typename: Fields.type({ alias: <span class="hljs-string">'T'</span> }),
-  },
-  table: table <span class="hljs-keyword">as</span> Table,
-});
+<span style="color: #008000">// Define the schema using Fields</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">model</span><span style="color: #000000"> = </span><span style="color: #001080">Model</span><span style="color: #000000">.</span><span style="color: #795E26">createModel</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ModelKey</span><span style="color: #000000">, </span><span style="color: #267F99">ModelItem</span><span style="color: #000000">&gt;({</span>
+<span style="color: #000000">  </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleModel&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">schema:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">split</span><span style="color: #000000">({ </span><span style="color: #001080">aliases:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;P&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;S&#039;</span><span style="color: #000000">] }),</span>
+<span style="color: #000000">    </span><span style="color: #001080">typename:</span><span style="color: #000000"> </span><span style="color: #001080">Fields</span><span style="color: #000000">.</span><span style="color: #795E26">type</span><span style="color: #000000">({ </span><span style="color: #001080">alias:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;T&#039;</span><span style="color: #000000"> }),</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">table:</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">Table</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// Generate params to pass to DocumentClient or call the action method</span>
-<span class="hljs-keyword">const</span> params = model.putParams({ id: <span class="hljs-string">'P-1.S-1'</span> });
+<span style="color: #008000">// Generate params to pass to DocumentClient or call the action method</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">params</span><span style="color: #000000"> = </span><span style="color: #001080">model</span><span style="color: #000000">.</span><span style="color: #795E26">putParams</span><span style="color: #000000">({ </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1.S-1&#039;</span><span style="color: #000000"> });</span>
 
-<span class="hljs-comment">// (jest) output of putParams</span>
-expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <span class="hljs-string">'S-1'</span>, T: <span class="hljs-string">'ExampleModel'</span> }, TableName: <span class="hljs-string">'ExampleTable'</span> });
+<span style="color: #008000">// (jest) output of putParams</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">params</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">({ </span><span style="color: #001080">Item:</span><span style="color: #000000"> { </span><span style="color: #001080">P:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;P-1&#039;</span><span style="color: #000000">, </span><span style="color: #001080">S:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;S-1&#039;</span><span style="color: #000000">, </span><span style="color: #001080">T:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleModel&#039;</span><span style="color: #000000"> }, </span><span style="color: #001080">TableName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ExampleTable&#039;</span><span style="color: #000000"> });</span>
+
 </code></pre>
 									</dd>
 								</dl>
@@ -1162,22 +1051,22 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.typeoptions.html" class="tsd-signature-type">TypeOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.TypeOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">TypeOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldtype.html" class="tsd-signature-type">FieldType</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldType.html" class="tsd-signature-type" data-tsd-kind="Class">FieldType</a></h4>
 							<p>New FieldType object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="updateddate" class="tsd-anchor"></a>
+					<a name="updatedDate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> updated<wbr>Date</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">updated<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.updatedateoptions.html" class="tsd-signature-type">UpdateDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldupdateddate.html" class="tsd-signature-type">FieldUpdatedDate</a></li>
+						<li class="tsd-signature tsd-kind-icon">updated<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.UpdateDateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldUpdatedDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldUpdatedDate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1194,22 +1083,22 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.updatedateoptions.html" class="tsd-signature-type">UpdateDateOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.UpdateDateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateDateOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldupdateddate.html" class="tsd-signature-type">FieldUpdatedDate</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldUpdatedDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldUpdatedDate</a></h4>
 							<p>New FieldUpdatedDate object.</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="updatednumberdate" class="tsd-anchor"></a>
+					<a name="updatedNumberDate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> updated<wbr>Number<wbr>Date</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">updated<wbr>Number<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/fields.updatenumberdateoptions.html" class="tsd-signature-type">UpdateNumberDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fields.fieldupdatednumberdate.html" class="tsd-signature-type">FieldUpdatedNumberDate</a></li>
+						<li class="tsd-signature tsd-kind-icon">updated<wbr>Number<wbr>Date<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/Fields.UpdateNumberDateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateNumberDateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Fields.FieldUpdatedNumberDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldUpdatedNumberDate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1226,13 +1115,13 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/fields.updatenumberdateoptions.html" class="tsd-signature-type">UpdateNumberDateOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/Fields.UpdateNumberDateOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">UpdateNumberDateOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Options to initialize field with.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fields.fieldupdatednumberdate.html" class="tsd-signature-type">FieldUpdatedNumberDate</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Fields.FieldUpdatedNumberDate.html" class="tsd-signature-type" data-tsd-kind="Class">FieldUpdatedNumberDate</a></h4>
 							<p>New FieldUpdatedNumberDate object.</p>
 						</li>
 					</ul>
@@ -1242,273 +1131,132 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="condition.html" class="tsd-kind-icon">Condition</a>
+						<a href="Condition.html" class="tsd-kind-icon">Condition</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="conditionexpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
+						<a href="ConditionExpression.html" class="tsd-kind-icon">Condition<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="expressionattributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
+						<a href="ExpressionAttributes.html" class="tsd-kind-icon">Expression<wbr>Attributes</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="fields.html" class="tsd-kind-icon">Fields</a>
+						<a href="Fields.html" class="tsd-kind-icon">Fields</a>
 						<ul>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldbase.html" class="tsd-kind-icon">Field<wbr>Base</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldbinary.html" class="tsd-kind-icon">Field<wbr>Binary</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldbinaryset.html" class="tsd-kind-icon">Field<wbr>Binary<wbr>Set</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldboolean.html" class="tsd-kind-icon">Field<wbr>Boolean</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldcomposite.html" class="tsd-kind-icon">Field<wbr>Composite</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldcompositenamed.html" class="tsd-kind-icon">Field<wbr>Composite<wbr>Named</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldcompositeslot.html" class="tsd-kind-icon">Field<wbr>Composite<wbr>Slot</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldcreateddate.html" class="tsd-kind-icon">Field<wbr>Created<wbr>Date</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldcreatednumberdate.html" class="tsd-kind-icon">Field<wbr>Created<wbr>Number<wbr>Date</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fielddate.html" class="tsd-kind-icon">Field<wbr>Date</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldexpression.html" class="tsd-kind-icon">Field<wbr>Expression</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldhidden.html" class="tsd-kind-icon">Field<wbr>Hidden</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldlist.html" class="tsd-kind-icon">Field<wbr>List</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldmap.html" class="tsd-kind-icon">Field<wbr>Map</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldmodel.html" class="tsd-kind-icon">Field<wbr>Model</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldmodellist.html" class="tsd-kind-icon">Field<wbr>Model<wbr>List</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldmodelmap.html" class="tsd-kind-icon">Field<wbr>Model<wbr>Map</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldnull.html" class="tsd-kind-icon">Field<wbr>Null</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldnumber.html" class="tsd-kind-icon">Field<wbr>Number</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldnumberset.html" class="tsd-kind-icon">Field<wbr>Number<wbr>Set</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldrevision.html" class="tsd-kind-icon">Field<wbr>Revision</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="fields.fieldset.html" class="tsd-kind-icon">Field<wbr>Set</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldsplit.html" class="tsd-kind-icon">Field<wbr>Split</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldstring.html" class="tsd-kind-icon">Field<wbr>String</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldstringset.html" class="tsd-kind-icon">Field<wbr>String<wbr>Set</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldtype.html" class="tsd-kind-icon">Field<wbr>Type</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldupdateddate.html" class="tsd-kind-icon">Field<wbr>Updated<wbr>Date</a>
-							</li>
-							<li class=" tsd-kind-class tsd-parent-kind-class">
-								<a href="fields.fieldupdatednumberdate.html" class="tsd-kind-icon">Field<wbr>Updated<wbr>Number<wbr>Date</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.attributedefinition.html" class="tsd-kind-icon">Attribute<wbr>Definition</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/fields.baseoptions.html" class="tsd-kind-icon">Base<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/fields.compositenamedoptions.html" class="tsd-kind-icon">Composite<wbr>Named<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.compositeoptions.html" class="tsd-kind-icon">Composite<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.createddateoptions.html" class="tsd-kind-icon">Created<wbr>Date<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.field.html" class="tsd-kind-icon">Field</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.modelcontext.html" class="tsd-kind-icon">Model<wbr>Context</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/fields.modellistoptions.html" class="tsd-kind-icon">Model<wbr>List<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/fields.modelmapoptions.html" class="tsd-kind-icon">Model<wbr>Map<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/fields.modeloptions.html" class="tsd-kind-icon">Model<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.revisionoptions.html" class="tsd-kind-icon">Revision<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="../interfaces/fields.setoptions.html" class="tsd-kind-icon">Set<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.splitoptions.html" class="tsd-kind-icon">Split<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.tablecontext.html" class="tsd-kind-icon">Table<wbr>Context</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.typeoptions.html" class="tsd-kind-icon">Type<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.updatedateoptions.html" class="tsd-kind-icon">Update<wbr>Date<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-class">
-								<a href="../interfaces/fields.updatenumberdateoptions.html" class="tsd-kind-icon">Update<wbr>Number<wbr>Date<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#actionscope" class="tsd-kind-icon">Action<wbr>Scope</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#attributesschema" class="tsd-kind-icon">Attributes<wbr>Schema</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="fields.html#compositeslotmap" class="tsd-kind-icon">Composite<wbr>Slot<wbr>Map</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="Fields.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#binary" class="tsd-kind-icon">binary</a>
+								<a href="Fields.html#binary" class="tsd-kind-icon">binary</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#binaryset" class="tsd-kind-icon">binary<wbr>Set</a>
+								<a href="Fields.html#binarySet" class="tsd-kind-icon">binary<wbr>Set</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#boolean" class="tsd-kind-icon">boolean</a>
+								<a href="Fields.html#boolean" class="tsd-kind-icon">boolean</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#composite" class="tsd-kind-icon">composite</a>
+								<a href="Fields.html#composite" class="tsd-kind-icon">composite</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="fields.html#compositenamed" class="tsd-kind-icon">composite<wbr>Named</a>
+								<a href="Fields.html#compositeNamed" class="tsd-kind-icon">composite<wbr>Named</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#createddate" class="tsd-kind-icon">created<wbr>Date</a>
+								<a href="Fields.html#createdDate" class="tsd-kind-icon">created<wbr>Date</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#creatednumberdate" class="tsd-kind-icon">created<wbr>Number<wbr>Date</a>
+								<a href="Fields.html#createdNumberDate" class="tsd-kind-icon">created<wbr>Number<wbr>Date</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#date" class="tsd-kind-icon">date</a>
+								<a href="Fields.html#date" class="tsd-kind-icon">date</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#hidden" class="tsd-kind-icon">hidden</a>
+								<a href="Fields.html#hidden" class="tsd-kind-icon">hidden</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#list" class="tsd-kind-icon">list</a>
+								<a href="Fields.html#list" class="tsd-kind-icon">list</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#map" class="tsd-kind-icon">map</a>
+								<a href="Fields.html#map" class="tsd-kind-icon">map</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="fields.html#model" class="tsd-kind-icon">model</a>
+								<a href="Fields.html#model" class="tsd-kind-icon">model</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="fields.html#modellist" class="tsd-kind-icon">model<wbr>List</a>
+								<a href="Fields.html#modelList" class="tsd-kind-icon">model<wbr>List</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="fields.html#modelmap" class="tsd-kind-icon">model<wbr>Map</a>
+								<a href="Fields.html#modelMap" class="tsd-kind-icon">model<wbr>Map</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#number" class="tsd-kind-icon">number</a>
+								<a href="Fields.html#number" class="tsd-kind-icon">number</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#numberset" class="tsd-kind-icon">number<wbr>Set</a>
+								<a href="Fields.html#numberSet" class="tsd-kind-icon">number<wbr>Set</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#revision" class="tsd-kind-icon">revision</a>
+								<a href="Fields.html#revision" class="tsd-kind-icon">revision</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#split" class="tsd-kind-icon">split</a>
+								<a href="Fields.html#split" class="tsd-kind-icon">split</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#string" class="tsd-kind-icon">string</a>
+								<a href="Fields.html#string" class="tsd-kind-icon">string</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#stringset" class="tsd-kind-icon">string<wbr>Set</a>
+								<a href="Fields.html#stringSet" class="tsd-kind-icon">string<wbr>Set</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#type" class="tsd-kind-icon">type</a>
+								<a href="Fields.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#updateddate" class="tsd-kind-icon">updated<wbr>Date</a>
+								<a href="Fields.html#updatedDate" class="tsd-kind-icon">updated<wbr>Date</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="fields.html#updatednumberdate" class="tsd-kind-icon">updated<wbr>Number<wbr>Date</a>
+								<a href="Fields.html#updatedNumberDate" class="tsd-kind-icon">updated<wbr>Number<wbr>Date</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class">
-						<a href="index.html" class="tsd-kind-icon">Index</a>
+						<a href="Index.html" class="tsd-kind-icon">Index</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="keycondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
+						<a href="KeyCondition.html" class="tsd-kind-icon">Key<wbr>Condition</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="keyconditionexpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
+						<a href="KeyConditionExpression.html" class="tsd-kind-icon">Key<wbr>Condition<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="model.html" class="tsd-kind-icon">Model</a>
+						<a href="Model.html" class="tsd-kind-icon">Model</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="table.html" class="tsd-kind-icon">Table</a>
+						<a href="Table.html" class="tsd-kind-icon">Table</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="update.html" class="tsd-kind-icon">Update</a>
+						<a href="Update.html" class="tsd-kind-icon">Update</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="updateexpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
+						<a href="UpdateExpression.html" class="tsd-kind-icon">Update<wbr>Expression</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindex" class="tsd-kind-icon">validate<wbr>Index</a>
+						<a href="../modules.html#validateIndex" class="tsd-kind-icon">validate<wbr>Index</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#validateindexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
+						<a href="../modules.html#validateIndexes" class="tsd-kind-icon">validate<wbr>Indexes</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#validatetable" class="tsd-kind-icon">validate<wbr>Table</a>
+						<a href="../modules.html#validateTable" class="tsd-kind-icon">validate<wbr>Table</a>
 					</li>
 				</ul>
 			</nav>
@@ -1520,57 +1268,13 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
@@ -1580,6 +1284,5 @@ expect(params).toEqual({ Item: { P: <span class="hljs-string">'P-1'</span>, S: <
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
