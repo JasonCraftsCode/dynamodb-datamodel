@@ -566,8 +566,7 @@ export namespace Model {
    */
   export type ModelUpdateT<KEY, INPUT> = {
     [P in keyof Table.Optional<INPUT>]: ModelUpdateValue<INPUT[P]>;
-  } &
-    KEY;
+  } & KEY;
 
   /**
    * Params used when creating {@link ModelT}.

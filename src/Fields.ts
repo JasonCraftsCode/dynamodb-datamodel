@@ -1455,10 +1455,9 @@ export namespace Fields {
    * Defines the map for the named slots for a composite named field.
    */
   // eslint-disable-next-line @typescript-eslint/ban-types
-  export type CompositeSlotMap<T extends { [index: string]: number }, V extends { [index: string]: Field } = {}> = V &
-    {
-      [P in keyof T]: FieldCompositeSlot;
-    };
+  export type CompositeSlotMap<T extends { [index: string]: number }, V extends { [index: string]: Field } = {}> = V & {
+    [P in keyof T]: FieldCompositeSlot;
+  };
 
   /**
    * Options used when constructing a FieldCompositeNamed.
