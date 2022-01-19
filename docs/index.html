@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>dynamodb-datamodel - v0.2.7</title><meta name="description" content="Documentation for dynamodb-datamodel - v0.2.7"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">dynamodb-datamodel - v0.2.7</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>dynamodb-datamodel - v0.2.7</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>dynamodb-datamodel - v0.2.7</title><meta name="description" content="Documentation for dynamodb-datamodel - v0.2.7"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">dynamodb-datamodel - v0.2.7</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>dynamodb-datamodel - v0.2.7</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
 <a href="#dynamodb-datamodel-" id="dynamodb-datamodel-" style="color: inherit; text-decoration: none;">
   <h1>DynamoDB DataModel <!-- omit in TOC --></h1>
 </a>
@@ -588,29 +588,116 @@
   <h3>Update functions</h3>
 </a>
 <p>For more details on what you can do with update expressions see <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html">DynamodDB&#39;s Update Expression guide</a>.</p>
-<p>Supported <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> functions:
-| Name | Supported Types | Description |
-| :---------------------------------------------------------------------------------------------------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#path">path</a> | all | Ensures that a value is treated as a path. Example: <code>{ name: Update.path(&#39;fullname&#39;) }</code> |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#pathwithdefault">pathWithDefault</a> | all | Ensures that a value is either a path or a default value if the path doesn&#39;t exists. Example: <code>{ name: Update.pathWithDefault(&#39;fullname&#39;, &#39;John Smith&#39;)}</code>. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#default">default</a> | all | Ensures an attribute has a default value. Example: <code>{ name: Update.default(&#39;John Smith&#39;) }</code>, if name doesn&#39;t exists then set it to &#39;John Smith&#39;. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#del">del</a> | all | Deletes an attribute from item, can also assign <code>null</code> to a value. Example : <code>{ name: Update.del() }</code> or <code>{ name: null }</code>. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#set">set</a> | all | Sets an attribute to a value, can also assign value directly. Example: <code>{ name: Update.set(&#39;John Smith&#39;) }</code> or <code>{ name: &#39;John Smith }</code> |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#arthmetic">arithmetic</a> | N | Preforms basic arithmetic on an attribute, used by in, dec, add and sub below. Example: <code>{ total: Update.arithmetic(&#39;total&#39;, &#39;+&#39;, 1) }</code>, adds 1 to total attribute. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#inc">inc</a> | N | Increments an attribute by a value. Example: <code>{ total: Update.inc(2) }</code>, increments total by 2. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#dec">dec</a> | N | Decrements an attribute by a value. Example: <code>{ total: Update.dec(3) }</code>, decrements total by 3. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#add">add</a> | N | Sets the receiving attribute to the addition of a value to the value of an attribute. Example: <code>{ total: Update.add(&#39;count&#39;, 1) }</code>, set total to the result of adding 1 to the value of &#39;count&#39;. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#sub">sub</a> | N | Sets the receiving attribute to the subtraction of a value from the value of an attribute. Example: <code>{ total: Update.sub(&#39;count&#39;, 2) }</code> , set total to the result of subtrating 1 from the value of &#39;count&#39;. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#join">join</a> | L | Sets the receiving attribute to the result of joining two lists. Example: <code>{ relatives: Update.join(&#39;children&#39;, &#39;parents&#39;) }</code>, set the relative attribute to the result of join children and parents together. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#append">append</a> | L | Appends a list to the beginning of a list attribute. <code>{ relatives: Update.append(&#39;children&#39;) }</code>, appends the value of the children attribute to relatives. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#prepend">prepend</a> | L | Prepends a list to the end of an list attribute. <code>{ relatives: Update.prepend(&#39;parents&#39;) }</code>, appends the value of the children attribute to relatives. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#delindexes">delIndexes</a> | L | Deletes values from a list attribute using an array of indexes. <code>{ relatives: Update.delIndexes([1, 3]) }</code> , deletes the 1 and 3 value from the relatives list attribute. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#setindexes">setIndexes</a> | L | Sets the values from a list attribute using a map of indexes to values. <code>{ relatives: Update.setIndexes({1:&#39;bob&#39;, 3:&#39;lucy&#39;}) }</code> , sets value at index 1 to &#39;bob&#39; and value in index 3 to &#39;lucy&#39; in relatives list attribute. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#addtoset">addToSet</a> | SS, NS, BS | Add values to a DynamoDB set attribute. Example: <code>{ color: Update.addToSet(table.createStringSet([&#39;yellow&#39;, &#39;red&#39;])) }</code>, adds yellow and red to the color set attribute. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#removefromset">removeFromSet</a> | SS, NS, BS | Remove values from a DynamoDB set attribute. Example: <code>{ color: Update.removeFromSet(table.createStringSet([&#39;blue&#39;, &#39;green&#39;])) }</code>, removes blue and green from the color set attribute. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#map">map</a> | M | Sets the receiving map attribute to the result of resolving a map of Update functions. Can also support &#39;.&#39; delimited path values for setting deep values. Example: <code>{ address: Update.map( street: &#39;One Infinity Loop&#39; ) }</code>, sets the street attribute within address to &#39;One Infinity Loop&#39;&#39;. |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#model">model</a> | M | Typed based wrapper around map to ensure the input matches an interface. Example: see <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#model">Update.model</a> |
-| <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#modelmap">modelMap</a> | M | String based key to model map, that enforces the key strings are only used as paths. Example: see <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#modelmap">Update.modelMap</a> |</p>
+<p>Supported <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html">Update</a> functions:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Supported Types</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#path">path</a></td>
+<td align="left">all</td>
+<td align="left">Ensures that a value is treated as a path. Example: <code>{ name: Update.path(&#39;fullname&#39;) }</code></td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#pathwithdefault">pathWithDefault</a></td>
+<td align="left">all</td>
+<td align="left">Ensures that a value is either a path or a default value if the path doesn&#39;t exists. Example: <code>{ name: Update.pathWithDefault(&#39;fullname&#39;, &#39;John Smith&#39;)}</code>.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#default">default</a></td>
+<td align="left">all</td>
+<td align="left">Ensures an attribute has a default value. Example: <code>{ name: Update.default(&#39;John Smith&#39;) }</code>, if name doesn&#39;t exists then set it to &#39;John Smith&#39;.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#del">del</a></td>
+<td align="left">all</td>
+<td align="left">Deletes an attribute from item, can also assign <code>null</code> to a value. Example : <code>{ name: Update.del() }</code> or <code>{ name: null }</code>.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#set">set</a></td>
+<td align="left">all</td>
+<td align="left">Sets an attribute to a value, can also assign value directly. Example: <code>{ name: Update.set(&#39;John Smith&#39;) }</code> or <code>{ name: &#39;John Smith }</code></td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#arthmetic">arithmetic</a></td>
+<td align="left">N</td>
+<td align="left">Preforms basic arithmetic on an attribute, used by in, dec, add and sub below. Example: <code>{ total: Update.arithmetic(&#39;total&#39;, &#39;+&#39;, 1) }</code>, adds 1 to total attribute.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#inc">inc</a></td>
+<td align="left">N</td>
+<td align="left">Increments an attribute by a value. Example: <code>{ total: Update.inc(2) }</code>, increments total by 2.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#dec">dec</a></td>
+<td align="left">N</td>
+<td align="left">Decrements an attribute by a value. Example: <code>{ total: Update.dec(3) }</code>, decrements total by 3.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#add">add</a></td>
+<td align="left">N</td>
+<td align="left">Sets the receiving attribute to the addition of a value to the value of an attribute. Example: <code>{ total: Update.add(&#39;count&#39;, 1) }</code>, set total to the result of adding 1 to the value of &#39;count&#39;.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#sub">sub</a></td>
+<td align="left">N</td>
+<td align="left">Sets the receiving attribute to the subtraction of a value from the value of an attribute. Example: <code>{ total: Update.sub(&#39;count&#39;, 2) }</code> , set total to the result of subtrating 1 from the value of &#39;count&#39;.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#join">join</a></td>
+<td align="left">L</td>
+<td align="left">Sets the receiving attribute to the result of joining two lists. Example: <code>{ relatives: Update.join(&#39;children&#39;, &#39;parents&#39;) }</code>, set the relative attribute to the result of join children and parents together.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#append">append</a></td>
+<td align="left">L</td>
+<td align="left">Appends a list to the beginning of a list attribute. <code>{ relatives: Update.append(&#39;children&#39;) }</code>, appends the value of the children attribute to relatives.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#prepend">prepend</a></td>
+<td align="left">L</td>
+<td align="left">Prepends a list to the end of an list attribute. <code>{ relatives: Update.prepend(&#39;parents&#39;) }</code>, appends the value of the children attribute to relatives.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#delindexes">delIndexes</a></td>
+<td align="left">L</td>
+<td align="left">Deletes values from a list attribute using an array of indexes. <code>{ relatives: Update.delIndexes([1, 3]) }</code> , deletes the 1 and 3 value from the relatives list attribute.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#setindexes">setIndexes</a></td>
+<td align="left">L</td>
+<td align="left">Sets the values from a list attribute using a map of indexes to values. <code>{ relatives: Update.setIndexes({1:&#39;bob&#39;, 3:&#39;lucy&#39;}) }</code> , sets value at index 1 to &#39;bob&#39; and value in index 3 to &#39;lucy&#39; in relatives list attribute.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#addtoset">addToSet</a></td>
+<td align="left">SS, NS, BS</td>
+<td align="left">Add values to a DynamoDB set attribute. Example: <code>{ color: Update.addToSet(table.createStringSet([&#39;yellow&#39;, &#39;red&#39;])) }</code>, adds yellow and red to the color set attribute.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#removefromset">removeFromSet</a></td>
+<td align="left">SS, NS, BS</td>
+<td align="left">Remove values from a DynamoDB set attribute. Example: <code>{ color: Update.removeFromSet(table.createStringSet([&#39;blue&#39;, &#39;green&#39;])) }</code>, removes blue and green from the color set attribute.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#map">map</a></td>
+<td align="left">M</td>
+<td align="left">Sets the receiving map attribute to the result of resolving a map of Update functions. Can also support &#39;.&#39; delimited path values for setting deep values. Example: <code>{ address: Update.map( street: &#39;One Infinity Loop&#39; ) }</code>, sets the street attribute within address to &#39;One Infinity Loop&#39;&#39;.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#model">model</a></td>
+<td align="left">M</td>
+<td align="left">Typed based wrapper around map to ensure the input matches an interface. Example: see <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#model">Update.model</a></td>
+</tr>
+<tr>
+<td align="left"><a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#modelmap">modelMap</a></td>
+<td align="left">M</td>
+<td align="left">String based key to model map, that enforces the key strings are only used as paths. Example: see <a href="https://jasoncraftscode.github.io/dynamodb-datamodel/classes/update.html#modelmap">Update.modelMap</a></td>
+</tr>
+</tbody></table>
 
 <a href="#create-your-own-custom-update-resolvers" id="create-your-own-custom-update-resolvers" style="color: inherit; text-decoration: none;">
   <h3>Create your own custom update resolvers</h3>
