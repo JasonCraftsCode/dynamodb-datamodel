@@ -3,8 +3,6 @@
 [![Actions Status](https://github.com/JasonCraftsCode/dynamodb-datamodel/workflows/build/badge.svg)](https://github.com/JasonCraftsCode/dynamodb-datamodel/actions)
 [![npm version](https://badgen.net/npm/v/dynamodb-datamodel)](https://www.npmjs.com/package/dynamodb-datamodel)
 [![minzip bundle size](https://badgen.net/bundlephobia/minzip/dynamodb-datamodel)](https://bundlephobia.com/result?p=dynamodb-datamodel)
-[![dependencies Status](https://badgen.net/david/dep/jasoncraftscode/dynamodb-datamodel)](https://david-dm.org/jasoncraftscode/dynamodb-datamodel)
-[![DependABot Status](https://badgen.net/dependabot/JasonCraftsCode/dynamodb-datamodel?icon=dependabot)](https://github.com/JasonCraftsCode/dynamodb-datamodel/pulls?q=is%3Apr+label%3Adependencies+)
 [![CodeCov](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel/branch/main/graph/badge.svg)](https://codecov.io/gh/JasonCraftsCode/dynamodb-datamodel)
 [![DeepScan grade](https://deepscan.io/api/teams/8443/projects/11172/branches/162758/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=8443&pid=11172&bid=162758)
 [![npm type definitions](https://img.shields.io/npm/types/dynamodb-datamodel)](https://www.typescriptlang.org/)
